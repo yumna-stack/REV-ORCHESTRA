@@ -1,18 +1,33 @@
 "use client";
 
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useEffect, useRef, useState } from "react";
 
 export default function Stats() {
-  const { ref, visible } = useScrollReveal({ threshold: 0.12 });
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section id="stats" className="relative w-full py-28 bg-[rgb(14,15,17)]">
       <div ref={ref} className="max-w-[1200px] mx-auto px-5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left - Content (slides in from left) */}
+          {/* Left - Content - slides in from left */}
           <div
-            className={`flex flex-col gap-6 scroll-reveal-base reveal-slide-left${visible ? " is-visible" : ""}`}
-            style={{ animationDelay: "0ms" }}
+            className="flex flex-col gap-6"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateX(0)" : "translateX(-60px)",
+              filter: visible ? "blur(0px)" : "blur(4px)",
+              transition: "all 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
           >
             <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] w-fit">
               <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
@@ -45,12 +60,18 @@ export default function Stats() {
             </div>
           </div>
 
-          {/* Right - CASCADING overlapping stat cards - SLIDE IN FROM RIGHT with stagger */}
+          {/* Right - CASCADING cards - slide in from right with stagger */}
           <div className="relative" style={{ height: "420px" }}>
-            {/* Card 1: REQUESTS PROCESSED - "2 Million" (purple, partially hidden) */}
+            {/* Card 1: REQUESTS PROCESSED */}
             <div
-              className={`absolute top-0 left-0 right-0 scroll-reveal-base reveal-slide-right${visible ? " is-visible" : ""}`}
-              style={{ animationDelay: "200ms", zIndex: 1 }}
+              className="absolute top-0 left-0 right-0"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateX(0) scale(1)" : "translateX(80px) scale(0.95)",
+                filter: visible ? "blur(0px)" : "blur(4px)",
+                transition: "all 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s",
+                zIndex: 1,
+              }}
             >
               <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
                 <div className="relative px-8 pt-6 pb-16" style={{
@@ -65,7 +86,7 @@ export default function Stats() {
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">6 DAYS</span>
                       <div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center">
-                        <span className="text-[10px]">&#9889;</span>
+                        <span className="text-[10px]">⚡</span>
                       </div>
                     </div>
                   </div>
@@ -76,10 +97,16 @@ export default function Stats() {
               </div>
             </div>
 
-            {/* Card 2: CHAINS TRACKED - "12+" (orange, overlaps card 1) */}
+            {/* Card 2: CHAINS TRACKED */}
             <div
-              className={`absolute top-[100px] left-0 right-0 scroll-reveal-base reveal-slide-right${visible ? " is-visible" : ""}`}
-              style={{ animationDelay: "450ms", zIndex: 2 }}
+              className="absolute top-[100px] left-0 right-0"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateX(0) scale(1)" : "translateX(80px) scale(0.95)",
+                filter: visible ? "blur(0px)" : "blur(4px)",
+                transition: "all 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s",
+                zIndex: 2,
+              }}
             >
               <div className="rounded-[36px] overflow-hidden" style={{
                 border: "1px solid rgba(41,42,43,1)",
@@ -93,7 +120,7 @@ export default function Stats() {
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">IN 2025</span>
                       <div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center">
-                        <span className="text-[10px]">&#128230;</span>
+                        <span className="text-[10px]">📦</span>
                       </div>
                     </div>
                   </div>
@@ -105,10 +132,16 @@ export default function Stats() {
               </div>
             </div>
 
-            {/* Card 3: CLIENTS SUPPORTED - "2300+" (gray, overlaps card 2) */}
+            {/* Card 3: CLIENTS SUPPORTED */}
             <div
-              className={`absolute top-[230px] left-0 right-0 scroll-reveal-base reveal-slide-right${visible ? " is-visible" : ""}`}
-              style={{ animationDelay: "700ms", zIndex: 3 }}
+              className="absolute top-[230px] left-0 right-0"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateX(0) scale(1)" : "translateX(80px) scale(0.95)",
+                filter: visible ? "blur(0px)" : "blur(4px)",
+                transition: "all 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.7s",
+                zIndex: 3,
+              }}
             >
               <div className="rounded-[36px] overflow-hidden" style={{
                 border: "1px solid rgba(41,42,43,1)",
@@ -122,7 +155,7 @@ export default function Stats() {
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">GLOBALLY</span>
                       <div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center">
-                        <span className="text-[10px]">&#127760;</span>
+                        <span className="text-[10px]">🌐</span>
                       </div>
                     </div>
                   </div>

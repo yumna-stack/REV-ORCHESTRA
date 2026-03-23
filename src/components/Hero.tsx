@@ -104,9 +104,15 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Dashboard Image Area */}
+      {/* Dashboard Image Area - POPS UP on load */}
       <div
-        className={`relative z-10 w-full max-w-[1080px] mx-auto px-5 mt-12 transition-all duration-1000 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+        className="relative z-10 w-full max-w-[1080px] mx-auto px-5 mt-12"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0) scale(1)" : "translateY(60px) scale(0.92)",
+          filter: visible ? "blur(0px)" : "blur(6px)",
+          transition: "all 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.4s",
+        }}
       >
         {/* Dashboard card */}
         <div className="relative rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.06)] bg-[rgba(20,20,22,0.9)]">
