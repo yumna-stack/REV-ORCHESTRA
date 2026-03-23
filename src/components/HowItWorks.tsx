@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const steps = [
   {
@@ -24,25 +24,15 @@ const steps = [
 ];
 
 export default function HowItWorks() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, visible } = useScrollReveal({ threshold: 0.1 });
 
   return (
     <section id="how-it-works" className="relative w-full py-28 bg-black-light">
       <div ref={ref} className="max-w-[1200px] mx-auto px-5">
-        {/* Heading */}
+        {/* Heading - slides up */}
         <div
-          className="text-center mb-20 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}
+          className={`text-center mb-20 scroll-reveal-base reveal-slide-up${visible ? " is-visible" : ""}`}
+          style={{ animationDelay: "0ms" }}
         >
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
             <span className="w-2 h-2 rounded-full bg-accent-orange" />
@@ -56,28 +46,35 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        {/* 3 Step Cards with orange glow top borders */}
+        {/* 3 Step Cards - slide up with spring stagger + orange glow top borders */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {steps.map((step, i) => (
             <div
               key={i}
-              className="relative flex flex-col p-8 rounded-2xl bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.06)] overflow-hidden group hover:border-[rgba(232,86,0,0.2)] transition-all duration-500"
-              style={{
-                opacity: visible ? 1 : 0,
-                transform: visible ? "translateY(0)" : "translateY(40px)",
-                transitionDelay: `${300 + i * 150}ms`,
-                transitionDuration: "700ms",
-              }}
+              className={`relative flex flex-col p-8 rounded-2xl bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.06)] overflow-hidden group hover:border-[rgba(232,86,0,0.25)] transition-colors duration-500 scroll-reveal-base reveal-slide-up${visible ? " is-visible" : ""}`}
+              style={{ animationDelay: `${250 + i * 200}ms` }}
             >
-              {/* Orange glow top border */}
-              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
-                background: "linear-gradient(90deg, transparent 0%, #E85600 30%, #E85600 70%, transparent 100%)",
-              }} />
+              {/* Orange glow top border - animated pulse */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[2px]"
+                style={{
+                  background: "linear-gradient(90deg, transparent 0%, #E85600 30%, #E85600 70%, transparent 100%)",
+                  animation: visible ? "glowTopBorder 2.5s ease-in-out infinite" : "none",
+                  animationDelay: `${i * 300}ms`,
+                }}
+              />
               {/* Orange glow effect above card */}
-              <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-[60%] h-16 bg-accent-orange/10 blur-2xl rounded-full" />
+              <div
+                className="absolute -top-8 left-1/2 -translate-x-1/2 w-[60%] h-16 rounded-full transition-all duration-700"
+                style={{
+                  background: visible ? "rgba(232,86,0,0.12)" : "rgba(232,86,0,0)",
+                  filter: "blur(16px)",
+                  transitionDelay: `${400 + i * 200}ms`,
+                }}
+              />
 
               {/* Step icon */}
-              <div className="w-14 h-14 rounded-2xl bg-accent-orange/10 border border-accent-orange/20 flex items-center justify-center mb-6 group-hover:bg-accent-orange/20 transition-colors duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-accent-orange/10 border border-accent-orange/20 flex items-center justify-center mb-6 group-hover:bg-accent-orange/20 group-hover:scale-110 transition-all duration-300">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d={step.icon} />
                 </svg>
@@ -89,7 +86,7 @@ export default function HowItWorks() {
               </p>
 
               {/* Step number watermark */}
-              <span className="absolute top-4 right-6 text-[60px] font-bold text-[rgba(255,255,255,0.03)] leading-none">
+              <span className="absolute top-4 right-6 text-[60px] font-bold text-[rgba(255,255,255,0.03)] leading-none group-hover:text-[rgba(232,86,0,0.06)] transition-colors duration-500">
                 {step.number}
               </span>
             </div>

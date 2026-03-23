@@ -120,3 +120,178 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Feature card animations */
+@keyframes slideUpStagger {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes coinFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.05); }
+}
+
+@keyframes coinGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.05); }
+  50% { box-shadow: 0 0 12px 2px rgba(255,255,255,0.08); }
+}
+
+@keyframes dashMove {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes travelDot {
+  0% { left: 0; }
+  50% { left: calc(100% - 8px); }
+  100% { left: 0; }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.9; }
+}
+
+@keyframes tickerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes fadeSlideIn {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes txSlideUp1 { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes txSlideUp2 { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 0.6; transform: translateY(0); } }
+@keyframes txSlideUp3 { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 0.35; transform: translateY(0); } }
+
+/* ===== SCROLL-DRIVEN REVEAL ANIMATIONS ===== */
+
+/* Slide in from right (Stats cascading cards) */
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px) scale(0.95);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 0.8;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Slide in from left (text content) */
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-60px);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0px);
+  }
+}
+
+/* Slide up with spring feel (HowItWorks cards) */
+@keyframes slideUpSpring {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.92);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateY(-8px) scale(1.01);
+  }
+  70% {
+    transform: translateY(3px) scale(0.995);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Scale up reveal (cards, general sections) */
+@keyframes scaleUpReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Continuous floating animation for coins */
+@keyframes coinFloatContinuous {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(2deg); }
+  50% { transform: translateY(-3px) rotate(0deg); }
+  75% { transform: translateY(-8px) rotate(-2deg); }
+}
+
+/* Continuous slide-up loop for DAPPS transactions */
+@keyframes txContinuousSlide {
+  0% { transform: translateY(0); opacity: 1; }
+  40% { transform: translateY(-4px); opacity: 1; }
+  70% { transform: translateY(2px); opacity: 0.85; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Pulsing glow for card borders on hover */
+@keyframes borderGlowPulse {
+  0%, 100% { border-color: rgba(232, 86, 0, 0.15); }
+  50% { border-color: rgba(232, 86, 0, 0.4); }
+}
+
+/* Orange glow pulse for HowItWorks top border */
+@keyframes glowTopBorder {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Scroll reveal utility classes */
+.scroll-reveal-base {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.scroll-reveal-base.is-visible {
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-slide-right.is-visible {
+  animation-name: slideInFromRight;
+  animation-duration: 0.9s;
+}
+
+.reveal-slide-left.is-visible {
+  animation-name: slideInFromLeft;
+  animation-duration: 0.8s;
+}
+
+.reveal-slide-up.is-visible {
+  animation-name: slideUpSpring;
+  animation-duration: 0.85s;
+}
+
+.reveal-scale-up.is-visible {
+  animation-name: scaleUpReveal;
+  animation-duration: 0.75s;
+}
