@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  --color-black-light: rgb(14, 15, 17);
+  --color-black-dark: rgb(0, 0, 0);
+  --color-black-03: rgb(30, 30, 30);
+  --color-black-outline: rgb(41, 42, 43);
+  --color-black-preheader: rgb(25, 27, 31);
+  --color-white-main: rgb(255, 255, 255);
+  --color-white-light: rgb(168, 168, 168);
+  --color-white-unhighlighted: rgb(77, 77, 77);
+  --color-accent-orange: rgb(232, 86, 0);
+  --color-accent-purple: rgb(152, 151, 255);
+  --color-accent-green: rgb(183, 233, 50);
+  --color-accent-red: rgb(233, 50, 50);
+  --font-family-inter: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-inter);
+  background-color: var(--color-black-light);
+  color: var(--color-white-main);
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-black-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-black-outline);
+  border-radius: 3px;
+}
+
+/* Logo scroll animation */
+@keyframes logoScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+@keyframes logoScrollReverse {
+  0% { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
+}
+
+/* Ticker animation */
+@keyframes tickerUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-33.333%); }
+}
+@keyframes tickerDown {
+  0% { transform: translateY(-33.333%); }
+  100% { transform: translateY(0); }
+}
+
+/* Pulse animation */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 86, 0, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(232, 86, 0, 0); }
+}
+
+/* Orbit animation */
+@keyframes orbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Floating icon animation */
+@keyframes float1 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+  50% { transform: translate(-50%, -50%) translateY(-12px); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+  50% { transform: translate(-50%, -50%) translateY(10px); }
+}
+@keyframes float3 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(-5px) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) translateY(8px) rotate(3deg); }
+}
+
+/* Fade up animation */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Checks pattern background */
+.checks-pattern {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Gradient text */
+.gradient-text-orange {
+  background: linear-gradient(135deg, #E85600, #FF8E68);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
