@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Reveal, fadeUp, popIn } from "@/components/motion";
 
 const toolLogos = [
   { name: "Bitcoin", src: "https://cdn.simpleicons.org/bitcoin/white" },
@@ -78,46 +78,32 @@ function CoinRow({ logos, direction = "left", speed = 30 }: { logos: typeof tool
 }
 
 export default function Integrations() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="integrations" className="relative w-full py-28 bg-black-light overflow-hidden">
-      <div ref={ref} className="max-w-[1200px] mx-auto px-5">
+      <div className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
-        <div
-          className="text-center mb-16 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}
-        >
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
-            <span className="w-2 h-2 rounded-full bg-accent-orange" />
-            <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Best Crypto Networks</span>
+        <Reveal variants={fadeUp}>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
+              <span className="w-2 h-2 rounded-full bg-accent-orange" />
+              <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Best Crypto Networks</span>
+            </div>
+            <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">
+              Best Crypto Networks
+            </h2>
+            <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[600px] mx-auto">
+              Effortlessly tap into real-time data from all major blockchain networks with AI-enhanced insights.
+            </p>
           </div>
-          <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">
-            Best Crypto Networks
-          </h2>
-          <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[600px] mx-auto">
-            Effortlessly tap into real-time data from all major blockchain networks with AI-enhanced insights.
-          </p>
-        </div>
+        </Reveal>
 
         {/* Animated orange coin logos - 2 rows scrolling opposite directions */}
-        <div
-          className="mb-8 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transitionDelay: "300ms" }}
-        >
-          <CoinRow logos={toolLogos} direction="left" speed={25} />
-          <CoinRow logos={row2Logos} direction="right" speed={30} />
-        </div>
+        <Reveal variants={popIn}>
+          <div className="mb-8">
+            <CoinRow logos={toolLogos} direction="left" speed={25} />
+            <CoinRow logos={row2Logos} direction="right" speed={30} />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

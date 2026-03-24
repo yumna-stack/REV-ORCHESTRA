@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Reveal, StaggerContainer, StaggerItem, fadeUp, fadeLeft, popIn } from "@/components/motion";
 
 function OrbitalAnimation({ scale }: { scale: number }) {
   return (
@@ -98,17 +100,7 @@ function OrbitalAnimation({ scale }: { scale: number }) {
 
 export default function BlockchainIndexing() {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
   const [orbitalScale, setOrbitalScale] = useState(1.3);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
 
   /* Scroll-driven scale: starts big (1.3) and shrinks to normal (1.0) */
   useEffect(() => {
@@ -132,54 +124,51 @@ export default function BlockchainIndexing() {
       <div ref={ref} className="max-w-[1200px] mx-auto px-5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left - Content */}
-          <div
-            className="flex flex-col gap-6 transition-all duration-700"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-30px)" }}
-          >
-            <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] w-fit">
-              <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
-              <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider">Blockchain Indexing</span>
+          <Reveal variants={fadeLeft}>
+            <div className="flex flex-col gap-6">
+              <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] w-fit">
+                <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
+                <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider">Blockchain Indexing</span>
+              </div>
+
+              <h2 className="text-[clamp(28px,4vw,48px)] font-medium leading-[115%] tracking-[-2px] text-white">
+                Your Gateway to Advanced Crypto Data Indexing
+              </h2>
+
+              <p className="text-base text-[rgba(255,255,255,0.45)] leading-[170%]">
+                Experience the power of the CRYPS Network, where crypto indexing meets decentralization. Our Staked Authority model empowers community members to run indexers, boosting reliability and trust.
+              </p>
+
+              {/* Feature points */}
+              <StaggerContainer className="flex flex-col gap-3 mt-2">
+                {["Deep Crypto Indexing", "Robust API Suite", "Client-Focused Support", "True Crypto SaaS"].map((point, i) => (
+                  <StaggerItem key={i}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-accent-orange/10 border border-accent-orange/20 flex items-center justify-center shrink-0">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d={["M9 12h6M12 9v6", "M4 6h16M4 10h16M4 14h16M4 18h16", "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z", "M12 2L2 7l10 5 10-5-10-5z"][i]} />
+                        </svg>
+                      </div>
+                      <span className="text-sm font-medium text-white">{point}</span>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+
+              <a href="#contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all w-fit mt-2">
+                JOIN CRYPS NOW
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </a>
             </div>
-
-            <h2 className="text-[clamp(28px,4vw,48px)] font-medium leading-[115%] tracking-[-2px] text-white">
-              Your Gateway to Advanced Crypto Data Indexing
-            </h2>
-
-            <p className="text-base text-[rgba(255,255,255,0.45)] leading-[170%]">
-              Experience the power of the CRYPS Network, where crypto indexing meets decentralization. Our Staked Authority model empowers community members to run indexers, boosting reliability and trust.
-            </p>
-
-            {/* Feature points */}
-            <div className="flex flex-col gap-3 mt-2">
-              {["Deep Crypto Indexing", "Robust API Suite", "Client-Focused Support", "True Crypto SaaS"].map((point, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-accent-orange/10 border border-accent-orange/20 flex items-center justify-center shrink-0">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={["M9 12h6M12 9v6", "M4 6h16M4 10h16M4 14h16M4 18h16", "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z", "M12 2L2 7l10 5 10-5-10-5z"][i]} />
-                    </svg>
-                  </div>
-                  <span className="text-sm font-medium text-white">{point}</span>
-                </div>
-              ))}
-            </div>
-
-            <a href="#contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all w-fit mt-2">
-              JOIN CRYPS NOW
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </a>
-          </div>
+          </Reveal>
 
           {/* Right - Orbital Ring Animation (scales from big to normal on scroll) */}
-          <div
-            className="h-[500px] transition-all duration-700"
-            style={{
-              opacity: visible ? 1 : 0,
-              transitionDelay: "300ms",
-            }}
-          >
-            <OrbitalAnimation scale={orbitalScale} />
-          </div>
+          <Reveal variants={popIn}>
+            <div className="h-[500px]">
+              <OrbitalAnimation scale={orbitalScale} />
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
