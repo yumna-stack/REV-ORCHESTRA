@@ -39,11 +39,9 @@ export default function AnimatedText() {
 
   return (
     <>
-      {/* Scroll-driven text reveal - tall section so animation is slow */}
-      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "1000px" }}>
-        {/* Seamless continuation of Hero warm glow — no visible line */}
-
-        <div className="sticky top-0 h-screen flex items-center justify-center px-5 z-10">
+      {/* Scroll-driven text reveal — compact height, no huge gap */}
+      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "600px" }}>
+        <div className="sticky top-0 h-[60vh] flex items-center justify-center px-5 z-10">
           <p className="text-[clamp(28px,4.5vw,58px)] font-medium leading-[135%] tracking-[-1.5px] text-center max-w-[850px]">
             {words.map((word, i) => {
               let opacity = 0.12;
@@ -93,8 +91,8 @@ export default function AnimatedText() {
         </div>
       </section>
 
-      {/* Supported Tech - appears AFTER sticky text as you scroll past */}
-      <section className="relative w-full pt-6 pb-8 bg-[rgb(14,15,17)] overflow-hidden -mt-[100px]">
+      {/* Supported Tech - centered, no gap */}
+      <section className="relative w-full py-12 bg-[rgb(14,15,17)] overflow-hidden">
         {/* Label with lines */}
         <div className="flex items-center justify-center gap-4 mb-8 px-5">
           <div className="flex-1 max-w-[300px] h-px" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.12))" }} />
