@@ -238,7 +238,7 @@ export default function Hero() {
     </section>
 
     {/* Warm amber gradient glow zone — seamless like Cryps */}
-    <div className="relative w-full h-[700px] -mt-[50px] -mb-[300px] z-20 pointer-events-none overflow-visible" style={{ background: "rgb(14,15,17)" }}>
+    <div className="relative w-full h-[700px] -mb-[350px] z-10 pointer-events-none overflow-visible" style={{ background: "rgb(14,15,17)" }}>
       {/* Main warm center band */}
       <div className="absolute inset-0" style={{
         background: "radial-gradient(ellipse 130% 60% at 50% 10%, rgba(180, 90, 15, 0.35) 0%, rgba(140, 65, 10, 0.2) 20%, rgba(80, 35, 5, 0.08) 45%, transparent 70%)",
