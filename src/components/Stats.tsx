@@ -115,10 +115,10 @@ export default function Stats() {
             </div>
           </Reveal>
 
-          {/* Right - Cascading cards with DYNAMIC counting numbers */}
-          <div className="relative" style={{ height: "520px" }}>
+          {/* Right - Stacked cards with gaps (no overlap) - slide in from right */}
+          <div className="flex flex-col gap-4">
             {/* Card 1: REQUESTS PROCESSED - purple number counts to 2 Million */}
-            <motion.div className="absolute top-0 left-0 right-0 z-[1]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={cardSlide(0.2)}>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={cardSlide(0.2)}>
               <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
                 <div className="relative px-8 pt-6 pb-16" style={{ background: "linear-gradient(180deg, rgba(100,80,180,0.12) 0%, rgba(14,15,17,1) 100%)" }}>
                   {/* Grid pattern overlay */}
@@ -143,10 +143,12 @@ export default function Stats() {
             </motion.div>
 
             {/* Card 2: CHAINS TRACKED - orange number counts to 12+ */}
-            <motion.div className="absolute top-[140px] left-0 right-0 z-[2]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={cardSlide(0.45)}>
-              <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
-                <div className="relative px-8 pt-6 pb-16" style={{ background: "linear-gradient(180deg, rgba(14,15,17,1) 0%, rgba(14,15,17,1) 60%, rgba(232,86,0,0.08) 100%)" }}>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={cardSlide(0.45)}>
+              <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
+                <div className="relative px-8 pt-6 pb-16" style={{ background: "linear-gradient(135deg, rgba(14,15,17,1) 0%, rgba(14,15,17,1) 50%, rgba(232,86,0,0.12) 100%)" }}>
                   <PulsingGlow color="#E85600" delay={0.5} />
+                  {/* Orange glow on right side like Cryps */}
+                  <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at 100% 50%, rgba(232,86,0,0.15) 0%, transparent 60%)" }} />
                   <div className="flex items-center justify-between mb-3 relative z-10">
                     <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">CHAINS TRACKED</span>
                     <div className="flex items-center gap-2">
@@ -173,8 +175,8 @@ export default function Stats() {
             </motion.div>
 
             {/* Card 3: CLIENTS SUPPORTED - gray number counts to 2300+ */}
-            <motion.div className="absolute top-[290px] left-0 right-0 z-[3]" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={cardSlide(0.7)}>
-              <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)", boxShadow: "0 -10px 40px rgba(0,0,0,0.5)" }}>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={cardSlide(0.7)}>
+              <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
                 <div className="relative px-8 pt-6 pb-10" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.5) 0%, rgba(14,15,17,1) 100%)" }}>
                   <div className="flex items-center justify-between mb-3 relative z-10">
                     <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">CLIENTS SUPPORTED</span>
