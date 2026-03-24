@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Reveal, fadeUp, popIn } from "@/components/motion";
 
 const toolLogos = [
@@ -48,13 +49,15 @@ function CoinRow({ logos, direction = "left", speed = 30 }: { logos: typeof tool
         }}
       >
         {items.map((logo, i) => (
-          <div
+          <motion.div
             key={i}
-            className="w-[80px] h-[80px] rounded-full shrink-0 flex items-center justify-center relative overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-110"
+            className="w-[80px] h-[80px] rounded-full shrink-0 flex items-center justify-center relative overflow-hidden cursor-pointer"
             style={{
               background: "linear-gradient(160deg, #F09030 0%, #E85600 35%, #C44800 65%, #8A3200 100%)",
               boxShadow: "0 6px 24px rgba(232, 86, 0, 0.2), inset 0 2px 0 rgba(255,200,150,0.2), inset 0 -2px 4px rgba(0,0,0,0.3)",
             }}
+            whileHover={{ scale: 1.15, y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
           >
             {/* Coin 3D shine effect */}
             <div
@@ -70,7 +73,7 @@ function CoinRow({ logos, direction = "left", speed = 30 }: { logos: typeof tool
               alt={logo.name}
               className="w-9 h-9 object-contain relative z-10 drop-shadow-lg"
             />
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
@@ -84,10 +87,14 @@ export default function Integrations() {
         {/* Heading */}
         <Reveal variants={fadeUp}>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
+            <motion.div
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6"
+              animate={{ y: [-2, 2, -2] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
               <span className="w-2 h-2 rounded-full bg-accent-orange" />
               <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Best Crypto Networks</span>
-            </div>
+            </motion.div>
             <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">
               Best Crypto Networks
             </h2>
@@ -98,7 +105,7 @@ export default function Integrations() {
         </Reveal>
 
         {/* Animated orange coin logos - 2 rows scrolling opposite directions */}
-        <Reveal variants={popIn}>
+        <Reveal variants={popIn} delay={0.2}>
           <div className="mb-8">
             <CoinRow logos={toolLogos} direction="left" speed={25} />
             <CoinRow logos={row2Logos} direction="right" speed={30} />

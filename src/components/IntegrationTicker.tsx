@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Reveal, fadeUp } from "@/components/motion";
+
 const allLogos = [
   { name: "Gmail", src: "https://assistants.ae/assets/logos/gmail.svg" },
   { name: "HubSpot", src: "https://assistants.ae/assets/logos/hubspot.svg" },
@@ -40,15 +43,23 @@ function TickerColumn({
   logos,
   speed,
   direction,
+  colIndex,
 }: {
   logos: typeof allLogos;
   speed: number;
   direction: "up" | "down";
+  colIndex: number;
 }) {
   const items = [...logos, ...logos, ...logos];
 
   return (
-    <div className="w-12 h-full overflow-hidden relative">
+    <motion.div
+      className="w-12 h-full overflow-hidden relative"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: colIndex * 0.12 }}
+    >
       <div
         className="flex flex-col items-center gap-4"
         style={{
@@ -68,7 +79,7 @@ function TickerColumn({
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -77,22 +88,25 @@ export default function IntegrationTicker() {
   const logosPerColumn = Math.ceil(allLogos.length / columns);
 
   return (
-    <div className="w-full h-full flex items-center justify-center gap-4 overflow-hidden">
-      {Array.from({ length: columns }).map((_, colIndex) => {
-        const shuffled = shuffleArray(allLogos, colIndex * 7);
-        const columnLogos = shuffled.slice(0, logosPerColumn);
-        const direction = colIndex % 2 === 0 ? "up" : "down";
-        const speed = 20 + colIndex * 5;
+    <Reveal variants={fadeUp}>
+      <div className="w-full h-full flex items-center justify-center gap-4 overflow-hidden">
+        {Array.from({ length: columns }).map((_, colIndex) => {
+          const shuffled = shuffleArray(allLogos, colIndex * 7);
+          const columnLogos = shuffled.slice(0, logosPerColumn);
+          const direction = colIndex % 2 === 0 ? "up" : "down";
+          const speed = 20 + colIndex * 5;
 
-        return (
-          <TickerColumn
-            key={colIndex}
-            logos={columnLogos}
-            speed={speed}
-            direction={direction as "up" | "down"}
-          />
-        );
-      })}
-    </div>
+          return (
+            <TickerColumn
+              key={colIndex}
+              logos={columnLogos}
+              speed={speed}
+              direction={direction as "up" | "down"}
+              colIndex={colIndex}
+            />
+          );
+        })}
+      </div>
+    </Reveal>
   );
 }

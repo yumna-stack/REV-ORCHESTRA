@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { Reveal, StaggerContainer, StaggerItem, fadeUp, fadeLeft } from "@/components/motion";
+
 const footerLinks = {
   Company: [
     { label: "Products", href: "#features" },
@@ -27,65 +30,76 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-5">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Logo, tagline & social icons */}
-          <div className="flex flex-col gap-4">
-            <span className="text-white font-semibold text-base tracking-[1.5px] uppercase">
-              REVORCHESTRA
-            </span>
-            <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[160%]">
-              Revolutionizing crypto with advanced AI technology. A simple, fast, and secure platform.
-            </p>
-            {/* Social icons */}
-            <div className="flex items-center gap-3 mt-2">
-              {socialIcons.map((social, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-9 h-9 rounded-full bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center hover:bg-accent-orange/15 hover:border-accent-orange/25 transition-all duration-300"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={social.svg} />
-                  </svg>
-                </a>
-              ))}
+          <Reveal variants={fadeLeft}>
+            <div className="flex flex-col gap-4">
+              <span className="text-white font-semibold text-base tracking-[1.5px] uppercase">
+                REVORCHESTRA
+              </span>
+              <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[160%]">
+                Revolutionizing crypto with advanced AI technology. A simple, fast, and secure platform.
+              </p>
+              {/* Social icons */}
+              <StaggerContainer className="flex items-center gap-3 mt-2" staggerDelay={0.08}>
+                {socialIcons.map((social, i) => (
+                  <StaggerItem key={i} variants={fadeUp}>
+                    <motion.a
+                      href="#"
+                      className="w-9 h-9 rounded-full bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center hover:bg-accent-orange/15 hover:border-accent-orange/25 transition-all duration-300"
+                      whileHover={{ scale: 1.15, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d={social.svg} />
+                      </svg>
+                    </motion.a>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
             </div>
-          </div>
+          </Reveal>
 
           {/* Spacer for layout */}
           <div className="hidden md:block" />
 
           {/* Link columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title} className="flex flex-col gap-4">
-              <span className="text-xs text-[rgba(255,255,255,0.3)] uppercase tracking-wider font-medium">
-                {title}
-              </span>
-              {links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm text-[rgba(255,255,255,0.5)] hover:text-white transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+          {Object.entries(footerLinks).map(([title, links], colIdx) => (
+            <Reveal key={title} variants={fadeUp} delay={0.1 + colIdx * 0.15}>
+              <div className="flex flex-col gap-4">
+                <span className="text-xs text-[rgba(255,255,255,0.3)] uppercase tracking-wider font-medium">
+                  {title}
+                </span>
+                {links.map((link) => (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    className="text-sm text-[rgba(255,255,255,0.5)] hover:text-white transition-colors"
+                    whileHover={{ x: 4 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
+              </div>
+            </Reveal>
           ))}
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-[rgba(255,255,255,0.06)]">
-          <span className="text-xs text-[rgba(255,255,255,0.3)]">
-            &copy; {new Date().getFullYear()} REVORCHESTRA. All rights reserved.
-          </span>
-          <div className="flex gap-6">
-            <a href="#" className="text-xs text-[rgba(255,255,255,0.3)] hover:text-white transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-xs text-[rgba(255,255,255,0.3)] hover:text-white transition-colors">
-              Terms of Service
-            </a>
+        <Reveal variants={fadeUp} delay={0.3}>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-[rgba(255,255,255,0.06)]">
+            <span className="text-xs text-[rgba(255,255,255,0.3)]">
+              &copy; {new Date().getFullYear()} REVORCHESTRA. All rights reserved.
+            </span>
+            <div className="flex gap-6">
+              <a href="#" className="text-xs text-[rgba(255,255,255,0.3)] hover:text-white transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#" className="text-xs text-[rgba(255,255,255,0.3)] hover:text-white transition-colors">
+                Terms of Service
+              </a>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );
