@@ -65,7 +65,7 @@ function PulsingGlow({ color, delay = 0 }: { color: string; delay?: number }) {
   );
 }
 
-/* ── Scroll-Driven Stacking Cards ── */
+/* ── Scroll-Driven Stacking Cards — all 3 overlap on scroll ── */
 function ScrollStackCards() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -73,77 +73,78 @@ function ScrollStackCards() {
     offset: ["start end", "end start"],
   });
 
-  // Card 2 slides up over Card 1 as you scroll
-  const card2Y = useTransform(scrollYProgress, [0, 0.3, 0.5], [120, 120, -60]);
+  // Card 2 slides up over Card 1
+  const card2Y = useTransform(scrollYProgress, [0.1, 0.3, 0.45], [160, 80, -30]);
+  // Card 3 slides up over Card 2
+  const card3Y = useTransform(scrollYProgress, [0.25, 0.45, 0.6], [200, 100, -20]);
 
   return (
-    <div ref={containerRef} className="flex flex-col gap-5">
-      {/* Cards 1 + 2: stacking group */}
-      <div className="relative" style={{ height: "280px" }}>
-        {/* Card 1: REQUESTS PROCESSED - sits behind */}
-        <motion.div
-          className="absolute top-0 left-0 right-0 z-[1]"
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease }}
-        >
-          <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
-            <div className="relative px-8 pt-6 pb-20" style={{ background: "linear-gradient(180deg, rgba(100,80,180,0.12) 0%, rgba(14,15,17,1) 100%)" }}>
-              <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
-              <PulsingGlow color="#9897FF" />
-              <div className="flex items-center justify-between mb-3 relative z-10">
-                <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">REQUESTS PROCESSED</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">6 DAYS</span>
-                  <motion.div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center" animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-                    <span className="text-[10px]">⚡</span>
-                  </motion.div>
-                </div>
-              </div>
-              <AnimatedNumber value={2000000} suffix=" Million" prefix="" duration={2.5} color="#9897FF" />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Card 2: CHAINS TRACKED - slides up over Card 1 on scroll */}
-        <motion.div
-          className="absolute left-0 right-0 z-[2]"
-          style={{ y: card2Y, top: "60px" }}
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8, ease, delay: 0.2 }}
-        >
-          <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)", boxShadow: "0 -20px 60px rgba(0,0,0,0.6)" }}>
-            <div className="relative px-8 pt-6 pb-16" style={{ background: "linear-gradient(135deg, rgba(14,15,17,1) 0%, rgba(14,15,17,1) 40%, rgba(232,86,0,0.15) 100%)" }}>
-              <PulsingGlow color="#E85600" delay={0.5} />
-              <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at 100% 50%, rgba(232,86,0,0.2) 0%, transparent 60%)" }} />
-              <div className="flex items-center justify-between mb-3 relative z-10">
-                <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">CHAINS TRACKED</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">IN 2025</span>
-                  <motion.div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center" animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}>
-                    <span className="text-[10px]">📦</span>
-                  </motion.div>
-                </div>
-              </div>
-              <AnimatedNumber value={12} suffix="+" duration={1.5} color="#E85600" />
-              <motion.div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #E85600, transparent)" }} animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Card 3: CLIENTS SUPPORTED - separate below with gap */}
+    <div ref={containerRef} className="relative" style={{ height: "480px" }}>
+      {/* Card 1: REQUESTS PROCESSED — base layer */}
       <motion.div
+        className="absolute top-0 left-0 right-0 z-[1]"
         initial={{ opacity: 0, x: 60 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, ease, delay: 0.4 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease }}
       >
         <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
-          <div className="relative px-8 pt-6 pb-10" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.5) 0%, rgba(14,15,17,1) 100%)" }}>
+          <div className="relative px-8 pt-6 pb-20" style={{ background: "linear-gradient(180deg, rgba(100,80,180,0.12) 0%, rgba(14,15,17,1) 100%)" }}>
+            <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+            <PulsingGlow color="#9897FF" />
+            <div className="flex items-center justify-between mb-3 relative z-10">
+              <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">REQUESTS PROCESSED</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">6 DAYS</span>
+                <motion.div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center" animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
+                  <span className="text-[10px]">⚡</span>
+                </motion.div>
+              </div>
+            </div>
+            <AnimatedNumber value={2000000} suffix=" Million" prefix="" duration={2.5} color="#9897FF" />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Card 2: CHAINS TRACKED — slides up over Card 1 */}
+      <motion.div
+        className="absolute left-0 right-0 z-[2]"
+        style={{ y: card2Y, top: "80px" }}
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.8, ease, delay: 0.15 }}
+      >
+        <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)", boxShadow: "0 -20px 60px rgba(0,0,0,0.7)" }}>
+          <div className="relative px-8 pt-6 pb-20" style={{ background: "linear-gradient(135deg, rgba(14,15,17,1) 0%, rgba(14,15,17,1) 40%, rgba(232,86,0,0.15) 100%)" }}>
+            <PulsingGlow color="#E85600" delay={0.5} />
+            <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at 100% 50%, rgba(232,86,0,0.2) 0%, transparent 60%)" }} />
+            <div className="flex items-center justify-between mb-3 relative z-10">
+              <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">CHAINS TRACKED</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">IN 2025</span>
+                <motion.div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center" animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}>
+                  <span className="text-[10px]">📦</span>
+                </motion.div>
+              </div>
+            </div>
+            <AnimatedNumber value={12} suffix="+" duration={1.5} color="#E85600" />
+            <motion.div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #E85600, transparent)" }} animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Card 3: CLIENTS SUPPORTED — slides up over Card 2 */}
+      <motion.div
+        className="absolute left-0 right-0 z-[3]"
+        style={{ y: card3Y, top: "160px" }}
+        initial={{ opacity: 0, x: 60 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.8, ease, delay: 0.3 }}
+      >
+        <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)", boxShadow: "0 -20px 60px rgba(0,0,0,0.7)" }}>
+          <div className="relative px-8 pt-6 pb-14" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.5) 0%, rgba(14,15,17,1) 100%)" }}>
             <div className="flex items-center justify-between mb-3 relative z-10">
               <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">CLIENTS SUPPORTED</span>
               <div className="flex items-center gap-2">
