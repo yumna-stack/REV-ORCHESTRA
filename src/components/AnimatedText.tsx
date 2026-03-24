@@ -40,7 +40,7 @@ export default function AnimatedText() {
   return (
     <>
       {/* Scroll-driven text reveal - tall section so animation is slow */}
-      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)] -mt-[1px]" style={{ height: "1400px" }}>
+      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "1000px" }}>
         {/* Seamless continuation of Hero warm glow — no visible line */}
 
         <div className="sticky top-0 h-screen flex items-center justify-center px-5 z-10">
