@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Float } from "@/components/motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -17,9 +18,21 @@ const floatingIcons = [
 ];
 
 export default function Hero() {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax: text moves up faster, dashboard stays, opacity fades
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const dashboardY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const dashboardScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+
   return (
     <>
-    <section className="relative w-full flex flex-col items-center bg-[rgb(14,15,17)] overflow-hidden">
+    <section ref={sectionRef} className="relative w-full flex flex-col items-center bg-[rgb(14,15,17)] overflow-hidden">
       {/* Grid pattern background */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -47,12 +60,13 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Hero Content - staggered fade up */}
+      {/* Hero Content - staggered fade up + scroll parallax */}
       <motion.div
         className="relative z-10 flex flex-col items-center text-center max-w-[1200px] mx-auto px-5 pt-[150px] gap-8"
         initial="hidden"
         animate="visible"
         variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } } }}
+        style={{ y: textY, opacity: textOpacity }}
       >
         {/* Badge */}
         <motion.div
@@ -98,12 +112,13 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Dashboard - pops up with scale + blur */}
+      {/* Dashboard - pops up with scale + blur + scroll parallax */}
       <motion.div
         className="relative z-10 w-full max-w-[1080px] mx-auto px-5 mt-12"
         initial={{ opacity: 0, y: 80, scale: 0.9, filter: "blur(10px)" }}
         animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.2, ease, delay: 0.6 }}
+        style={{ y: dashboardY, scale: dashboardScale }}
       >
         <div className="relative rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.06)] bg-[rgba(20,20,22,0.9)]">
           {/* Dashboard header */}
