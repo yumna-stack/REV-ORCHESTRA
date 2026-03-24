@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Reveal, StaggerContainer, StaggerItem, fadeUp, popIn } from "@/components/motion";
 
 const faqs = [
   { q: "What is CRYPS?", a: "CRYPS is a cutting-edge platform that combines cryptocurrency management with advanced AI technology, offering secure wallet management, real-time analytics, and intelligent trading insights." },
@@ -16,81 +18,59 @@ function FAQItem({ faq }: { faq: typeof faqs[0] }) {
 
   return (
     <div className="border-b border-[rgba(255,255,255,0.06)] last:border-b-0">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-6 text-left group"
-      >
-        <span className="text-base font-medium text-white group-hover:text-accent-orange transition-colors duration-300 pr-4">
-          {faq.q}
-        </span>
-        <div
-          className="w-8 h-8 rounded-full border border-[rgba(255,255,255,0.1)] flex items-center justify-center shrink-0 transition-all duration-300"
-          style={{
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between py-6 text-left group">
+        <span className="text-base font-medium text-white group-hover:text-accent-orange transition-colors duration-300 pr-4">{faq.q}</span>
+        <motion.div
+          className="w-8 h-8 rounded-full border flex items-center justify-center shrink-0"
+          animate={{
+            rotate: open ? 45 : 0,
             backgroundColor: open ? "rgba(232,86,0,0.15)" : "transparent",
             borderColor: open ? "rgba(232,86,0,0.3)" : "rgba(255,255,255,0.1)",
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
           }}
+          transition={{ duration: 0.3 }}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M7 2v10M2 7h10" stroke={open ? "#E85600" : "rgba(255,255,255,0.5)"} strokeWidth="1.5" strokeLinecap="round" />
           </svg>
-        </div>
+        </motion.div>
       </button>
-      <div
-        className="overflow-hidden transition-all duration-500 ease-in-out"
-        style={{
-          maxHeight: open ? "200px" : "0px",
-          opacity: open ? 1 : 0,
-        }}
-      >
-        <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] pb-6 pr-12">
-          {faq.a}
-        </p>
-      </div>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] pb-6 pr-12">{faq.a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
 export default function FAQ() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="faq" className="relative w-full py-28 bg-black-light">
-      <div ref={ref} className="max-w-[800px] mx-auto px-5">
-        <div
-          className="text-center mb-12 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}
-        >
+      <div className="max-w-[800px] mx-auto px-5">
+        <Reveal variants={fadeUp} className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
             <span className="w-2 h-2 rounded-full bg-accent-orange" />
             <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Questions Answered</span>
           </div>
-          <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">
-            FAQ&apos;S
-          </h2>
-          <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[550px] mx-auto">
-            Find answers to the most common questions about our platform, security, and how we can help you trade smarter.
-          </p>
-        </div>
+          <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">FAQ&apos;S</h2>
+          <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[550px] mx-auto">Find answers to the most common questions about our platform, security, and how we can help you trade smarter.</p>
+        </Reveal>
 
-        <div
-          className="transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transitionDelay: "300ms" }}
-        >
+        <StaggerContainer staggerDelay={0.08}>
           {faqs.map((faq, i) => (
-            <FAQItem key={i} faq={faq} />
+            <StaggerItem key={i} variants={fadeUp}>
+              <FAQItem faq={faq} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
