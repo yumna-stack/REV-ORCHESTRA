@@ -237,58 +237,24 @@ export default function Hero() {
 
     </section>
 
-    {/* Warm amber gradient glow zone - OUTSIDE section so not clipped */}
-    <div className="relative w-full h-[600px] -mt-[100px] -mb-[250px] z-20 pointer-events-none overflow-visible bg-[rgb(14,15,17)]">
-        {/* Main warm band - full width horizontal glow */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 120% 70% at 50% 15%, rgba(180, 90, 15, 0.4) 0%, rgba(140, 65, 10, 0.25) 20%, rgba(100, 45, 5, 0.12) 40%, transparent 65%)",
-        }} />
-        {/* Left warm glow */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 40% 90% at 5% 30%, rgba(160, 80, 10, 0.2) 0%, transparent 55%)",
-        }} />
-        {/* Right warm glow */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 40% 90% at 95% 30%, rgba(160, 80, 10, 0.2) 0%, transparent 55%)",
-        }} />
-        {/* Green-ish highlight from dashboard charts */}
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 50% 30% at 50% 5%, rgba(140, 110, 20, 0.15) 0%, transparent 50%)",
-        }} />
-
-        {/* Floating side icons - 4 icons, animated up/down like Cryps */}
-        {/* Left top - clock/timer */}
-        <motion.div
-          className="absolute left-3 top-[20%] w-12 h-12 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-          animate={{ y: [-8, 8, -8] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        </motion.div>
-        {/* Left bottom - globe */}
-        <motion.div
-          className="absolute left-3 top-[50%] w-12 h-12 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-          animate={{ y: [-10, 10, -10] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-        </motion.div>
-        {/* Right top - people */}
-        <motion.div
-          className="absolute right-3 top-[20%] w-12 h-12 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-          animate={{ y: [-9, 9, -9] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        </motion.div>
-        {/* Right bottom - users */}
-        <motion.div
-          className="absolute right-3 top-[55%] w-12 h-12 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-          animate={{ y: [-7, 7, -7] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        </motion.div>
+    {/* Warm amber gradient glow zone — seamless like Cryps */}
+    <div className="relative w-full h-[700px] -mt-[50px] -mb-[300px] z-20 pointer-events-none overflow-visible" style={{ background: "rgb(14,15,17)" }}>
+      {/* Main warm center band */}
+      <div className="absolute inset-0" style={{
+        background: "radial-gradient(ellipse 130% 60% at 50% 10%, rgba(180, 90, 15, 0.35) 0%, rgba(140, 65, 10, 0.2) 20%, rgba(80, 35, 5, 0.08) 45%, transparent 70%)",
+      }} />
+      {/* Left edge warmth */}
+      <div className="absolute inset-0" style={{
+        background: "radial-gradient(ellipse 35% 80% at 0% 25%, rgba(140, 70, 10, 0.18) 0%, transparent 55%)",
+      }} />
+      {/* Right edge warmth */}
+      <div className="absolute inset-0" style={{
+        background: "radial-gradient(ellipse 35% 80% at 100% 25%, rgba(140, 70, 10, 0.18) 0%, transparent 55%)",
+      }} />
+      {/* Bottom fade to pure black */}
+      <div className="absolute bottom-0 left-0 right-0 h-[40%]" style={{
+        background: "linear-gradient(to bottom, transparent, rgb(14,15,17))",
+      }} />
     </div>
     </>
   );
