@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useMotionValue, useTransform, animate, useInView, useScroll } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
 import { Reveal, fadeLeft } from "@/components/motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -65,99 +65,111 @@ function PulsingGlow({ color, delay = 0 }: { color: string; delay?: number }) {
   );
 }
 
-/* ── Scroll-Driven Stacking Cards — all 3 overlap on scroll ── */
-function ScrollStackCards() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  // Cards start fully separated, scroll up to stack/overlap
-  const card2Y = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0, -60, -100]);
-  const card3Y = useTransform(scrollYProgress, [0.4, 0.6, 0.8], [0, -50, -80]);
+/* ── Stats Cards — staggered slide-in, NO overlap ── */
+function StatsCards() {
+  const cards = [
+    {
+      label: "REQUESTS PROCESSED",
+      tag: "6 DAYS",
+      icon: "⚡",
+      value: 2000000,
+      suffix: " Million",
+      duration: 2.5,
+      color: "#9897FF",
+      bg: "linear-gradient(180deg, rgba(100,80,180,0.12) 0%, rgba(14,15,17,1) 100%)",
+      hasGrid: true,
+      iconAnim: { rotate: [0, 10, -10, 0] },
+    },
+    {
+      label: "CHAINS TRACKED",
+      tag: "IN 2025",
+      icon: "📦",
+      value: 12,
+      suffix: "+",
+      duration: 1.5,
+      color: "#E85600",
+      bg: "linear-gradient(135deg, rgba(14,15,17,1) 0%, rgba(14,15,17,1) 40%, rgba(232,86,0,0.15) 100%)",
+      hasGlow: true,
+      hasLine: true,
+      iconAnim: { scale: [1, 1.15, 1] },
+    },
+    {
+      label: "CLIENTS SUPPORTED",
+      tag: "GLOBALLY",
+      icon: "🌐",
+      value: 2300,
+      suffix: "+",
+      duration: 2,
+      color: "rgba(255,255,255,0.15)",
+      bg: "linear-gradient(180deg, rgba(30,30,30,0.5) 0%, rgba(14,15,17,1) 100%)",
+      iconAnim: { rotate: [0, 360] },
+      iconDur: 8,
+      iconEase: "linear" as const,
+    },
+  ];
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: "620px" }}>
-      {/* Card 1: REQUESTS PROCESSED — base layer */}
-      <motion.div
-        className="absolute top-0 left-0 right-0 z-[1]"
-        initial={{ opacity: 0, x: 60 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, ease }}
-      >
-        <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
-          <div className="relative px-8 pt-6 pb-20" style={{ background: "linear-gradient(180deg, rgba(100,80,180,0.12) 0%, rgba(14,15,17,1) 100%)" }}>
-            <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
-            <PulsingGlow color="#9897FF" />
-            <div className="flex items-center justify-between mb-3 relative z-10">
-              <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">REQUESTS PROCESSED</span>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">6 DAYS</span>
-                <motion.div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center" animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>
-                  <span className="text-[10px]">⚡</span>
-                </motion.div>
-              </div>
-            </div>
-            <AnimatedNumber value={2000000} suffix=" Million" prefix="" duration={2.5} color="#9897FF" />
-          </div>
-        </div>
-      </motion.div>
+    <motion.div
+      className="flex flex-col gap-4"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.2 } } }}
+    >
+      {cards.map((card, i) => (
+        <motion.div
+          key={i}
+          variants={{
+            hidden: { opacity: 0, x: 80, scale: 0.95, filter: "blur(8px)" },
+            visible: { opacity: 1, x: 0, scale: 1, filter: "blur(0px)" },
+          }}
+          transition={{ duration: 0.8, ease }}
+          whileHover={{ scale: 1.01, y: -2 }}
+        >
+          <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)" }}>
+            <div className="relative px-8 pt-6 pb-8" style={{ background: card.bg }}>
+              {/* Grid pattern for first card */}
+              {card.hasGrid && (
+                <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+              )}
+              {/* Orange glow for second card */}
+              {card.hasGlow && (
+                <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at 100% 50%, rgba(232,86,0,0.2) 0%, transparent 60%)" }} />
+              )}
+              <PulsingGlow color={card.color} delay={i * 0.5} />
 
-      {/* Card 2: CHAINS TRACKED — slides up over Card 1 */}
-      <motion.div
-        className="absolute left-0 right-0 z-[2]"
-        style={{ y: card2Y, top: "180px" }}
-        initial={{ opacity: 0, x: 60 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8, ease, delay: 0.15 }}
-      >
-        <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)", boxShadow: "0 -20px 60px rgba(0,0,0,0.7)" }}>
-          <div className="relative px-8 pt-6 pb-20" style={{ background: "linear-gradient(135deg, rgba(14,15,17,1) 0%, rgba(14,15,17,1) 40%, rgba(232,86,0,0.15) 100%)" }}>
-            <PulsingGlow color="#E85600" delay={0.5} />
-            <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at 100% 50%, rgba(232,86,0,0.2) 0%, transparent 60%)" }} />
-            <div className="flex items-center justify-between mb-3 relative z-10">
-              <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">CHAINS TRACKED</span>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">IN 2025</span>
-                <motion.div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center" animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}>
-                  <span className="text-[10px]">📦</span>
-                </motion.div>
+              {/* Header row */}
+              <div className="flex items-center justify-between mb-4 relative z-10">
+                <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">{card.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">{card.tag}</span>
+                  <motion.div
+                    className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center"
+                    animate={card.iconAnim}
+                    transition={{ duration: card.iconDur || 2.5, repeat: Infinity, ease: card.iconEase || "easeInOut" }}
+                  >
+                    <span className="text-[10px]">{card.icon}</span>
+                  </motion.div>
+                </div>
               </div>
-            </div>
-            <AnimatedNumber value={12} suffix="+" duration={1.5} color="#E85600" />
-            <motion.div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #E85600, transparent)" }} animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} />
-          </div>
-        </div>
-      </motion.div>
 
-      {/* Card 3: CLIENTS SUPPORTED — slides up over Card 2 */}
-      <motion.div
-        className="absolute left-0 right-0 z-[3]"
-        style={{ y: card3Y, top: "380px" }}
-        initial={{ opacity: 0, x: 60 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8, ease, delay: 0.3 }}
-      >
-        <div className="rounded-[36px] overflow-hidden" style={{ border: "1px solid rgba(41,42,43,1)", boxShadow: "0 -20px 60px rgba(0,0,0,0.7)" }}>
-          <div className="relative px-8 pt-6 pb-14" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.5) 0%, rgba(14,15,17,1) 100%)" }}>
-            <div className="flex items-center justify-between mb-3 relative z-10">
-              <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">CLIENTS SUPPORTED</span>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">GLOBALLY</span>
-                <motion.div className="w-6 h-6 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center" animate={{ rotate: [0, 360] }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }}>
-                  <span className="text-[10px]">🌐</span>
-                </motion.div>
-              </div>
+              {/* Animated number */}
+              <AnimatedNumber value={card.value} suffix={card.suffix} duration={card.duration} color={card.color} />
+
+              {/* Orange bottom line for second card */}
+              {card.hasLine && (
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-[2px]"
+                  style={{ background: "linear-gradient(90deg, transparent, #E85600, transparent)" }}
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+              )}
             </div>
-            <AnimatedNumber value={2300} suffix="+" duration={2} color="rgba(255,255,255,0.15)" />
           </div>
-        </div>
-      </motion.div>
-    </div>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }
 
@@ -211,8 +223,8 @@ export default function Stats() {
             </div>
           </Reveal>
 
-          {/* Right - Scroll-driven stacking cards like Cryps */}
-          <ScrollStackCards />
+          {/* Right - Staggered slide-in cards, fully visible */}
+          <StatsCards />
         </div>
       </div>
     </section>
