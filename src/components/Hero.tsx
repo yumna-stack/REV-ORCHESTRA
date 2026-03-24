@@ -234,10 +234,25 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Warm gradient glow */}
-      <div className="relative w-full h-[300px] -mb-[100px] z-20" style={{
-        background: "radial-gradient(ellipse 90% 80% at 50% 20%, rgba(180, 80, 20, 0.2) 0%, rgba(120, 50, 10, 0.12) 30%, rgba(60, 25, 5, 0.06) 50%, transparent 80%)",
-      }} />
+      {/* Warm amber gradient glow - matches Cryps template */}
+      <div className="relative w-full h-[500px] -mb-[200px] z-20 pointer-events-none">
+        {/* Main warm center glow */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 80% 60% at 50% 10%, rgba(200, 100, 20, 0.35) 0%, rgba(160, 70, 10, 0.2) 25%, rgba(100, 45, 5, 0.1) 45%, transparent 70%)",
+        }} />
+        {/* Left side warm glow */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 50% 80% at 15% 20%, rgba(140, 80, 10, 0.15) 0%, transparent 60%)",
+        }} />
+        {/* Right side warm glow */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 50% 80% at 85% 20%, rgba(140, 80, 10, 0.15) 0%, transparent 60%)",
+        }} />
+        {/* Subtle green-amber tint from the dashboard */}
+        <div className="absolute inset-0" style={{
+          background: "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(120, 90, 20, 0.12) 0%, transparent 50%)",
+        }} />
+      </div>
     </section>
   );
 }

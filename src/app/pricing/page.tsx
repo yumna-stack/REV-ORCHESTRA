@@ -1,8 +1,10 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Badge, PageHero } from "@/components/PageWrapper";
+import { Badge, PageHero, StaggerGrid, GridItem } from "@/components/PageWrapper";
+import { Reveal, StaggerContainer, StaggerItem, fadeUp } from "@/components/motion";
 
 /* ------------------------------------------------------------------ */
 /*  Types & Data                                                       */
@@ -113,9 +115,11 @@ function PricingCard({ plan }: { plan: Plan }) {
   if (isPurple) innerBorder = "1px solid rgba(152,150,255,0.24)";
 
   return (
-    <div
+    <motion.div
       className="relative flex-1 min-w-[300px] max-w-[400px]"
       style={{ padding: 8, borderRadius: 44, border: outerBorder, background: "rgba(255,255,255,0.01)" }}
+      whileHover={{ y: -6, borderColor: "rgba(232,86,0,0.25)" }}
+      transition={{ duration: 0.3 }}
     >
       {/* Orange corner glow for Pro */}
       {isOrange && (
@@ -193,7 +197,7 @@ function PricingCard({ plan }: { plan: Plan }) {
           ))}
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -220,41 +224,52 @@ function ComparisonTable() {
   return (
     <section className="w-full py-24">
       <div className="max-w-[1100px] mx-auto px-5">
-        <div className="text-center mb-14">
-          <Badge text="Compare" />
-          <h2 className="mt-6 text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-1.5px] text-white">
-            Price Comparison
-          </h2>
-        </div>
+        <Reveal variants={fadeUp}>
+          <div className="text-center mb-14">
+            <Badge text="Compare" />
+            <h2 className="mt-6 text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-1.5px] text-white">
+              Price Comparison
+            </h2>
+          </div>
+        </Reveal>
 
-        <div className="w-full overflow-x-auto">
-          <table className="w-full border-collapse text-left">
-            <thead>
-              <tr className="border-b border-[rgba(255,255,255,0.06)]">
-                <th className="py-4 pr-6 text-sm text-[rgba(255,255,255,0.4)] font-normal">Features</th>
-                {["Starter", "Pro", "Enterprise"].map((p) => (
-                  <th key={p} className="py-4 px-6 text-sm text-white font-medium text-center">{p}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonFeatures.map((feat, i) => (
-                <tr key={feat} className="border-b border-[rgba(255,255,255,0.04)]">
-                  <td className="py-4 pr-6 text-sm text-[rgba(255,255,255,0.6)]">{feat}</td>
+        <Reveal variants={fadeUp} delay={0.1}>
+          <div className="w-full overflow-x-auto">
+            <table className="w-full border-collapse text-left">
+              <thead>
+                <tr className="border-b border-[rgba(255,255,255,0.06)]">
+                  <th className="py-4 pr-6 text-sm text-[rgba(255,255,255,0.4)] font-normal">Features</th>
                   {["Starter", "Pro", "Enterprise"].map((p) => (
-                    <td key={p} className="py-4 px-6 text-center">
-                      {comparisonData[p][i] ? (
-                        <span className="inline-flex justify-center"><GreenCheck /></span>
-                      ) : (
-                        <span className="inline-flex justify-center"><GrayCheck /></span>
-                      )}
-                    </td>
+                    <th key={p} className="py-4 px-6 text-sm text-white font-medium text-center">{p}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {comparisonFeatures.map((feat, i) => (
+                  <motion.tr
+                    key={feat}
+                    className="border-b border-[rgba(255,255,255,0.04)]"
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.07 }}
+                  >
+                    <td className="py-4 pr-6 text-sm text-[rgba(255,255,255,0.6)]">{feat}</td>
+                    {["Starter", "Pro", "Enterprise"].map((p) => (
+                      <td key={p} className="py-4 px-6 text-center">
+                        {comparisonData[p][i] ? (
+                          <span className="inline-flex justify-center"><GreenCheck /></span>
+                        ) : (
+                          <span className="inline-flex justify-center"><GrayCheck /></span>
+                        )}
+                      </td>
+                    ))}
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -277,11 +292,13 @@ export default function PricingPage() {
 
       {/* Pricing Cards */}
       <section className="w-full pb-24">
-        <div className="max-w-[1200px] mx-auto px-5 flex flex-col md:flex-row items-stretch justify-center gap-6">
+        <StaggerGrid className="max-w-[1200px] mx-auto px-5 flex flex-col md:flex-row items-stretch justify-center gap-6">
           {plans.map((plan) => (
-            <PricingCard key={plan.name} plan={plan} />
+            <GridItem key={plan.name}>
+              <PricingCard plan={plan} />
+            </GridItem>
           ))}
-        </div>
+        </StaggerGrid>
       </section>
 
       {/* Price Comparison */}

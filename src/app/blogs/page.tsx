@@ -1,8 +1,11 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Section, Badge, PageHero, CTAButton } from "@/components/PageWrapper";
+import { Reveal, StaggerContainer, StaggerItem, fadeUp, fadeLeft, fadeRight, popIn, scaleUp } from "@/components/motion";
+import { StaggerGrid, GridItem } from "@/components/PageWrapper";
 
 const featuredBlog = {
   slug: "we-can-build-for-you",
@@ -73,9 +76,12 @@ export default function BlogsPage() {
       {/* Featured Blog Card */}
       <section className="py-16">
         <div className="max-w-[1200px] mx-auto px-5">
-          <Section>
+          <Reveal variants={popIn} delay={0.2}>
             <a href={`/blogs/${featuredBlog.slug}`} className="block group">
-              <div className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300">
+              <motion.div
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300"
+              >
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Image area */}
                   <div
@@ -85,14 +91,34 @@ export default function BlogsPage() {
                     {/* Decorative elements */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="relative">
-                        <div className="w-40 h-40 rounded-full border border-[rgba(255,255,255,0.06)] flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity group-hover:scale-110 duration-700">
-                          <div className="w-24 h-24 rounded-full border border-[rgba(255,255,255,0.08)] flex items-center justify-center">
-                            <div className="w-10 h-10 rounded-full bg-accent-orange/20" />
-                          </div>
-                        </div>
+                        <motion.div
+                          animate={{ scale: [1, 1.08, 1] }}
+                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                          className="w-40 h-40 rounded-full border border-[rgba(255,255,255,0.06)] flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity group-hover:scale-110 duration-700"
+                        >
+                          <motion.div
+                            animate={{ scale: [1, 1.12, 1] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                            className="w-24 h-24 rounded-full border border-[rgba(255,255,255,0.08)] flex items-center justify-center"
+                          >
+                            <motion.div
+                              animate={{ scale: [1, 1.2, 1] }}
+                              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+                              className="w-10 h-10 rounded-full bg-accent-orange/20"
+                            />
+                          </motion.div>
+                        </motion.div>
                         {/* Floating dots */}
-                        <div className="absolute -top-4 -right-4 w-3 h-3 rounded-full bg-[#9897FF]/30" />
-                        <div className="absolute -bottom-6 -left-2 w-2 h-2 rounded-full bg-accent-orange/40" />
+                        <motion.div
+                          animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                          className="absolute -top-4 -right-4 w-3 h-3 rounded-full bg-[#9897FF]/30"
+                        />
+                        <motion.div
+                          animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.7, 0.4] }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                          className="absolute -bottom-6 -left-2 w-2 h-2 rounded-full bg-accent-orange/40"
+                        />
                       </div>
                     </div>
                   </div>
@@ -119,20 +145,23 @@ export default function BlogsPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </a>
-          </Section>
+          </Reveal>
         </div>
       </section>
 
       {/* Blog Grid - 3x2 */}
       <section className="pb-28">
         <div className="max-w-[1200px] mx-auto px-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {blogs.map((blog, i) => (
-              <Section key={blog.slug} delay={i * 100}>
+              <GridItem key={blog.slug}>
                 <a href={`/blogs/${blog.slug}`} className="block group h-full">
-                  <div className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300 h-full flex flex-col">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300 h-full flex flex-col"
+                  >
                     {/* Card image/placeholder */}
                     <div
                       className="w-full aspect-[16/10] relative overflow-hidden"
@@ -170,11 +199,11 @@ export default function BlogsPage() {
                         </svg>
                       </span>
                     </div>
-                  </div>
+                  </motion.div>
                 </a>
-              </Section>
+              </GridItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
 
