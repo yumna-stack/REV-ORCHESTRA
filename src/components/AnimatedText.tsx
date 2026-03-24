@@ -40,14 +40,8 @@ export default function AnimatedText() {
   return (
     <>
       {/* Scroll-driven text reveal - tall section so animation is slow */}
-      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "1400px" }}>
-        {/* Warm glow that fades from hero */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: `
-            radial-gradient(ellipse 80% 40% at 50% 0%, rgba(180,80,20,0.18) 0%, rgba(100,40,10,0.08) 40%, transparent 70%),
-            linear-gradient(to bottom, transparent 0%, rgb(14,15,17) 30%)
-          `,
-        }} />
+      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)] -mt-[1px]" style={{ height: "1400px" }}>
+        {/* Seamless continuation of Hero warm glow — no visible line */}
 
         <div className="sticky top-0 h-screen flex items-center justify-center px-5 z-10">
           <p className="text-[clamp(28px,4.5vw,58px)] font-medium leading-[135%] tracking-[-1.5px] text-center max-w-[850px]">

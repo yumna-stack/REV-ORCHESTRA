@@ -18,6 +18,7 @@ const floatingIcons = [
 
 export default function Hero() {
   return (
+    <>
     <section className="relative w-full flex flex-col items-center bg-[rgb(14,15,17)] overflow-hidden">
       {/* Grid pattern background */}
       <div
@@ -234,8 +235,10 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Warm amber gradient glow zone - FULL WIDTH like Cryps */}
-      <div className="relative w-full h-[600px] -mb-[250px] z-20 pointer-events-none overflow-visible">
+    </section>
+
+    {/* Warm amber gradient glow zone - OUTSIDE section so not clipped */}
+    <div className="relative w-full h-[600px] -mt-[100px] -mb-[250px] z-20 pointer-events-none overflow-visible bg-[rgb(14,15,17)]">
         {/* Main warm band - full width horizontal glow */}
         <div className="absolute inset-0" style={{
           background: "radial-gradient(ellipse 120% 70% at 50% 15%, rgba(180, 90, 15, 0.4) 0%, rgba(140, 65, 10, 0.25) 20%, rgba(100, 45, 5, 0.12) 40%, transparent 65%)",
@@ -286,7 +289,7 @@ export default function Hero() {
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
         </motion.div>
-      </div>
-    </section>
+    </div>
+    </>
   );
 }
