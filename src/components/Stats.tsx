@@ -73,12 +73,12 @@ function ScrollStackCards() {
     offset: ["start end", "end start"],
   });
 
-  // Cards start spread out, then slide up to overlap as you scroll
-  const card2Y = useTransform(scrollYProgress, [0.15, 0.35, 0.5], [180, 40, -50]);
-  const card3Y = useTransform(scrollYProgress, [0.3, 0.5, 0.65], [220, 60, -40]);
+  // Cards start fully separated, scroll up to stack/overlap
+  const card2Y = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0, -60, -100]);
+  const card3Y = useTransform(scrollYProgress, [0.4, 0.6, 0.8], [0, -50, -80]);
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: "560px" }}>
+    <div ref={containerRef} className="relative" style={{ height: "620px" }}>
       {/* Card 1: REQUESTS PROCESSED — base layer */}
       <motion.div
         className="absolute top-0 left-0 right-0 z-[1]"
@@ -108,7 +108,7 @@ function ScrollStackCards() {
       {/* Card 2: CHAINS TRACKED — slides up over Card 1 */}
       <motion.div
         className="absolute left-0 right-0 z-[2]"
-        style={{ y: card2Y, top: "120px" }}
+        style={{ y: card2Y, top: "180px" }}
         initial={{ opacity: 0, x: 60 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.1 }}
@@ -136,7 +136,7 @@ function ScrollStackCards() {
       {/* Card 3: CLIENTS SUPPORTED — slides up over Card 2 */}
       <motion.div
         className="absolute left-0 right-0 z-[3]"
-        style={{ y: card3Y, top: "240px" }}
+        style={{ y: card3Y, top: "380px" }}
         initial={{ opacity: 0, x: 60 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.1 }}
