@@ -80,8 +80,17 @@ export default function AnimatedText() {
                 );
               }
 
+              /* Highlight "revolutionizing" in orange like Cryps */
+              const isHighlight = word === "revolutionizing";
               return (
-                <span key={i} className="inline-block mr-[0.3em]" style={{ color: `rgba(255,255,255,${opacity})`, transition: "color 0.2s ease-out" }}>
+                <span
+                  key={i}
+                  className={`inline-block mr-[0.3em] ${isHighlight ? "italic" : ""}`}
+                  style={{
+                    color: isHighlight && opacity > 0.5 ? "#E85600" : `rgba(255,255,255,${opacity})`,
+                    transition: "color 0.3s ease-out",
+                  }}
+                >
                   {word}
                 </span>
               );

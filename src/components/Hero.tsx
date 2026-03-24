@@ -234,24 +234,32 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Warm amber gradient glow - matches Cryps template */}
-      <div className="relative w-full h-[500px] -mb-[200px] z-20 pointer-events-none">
-        {/* Main warm center glow */}
+      {/* Warm amber gradient glow zone - FULL WIDTH like Cryps */}
+      <div className="relative w-full h-[600px] -mb-[250px] z-20 pointer-events-none overflow-visible">
+        {/* Main warm band - full width horizontal glow */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 80% 60% at 50% 10%, rgba(200, 100, 20, 0.35) 0%, rgba(160, 70, 10, 0.2) 25%, rgba(100, 45, 5, 0.1) 45%, transparent 70%)",
+          background: "radial-gradient(ellipse 120% 70% at 50% 15%, rgba(180, 90, 15, 0.4) 0%, rgba(140, 65, 10, 0.25) 20%, rgba(100, 45, 5, 0.12) 40%, transparent 65%)",
         }} />
-        {/* Left side warm glow */}
+        {/* Left warm glow */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 50% 80% at 15% 20%, rgba(140, 80, 10, 0.15) 0%, transparent 60%)",
+          background: "radial-gradient(ellipse 40% 90% at 5% 30%, rgba(160, 80, 10, 0.2) 0%, transparent 55%)",
         }} />
-        {/* Right side warm glow */}
+        {/* Right warm glow */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 50% 80% at 85% 20%, rgba(140, 80, 10, 0.15) 0%, transparent 60%)",
+          background: "radial-gradient(ellipse 40% 90% at 95% 30%, rgba(160, 80, 10, 0.2) 0%, transparent 55%)",
         }} />
-        {/* Subtle green-amber tint from the dashboard */}
+        {/* Green-ish highlight from dashboard charts */}
         <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(120, 90, 20, 0.12) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse 50% 30% at 50% 5%, rgba(140, 110, 20, 0.15) 0%, transparent 50%)",
         }} />
+
+        {/* Floating side icons like Cryps */}
+        <div className="absolute left-4 top-[30%] w-14 h-14 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <div className="absolute right-4 top-[30%] w-14 h-14 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
       </div>
     </section>
   );
