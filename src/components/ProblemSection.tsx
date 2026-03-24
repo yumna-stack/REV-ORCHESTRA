@@ -5,7 +5,7 @@ import { Reveal, StaggerContainer, StaggerItem, fadeUp } from "@/components/moti
 
 export default function ProblemSection() {
   return (
-    <section className="relative w-full py-24 bg-black-light">
+    <section className="relative w-full py-16 bg-black-light">
       <div className="max-w-[1200px] mx-auto px-5">
         <StaggerContainer className="flex flex-col gap-6" staggerDelay={0.12}>
           <StaggerItem variants={fadeUp}>

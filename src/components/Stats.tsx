@@ -175,7 +175,7 @@ function StatsCards() {
 
 export default function Stats() {
   return (
-    <section id="stats" className="relative w-full py-28 bg-[rgb(14,15,17)]">
+    <section id="stats" className="relative w-full py-16 bg-[rgb(14,15,17)]">
       <div className="max-w-[1200px] mx-auto px-5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left */}

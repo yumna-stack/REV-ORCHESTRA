@@ -11,10 +11,10 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative w-full py-28 bg-[rgb(14,15,17)]">
+    <section id="how-it-works" className="relative w-full py-16 bg-[rgb(14,15,17)]">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
-        <Reveal variants={fadeUp} className="text-center mb-20">
+        <Reveal variants={fadeUp} className="text-center mb-12">
           <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
             <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
             <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />

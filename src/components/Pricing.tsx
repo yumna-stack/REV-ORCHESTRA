@@ -94,7 +94,7 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="relative w-full py-28 bg-[rgb(14,15,17)]">
+    <section id="pricing" className="relative w-full py-16 bg-[rgb(14,15,17)]">
       <div ref={ref} className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
         <Reveal variants={fadeUp}>

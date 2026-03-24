@@ -53,7 +53,7 @@ function FAQItem({ faq }: { faq: typeof faqs[0] }) {
 
 export default function FAQ() {
   return (
-    <section id="faq" className="relative w-full py-28 bg-black-light">
+    <section id="faq" className="relative w-full py-16 bg-black-light">
       <div className="max-w-[800px] mx-auto px-5">
         <Reveal variants={fadeUp} className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">

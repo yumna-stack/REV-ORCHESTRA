@@ -5,7 +5,7 @@ import { Reveal, popIn, fadeLeft, fadeRight } from "@/components/motion";
 
 export default function CTA() {
   return (
-    <section id="contact" className="relative w-full py-24 bg-black-light">
+    <section id="contact" className="relative w-full py-16 bg-black-light">
       <div className="max-w-[1200px] mx-auto px-5">
         <Reveal variants={popIn}>
           <div
