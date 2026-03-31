@@ -234,7 +234,7 @@ export default function Hero() {
       >
         <div className="relative rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.06)] bg-[rgba(20,20,22,0.9)]" style={{ aspectRatio: "16/9" }}>
           <iframe
-            src="https://player.vimeo.com/video/1157150585?autoplay=1&loop=1&muted=1&background=1&quality=1080p"
+            src="https://player.vimeo.com/video/1157150585?autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0"
             className="absolute inset-0 w-full h-full"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture"
