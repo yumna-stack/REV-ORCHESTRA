@@ -10,6 +10,7 @@ import TheShift from "@/components/TheShift";
 import CommandCenter from "@/components/CommandCenter";
 import ProcessVisual from "@/components/ProcessVisual";
 import HowItWorks from "@/components/HowItWorks";
+import PhoneMockup from "@/components/PhoneMockup";
 import SixAgents from "@/components/SixAgents";
 import SocialProof from "@/components/SocialProof";
 import Compliance from "@/components/Compliance";
@@ -33,6 +34,7 @@ export default function Home() {
       <CommandCenter />
       <ProcessVisual />
       <HowItWorks />
+      <PhoneMockup />
       <SixAgents />
       <SocialProof />
       <Compliance />
