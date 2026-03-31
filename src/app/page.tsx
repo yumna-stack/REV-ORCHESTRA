@@ -2,7 +2,6 @@ import Navigation from "@/components/Navigation";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
 import Hero from "@/components/Hero";
 import StackLogos from "@/components/StackLogos";
-import AnimatedText from "@/components/AnimatedText";
 import Stats from "@/components/Stats";
 import ProblemSection from "@/components/ProblemSection";
 import StatCallout from "@/components/StatCallout";
@@ -22,11 +21,9 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <main className="relative w-full overflow-hidden bg-[rgb(14,15,17)]">
-      <AnnouncementBanner />
       <Navigation />
       <Hero />
       <StackLogos />
-      <AnimatedText />
       <Stats />
       <ProblemSection />
       <StatCallout />

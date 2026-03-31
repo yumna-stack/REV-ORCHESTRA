@@ -91,32 +91,6 @@ export default function AnimatedText() {
         </div>
       </section>
 
-      {/* Supported Tech - centered, no gap */}
-      <section className="relative w-full py-12 bg-[rgb(14,15,17)] overflow-hidden">
-        {/* Label with lines */}
-        <div className="flex items-center justify-center gap-4 mb-8 px-5">
-          <div className="flex-1 max-w-[300px] h-px" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.12))" }} />
-          <span className="text-[11px] text-[rgba(255,255,255,0.35)] tracking-[0.2em] uppercase font-medium whitespace-nowrap">
-            Supported Tech
-          </span>
-          <div className="flex-1 max-w-[300px] h-px" style={{ background: "linear-gradient(to left, transparent, rgba(255,255,255,0.12))" }} />
-        </div>
-
-        {/* Scrolling logos with REAL brand icons */}
-        <div className="relative w-full overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] to-transparent pointer-events-none" />
-          <div className="flex items-center gap-[60px] w-max" style={{ animation: "logoScroll 40s linear infinite" }}>
-            {[...logos, ...logos, ...logos].map((name, i) => (
-              <div key={i} className="flex items-center gap-2.5 shrink-0 opacity-40 hover:opacity-70 transition-opacity">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`https://www.google.com/s2/favicons?domain=${name.toLowerCase().replace(' ', '')}.com&sz=64`} alt={name} width={20} height={20} className="rounded-sm" loading="lazy" />
-                <span className="text-[rgba(255,255,255,0.3)] text-sm font-medium tracking-[2px] uppercase">{name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 }
