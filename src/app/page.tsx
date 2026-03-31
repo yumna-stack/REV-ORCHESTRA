@@ -1,13 +1,15 @@
 import Navigation from "@/components/Navigation";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
 import Hero from "@/components/Hero";
+import StackLogos from "@/components/StackLogos";
 import AnimatedText from "@/components/AnimatedText";
-import Features from "@/components/Features";
-import HowItWorks from "@/components/HowItWorks";
 import Stats from "@/components/Stats";
 import ProblemSection from "@/components/ProblemSection";
+import StatCallout from "@/components/StatCallout";
 import TheShift from "@/components/TheShift";
 import CommandCenter from "@/components/CommandCenter";
+import ProcessVisual from "@/components/ProcessVisual";
+import HowItWorks from "@/components/HowItWorks";
 import SixAgents from "@/components/SixAgents";
 import SocialProof from "@/components/SocialProof";
 import Compliance from "@/components/Compliance";
@@ -22,11 +24,14 @@ export default function Home() {
       <AnnouncementBanner />
       <Navigation />
       <Hero />
+      <StackLogos />
       <AnimatedText />
       <Stats />
       <ProblemSection />
+      <StatCallout />
       <TheShift />
       <CommandCenter />
+      <ProcessVisual />
       <HowItWorks />
       <SixAgents />
       <SocialProof />
