@@ -136,7 +136,7 @@ export default function Hero() {
               </p>
 
               {/* Scarcity */}
-              <p className="text-accent-orange font-semibold text-sm tracking-wide">🎯 4 seats available for Q2 2026. Ready to launch.</p>
+              <p className="text-accent-orange font-semibold text-sm tracking-wide">4 seats available for Q2 2026. Ready to launch.</p>
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -150,7 +150,7 @@ export default function Hero() {
 
               {/* Trust Strip */}
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-[rgba(255,255,255,0.35)]">
-                <span>⚡ 90-day build</span><span>🔒 You own everything</span><span>🤖 6 AI sub-agents</span><span>🔗 Plugs into your stack</span><span>📦 4 founders per quarter, max</span>
+                <span>90-day build</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>You own everything</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>6 AI sub-agents</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>Plugs into your stack</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>4 founders per quarter, max</span>
               </div>
 
               {/* ─── Rotating Tool Logos (SiteFire-style) ─── */}

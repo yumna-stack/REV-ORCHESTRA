@@ -71,7 +71,7 @@ function StatsCards() {
     {
       label: "PIPELINE GENERATED",
       tag: "90 DAYS",
-      icon: "⚡",
+      icon: "",
       value: 2000000,
       suffix: " Million",
       duration: 2.5,
@@ -83,7 +83,7 @@ function StatsCards() {
     {
       label: "AI AGENTS DEPLOYED",
       tag: "IN 2026",
-      icon: "📦",
+      icon: "",
       value: 12,
       suffix: "+",
       duration: 1.5,
@@ -96,7 +96,7 @@ function StatsCards() {
     {
       label: "MEETINGS BOOKED",
       tag: "GLOBALLY",
-      icon: "🌐",
+      icon: "",
       value: 2300,
       suffix: "+",
       duration: 2,
@@ -148,7 +148,7 @@ function StatsCards() {
                     animate={card.iconAnim}
                     transition={{ duration: card.iconDur || 2.5, repeat: Infinity, ease: card.iconEase || "easeInOut" }}
                   >
-                    <span className="text-[10px]">{card.icon}</span>
+                    {card.icon && <span className="text-[10px]">{card.icon}</span>}
                   </motion.div>
                 </div>
               </div>
