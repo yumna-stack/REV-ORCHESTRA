@@ -1,9 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Float } from "@/components/motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+/* Words that cycle in the headline */
+const cyclingWords = [
+  "running orchestras",
+  "using signal-led outbound",
+  "getting 8–12% reply rates",
+  "deploying AI agents",
+  "building pipeline systems",
+  "winning with precision",
+];
 
 const floatingIcons = [
   { svg: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1", x: 8, y: 18, size: 72, dur: 6 },
@@ -17,6 +28,15 @@ const floatingIcons = [
 ];
 
 export default function Hero() {
+  const [wordIdx, setWordIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIdx((i) => (i + 1) % cyclingWords.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
     <section className="relative w-full flex flex-col items-center bg-[rgb(14,15,17)] overflow-hidden">
@@ -65,14 +85,34 @@ export default function Hero() {
           <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider">The AI GTM System for Post-Funding B2B Founders</span>
         </motion.div>
 
-        {/* Headline */}
-        <motion.h1
+        {/* Headline with cycling words */}
+        <motion.div
           variants={{ hidden: { opacity: 0, y: 40, filter: "blur(8px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)" } }}
           transition={{ duration: 0.9, ease }}
-          className="text-[clamp(36px,5.5vw,72px)] font-medium leading-[105%] tracking-[-3px] text-white max-w-[900px]"
+          className="max-w-[900px]"
         >
-          You&apos;re still doing GTM like it&apos;s 2024. The teams beating you are running orchestras.
-        </motion.h1>
+          <h1
+            className="text-[clamp(36px,5.5vw,72px)] font-medium leading-[105%] tracking-[-3px] text-white"
+            style={{ fontFamily: "var(--font-family-heading)" }}
+          >
+            You&apos;re still doing GTM like it&apos;s 2024.{" "}
+            <span className="text-[rgba(255,255,255,0.5)]">The teams beating you are </span>
+            <span className="relative inline-block">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={cyclingWords[wordIdx]}
+                  initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -30, filter: "blur(8px)" }}
+                  transition={{ duration: 0.5, ease }}
+                  className="text-accent-orange italic inline-block"
+                >
+                  {cyclingWords[wordIdx]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </h1>
+        </motion.div>
 
         {/* Subtitle */}
         <motion.p
@@ -83,18 +123,40 @@ export default function Hero() {
           Rev Orchestra builds AI-orchestrated GTM systems for B2B founders who just raised and need pipeline. Six AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.
         </motion.p>
 
-        {/* Buttons */}
+        {/* Scarcity Signal */}
+        <motion.p
+          variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ duration: 0.6, ease }}
+          className="text-accent-orange font-semibold text-sm tracking-wide"
+        >
+          🎯 4 seats available for Q2 2026. Ready to launch.
+        </motion.p>
+
+        {/* CTAs */}
         <motion.div
           variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
           transition={{ duration: 0.6, ease }}
-          className="flex items-center gap-4"
+          className="flex flex-col sm:flex-row items-center gap-4"
         >
-          <a href="#features" className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all">
-            BOOK A CALL WITH DANNY <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <a href="https://calendly.com/danny-revorchestra" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all">
+            Book a Call with Danny <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </a>
           <a href="#how-it-works" className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full border border-[rgba(255,255,255,0.15)] hover:border-[rgba(255,255,255,0.3)] hover:bg-[rgba(255,255,255,0.04)] transition-all">
-            SEE HOW IT WORKS <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            See How It Works <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </a>
+        </motion.div>
+
+        {/* Trust Strip */}
+        <motion.div
+          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+          transition={{ duration: 0.6, ease, delay: 0.2 }}
+          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-[rgba(255,255,255,0.35)]"
+        >
+          <span>⚡ 90-day build</span>
+          <span>🔒 You own everything</span>
+          <span>🤖 6 AI sub-agents</span>
+          <span>🔗 Plugs into your stack</span>
+          <span>📦 4 founders per quarter, max</span>
         </motion.div>
       </motion.div>
 
