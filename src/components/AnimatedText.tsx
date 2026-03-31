@@ -1,122 +1,117 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Reveal, fadeUp } from "@/components/motion";
 
-const words = [
-  "Cryps", "is", "revolutionizing", "the", "fusion", "of",
-  "cryptocurrency", "and", "artificial", "intelligence",
-  "ushering", "in", "a", "new", "era",
-  "of", "crypto", "data", "indexing.",
-];
-
-const logos = [
-  "IPSUM", "LOGO", "IPSUM", "LOGO", "IPSUM", "LOGO", "IPSUM", "LOGO",
-  "IPSUM", "LOGO", "IPSUM", "LOGO",
+const tools = ["Clay", "Instantly", "HubSpot", "Slack", "n8n", "LinkedIn"];
+const actions = [
+  "finding warm leads",
+  "writing personalised outreach",
+  "updating your CRM",
+  "monitoring buying signals",
+  "briefing your reps",
+  "watching your pipeline",
 ];
 
 export default function AnimatedText() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const [toolIdx, setToolIdx] = useState(0);
+  const [actionIdx, setActionIdx] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-      const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const scrolled = viewportHeight - rect.top;
-      const totalScrollable = rect.height;
-      setProgress(Math.max(0, Math.min(1, scrolled / totalScrollable)));
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const t1 = setInterval(() => setToolIdx((i) => (i + 1) % tools.length), 2500);
+    const t2 = setInterval(() => setActionIdx((i) => (i + 1) % actions.length), 3000);
+    return () => { clearInterval(t1); clearInterval(t2); };
   }, []);
 
-  const activeWordIndex = Math.floor(progress * words.length * 1.3) - 1;
-  const logoItems = [...logos, ...logos, ...logos];
-
   return (
-    <>
-      {/* Scroll-driven text reveal — tight, no wasted space */}
-      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "90vh" }}>
-        <div className="sticky top-0 h-screen flex items-center justify-center px-5 z-10">
-          <p className="text-[clamp(24px,4vw,52px)] font-medium leading-[140%] tracking-[-1.5px] text-center max-w-[800px]">
-            {words.map((word, i) => {
-              let opacity = 0.12;
-              if (i <= activeWordIndex) opacity = 1;
-              else if (i === activeWordIndex + 1) {
-                const frac = (progress * words.length * 1.3 - 1) % 1;
-                opacity = 0.12 + Math.max(0, frac) * 0.88;
-              }
+    <section className="relative w-full py-16 bg-[rgb(8,8,15)] overflow-hidden">
+      {/* Warm gradient glow */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[800px] h-[300px] rounded-full bg-accent-orange/8 blur-[120px]" />
+      </div>
 
-              if (i === 9) {
-                return (
-                  <span key={i} className="inline-flex items-center gap-2 mr-[0.25em]" style={{ color: `rgba(255,255,255,${opacity})`, transition: "color 0.2s ease-out" }}>
-                    {word}
-                    <span
-                      className="inline-flex items-center justify-center w-10 h-10 rounded-xl shrink-0"
-                      style={{
-                        background: "radial-gradient(circle at 30% 30%, #F09030, #C44800)",
-                        boxShadow: "0 4px 16px rgba(232,86,0,0.3)",
-                        opacity: Math.max(0.4, opacity),
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                      </svg>
-                    </span>
-                  </span>
-                );
-              }
-
-              const isHighlight = word === "revolutionizing";
-              return (
-                <span
-                  key={i}
-                  className={`inline-block mr-[0.25em] ${isHighlight ? "italic" : ""}`}
-                  style={{
-                    color: isHighlight && opacity > 0.5 ? "#E85600" : `rgba(255,255,255,${opacity})`,
-                    transition: "color 0.3s ease-out",
-                  }}
-                >
-                  {word}
-                </span>
-              );
-            })}
+      <div className="max-w-[900px] mx-auto px-5 relative z-10">
+        {/* Tool logos cycling */}
+        <Reveal variants={fadeUp} className="text-center mb-10">
+          <p className="text-[rgba(255,255,255,0.5)] text-lg mb-4">
+            We&apos;re building GTM systems connected to
           </p>
-        </div>
-      </section>
-
-      {/* Supported Tech — tight, centered */}
-      <motion.section
-        className="relative w-full py-8 bg-[rgb(14,15,17)] overflow-hidden"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="flex items-center justify-center gap-4 mb-6 px-5">
-          <div className="flex-1 max-w-[300px] h-px" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.12))" }} />
-          <span className="text-[11px] text-[rgba(255,255,255,0.35)] tracking-[0.2em] uppercase font-medium whitespace-nowrap">
-            Supported Tech
-          </span>
-          <div className="flex-1 max-w-[300px] h-px" style={{ background: "linear-gradient(to left, transparent, rgba(255,255,255,0.12))" }} />
-        </div>
-
-        <div className="relative w-full overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] to-transparent pointer-events-none" />
-          <div className="flex items-center gap-[80px] w-max" style={{ animation: "logoScroll 40s linear infinite" }}>
-            {logoItems.map((logo, i) => (
-              <span key={i} className="text-[rgba(255,255,255,0.25)] text-lg font-bold tracking-[3px] uppercase shrink-0 hover:text-[rgba(255,255,255,0.5)] transition-colors duration-300">
-                {logo}
-              </span>
-            ))}
+          <div className="h-[48px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={tools[toolIdx]}
+                initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+                transition={{ duration: 0.4 }}
+                className="text-4xl font-bold text-accent-orange"
+                style={{ fontFamily: "var(--font-family-heading)" }}
+              >
+                {tools[toolIdx]}
+              </motion.span>
+            </AnimatePresence>
           </div>
+        </Reveal>
+
+        {/* Separator */}
+        <div className="flex items-center justify-center gap-4 mb-10">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[rgba(255,255,255,0.1)]" />
+          <span className="text-[10px] text-[rgba(255,255,255,0.3)] uppercase tracking-widest">Live System</span>
+          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[rgba(255,255,255,0.1)]" />
         </div>
-      </motion.section>
-    </>
+
+        {/* Actions cycling */}
+        <Reveal variants={fadeUp} className="text-center">
+          <p className="text-[rgba(255,255,255,0.5)] text-lg mb-4">
+            Right now, our agents are
+          </p>
+          <div className="h-[36px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={actions[actionIdx]}
+                initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
+                transition={{ duration: 0.35 }}
+                className="text-xl text-white font-medium"
+              >
+                {actions[actionIdx]}
+              </motion.span>
+            </AnimatePresence>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Floating side icons */}
+      <motion.div
+        className="absolute left-6 top-1/4 w-12 h-12 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
+        animate={{ y: [-8, 8, -8] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <span className="text-[rgba(255,255,255,0.3)] text-lg">⚡</span>
+      </motion.div>
+      <motion.div
+        className="absolute right-6 top-1/3 w-12 h-12 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
+        animate={{ y: [8, -8, 8] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <span className="text-[rgba(255,255,255,0.3)] text-lg">🤖</span>
+      </motion.div>
+      <motion.div
+        className="absolute left-10 bottom-1/4 w-10 h-10 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
+        animate={{ y: [-6, 6, -6] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      >
+        <span className="text-[rgba(255,255,255,0.3)] text-sm">🔗</span>
+      </motion.div>
+      <motion.div
+        className="absolute right-10 bottom-1/3 w-10 h-10 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
+        animate={{ y: [6, -6, 6] }}
+        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+      >
+        <span className="text-[rgba(255,255,255,0.3)] text-sm">📊</span>
+      </motion.div>
+    </section>
   );
 }

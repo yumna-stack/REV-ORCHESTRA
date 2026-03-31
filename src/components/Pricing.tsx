@@ -1,228 +1,203 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Reveal, fadeUp } from "@/components/motion";
-import { StaggerGrid, GridItem } from "@/components/PageWrapper";
+import {
+  Reveal,
+  StaggerContainer,
+  StaggerItem,
+  fadeUp,
+  popIn,
+} from "@/components/motion";
 
-const plans = [
-  {
-    name: "STARTER",
-    price: "$25",
-    period: "/MONTH",
-    description: "Powerful & Simple Solution",
-    featured: false,
-    accentColor: "rgba(183,233,50,0.8)",
-    borderColor: "rgba(255,255,255,0.03)",
-    iconBg: "rgba(183,233,50,0.15)",
-    points: [
-      { text: "API suite", included: true },
-      { text: "1M requests/month", included: true },
-      { text: "24/7 support", included: false },
-      { text: "Crypto Buying & Selling", included: false },
-      { text: "P2P Payments", included: true },
-      { text: "Full Dashboard Access", included: false },
-    ],
-  },
-  {
-    name: "PRO",
-    price: "$30",
-    period: "/MONTH",
-    description: "Powerful & Simple Solution",
-    featured: true,
-    accentColor: "rgba(232,86,0,1)",
-    borderColor: "rgba(232,85,0,0.22)",
-    iconBg: "rgba(232,86,0,0.2)",
-    points: [
-      { text: "API suite", included: true },
-      { text: "1M requests/month", included: true },
-      { text: "24/7 support", included: true },
-      { text: "Crypto Buying & Selling", included: false },
-      { text: "P2P Payments", included: true },
-      { text: "Full Dashboard Access", included: false },
-    ],
-  },
-  {
-    name: "ENTERPRISE",
-    price: "$50",
-    period: "/MONTH",
-    description: "Powerful & Simple Solution",
-    featured: false,
-    accentColor: "rgba(152,151,255,0.8)",
-    borderColor: "rgba(152,150,255,0.24)",
-    iconBg: "rgba(152,151,255,0.15)",
-    points: [
-      { text: "API suite", included: true },
-      { text: "1M requests/month", included: true },
-      { text: "24/7 support", included: true },
-      { text: "Crypto Buying & Selling", included: true },
-      { text: "P2P Payments", included: true },
-      { text: "Full Dashboard Access", included: true },
-    ],
-  },
+const features = [
+  "Full 4-phase delivery (Diagnose, Design, Build, Orchestrate)",
+  "6 AI sub-agents deployed and connected to your stack",
+  "Custom ICP and messaging framework built from scratch",
+  "90-day async support during the build",
+  "30-day post-handoff support window",
+  "Full documentation and team training session",
+  "You own 100% of the workflows, agents, and IP",
+  "Maximum 4 clients per quarter \u2014 quality, not scale",
 ];
 
 export default function Pricing() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState(1); // Pro is default active on scroll
-
-  /* On scroll, the center card (Pro) starts big, then as user scrolls further it evens out */
-  useEffect(() => {
-    const handleScroll = () => {
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
-      // At start of section, Pro is big. As you scroll, they equalize
-      if (progress < 0.3) setActiveIndex(1);
-      else if (progress > 0.7) setActiveIndex(-1); // all equal
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const getScale = (i: number) => {
-    // Hover takes priority
-    if (hoveredIndex !== null) {
-      return hoveredIndex === i ? 1.05 : 0.95;
-    }
-    // Scroll-based: active card is bigger
-    if (activeIndex === -1) return 1; // all equal
-    return activeIndex === i ? 1.03 : 0.97;
-  };
-
   return (
-    <section id="pricing" className="relative w-full py-16 bg-[rgb(14,15,17)]">
-      <div ref={ref} className="max-w-[1200px] mx-auto px-5">
+    <section id="pricing" className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
+      <div className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
         <Reveal variants={fadeUp}>
-          <div className="text-center mb-16">
+          <div className="text-center mb-6">
             <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
               <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
               <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
-              <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider">Pricing</span>
+              <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">
+                Pricing
+              </span>
             </div>
-            <h2 className="text-[clamp(28px,4vw,56px)] font-medium leading-[110%] tracking-[-2.88px] text-white">
-              Simplest Membership
+            <h2
+              className="text-[clamp(28px,4vw,56px)] font-medium leading-[110%] tracking-[-2.88px] text-white"
+              style={{ fontFamily: "var(--font-family-heading)" }}
+            >
+              THE INVESTMENT
             </h2>
           </div>
         </Reveal>
 
-        {/* Pricing Cards with hover/scroll scale animation */}
-        <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
-          {plans.map((plan, i) => {
-            const scale = getScale(i);
-            const isActive = hoveredIndex === i || (hoveredIndex === null && activeIndex === i);
+        <Reveal variants={fadeUp} delay={0.1}>
+          <p className="text-center text-lg md:text-xl text-accent-orange font-medium max-w-[600px] mx-auto mb-4">
+            One fee. One system. Yours forever.
+          </p>
+        </Reveal>
 
-            return (
-              <GridItem key={i}>
-                <motion.div
-                  className="cursor-pointer"
-                  style={{
-                    zIndex: isActive ? 10 : 1,
-                  }}
-                  animate={{ scale }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                  onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(null)}
+        <Reveal variants={fadeUp} delay={0.2}>
+          <p className="text-center text-[rgba(255,255,255,0.55)] max-w-[740px] mx-auto mb-16 leading-relaxed">
+            Most Seed-to-Series A founders spend $3,000&ndash;4,000/month on GTM
+            tools that don&apos;t coordinate. That&apos;s $36,000&ndash;48,000 per
+            year &mdash; for a stack with no memory, no handoffs, and no one making
+            sure the signals actually trigger the right outreach. Rev Orchestra
+            builds the system once. One price. You own it permanently.
+          </p>
+        </Reveal>
+
+        {/* Pricing Card */}
+        <Reveal variants={popIn} delay={0.25}>
+          <motion.div
+            className="relative max-w-[600px] mx-auto rounded-[28px] overflow-hidden"
+            initial={{ scale: 0.95 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {/* Orange glow border effect */}
+            <div
+              className="absolute inset-0 rounded-[28px] pointer-events-none"
+              style={{
+                padding: "1px",
+                background:
+                  "linear-gradient(135deg, rgba(232,86,0,0.5) 0%, rgba(232,86,0,0.1) 40%, rgba(232,86,0,0.05) 60%, rgba(232,86,0,0.4) 100%)",
+                WebkitMask:
+                  "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                WebkitMaskComposite: "xor",
+                maskComposite: "exclude",
+              }}
+            />
+
+            {/* Glow behind the card */}
+            <div className="absolute -inset-1 rounded-[32px] bg-accent-orange/10 blur-xl pointer-events-none" />
+
+            {/* Card content */}
+            <div className="relative rounded-[28px] bg-[rgb(18,19,23)] border border-[rgba(232,86,0,0.25)] p-8 md:p-10">
+              {/* Corner glows */}
+              <div
+                className="absolute top-0 left-0 w-[160px] h-[160px] pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at top left, rgba(232,86,0,0.12) 0%, transparent 70%)",
+                }}
+              />
+              <div
+                className="absolute bottom-0 right-0 w-[160px] h-[160px] pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at bottom right, rgba(232,86,0,0.08) 0%, transparent 70%)",
+                }}
+              />
+
+              {/* Price */}
+              <div className="text-center mb-8 relative z-10">
+                <span
+                  className="block text-[clamp(48px,6vw,72px)] font-bold text-accent-orange leading-none tracking-[-2px]"
+                  style={{ fontFamily: "var(--font-family-heading)" }}
                 >
-                  {/* Outer border container */}
-                  <div
-                    className="rounded-[44px] p-[8px] transition-all duration-500"
-                    style={{
-                      border: `0.93px solid ${isActive ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)"}`,
-                      boxShadow: isActive ? "0 20px 60px rgba(0,0,0,0.4)" : "none",
-                    }}
-                  >
-                    {/* Inner card */}
-                    <div
-                      className="relative rounded-[36px] p-6 overflow-hidden transition-all duration-500"
-                      style={{
-                        border: `1px solid ${isActive ? (plan.featured ? "rgba(232,85,0,0.35)" : plan.borderColor) : plan.borderColor}`,
-                        background: "rgb(14,15,17)",
-                      }}
-                    >
-                      {/* Glow effects for featured (Pro) card */}
-                      {plan.featured && (
-                        <>
-                          <div className="absolute top-0 left-0 w-[120px] h-[130px] pointer-events-none transition-opacity duration-500" style={{
-                            background: "radial-gradient(ellipse at top left, rgba(232,86,0,0.15) 0%, transparent 70%)",
-                            opacity: isActive ? 1 : 0.5,
-                          }} />
-                          <div className="absolute bottom-0 right-0 w-[130px] h-[150px] pointer-events-none transition-opacity duration-500" style={{
-                            background: "radial-gradient(ellipse at bottom right, rgba(232,86,0,0.12) 0%, transparent 70%)",
-                            opacity: isActive ? 1 : 0.5,
-                          }} />
-                        </>
-                      )}
+                  $18,000
+                </span>
+                <span className="text-sm text-[rgba(255,255,255,0.45)] mt-2 block">
+                  one-time &middot; 50% upfront, 50% at handoff &middot; USD
+                </span>
+              </div>
 
-                      {/* Purple glow for Enterprise */}
-                      {i === 2 && (
-                        <div className="absolute top-0 right-0 w-[120px] h-[130px] pointer-events-none transition-opacity duration-500" style={{
-                          background: "radial-gradient(ellipse at top right, rgba(152,151,255,0.1) 0%, transparent 70%)",
-                          opacity: isActive ? 1 : 0.4,
-                        }} />
-                      )}
+              {/* Divider */}
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.08)] to-transparent mb-8" />
 
-                      {/* Plan name with colored dot */}
-                      <div className="flex items-center gap-2 mb-4 relative z-10">
-                        <div className="w-3 h-3 rounded-full transition-all duration-300" style={{
-                          background: plan.accentColor,
-                          boxShadow: isActive ? `0 0 10px ${plan.accentColor}` : "none",
-                        }} />
-                        <span className="text-sm font-medium text-white uppercase tracking-wider">{plan.name}</span>
+              {/* Features */}
+              <StaggerContainer
+                staggerDelay={0.08}
+                className="flex flex-col gap-4 mb-8 relative z-10"
+              >
+                {features.map((feature, i) => (
+                  <StaggerItem key={i} variants={fadeUp}>
+                    <div className="flex items-start gap-3">
+                      <div className="w-5 h-5 mt-0.5 rounded-full bg-accent-orange/15 flex items-center justify-center shrink-0">
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                        >
+                          <path
+                            d="M2 5l2.5 2.5L8 3"
+                            stroke="#E85600"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       </div>
-
-                      {/* Price */}
-                      <div className="flex items-baseline gap-2 mb-3 relative z-10">
-                        <span className="text-[clamp(36px,4vw,48px)] font-medium text-white tracking-[-1px]">{plan.price}</span>
-                        <span className="text-sm text-[rgba(255,255,255,0.35)] uppercase">{plan.period}</span>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-sm text-[rgba(255,255,255,0.5)] mb-6 relative z-10">{plan.description}</p>
-
-                      {/* CTA Button */}
-                      <a
-                        href="#contact"
-                        className={`w-full py-3.5 rounded-full text-sm font-medium text-center transition-all duration-300 mb-8 flex items-center justify-center gap-2 relative z-10 uppercase tracking-wider ${
-                          plan.featured
-                            ? "bg-accent-orange text-white hover:brightness-110"
-                            : "bg-transparent text-white border border-[rgba(255,255,255,0.12)] hover:border-[rgba(255,255,255,0.25)]"
-                        }`}
-                      >
-                        GET STARTED
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                      </a>
-
-                      {/* Feature points */}
-                      <div className="flex flex-col gap-4 relative z-10">
-                        {plan.points.map((point, j) => (
-                          <div key={j} className="flex items-center gap-3">
-                            {point.included ? (
-                              <div className="w-5 h-5 rounded-full bg-accent-orange/15 flex items-center justify-center shrink-0">
-                                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                              </div>
-                            ) : (
-                              <div className="w-5 h-5 rounded-full bg-[rgba(255,255,255,0.05)] flex items-center justify-center shrink-0">
-                                <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 1.5l5 5M6.5 1.5l-5 5" stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" strokeLinecap="round" /></svg>
-                              </div>
-                            )}
-                            <span className={`text-sm ${point.included ? "text-white font-medium" : "text-[rgba(255,255,255,0.3)]"}`}>
-                              {point.text}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                      <span className="text-sm text-white font-medium leading-snug">
+                        {feature}
+                      </span>
                     </div>
-                  </div>
-                </motion.div>
-              </GridItem>
-            );
-          })}
-        </StaggerGrid>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+
+              {/* Divider */}
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.08)] to-transparent mb-8" />
+
+              {/* Scarcity */}
+              <p className="text-center text-sm text-accent-orange font-medium mb-6 relative z-10">
+                <span className="mr-1" aria-hidden="true">
+                  &#x1F3AF;
+                </span>
+                4 seats available for Q2 2026. Applications open.
+              </p>
+
+              {/* CTA Button */}
+              <div className="relative z-10">
+                <a
+                  href="https://calendly.com/danny-revorchestra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 rounded-full bg-accent-orange text-white font-semibold text-center text-base tracking-wide hover:brightness-110 transition-all duration-300 flex items-center justify-center gap-2"
+                >
+                  Book a Call with Danny
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M3 8h10M9 4l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </Reveal>
+
+        {/* Note */}
+        <Reveal variants={fadeUp} delay={0.35}>
+          <p className="text-center text-xs text-[rgba(255,255,255,0.35)] max-w-[520px] mx-auto mt-8 leading-relaxed">
+            Applications only. Discovery call first. If it&apos;s not the right
+            fit, we&apos;ll tell you on the call &mdash; before you spend anything.
+          </p>
+        </Reveal>
       </div>
     </section>
   );

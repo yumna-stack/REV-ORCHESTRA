@@ -9,11 +9,12 @@
   --color-white-main: rgb(255, 255, 255);
   --color-white-light: rgb(168, 168, 168);
   --color-white-unhighlighted: rgb(77, 77, 77);
-  --color-accent-orange: rgb(232, 86, 0);
+  --color-accent-orange: rgb(232, 101, 10);
   --color-accent-purple: rgb(152, 151, 255);
   --color-accent-green: rgb(183, 233, 50);
   --color-accent-red: rgb(233, 50, 50);
   --font-family-inter: "Inter", system-ui, -apple-system, sans-serif;
+  --font-family-heading: var(--font-heading), "Instrument Serif", serif;
 }
 
 html {

@@ -1,105 +1,81 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Reveal, StaggerContainer, StaggerItem, fadeUp, fadeLeft } from "@/components/motion";
+import Link from "next/link";
 
 const footerLinks = {
-  Company: [
-    { label: "Products", href: "#features" },
-    { label: "About", href: "#stats" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Blog", href: "#blog" },
+  main: [
+    { label: "What We Do", href: "#agents" },
+    { label: "How It Works", href: "#how-it-works" },
+    { label: "Packages", href: "#pricing" },
   ],
-  Resources: [
-    { label: "Documentation", href: "#" },
-    { label: "API Reference", href: "#" },
-    { label: "Community", href: "#" },
-    { label: "Support", href: "#contact" },
+  resources: [
+    { label: "Playbooks", href: "/resources" },
+    { label: "Blog", href: "/blogs" },
+    { label: "The Orchestra", href: "/resources/orchestra" },
+  ],
+  legal: [
+    { label: "Privacy Policy", href: "/legal/privacy" },
+    { label: "Terms of Service", href: "/legal/terms" },
   ],
 };
 
-const socialIcons = [
-  { name: "Twitter", svg: "M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" },
-  { name: "LinkedIn", svg: "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" },
-  { name: "GitHub", svg: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" },
-];
+const tools = ["n8n", "Claude", "Clay", "Instantly", "HubSpot"];
 
 export default function Footer() {
   return (
-    <footer className="w-full py-16 bg-black-dark border-t border-[rgba(255,255,255,0.06)]">
+    <footer className="relative w-full pt-20 pb-8 bg-[rgb(8,8,15)] border-t border-[rgba(255,255,255,0.04)]">
       <div className="max-w-[1200px] mx-auto px-5">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          {/* Logo, tagline & social icons */}
-          <Reveal variants={fadeLeft}>
-            <div className="flex flex-col gap-4">
-              <span className="text-white font-semibold text-base tracking-[1.5px] uppercase">
-                REVORCHESTRA
-              </span>
-              <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[160%]">
-                Revolutionizing crypto with advanced AI technology. A simple, fast, and secure platform.
-              </p>
-              {/* Social icons */}
-              <StaggerContainer className="flex items-center gap-3 mt-2" staggerDelay={0.08}>
-                {socialIcons.map((social, i) => (
-                  <StaggerItem key={i} variants={fadeUp}>
-                    <motion.a
-                      href="#"
-                      className="w-9 h-9 rounded-full bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center hover:bg-accent-orange/15 hover:border-accent-orange/25 transition-all duration-300"
-                      whileHover={{ scale: 1.15, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d={social.svg} />
-                      </svg>
-                    </motion.a>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            </div>
-          </Reveal>
-
-          {/* Spacer for layout */}
-          <div className="hidden md:block" />
-
-          {/* Link columns */}
-          {Object.entries(footerLinks).map(([title, links], colIdx) => (
-            <Reveal key={title} variants={fadeUp} delay={0.1 + colIdx * 0.15}>
-              <div className="flex flex-col gap-4">
-                <span className="text-xs text-[rgba(255,255,255,0.3)] uppercase tracking-wider font-medium">
-                  {title}
-                </span>
-                {links.map((link) => (
-                  <motion.a
-                    key={link.label}
-                    href={link.href}
-                    className="text-sm text-[rgba(255,255,255,0.5)] hover:text-white transition-colors"
-                    whileHover={{ x: 4 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    {link.label}
-                  </motion.a>
-                ))}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-accent-orange flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>
               </div>
-            </Reveal>
-          ))}
+              <span className="text-white font-semibold text-sm">Rev Orchestra</span>
+            </div>
+            <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[160%] mb-4">
+              The AI GTM System for B2B Founders
+            </p>
+            <p className="text-xs text-[rgba(255,255,255,0.25)]">
+              hello@revorchestra.com
+            </p>
+          </div>
+
+          {/* Main links */}
+          <div>
+            <h4 className="text-xs text-[rgba(255,255,255,0.3)] uppercase tracking-wider mb-4">Company</h4>
+            {footerLinks.main.map((link) => (
+              <a key={link.label} href={link.href} className="block text-sm text-[rgba(255,255,255,0.5)] hover:text-white transition-colors py-1.5">{link.label}</a>
+            ))}
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h4 className="text-xs text-[rgba(255,255,255,0.3)] uppercase tracking-wider mb-4">Resources</h4>
+            {footerLinks.resources.map((link) => (
+              <Link key={link.label} href={link.href} className="block text-sm text-[rgba(255,255,255,0.5)] hover:text-white transition-colors py-1.5">{link.label}</Link>
+            ))}
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="text-xs text-[rgba(255,255,255,0.3)] uppercase tracking-wider mb-4">Legal</h4>
+            {footerLinks.legal.map((link) => (
+              <Link key={link.label} href={link.href} className="block text-sm text-[rgba(255,255,255,0.5)] hover:text-white transition-colors py-1.5">{link.label}</Link>
+            ))}
+          </div>
         </div>
 
-        {/* Bottom bar */}
-        <Reveal variants={fadeUp} delay={0.3}>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-[rgba(255,255,255,0.06)]">
-            <span className="text-xs text-[rgba(255,255,255,0.3)]">
-              &copy; {new Date().getFullYear()} REVORCHESTRA. All rights reserved.
-            </span>
-            <div className="flex gap-6">
-              <a href="#" className="text-xs text-[rgba(255,255,255,0.3)] hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-xs text-[rgba(255,255,255,0.3)] hover:text-white transition-colors">
-                Terms of Service
-              </a>
-            </div>
-          </div>
-        </Reveal>
+        {/* Built with */}
+        <div className="border-t border-[rgba(255,255,255,0.04)] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-[rgba(255,255,255,0.25)]">
+            Built with {tools.join(" · ")}
+          </p>
+          <p className="text-xs text-[rgba(255,255,255,0.25)]">
+            © 2026 Rev Orchestra · US LLC via Stripe Atlas · Team in Sri Lanka & Singapore
+          </p>
+        </div>
       </div>
     </footer>
   );

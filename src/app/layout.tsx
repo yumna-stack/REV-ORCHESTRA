@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,10 +7,16 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-heading",
+});
+
 export const metadata: Metadata = {
-  title: "REVORCHESTRA - GTM Orchestration for B2B Founders",
+  title: "Rev Orchestra — AI GTM System for B2B Founders",
   description:
-    "We build the missing GTM layer that connects buyer signals, systems, and execution into predictable pipeline.",
+    "Rev Orchestra builds AI-orchestrated GTM systems for B2B founders who just raised and need pipeline. Six AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.",
 };
 
 export default function RootLayout({
@@ -20,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} ${instrumentSerif.variable} antialiased`}>{children}</body>
     </html>
   );
 }
