@@ -1,34 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Reveal, StaggerContainer, StaggerItem, fadeUp, popIn } from "@/components/motion";
 import Image from "next/image";
 
-const primaryTools = [
-  { name: "HubSpot", logo: "/logos/hubspot.svg" },
-  { name: "n8n", logo: "/logos/n8n.svg" },
-  { name: "Clay", logo: "/logos/clay.svg" },
-  { name: "Instantly", logo: "/logos/instantly.svg" },
-  { name: "Slack", logo: "/logos/slack.svg" },
-  { name: "LinkedIn", logo: "/logos/linkedin.svg" },
-  { name: "Claude", logo: "/logos/claude.svg" },
-  { name: "Apollo", logo: "/logos/apollo.svg" },
+/* Tools with real SVG logo files */
+const stackTools = [
+  { name: "HubSpot", logo: "/logos/hubspot.svg", bg: "#FFF4F0" },
+  { name: "Slack", logo: "/logos/slack.svg", bg: "#F5F0F7" },
+  { name: "LinkedIn", logo: "/logos/linkedin.svg", bg: "#EEF4FB" },
+  { name: "n8n", logo: "/logos/n8n.svg", bg: "#FDF0F3" },
+  { name: "Clay", logo: "/logos/clay.svg", bg: "#EEEDFB" },
+  { name: "Instantly", logo: "/logos/instantly.svg", bg: "#EDF4FC" },
+  { name: "Claude", logo: "/logos/claude.svg", bg: "#F7F0E8" },
+  { name: "Apollo", logo: "/logos/apollo.svg", bg: "#EEEDFB" },
 ];
 
-const secondaryTools = [
-  { name: "Salesforce", logo: "/logos/salesforce.svg" },
-  { name: "Google", logo: "/logos/google.svg" },
-  { name: "Notion", logo: "/logos/notion.svg" },
-  { name: "Zoom", logo: "/logos/zoom.svg" },
-  { name: "Stripe", logo: "/logos/stripe.svg" },
-  { name: "Airtable", logo: "/logos/airtable.svg" },
-  { name: "Zapier", logo: "/logos/zapier.svg" },
-  { name: "50+ more", logo: "" },
-];
-
-const allLogos = [...primaryTools, ...secondaryTools, ...primaryTools, ...secondaryTools];
-
-/* ── 3-column capability grid (FuseAI style) ── */
+/* Capability grid */
 const capabilities = [
   {
     title: "Prospect",
@@ -59,20 +48,95 @@ const capabilities = [
   },
 ];
 
+/* ── Scroll-driven stacking card animation ── */
+function StackedCards() {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.3 });
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  return (
+    <div ref={containerRef} className="relative h-[400px] flex items-center justify-center">
+      {stackTools.map((tool, i) => {
+        const total = stackTools.length;
+        /* Each card settles to a slightly different position in the stack */
+        const finalRotate = (i - total / 2) * 3;
+        const finalX = (i - total / 2) * 6;
+        const finalY = (i - total / 2) * 3;
+        const zIdx = total - Math.abs(Math.round(i - total / 2));
+
+        return (
+          <motion.div
+            key={tool.name}
+            className="absolute w-[130px] h-[130px] rounded-[28px] flex flex-col items-center justify-center gap-2 shadow-xl cursor-pointer"
+            style={{
+              backgroundColor: tool.bg,
+              zIndex: zIdx,
+              boxShadow: "0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.1)",
+            }}
+            initial={{
+              opacity: 0,
+              x: i % 2 === 0 ? -200 : 200,
+              y: i < total / 2 ? -100 : 100,
+              rotate: (i - total / 2) * 15,
+              scale: 0.6,
+            }}
+            animate={
+              isInView
+                ? {
+                    opacity: 1,
+                    x: finalX,
+                    y: finalY,
+                    rotate: finalRotate,
+                    scale: 1,
+                  }
+                : {}
+            }
+            transition={{
+              delay: i * 0.12,
+              duration: 0.8,
+              type: "spring",
+              stiffness: 120,
+              damping: 14,
+            }}
+            whileHover={{
+              y: finalY - 25,
+              rotate: 0,
+              scale: 1.1,
+              zIndex: 20,
+              boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
+              transition: { duration: 0.3 },
+            }}
+          >
+            <Image src={tool.logo} alt={tool.name} width={48} height={48} className="rounded-lg" />
+            <span className="text-[9px] font-semibold text-[rgba(0,0,0,0.5)] uppercase tracking-wider">{tool.name}</span>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function StackLogos() {
   return (
     <section className="relative w-full py-20 bg-[rgb(14,15,17)] overflow-hidden">
       <div className="max-w-[1100px] mx-auto px-5">
         {/* Heading */}
-        <Reveal variants={fadeUp} className="text-center mb-14">
+        <Reveal variants={fadeUp} className="text-center mb-6">
           <p className="text-xs text-[rgba(255,255,255,0.3)] uppercase tracking-[0.2em] mb-4">Integrations</p>
           <h2 className="text-[clamp(28px,4vw,48px)] font-medium leading-[110%] tracking-[-2px] text-white" style={{ fontFamily: "var(--font-family-heading)" }}>
             Upgrade your legacy stack with <span className="text-accent-orange italic">one orchestrated system.</span>
           </h2>
         </Reveal>
 
-        {/* 3-column capability grid (FuseAI style) */}
-        <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        {/* Stacked cards animation — cards fly in and stack */}
+        <StackedCards />
+
+        {/* 3-column capability grid */}
+        <StaggerContainer staggerDelay={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 mt-10">
           {capabilities.map((col) => (
             <StaggerItem key={col.title}>
               <div>
@@ -102,13 +166,11 @@ export default function StackLogos() {
         </StaggerContainer>
 
         {/* Legacy stack comparison */}
-        <Reveal variants={fadeUp} className="max-w-[600px] mx-auto mb-14">
+        <Reveal variants={fadeUp} className="max-w-[600px] mx-auto">
           <div className="relative rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-6">
-            {/* Connection lines */}
             <div className="absolute -top-6 left-1/4 w-px h-6 bg-[rgba(255,255,255,0.08)]" />
             <div className="absolute -top-6 left-1/2 w-px h-6 bg-[rgba(255,255,255,0.08)]" />
             <div className="absolute -top-6 left-3/4 w-px h-6 bg-[rgba(255,255,255,0.08)]" />
-
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-[rgba(255,255,255,0.06)]">
               <span className="text-sm text-[rgba(255,255,255,0.4)]">Legacy stack</span>
               <span className="text-sm text-[rgba(255,255,255,0.3)] line-through">$3,500/month</span>
@@ -124,31 +186,6 @@ export default function StackLogos() {
             </div>
           </div>
         </Reveal>
-
-        {/* Primary tools — icon grid */}
-        <StaggerContainer staggerDelay={0.06} className="grid grid-cols-4 sm:grid-cols-8 gap-4 mb-6 max-w-[700px] mx-auto">
-          {primaryTools.map((tool) => (
-            <StaggerItem key={tool.name}>
-              <motion.div
-                className="flex flex-col items-center gap-2 p-3 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] hover:border-[rgba(255,255,255,0.12)] transition-all"
-                whileHover={{ y: -4, scale: 1.05 }}
-              >
-                <Image src={tool.logo} alt={tool.name} width={28} height={28} />
-                <span className="text-[9px] text-[rgba(255,255,255,0.4)] uppercase tracking-wider">{tool.name}</span>
-              </motion.div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-
-        {/* Secondary tools row */}
-        <div className="flex flex-wrap items-center justify-center gap-2 max-w-[600px] mx-auto">
-          {secondaryTools.map((tool) => (
-            <div key={tool.name} className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.01)]">
-              {tool.logo && <Image src={tool.logo} alt={tool.name} width={14} height={14} />}
-              <span className="text-[10px] text-[rgba(255,255,255,0.3)]">{tool.name}</span>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Horizontal scrolling logo strip (ash/muted) */}
@@ -160,9 +197,9 @@ export default function StackLogos() {
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
         >
-          {allLogos.map((tool, i) => (
+          {[...stackTools, ...stackTools, ...stackTools, ...stackTools].map((tool, i) => (
             <div key={i} className="flex items-center gap-2 shrink-0 opacity-15 hover:opacity-30 transition-opacity">
-              {tool.logo && <Image src={tool.logo} alt={tool.name} width={16} height={16} style={{ filter: "grayscale(1) brightness(0.6)" }} />}
+              <Image src={tool.logo} alt={tool.name} width={16} height={16} style={{ filter: "grayscale(1) brightness(0.6)" }} />
               <span className="text-[rgba(255,255,255,0.15)] text-sm font-medium tracking-wider uppercase">{tool.name}</span>
             </div>
           ))}
