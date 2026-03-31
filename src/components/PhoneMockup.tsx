@@ -2,14 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Reveal, fadeUp } from "@/components/motion";
-import Image from "next/image";
+import BrandLogo from "@/components/BrandLogo";
 
 const slackMessages = [
   {
     user: "Signal Agent",
     time: "9:14 AM",
     color: "#E8650A",
-    icon: "/logos/zapier.svg",
+    brandKey: "zapier",
     lines: [
       "New signal detected:",
       "- VP Sales hired at Acme Corp (3 days ago)",
@@ -21,7 +21,7 @@ const slackMessages = [
     user: "Research Agent",
     time: "9:14 AM",
     color: "#6366F1",
-    icon: "/logos/notion.svg",
+    brandKey: "notion",
     lines: [
       "Account brief compiled for Acme Corp:",
       "- 85 employees, B2B SaaS, Series A",
@@ -33,7 +33,7 @@ const slackMessages = [
     user: "Copy Agent",
     time: "9:15 AM",
     color: "#22C55E",
-    icon: "/logos/claude.svg",
+    brandKey: "claude",
     lines: [
       "Draft ready for review:",
       'Subject: "Sarah — re: your SDR scaling plans"',
@@ -45,7 +45,7 @@ const slackMessages = [
     user: "CRM Agent",
     time: "9:15 AM",
     color: "#3B82F6",
-    icon: "/logos/hubspot.svg",
+    brandKey: "hubspot",
     lines: [
       "Acme Corp added to pipeline",
       "Sarah Chen created as contact",
@@ -129,7 +129,7 @@ export default function PhoneMockup() {
                 <div className="relative p-4">
                   {/* Slack header bar */}
                   <div className="flex items-center gap-2 mb-3 pb-2 border-b border-[rgba(255,255,255,0.1)]">
-                    <Image src="/logos/slack.svg" alt="Slack" width={16} height={16} />
+                    <BrandLogo name="slack" size={16} />
                     <span className="text-white text-xs font-medium">Rev Orchestra</span>
                     <span className="text-[rgba(255,255,255,0.3)] text-[9px] ml-auto">#gtm-orchestrator</span>
                   </div>
@@ -148,7 +148,7 @@ export default function PhoneMockup() {
                         transition={{ delay: 0.5 + i * 0.25, duration: 0.5 }}
                       >
                         <div className="flex items-center gap-2 mb-1">
-                          <Image src={msg.icon} alt={msg.user} width={14} height={14} className="rounded-sm" />
+                          <BrandLogo name={msg.brandKey} size={14} />
                           <span className="text-[10px] font-semibold" style={{ color: msg.color }}>{msg.user}</span>
                           <span className="text-[7px] text-[rgba(255,255,255,0.2)]">{msg.time}</span>
                         </div>
