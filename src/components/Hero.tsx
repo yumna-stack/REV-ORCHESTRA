@@ -153,29 +153,6 @@ export default function Hero() {
                 <span>90-day build</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>You own everything</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>6 AI sub-agents</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>Plugs into your stack</span><span className="text-[rgba(255,255,255,0.15)]">·</span><span>4 founders per quarter, max</span>
               </div>
 
-              {/* ─── Rotating Tool Logos (SiteFire-style) ─── */}
-              <div className="flex flex-col items-center gap-3 pt-4">
-                <p className="text-[rgba(255,255,255,0.4)] text-sm">We&apos;re building GTM systems connected to</p>
-                <div className="h-[40px] flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    <motion.span key={toolLogos[toolIdx]} initial={{ opacity: 0, y: 16, filter: "blur(6px)", scale: 0.9 }} animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }} exit={{ opacity: 0, y: -16, filter: "blur(6px)", scale: 0.9 }} transition={{ duration: 0.4, ease }} className="text-2xl font-bold text-white">
-                      {toolLogos[toolIdx]}
-                    </motion.span>
-                  </AnimatePresence>
-                </div>
-              </div>
-
-              {/* ─── Rotating Agent Actions ─── */}
-              <div className="flex flex-col items-center gap-2">
-                <p className="text-[rgba(255,255,255,0.35)] text-xs">Right now, our agents are</p>
-                <div className="h-[28px] flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    <motion.span key={agentActions[actionIdx]} initial={{ opacity: 0, y: 12, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -12, filter: "blur(4px)" }} transition={{ duration: 0.35, ease }} className="text-base text-accent-orange font-medium italic">
-                      {agentActions[actionIdx]}
-                    </motion.span>
-                  </AnimatePresence>
-                </div>
-              </div>
             </motion.div>
           ) : (
             /* ─── FOMO MODE OFF ─── */

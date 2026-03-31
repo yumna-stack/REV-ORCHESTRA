@@ -119,7 +119,7 @@ export default function StackLogos() {
               whileHover={{ y: -6, scale: 1.05, transition: { duration: 0.2 } }}
             >
               {tool.key ? (
-                <BrandLogo name={tool.key} size={36} className="rounded-lg" />
+                <BrandLogo name={tool.key} size={36} className="rounded-lg" style={{ filter: "grayscale(1) brightness(1.2) contrast(0.9)" }} />
               ) : (
                 <div className="w-9 h-9 rounded-lg bg-[rgba(255,255,255,0.06)] flex items-center justify-center">
                   <span className="text-[rgba(255,255,255,0.3)] text-lg font-bold">+</span>
@@ -186,9 +186,9 @@ export default function StackLogos() {
           transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
         >
           {[...stackTools.filter(t => t.key), ...stackTools.filter(t => t.key), ...stackTools.filter(t => t.key), ...stackTools.filter(t => t.key)].map((tool, i) => (
-            <div key={i} className="flex items-center gap-2.5 shrink-0 opacity-25 hover:opacity-50 transition-opacity">
-              <BrandLogo name={tool.key} size={18} className="grayscale brightness-75" />
-              <span className="text-[rgba(255,255,255,0.2)] text-sm font-medium tracking-wider uppercase">{tool.name}</span>
+            <div key={i} className="flex items-center gap-3 shrink-0 opacity-50 hover:opacity-80 transition-opacity">
+              <BrandLogo name={tool.key} size={32} />
+              <span className="text-[rgba(255,255,255,0.4)] text-base font-semibold tracking-wider uppercase">{tool.name}</span>
             </div>
           ))}
         </motion.div>

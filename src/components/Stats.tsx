@@ -120,7 +120,7 @@ function StatsCards() {
         <motion.div
           key={i}
           variants={{
-            hidden: { opacity: 0, x: 80, scale: 0.95, filter: "blur(8px)" },
+            hidden: { opacity: 0, x: i % 2 === 0 ? 100 : -100, scale: 0.95, filter: "blur(8px)" },
             visible: { opacity: 1, x: 0, scale: 1, filter: "blur(0px)" },
           }}
           transition={{ duration: 0.8, ease }}

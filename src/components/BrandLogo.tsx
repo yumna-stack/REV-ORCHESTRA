@@ -1,7 +1,6 @@
 "use client";
 
 /* Uses Google's favicon service to get REAL brand logos at runtime */
-/* These load in the user's browser, not during build */
 
 const domains: Record<string, string> = {
   hubspot: "hubspot.com",
@@ -25,16 +24,18 @@ export default function BrandLogo({
   name,
   size = 32,
   className = "",
+  style,
 }: {
   name: string;
   size?: number;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   const domain = domains[name.toLowerCase()];
   if (!domain) return null;
 
-  /* Google S2 favicon API — returns real brand favicons/logos */
-  const src = `https://www.google.com/s2/favicons?domain=${domain}&sz=${Math.min(size * 2, 128)}`;
+  /* Always request max 128px for HD quality */
+  const src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -44,6 +45,7 @@ export default function BrandLogo({
       width={size}
       height={size}
       className={`rounded-sm ${className}`}
+      style={style}
       loading="lazy"
     />
   );
