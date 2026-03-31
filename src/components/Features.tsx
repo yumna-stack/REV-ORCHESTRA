@@ -5,7 +5,7 @@ import { Reveal, StaggerContainer, StaggerItem, fadeLeft, popIn } from "@/compon
 
 export default function Features() {
   return (
-    <section id="features" className="relative w-full py-16 bg-[rgb(14,15,17)] overflow-hidden">
+    <section id="features" className="relative w-full py-28 bg-[rgb(14,15,17)] overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left - slides in from left */}

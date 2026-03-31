@@ -82,7 +82,7 @@ function CoinRow({ logos, direction = "left", speed = 30 }: { logos: typeof tool
 
 export default function Integrations() {
   return (
-    <section id="integrations" className="relative w-full py-16 bg-black-light overflow-hidden">
+    <section id="integrations" className="relative w-full py-28 bg-black-light overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
         <Reveal variants={fadeUp}>

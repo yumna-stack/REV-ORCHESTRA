@@ -1,117 +1,120 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Reveal, fadeUp } from "@/components/motion";
+import { useEffect, useRef, useState } from "react";
 
-const tools = ["Clay", "Instantly", "HubSpot", "Slack", "n8n", "LinkedIn"];
-const actions = [
-  "finding warm leads",
-  "writing personalised outreach",
-  "updating your CRM",
-  "monitoring buying signals",
-  "briefing your reps",
-  "watching your pipeline",
+const words = [
+  "Rev", "Orchestra", "is", "orchestrating", "the", "future", "of",
+  "go-to-market", "execution", "for",
+  "B2B", "founders", "with", "AI-powered",
+  "signal-led", "pipeline", "systems.",
+];
+
+const logos = [
+  "CLAY", "INSTANTLY", "HUBSPOT", "SLACK", "N8N", "LINKEDIN",
+  "CLAY", "INSTANTLY", "HUBSPOT", "SLACK", "N8N", "LINKEDIN",
 ];
 
 export default function AnimatedText() {
-  const [toolIdx, setToolIdx] = useState(0);
-  const [actionIdx, setActionIdx] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const t1 = setInterval(() => setToolIdx((i) => (i + 1) % tools.length), 2500);
-    const t2 = setInterval(() => setActionIdx((i) => (i + 1) % actions.length), 3000);
-    return () => { clearInterval(t1); clearInterval(t2); };
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const scrolled = viewportHeight - rect.top;
+      const totalScrollable = rect.height;
+      setProgress(Math.max(0, Math.min(1, scrolled / totalScrollable)));
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /* Slower word reveal: multiplier of 1.1 means you need to scroll most of the section */
+  const activeWordIndex = Math.floor(progress * words.length * 1.1) - 2;
+  const logoItems = [...logos, ...logos, ...logos];
+
   return (
-    <section className="relative w-full py-16 bg-[rgb(8,8,15)] overflow-hidden">
-      {/* Warm gradient glow */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[800px] h-[300px] rounded-full bg-accent-orange/8 blur-[120px]" />
-      </div>
+    <>
+      {/* Scroll-driven text reveal — compact height, no huge gap */}
+      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "600px" }}>
+        <div className="sticky top-0 h-[60vh] flex items-center justify-center px-5 z-10">
+          <p className="text-[clamp(28px,4.5vw,58px)] font-medium leading-[135%] tracking-[-1.5px] text-center max-w-[850px]">
+            {words.map((word, i) => {
+              let opacity = 0.12;
+              if (i <= activeWordIndex) opacity = 1;
+              else if (i === activeWordIndex + 1) {
+                const frac = (progress * words.length * 1.1 - 2) % 1;
+                opacity = 0.12 + Math.max(0, frac) * 0.88;
+              }
 
-      <div className="max-w-[900px] mx-auto px-5 relative z-10">
-        {/* Tool logos cycling */}
-        <Reveal variants={fadeUp} className="text-center mb-10">
-          <p className="text-[rgba(255,255,255,0.5)] text-lg mb-4">
-            We&apos;re building GTM systems connected to
+              /* Embed small logo icon after "intelligence" (index 9) */
+              if (i === 11) {
+                return (
+                  <span key={i} className="inline-flex items-center gap-3 mr-[0.3em]" style={{ color: `rgba(255,255,255,${opacity})`, transition: "color 0.2s ease-out" }}>
+                    {word}
+                    <span
+                      className="inline-flex items-center justify-center w-11 h-11 rounded-xl shrink-0"
+                      style={{
+                        background: "radial-gradient(circle at 30% 30%, #F09030, #C44800)",
+                        boxShadow: "0 4px 16px rgba(232,86,0,0.3), inset 0 1px 0 rgba(255,200,150,0.3)",
+                        opacity: Math.max(0.4, opacity),
+                      }}
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                      </svg>
+                    </span>
+                  </span>
+                );
+              }
+
+              /* Highlight "revolutionizing" in orange like Cryps */
+              const isHighlight = word === "orchestrating";
+              return (
+                <span
+                  key={i}
+                  className={`inline-block mr-[0.3em] ${isHighlight ? "italic" : ""}`}
+                  style={{
+                    color: isHighlight && opacity > 0.5 ? "#E85600" : `rgba(255,255,255,${opacity})`,
+                    transition: "color 0.3s ease-out",
+                  }}
+                >
+                  {word}
+                </span>
+              );
+            })}
           </p>
-          <div className="h-[48px] flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={tools[toolIdx]}
-                initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
-                transition={{ duration: 0.4 }}
-                className="text-4xl font-bold text-accent-orange"
-                style={{ fontFamily: "var(--font-family-heading)" }}
-              >
-                {tools[toolIdx]}
-              </motion.span>
-            </AnimatePresence>
-          </div>
-        </Reveal>
+        </div>
+      </section>
 
-        {/* Separator */}
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[rgba(255,255,255,0.1)]" />
-          <span className="text-[10px] text-[rgba(255,255,255,0.3)] uppercase tracking-widest">Live System</span>
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[rgba(255,255,255,0.1)]" />
+      {/* Supported Tech - centered, no gap */}
+      <section className="relative w-full py-12 bg-[rgb(14,15,17)] overflow-hidden">
+        {/* Label with lines */}
+        <div className="flex items-center justify-center gap-4 mb-8 px-5">
+          <div className="flex-1 max-w-[300px] h-px" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.12))" }} />
+          <span className="text-[11px] text-[rgba(255,255,255,0.35)] tracking-[0.2em] uppercase font-medium whitespace-nowrap">
+            Supported Tech
+          </span>
+          <div className="flex-1 max-w-[300px] h-px" style={{ background: "linear-gradient(to left, transparent, rgba(255,255,255,0.12))" }} />
         </div>
 
-        {/* Actions cycling */}
-        <Reveal variants={fadeUp} className="text-center">
-          <p className="text-[rgba(255,255,255,0.5)] text-lg mb-4">
-            Right now, our agents are
-          </p>
-          <div className="h-[36px] flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={actions[actionIdx]}
-                initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
-                transition={{ duration: 0.35 }}
-                className="text-xl text-white font-medium"
-              >
-                {actions[actionIdx]}
-              </motion.span>
-            </AnimatePresence>
+        {/* Scrolling logos */}
+        <div className="relative w-full overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] to-transparent pointer-events-none" />
+          <div className="flex items-center gap-[80px] w-max" style={{ animation: "logoScroll 40s linear infinite" }}>
+            {logoItems.map((logo, i) => (
+              <span key={i} className="text-[rgba(255,255,255,0.25)] text-lg font-bold tracking-[3px] uppercase shrink-0 hover:text-[rgba(255,255,255,0.5)] transition-colors duration-300">
+                {logo}
+              </span>
+            ))}
           </div>
-        </Reveal>
-      </div>
-
-      {/* Floating side icons */}
-      <motion.div
-        className="absolute left-6 top-1/4 w-12 h-12 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-        animate={{ y: [-8, 8, -8] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="text-[rgba(255,255,255,0.3)] text-lg">⚡</span>
-      </motion.div>
-      <motion.div
-        className="absolute right-6 top-1/3 w-12 h-12 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-        animate={{ y: [8, -8, 8] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="text-[rgba(255,255,255,0.3)] text-lg">🤖</span>
-      </motion.div>
-      <motion.div
-        className="absolute left-10 bottom-1/4 w-10 h-10 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-        animate={{ y: [-6, 6, -6] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      >
-        <span className="text-[rgba(255,255,255,0.3)] text-sm">🔗</span>
-      </motion.div>
-      <motion.div
-        className="absolute right-10 bottom-1/3 w-10 h-10 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] flex items-center justify-center"
-        animate={{ y: [6, -6, 6] }}
-        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-      >
-        <span className="text-[rgba(255,255,255,0.3)] text-sm">📊</span>
-      </motion.div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 }
