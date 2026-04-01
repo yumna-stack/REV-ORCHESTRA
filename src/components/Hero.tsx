@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Float } from "@/components/motion";
+import CommandCenter from "@/components/CommandCenter";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
@@ -229,23 +230,14 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-      {/* Vimeo video */}
+      {/* Command Center — animated dashboard */}
       <motion.div
         className="relative z-10 w-full max-w-[1080px] mx-auto px-5 mt-12"
         initial={{ opacity: 0, y: 80, scale: 0.9, filter: "blur(10px)" }}
         animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.2, ease, delay: 0.6 }}
       >
-        <div className="relative rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.06)] bg-[rgba(20,20,22,0.9)]" style={{ aspectRatio: "16/9" }}>
-          <iframe
-            src="https://player.vimeo.com/video/1157150585?autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0"
-            className="absolute inset-0 w-full h-full"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            title="Rev Orchestra Command Center"
-          />
-        </div>
+        <CommandCenter />
       </motion.div>
     </section>
 
