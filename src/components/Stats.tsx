@@ -102,7 +102,26 @@ function BadgeIcon({ type, color }: { type: string; color: string }) {
   return <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" stroke={color} strokeWidth="1" fill="none" /><path d="M3 5h4M5 3v4" stroke={color} strokeWidth="1" strokeLinecap="round" /></svg>;
 }
 
-/* ── Glassmorphic stat card — Cryps screenshot style ── */
+/* ── Card slide variants — alternating left/right per Context7 dynamic variants ── */
+const cardSlideVariants = {
+  hidden: (i: number) => ({
+    opacity: 0,
+    x: i % 2 === 0 ? -120 : 120,
+    rotateY: i % 2 === 0 ? 8 : -8,
+    scale: 0.92,
+    filter: "blur(6px)",
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    rotateY: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease },
+  },
+};
+
+/* ── Glassmorphic stat card — Cryps screenshot style + sideways slide ── */
 function StatCard({
   stat,
   index,
@@ -112,11 +131,14 @@ function StatCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 60, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      custom={index}
+      variants={cardSlideVariants}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: false, amount: 0.3 }}
-      transition={{ duration: 0.7, ease, delay: index * 0.12 }}
+      transition={{ duration: 0.8, ease, delay: index * 0.15 }}
       whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.25 } }}
+      style={{ transformPerspective: 1200 }}
     >
       {/* Outer shell */}
       <div className="rounded-[24px] p-[4px] border border-[rgba(255,255,255,0.04)]">
