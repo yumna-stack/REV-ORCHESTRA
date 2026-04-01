@@ -32,11 +32,23 @@ export default function BrandLogo({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  const domain = domains[name.toLowerCase()];
+  const key = name.toLowerCase();
+  const domain = domains[key];
   if (!domain) return null;
 
   /* Always request max 128px for HD quality */
   const src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+
+  /* X/Twitter favicon is black — invert it so it's visible on dark backgrounds */
+  const needsInvert = key === "twitter";
+  const mergedStyle: React.CSSProperties = {
+    ...style,
+    ...(needsInvert && !style?.filter
+      ? { filter: "invert(1) grayscale(1) brightness(1.4) contrast(0.85)" }
+      : needsInvert && style?.filter
+        ? { filter: `invert(1) ${style.filter}` }
+        : {}),
+  };
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -46,7 +58,7 @@ export default function BrandLogo({
       width={size}
       height={size}
       className={`rounded-sm ${className}`}
-      style={style}
+      style={mergedStyle}
       loading="lazy"
     />
   );
