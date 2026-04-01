@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Badge, PageHero, StaggerGrid, GridItem } from "@/components/PageWrapper";
-import { Reveal, fadeUp } from "@/components/motion";
+import { Reveal, fadeUp, fadeLeft, popIn } from "@/components/motion";
 
 const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 
@@ -39,6 +39,9 @@ const steps = [
   },
 ];
 
+/* Cycle through animation variants per card */
+const cardVariants = [fadeUp, fadeLeft, popIn, fadeUp];
+
 export default function HowItWorksPage() {
   return (
     <main className="w-full bg-[rgb(14,15,17)]">
@@ -54,7 +57,7 @@ export default function HowItWorksPage() {
       <section className="w-full py-20 bg-[rgb(14,15,17)]">
         <div className="max-w-[900px] mx-auto px-5">
           {steps.map((step, i) => (
-            <Reveal key={i} variants={fadeUp} delay={i * 0.1}>
+            <Reveal key={i} variants={cardVariants[i]} delay={i * 0.1} once={false}>
               <div className="relative pl-12 pb-16 last:pb-0">
                 {/* Timeline line */}
                 {i < steps.length - 1 && (
@@ -63,7 +66,7 @@ export default function HowItWorksPage() {
                     style={{ background: "linear-gradient(to bottom, #E8650A, rgba(255,255,255,0.06))" }}
                     initial={{ scaleY: 0, transformOrigin: "top" }}
                     whileInView={{ scaleY: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     transition={{ duration: 0.8, delay: 0.3 }}
                   />
                 )}
@@ -72,43 +75,70 @@ export default function HowItWorksPage() {
                 <motion.div
                   className="absolute left-0 top-0 w-9 h-9 rounded-full border-2 border-accent-orange bg-[rgb(14,15,17)] flex items-center justify-center"
                   whileInView={{ scale: [0.8, 1.1, 1] }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <span className="text-accent-orange text-xs font-bold">{step.number}</span>
                 </motion.div>
 
-                {/* Content card */}
+                {/* Glassmorphic content card — outer shell */}
                 <motion.div
-                  className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-7"
-                  whileHover={{ borderColor: "rgba(232,86,0,0.15)" }}
+                  className="rounded-[28px] p-[5px] border border-[rgba(255,255,255,0.03)]"
+                  whileHover={{ scale: 1.015, y: -3 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <h3 className="text-white text-xl font-semibold" style={{ fontFamily: "var(--font-family-heading)" }}>
-                      {step.title}
-                    </h3>
-                    <span className="text-xs text-accent-orange bg-accent-orange/10 px-2.5 py-1 rounded-full font-medium">{step.timeline}</span>
-                  </div>
+                  {/* Inner card */}
+                  <div className="relative rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden">
+                    {/* Orange glow at bottom */}
+                    <div
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-[140px]"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse 60% 90% at 50% 100%, rgba(232,101,10,0.08) 0%, transparent 70%)",
+                      }}
+                    />
 
-                  <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] mb-5">{step.description}</p>
+                    <div className="relative z-10 p-7">
+                      <div className="flex items-center gap-3 mb-3">
+                        <h3 className="text-white text-xl font-semibold" style={{ fontFamily: "var(--font-family-heading)" }}>
+                          {step.title}
+                        </h3>
+                        <span className="text-xs text-accent-orange bg-accent-orange/10 px-2.5 py-1 rounded-full font-medium">{step.timeline}</span>
+                      </div>
 
-                  <div className="border-t border-[rgba(255,255,255,0.06)] pt-4">
-                    <p className="text-[10px] text-[rgba(255,255,255,0.3)] uppercase tracking-wider mb-3">Deliverables</p>
-                    <div className="flex flex-wrap gap-2">
-                      {step.deliverables.map((d, j) => (
-                        <motion.span
-                          key={j}
-                          className="text-[11px] text-[rgba(255,255,255,0.5)] px-3 py-1.5 rounded-full border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]"
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: 0.4 + j * 0.05 }}
-                        >
-                          {d}
-                        </motion.span>
-                      ))}
+                      <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] mb-5">{step.description}</p>
+
+                      <div className="border-t border-[rgba(255,255,255,0.06)] pt-4">
+                        <p className="text-[10px] text-[rgba(255,255,255,0.3)] uppercase tracking-wider mb-3">Deliverables</p>
+                        <div className="flex flex-wrap gap-2">
+                          {step.deliverables.map((d, j) => (
+                            <motion.span
+                              key={j}
+                              className="text-[11px] text-[rgba(255,255,255,0.5)] px-3 py-1.5 rounded-full border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]"
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: false }}
+                              transition={{ delay: 0.4 + j * 0.05 }}
+                            >
+                              {d}
+                            </motion.span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Animated bottom line */}
+                    <motion.div
+                      className="absolute bottom-0 left-[10%] right-[10%] h-px"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent, #E8650A, transparent)",
+                      }}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: [0, 1, 0.6] }}
+                      viewport={{ once: false }}
+                      transition={{ duration: 1.2, delay: 0.5 }}
+                    />
                   </div>
                 </motion.div>
               </div>
@@ -120,7 +150,7 @@ export default function HowItWorksPage() {
       {/* CTA */}
       <section className="w-full py-20 bg-[rgb(14,15,17)]">
         <div className="max-w-[600px] mx-auto px-5 text-center">
-          <Reveal variants={fadeUp}>
+          <Reveal variants={fadeUp} once={false}>
             <h2 className="text-[clamp(24px,3.5vw,40px)] font-medium leading-[115%] tracking-[-1.5px] text-white mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>
               The founders who built their system in Q1 are already booking calls from it.
             </h2>

@@ -91,7 +91,7 @@ export default function Footer() {
 
       <div className="max-w-[1200px] mx-auto px-5">
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-20 mb-20"
+          className="grid grid-cols-1 lg:grid-cols-[1.2fr_2fr] gap-20 mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -160,7 +160,7 @@ export default function Footer() {
           {/* ── RIGHT COLUMN — Link groups (Framer: 2 groups horizontal, gap 40px) ── */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap gap-16 lg:justify-end"
+            className="grid grid-cols-3 gap-10"
           >
             {/* Company links */}
             <div className="min-w-[140px]">

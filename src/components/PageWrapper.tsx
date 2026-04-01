@@ -22,7 +22,7 @@ export function Section({ children, className = "", id, delay = 0 }: { children:
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: false, amount: 0.1 }}
       variants={fadeUp}
       transition={{ duration: 0.7, ease, delay: delay / 1000 }}
     >
@@ -111,7 +111,7 @@ export function StaggerGrid({ children, className = "" }: { children: ReactNode;
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: false, amount: 0.1 }}
       variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
     >
       {children}

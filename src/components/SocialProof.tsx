@@ -86,11 +86,13 @@ function OrbitVisual({ activeQuote }: { activeQuote: number }) {
           const angle = (i * 360) / orbitItems.length;
           const rad = (angle * Math.PI) / 180;
           const r = 90;
+          const x = Math.round(Math.cos(rad) * r);
+          const y = Math.round(Math.sin(rad) * r);
           return (
             <motion.div
               key={i}
               className="absolute"
-              style={{ left: `calc(50% + ${Math.cos(rad) * r}px - 16px)`, top: `calc(50% + ${Math.sin(rad) * r}px - 16px)` }}
+              style={{ left: `calc(50% + ${x}px - 16px)`, top: `calc(50% + ${y}px - 16px)` }}
               animate={{ rotate: -360 }}
               transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             >
@@ -108,11 +110,13 @@ function OrbitVisual({ activeQuote }: { activeQuote: number }) {
         const rad = (angle * Math.PI) / 180;
         const r = 155;
         const isActive = activeQuote === i;
+        const dx = Math.round(Math.cos(rad) * r);
+        const dy = Math.round(Math.sin(rad) * r);
         return (
           <motion.div
             key={`dot-${i}`}
             className="absolute"
-            style={{ left: `calc(50% + ${Math.cos(rad) * r}px - 10px)`, top: `calc(50% + ${Math.sin(rad) * r}px - 10px)` }}
+            style={{ left: `calc(50% + ${dx}px - 10px)`, top: `calc(50% + ${dy}px - 10px)` }}
           >
             <motion.div
               className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-500 ${

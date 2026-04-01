@@ -35,7 +35,7 @@ const capabilities = [
   {
     title: "Prospect",
     items: [
-      { label: "Signal Detection", tools: ["hubspot", "linkedin", "zapier"] },
+      { label: "Signal Detection", tools: ["hubspot", "linkedin", "twitter", "zapier"] },
       { label: "Account Research", tools: ["clay", "apollo", "google"] },
       { label: "ICP Matching", tools: ["salesforce", "hubspot", "airtable"] },
       { label: "Contact Enrichment", tools: ["clay", "apollo", "linkedin"] },
