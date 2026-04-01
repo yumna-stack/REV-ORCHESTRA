@@ -24,8 +24,8 @@ export default function StatCallout() {
 
               {/* Divider */}
               <div className="hidden md:flex flex-col items-center gap-2 absolute left-1/2 -translate-x-1/2">
-                <motion.div className="w-px h-16 bg-gradient-to-b from-[#EF4444] to-[#22C55E]" initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.4 }} />
-                <motion.svg width="20" height="20" viewBox="0 0 20 20" fill="none" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.8 }}>
+                <motion.div className="w-px h-16 bg-gradient-to-b from-[#EF4444] to-[#22C55E]" initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: false }} transition={{ duration: 0.6, delay: 0.4 }} />
+                <motion.svg width="20" height="20" viewBox="0 0 20 20" fill="none" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false }} transition={{ delay: 0.8 }}>
                   <path d="M10 4v12M6 12l4 4 4-4" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </motion.svg>
               </div>

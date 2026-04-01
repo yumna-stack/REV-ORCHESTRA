@@ -2,8 +2,14 @@
 
 import { motion } from "framer-motion";
 
-const content =
-  "\u{1F3AF} 4 seats available for Q2 2026 \u00B7 90-day AI GTM system build \u00B7 You own it permanently \u00B7 Applications closing soon \u2192";
+const items = [
+  "4 seats available for Q2 2026",
+  "90-day AI GTM system build",
+  "You own it permanently",
+  "Applications closing soon",
+];
+
+const content = items.join("  \u00B7  ") + "  \u2192";
 
 export default function AnnouncementBanner() {
   return (
@@ -23,10 +29,10 @@ export default function AnnouncementBanner() {
           },
         }}
       >
-        {[...Array(2)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <span
             key={i}
-            className="text-sm font-medium text-white px-8 inline-block"
+            className="text-sm font-medium text-white px-12 inline-block"
           >
             {content}
           </span>

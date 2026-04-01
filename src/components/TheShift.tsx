@@ -7,6 +7,7 @@ import {
   StaggerContainer,
   StaggerItem,
   fadeUp,
+  slideRight,
   popIn,
 } from "@/components/motion";
 
@@ -134,20 +135,20 @@ const stats = [
 
 export default function TheShift() {
   const statsRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(statsRef, { once: true, amount: 0.3 });
+  const inView = useInView(statsRef, { once: false, amount: 0.3 });
 
   return (
     <section className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Header */}
         <div className="mb-16 max-w-[800px]">
-          <Reveal variants={fadeUp}>
+          <Reveal variants={slideRight}>
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.06)] text-xs text-[rgba(255,255,255,0.5)] tracking-wider uppercase w-fit mb-6">
               THE SHIFT
             </div>
           </Reveal>
 
-          <Reveal variants={fadeUp} delay={0.1}>
+          <Reveal variants={slideRight} delay={0.1}>
             <h2
               className="text-[clamp(28px,4vw,52px)] font-medium leading-[110%] tracking-[-2px] text-white mb-5"
               style={{ fontFamily: "var(--font-family-heading)" }}

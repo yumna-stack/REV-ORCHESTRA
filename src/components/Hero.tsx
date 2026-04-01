@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Float } from "@/components/motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const CALENDLY = "https://calendly.com/danny-revorchestra";
+const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
+const SPOTS_LEFT = 4; // Change to 0 when fully booked — dot turns red automatically
 
 const cyclingWords = [
   "running orchestras",
@@ -108,17 +109,17 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
               transition={{ duration: 0.6, ease }}
-              className="flex flex-col items-center gap-7"
+              className="flex flex-col items-center"
             >
               {/* Badge */}
-              <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)]">
+              <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-8">
                 <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-orange animate-pulse" />
                 <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">The AI GTM System for Post-Funding B2B Founders</span>
               </div>
 
               {/* Headline with cycling words */}
-              <h1 className="text-[clamp(36px,5.5vw,72px)] font-medium leading-[105%] tracking-[-3px] text-white max-w-[900px]" style={{ fontFamily: "var(--font-family-heading)" }}>
+              <h1 className="text-[clamp(36px,5.5vw,72px)] font-medium leading-[105%] tracking-[-3px] text-white max-w-[900px] mb-8" style={{ fontFamily: "var(--font-family-heading)" }}>
                 You&apos;re still doing GTM like it&apos;s 2024.{" "}
                 <span className="text-[rgba(255,255,255,0.5)]">The teams beating you are </span>
                 <span className="relative inline-block align-bottom">
@@ -131,21 +132,47 @@ export default function Hero() {
               </h1>
 
               {/* Sub-headline */}
-              <p className="text-lg text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[620px]">
+              <p className="text-lg text-[rgba(255,255,255,0.45)] leading-[170%] max-w-[620px] mb-10">
                 Rev Orchestra builds AI-orchestrated GTM systems for B2B founders who just raised and need pipeline — not another tool to manage, not another retainer to renew. Six AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.
               </p>
 
-              {/* Scarcity */}
-              <p className="text-accent-orange font-semibold text-sm tracking-wide">4 seats available for Q2 2026. Ready to launch.</p>
+              {/* Scarcity — minimal, no background */}
+              <motion.div
+                className="inline-flex items-center gap-2 mb-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+              >
+                <motion.span
+                  className={`w-1.5 h-1.5 rounded-full ${SPOTS_LEFT > 0 ? "bg-green-500" : "bg-red-500"}`}
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <span className={`text-xs tracking-wide ${SPOTS_LEFT > 0 ? "text-green-500" : "text-red-500"}`}>
+                  {SPOTS_LEFT > 0 ? `${SPOTS_LEFT} spots left for Q2 2026` : "Q2 2026 fully booked"}
+                </span>
+              </motion.div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all">
+              <div className="flex flex-col sm:flex-row items-center gap-5 mb-10">
+                <motion.a
+                  href={CAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
                   Book a Call with Danny <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </a>
-                <a href="#how-it-works" className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full border border-[rgba(255,255,255,0.15)] hover:border-[rgba(255,255,255,0.3)] hover:bg-[rgba(255,255,255,0.04)] transition-all">
+                </motion.a>
+                <motion.a
+                  href="#how-it-works"
+                  className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full border border-[rgba(255,255,255,0.15)] hover:border-[rgba(255,255,255,0.3)] hover:bg-[rgba(255,255,255,0.04)] transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
                   See How It Works <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </a>
+                </motion.a>
               </div>
 
               {/* Trust Strip */}
@@ -193,7 +220,7 @@ export default function Hero() {
               <div className="text-center pt-4">
                 <p className="text-[rgba(255,255,255,0.5)] text-sm mb-2">The founders who built their system in Q1 are already booking calls from it.</p>
                 <p className="text-accent-orange font-semibold text-sm mb-6">4 seats left for Q2 2026. Build yours before the window closes.</p>
-                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all">
+                <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all">
                   Book a Call with Danny <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </a>
               </div>

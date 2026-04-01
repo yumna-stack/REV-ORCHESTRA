@@ -4,23 +4,23 @@ import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Badge, PageHero, StaggerGrid, GridItem } from "@/components/PageWrapper";
-import { Reveal, fadeUp, popIn } from "@/components/motion";
+import { Reveal, fadeUp } from "@/components/motion";
 
-const team = [
-  { name: "Jane Doe", role: "CEO & Blockchain Architect", socials: { x: "#", youtube: "#", linkedin: "#", instagram: "#" } },
-  { name: "John Smith", role: "AI & Data Scientist", socials: { x: "#", youtube: "#", linkedin: "#", instagram: "#" } },
-  { name: "Alex Crypto", role: "Lead Developer", socials: { x: "#", youtube: "#", linkedin: "#", instagram: "#" } },
-  { name: "Sarah Tech", role: "Community Manager", socials: { x: "#", youtube: "#", linkedin: "#", instagram: "#" } },
-  { name: "Michel Finn", role: "Community Manager", socials: { x: "#", youtube: "#", linkedin: "#", instagram: "#" } },
-  { name: "Chris Doe", role: "CEO & Blockchain Architect", socials: { x: "#", youtube: "#", linkedin: "#", instagram: "#" } },
-];
+const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 
-const partners = [
-  { name: "ADA", label: "AUTHORIZED PARTNER" },
-  { name: "BTC", label: "AUTHORIZED PARTNER" },
-  { name: "ETH", label: "AUTHORIZED PARTNER" },
-  { name: "SOL", label: "AUTHORIZED PARTNER" },
-  { name: "BNB", label: "AUTHORIZED PARTNER" },
+const values = [
+  {
+    title: "Ownership > Subscriptions",
+    desc: "You pay once, you own everything. No monthly fees, no vendor lock-in, no surprise price hikes. The system is yours permanently.",
+  },
+  {
+    title: "Playbook > Tools",
+    desc: "Tools without a strategy just create expensive noise. We build the playbook first, then connect the tools to execute it.",
+  },
+  {
+    title: "Precision > Volume",
+    desc: "Sending more emails isn't a strategy. Reaching the right buyer in the right window with the right message — that's orchestration.",
+  },
 ];
 
 export default function AboutPage() {
@@ -28,129 +28,87 @@ export default function AboutPage() {
     <main className="w-full bg-[rgb(14,15,17)]">
       <Navigation />
 
-      {/* Hero */}
       <PageHero
         badge="About"
-        title="Unleash the Power of Crypto Data"
-        subtitle="Real-time insights across 35+ chains with CRYPS' decentralized indexing."
+        title="Built by a founder, for founders."
+        subtitle="Rev Orchestra exists because too many post-funding B2B founders are burning through pipeline budgets on disconnected tools."
       />
 
-      {/* Animated Text Section */}
-      <section className="relative w-full py-20 bg-[rgb(14,15,17)]">
-        <div className="max-w-[850px] mx-auto px-5 text-center">
+      {/* Story */}
+      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+        <div className="max-w-[750px] mx-auto px-5">
           <Reveal variants={fadeUp}>
-            <p className="text-[clamp(24px,4vw,48px)] font-medium leading-[135%] tracking-[-1.5px] text-[rgba(255,255,255,0.12)]">
-              <span className="text-white">Cryps</span>{" "}
-              <span className="text-white">is</span>{" "}
-              <span className="text-white">revolutionizing</span>{" "}
-              the fusion of cryptocurrency and artificial intelligence, ushering in a new era of crypto data indexing.
+            <div className="space-y-6 text-base text-[rgba(255,255,255,0.5)] leading-[180%]">
+              <p>
+                Danny Bossa built Rev Orchestra after watching 30+ B2B founders go through the same cycle: raise funding, hire an SDR, buy 5-6 tools, burn through their list in 60 days, and end up with nothing but a messy CRM and a depleted TAM.
+              </p>
+              <p>
+                The problem was never the tools. It was never the AI. It was the <span className="text-white font-medium">lack of orchestration</span> — no system connecting the signals to the research to the copy to the outreach to the CRM. Just disconnected point solutions running in parallel.
+              </p>
+              <p>
+                Rev Orchestra is the fix. A <span className="text-accent-orange font-medium">90-day, done-for-you GTM system build</span> that deploys six AI agents into your existing stack. Not another SaaS subscription. Not another retainer. A system you own, permanently.
+              </p>
+              <p className="text-white font-medium">
+                Small team. High-touch. 4 clients per quarter, max. Based between Sri Lanka and Singapore.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+        <div className="max-w-[1000px] mx-auto px-5">
+          <Reveal variants={fadeUp} className="text-center mb-14">
+            <Badge text="Our Values" />
+            <h2 className="text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-2px] text-white mt-6" style={{ fontFamily: "var(--font-family-heading)" }}>
+              What we believe
+            </h2>
+          </Reveal>
+
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {values.map((v, i) => (
+              <GridItem key={i}>
+                <motion.div
+                  className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-8 h-full"
+                  whileHover={{ borderColor: "rgba(232,86,0,0.2)", y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h3 className="text-accent-orange font-semibold text-lg mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>
+                    {v.title}
+                  </h3>
+                  <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%]">{v.desc}</p>
+                </motion.div>
+              </GridItem>
+            ))}
+          </StaggerGrid>
+        </div>
+      </section>
+
+      {/* Founder */}
+      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+        <div className="max-w-[600px] mx-auto px-5 text-center">
+          <Reveal variants={fadeUp}>
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-orange/20 to-accent-orange/5 border border-accent-orange/20 flex items-center justify-center mx-auto mb-6">
+              <span className="text-2xl font-bold text-accent-orange">DB</span>
+            </div>
+            <h3 className="text-white text-xl font-semibold mb-1">Danny Bossa</h3>
+            <p className="text-sm text-accent-orange mb-4">Founder, Rev Orchestra</p>
+            <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] mb-8">
+              GTM strategist and AI systems builder. Previously built and scaled outbound engines for B2B SaaS companies across APAC and Europe. Now focused on one thing: building AI-orchestrated GTM systems that founders own permanently.
             </p>
+            <motion.a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              Book a Call with Danny
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </motion.a>
           </Reveal>
-        </div>
-      </section>
-
-      {/* Team Photos Ticker */}
-      <section className="relative w-full py-24 bg-[rgb(14,15,17)]">
-        <div className="max-w-[1200px] mx-auto px-5">
-          <Reveal variants={fadeUp}>
-            <div className="text-center mb-12">
-              <Badge text="Our Team" />
-              <h2 className="text-[clamp(28px,4vw,52px)] font-medium leading-[110%] tracking-[-2px] text-white mt-6 mb-4">
-                Cryps Team in Action
-              </h2>
-              <p className="text-lg text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[560px] mx-auto">
-                Our team works in a hybrid environment to be the best in the world
-              </p>
-            </div>
-          </Reveal>
-
-          {/* Photos ticker - scrolling row */}
-          <Reveal variants={popIn}>
-            <div className="relative w-full h-[500px] overflow-hidden rounded-[60px]">
-              <div className="absolute left-0 top-0 bottom-0 w-[10%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] to-transparent" />
-              <div className="absolute right-0 top-0 bottom-0 w-[10%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] to-transparent" />
-              <div className="flex gap-6 h-full" style={{ animation: "logoScroll 30s linear infinite" }}>
-                {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((_, i) => (
-                  <div key={i} className="w-[500px] h-full shrink-0 rounded-[60px] bg-gradient-to-br from-[rgba(255,255,255,0.04)] to-[rgba(255,255,255,0.01)] border border-[rgba(255,255,255,0.06)]" />
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Partners Grid */}
-      <section className="relative w-full py-24 bg-[rgb(14,15,17)]">
-        <div className="max-w-[1200px] mx-auto px-5">
-          <Reveal variants={fadeUp}>
-            <div className="text-center mb-12">
-              <Badge text="Trusted Partners" />
-              <h2 className="text-[clamp(28px,4vw,52px)] font-medium leading-[110%] tracking-[-2px] text-white mt-6 mb-4">
-                A Foundation You Can Trust
-              </h2>
-              <p className="text-lg text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[560px] mx-auto">
-                Our deep integrations with these leading protocols provide our users with unparalleled security, speed, and reliability.
-              </p>
-            </div>
-          </Reveal>
-
-          <StaggerGrid className="grid grid-cols-2 md:grid-cols-5 gap-5">
-            {partners.map((p, i) => (
-              <GridItem key={i}>
-                <motion.div
-                  className="rounded-[24px] border border-[rgba(41,42,43,1)] bg-[rgba(255,255,255,0.02)] p-6 flex flex-col items-center justify-center gap-4 h-[200px] transition-all"
-                  whileHover={{ scale: 1.02, borderColor: "rgba(232,86,0,0.3)" }}
-                >
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-accent-orange/20 to-accent-purple/10 flex items-center justify-center">
-                    <span className="text-xl font-bold text-white">{p.name[0]}</span>
-                  </div>
-                  <span className="text-lg font-semibold text-white">{p.name}</span>
-                  <span className="text-[10px] text-[rgba(255,255,255,0.4)] uppercase tracking-[0.15em]">{p.label}</span>
-                </motion.div>
-              </GridItem>
-            ))}
-          </StaggerGrid>
-        </div>
-      </section>
-
-      {/* Team Grid */}
-      <section className="relative w-full py-24 bg-[rgb(14,15,17)]">
-        <div className="max-w-[1200px] mx-auto px-5">
-          <Reveal variants={fadeUp}>
-            <div className="text-center mb-12">
-              <Badge text="Our Heros" />
-              <h2 className="text-[clamp(28px,4vw,52px)] font-medium leading-[110%] tracking-[-2px] text-white mt-6 mb-4">
-                Our Team
-              </h2>
-              <p className="text-lg text-[rgba(255,255,255,0.45)] leading-[160%]">Meet our great team.</p>
-            </div>
-          </Reveal>
-
-          <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {team.map((m, i) => (
-              <GridItem key={i}>
-                <motion.div
-                  className="rounded-[24px] border border-[rgba(41,42,43,1)] bg-[rgba(255,255,255,0.02)] p-8 transition-all"
-                  whileHover={{ scale: 1.02, borderColor: "rgba(232,86,0,0.3)" }}
-                >
-                  {/* Avatar placeholder */}
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[rgba(255,255,255,0.06)] to-[rgba(255,255,255,0.02)] mb-6 flex items-center justify-center">
-                    <span className="text-2xl font-semibold text-[rgba(255,255,255,0.3)]">{m.name.split(" ").map(n => n[0]).join("")}</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-1">{m.name}</h3>
-                  <p className="text-sm text-[rgba(255,255,255,0.45)] mb-4">{m.role}</p>
-                  {/* Social links */}
-                  <div className="flex gap-3">
-                    {["X", "YT", "Li", "IG"].map((s, j) => (
-                      <a key={j} href="#" className="w-8 h-8 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] flex items-center justify-center text-[10px] text-[rgba(255,255,255,0.4)] hover:border-accent-orange hover:text-accent-orange transition-all">
-                        {s}
-                      </a>
-                    ))}
-                  </div>
-                </motion.div>
-              </GridItem>
-            ))}
-          </StaggerGrid>
         </div>
       </section>
 

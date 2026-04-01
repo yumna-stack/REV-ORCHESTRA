@@ -36,13 +36,28 @@ export const scaleUp: Variants = {
   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease } },
 };
 
+export const flipUp: Variants = {
+  hidden: { opacity: 0, rotateX: 25, y: 50, filter: "blur(6px)" },
+  visible: { opacity: 1, rotateX: 0, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease } },
+};
+
+export const slideRight: Variants = {
+  hidden: { opacity: 0, x: -60, filter: "blur(4px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.7, ease } },
+};
+
+export const zoomRotate: Variants = {
+  hidden: { opacity: 0, scale: 0.7, rotate: -5 },
+  visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 0.8, ease } },
+};
+
 /* ── Reveal: scroll-triggered whileInView wrapper ── */
 export function Reveal({
   children,
   variants = fadeUp,
   className = "",
   delay = 0,
-  once = true,
+  once = false,
   amount = 0.2,
 }: {
   children: ReactNode;
@@ -72,7 +87,7 @@ export function StaggerContainer({
   className = "",
   staggerDelay = 0.15,
   initialDelay = 0,
-  once = true,
+  once = false,
   amount = 0.15,
 }: {
   children: ReactNode;

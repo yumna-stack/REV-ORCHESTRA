@@ -18,6 +18,7 @@ const domains: Record<string, string> = {
   stripe: "stripe.com",
   airtable: "airtable.com",
   zapier: "zapier.com",
+  twitter: "x.com",
 };
 
 export default function BrandLogo({
