@@ -251,60 +251,50 @@ function Card4() {
   );
 }
 
-/* ── Dashed connector between two cards — vertical line with circle endpoints + orange dot (Cryps-style) ── */
+/* ── Dashed connector between two cards — Cryps-style ── */
 function DashedConnector() {
   return (
     <div
       className="hidden lg:flex items-center justify-center"
-      style={{ width: 28, position: "relative", zIndex: 20, alignSelf: "center" }}
+      style={{ width: 48, flexShrink: 0, position: "relative", zIndex: 20 }}
     >
-      <div className="relative flex flex-col items-center" style={{ height: 80 }}>
-        {/* Top circle */}
-        <div
-          className="shrink-0"
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            backgroundColor: "rgb(20,21,24)",
-            border: "1.5px solid rgba(255,255,255,0.25)",
-          }}
-        />
-        {/* Dashed line */}
-        <div
-          className="flex-1"
-          style={{
-            width: 0,
-            borderLeft: "1.5px dashed rgba(255,255,255,0.2)",
-            margin: "3px 0",
-          }}
-        />
-        {/* Bottom circle */}
-        <div
-          className="shrink-0"
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            backgroundColor: "rgb(20,21,24)",
-            border: "1.5px solid rgba(255,255,255,0.25)",
-          }}
-        />
-        {/* Orange center dot */}
-        <div
-          className="absolute"
-          style={{
-            width: 10,
-            height: 10,
-            borderRadius: "50%",
-            backgroundColor: "#E85600",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            boxShadow: "0 0 8px rgba(232,86,0,0.6)",
-          }}
-        />
-      </div>
+      {/* Left endpoint — sits on Card 1 border */}
+      <div
+        style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          backgroundColor: "rgb(18,19,22)",
+          border: "1.5px solid rgba(255,255,255,0.18)",
+          flexShrink: 0,
+        }}
+      />
+      {/* Dashed line segment */}
+      <div style={{ flex: 1, borderTop: "1.5px dashed rgba(255,255,255,0.15)", margin: "0 3px" }} />
+      {/* Orange dot center */}
+      <div
+        style={{
+          width: 8,
+          height: 8,
+          borderRadius: "50%",
+          backgroundColor: "#E85600",
+          boxShadow: "0 0 6px rgba(232,86,0,0.5)",
+          flexShrink: 0,
+        }}
+      />
+      {/* Dashed line segment */}
+      <div style={{ flex: 1, borderTop: "1.5px dashed rgba(255,255,255,0.15)", margin: "0 3px" }} />
+      {/* Right endpoint — sits on Card 2 border */}
+      <div
+        style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          backgroundColor: "rgb(18,19,22)",
+          border: "1.5px solid rgba(255,255,255,0.18)",
+          flexShrink: 0,
+        }}
+      />
     </div>
   );
 }
