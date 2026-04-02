@@ -10,7 +10,7 @@ import { Reveal, fadeUp } from "@/components/motion";
 const resources = [
   {
     title: "The Orchestra",
-    desc: "Weekly newsletter. Free. Actually useful. GTM strategy, AI orchestration insights, and founder playbooks — delivered every Tuesday.",
+    desc: "Weekly newsletter. Free. Actually useful. GTM strategy, AI orchestration insights, and founder playbooks, delivered every Tuesday.",
     href: "/resources/orchestra",
     cta: "Subscribe",
     icon: (
@@ -34,7 +34,7 @@ const resources = [
   },
   {
     title: "Playbooks",
-    desc: "Downloadable GTM frameworks. Signal mapping templates. ICP audit checklists. The same tools we use with our clients — free.",
+    desc: "Downloadable GTM frameworks. Signal mapping templates. ICP audit checklists. The same tools we use with our clients, free.",
     href: "/resources",
     cta: "Coming Soon",
     icon: (
@@ -57,7 +57,7 @@ export default function ResourcesPage() {
       <PageHero
         badge="Resources"
         title="Free GTM thinking."
-        subtitle="Download it. Read it. Build it. No gating, no email walls — just useful stuff."
+        subtitle="Download it. Read it. Build it. No gating, no email walls, just useful stuff."
       />
 
       <section className="w-full py-16 bg-[rgb(14,15,17)]">

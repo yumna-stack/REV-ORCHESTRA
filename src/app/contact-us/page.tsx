@@ -57,7 +57,7 @@ export default function ContactPage() {
                       </StaggerItem>
                       <StaggerItem>
                         <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[170%]">
-                          30-minute discovery call. No pitch deck, no hard sell — just an honest review of your GTM stack and where orchestration could help.
+                          30-minute discovery call. No pitch deck, no hard sell, just an honest review of your GTM stack and where orchestration could help.
                         </p>
                       </StaggerItem>
                     </StaggerContainer>

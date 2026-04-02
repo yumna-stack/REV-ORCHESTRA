@@ -37,7 +37,7 @@ export default function CTA() {
           </Reveal>
           <Reveal variants={fadeUp} delay={0.15}>
             <p className="text-base text-[rgba(255,255,255,0.5)] leading-[170%] mb-8 max-w-[540px] mx-auto">
-              4 seats left for Q2. Discovery calls are 30 minutes. We&apos;ll review your current GTM live on the call and tell you honestly what we&apos;d build.
+              4 seats left. Discovery calls are 30 minutes. We&apos;ll review your current GTM live on the call and tell you honestly what we&apos;d build.
             </p>
           </Reveal>
           <Reveal variants={fadeUp} delay={0.3}>
@@ -63,7 +63,7 @@ export default function CTA() {
                   Join Our Newsletter
                 </h3>
                 <p className="text-[14px] text-[rgba(255,255,255,0.35)] leading-[170%]">
-                  Join the Rev Orchestra Newsletter | GTM strategy, AI orchestration insights, and founder playbooks — delivered weekly.
+                  Join the Rev Orchestra Newsletter | GTM strategy, AI orchestration insights, and founder playbooks, delivered weekly.
                 </p>
                 {subscribed ? (
                   <motion.div

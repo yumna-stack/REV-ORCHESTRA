@@ -1,443 +1,470 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Reveal, fadeUp } from "@/components/motion";
+import BrandLogo from "@/components/BrandLogo";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-/* ── Step data ── */
-const steps = [
-  {
-    number: "1",
-    title: "Map the Gaps",
-    desc: "We audit your entire GTM stack before building anything.",
-    timeline: "Week 1–2",
-    details: [
-      "Full diagnostic of your current tools, data flows, and processes",
-      "ICP coverage, signal detection, and messaging scored",
-      "Identify gaps between where you are and where you need to be",
-    ],
-  },
-  {
-    number: "2",
-    title: "Design the Machine",
-    desc: "Full system architecture, signed off before a line of code.",
-    timeline: "Week 2–3",
-    details: [
-      "Agent network design with data flow mapping",
-      "Integration blueprint for your entire tool stack",
-      "Approval gate — nothing gets built without your sign-off",
-    ],
-  },
-  {
-    number: "3",
-    title: "Build the Orchestra",
-    desc: "Six AI agents go live, connected to your existing stack.",
-    timeline: "Week 3–10",
-    details: [
-      "Signal, Research, Copy, Outbound, CRM, and Monitor agents deployed",
-      "Connected to HubSpot, Clay, Instantly, Slack, and your tools",
-      "Guardrails, RBAC, and audit trails built in from day one",
-    ],
-  },
-  {
-    number: "4",
-    title: "Hand the Keys Over",
-    desc: "Two weeks of optimisation, then it's yours. Permanently.",
-    timeline: "Week 11–12",
-    details: [
-      "Full documentation and team training session",
-      "30-day post-handoff support window included",
-      "You own 100% of the workflows, agents, and IP",
-    ],
-  },
-];
-
-/* ── Mock screens for inside the Framer card ── */
-function AuditScreen() {
-  const rows = [
-    { label: "ICP Coverage", value: "34%", bar: 34, color: "#EF4444" },
-    { label: "Signal Detection", value: "None", bar: 0, color: "#EF4444" },
-    { label: "CRM Data Health", value: "52%", bar: 52, color: "#F59E0B" },
-    { label: "Outbound Reply Rate", value: "1.2%", bar: 12, color: "#EF4444" },
-    { label: "Tool Integration", value: "2 of 6", bar: 33, color: "#F59E0B" },
-    { label: "Messaging Score", value: "C-", bar: 25, color: "#EF4444" },
-  ];
+/* ── Card 1: Top-left — like Cryps "Crypo wallet with secure encryption" ── */
+function Card1() {
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-5 h-5 rounded-md bg-red-500/20 flex items-center justify-center">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2"><path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        </div>
-        <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-wider font-medium">GTM Gap Analysis</span>
-      </div>
-      {rows.map((row, i) => (
-        <motion.div
-          key={i}
-          className="flex items-center justify-between"
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.1 + i * 0.06, duration: 0.4 }}
+    <div className="flex flex-col h-full justify-between">
+      <div>
+        <h3
+          className="text-[20px] font-medium text-white leading-[130%] mb-2"
+          style={{ fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}
         >
-          <span className="text-[11px] text-[rgba(255,255,255,0.5)]">{row.label}</span>
-          <div className="flex items-center gap-3">
-            <span className="text-[11px] font-medium text-[rgba(255,255,255,0.7)] w-10 text-right">{row.value}</span>
-            <div className="w-16 h-1.5 bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden">
-              <motion.div
-                className="h-full rounded-full"
-                style={{ background: row.color }}
-                initial={{ width: 0 }}
-                animate={{ width: `${row.bar}%` }}
-                transition={{ delay: 0.3 + i * 0.08, duration: 0.6 }}
-              />
-            </div>
-          </div>
+          Signal-led prospecting with secure orchestration
+        </h3>
+        <p className="text-[13px] text-[rgba(255,255,255,0.4)] leading-[160%]">
+          Leading multi-agent AI pipeline management
+        </p>
+      </div>
+      {/* Avatar circles + dashed connector + orb — like Cryps profile pics */}
+      <div className="flex items-center mt-6">
+        {[
+          { letter: "D", bg: "rgba(232,86,0,0.3)", border: "rgba(232,86,0,0.4)", color: "#E85600" },
+          { letter: "R", bg: "rgba(255,255,255,0.08)", border: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)" },
+        ].map((a, i) => (
+          <motion.div
+            key={i}
+            className="w-11 h-11 rounded-full flex items-center justify-center text-[12px] font-bold"
+            style={{
+              backgroundColor: a.bg,
+              border: `2px solid ${a.border}`,
+              color: a.color,
+              marginLeft: i > 0 ? -10 : 0,
+              zIndex: 2 - i,
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false }}
+            transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 300, damping: 20 }}
+          >
+            {a.letter}
+          </motion.div>
+        ))}
+        {/* Dashed line */}
+        <div
+          className="mx-3"
+          style={{ width: 40, height: 0, borderTop: "1.5px dashed rgba(255,255,255,0.2)" }}
+        />
+        {/* Rev Orchestra orb */}
+        <motion.div
+          className="w-11 h-11 rounded-full flex items-center justify-center"
+          style={{
+            background: "radial-gradient(circle at 35% 35%, #F09030, #C44800)",
+            boxShadow: "0 4px 16px rgba(232,86,0,0.35)",
+          }}
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
         </motion.div>
-      ))}
-      <div className="mt-3 pt-3 border-t border-[rgba(255,255,255,0.06)] flex justify-between">
-        <span className="text-[10px] text-red-400 font-semibold uppercase tracking-wider">Overall Readiness</span>
-        <span className="text-[11px] font-bold text-red-400">27% — Critical</span>
       </div>
     </div>
   );
 }
 
-function BlueprintScreen() {
-  const agents = [
-    { name: "Signal", icon: "S" }, { name: "Research", icon: "R" }, { name: "Copy", icon: "C" },
-    { name: "Outbound", icon: "O" }, { name: "CRM", icon: "CR" }, { name: "Monitor", icon: "M" },
+/* ── Card 2: Top-right — like Cryps "Bitcoin" ticker card ── */
+function Card2() {
+  const tools = [
+    { name: "Claude", sub: "CLAUDE", key: "claude", stat: "2.20% ↑", color: "#4ade80" },
+    { name: "HubSpot", sub: "HUBSPOT", key: "hubspot", stat: "2.80% ↑", color: "#4ade80" },
+    { name: "Clay", sub: "CLAY", key: "clay", stat: "enriching", color: "#4ade80" },
+    { name: "Instantly", sub: "INSTANTLY", key: "instantly", stat: "1.50% ↑", color: "#4ade80" },
+    { name: "LinkedIn", sub: "LINKEDIN", key: "linkedin", stat: "scanning", color: "#4ade80" },
+    { name: "Slack", sub: "SLACK", key: "slack", stat: "alerting", color: "#facc15" },
+    { name: "n8n", sub: "N8N", key: "n8n", stat: "running", color: "#4ade80" },
+    { name: "Apollo", sub: "APOLLO", key: "apollo", stat: "1,247", color: "#4ade80" },
   ];
+  const doubled = [...tools, ...tools];
+
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col h-full">
+      {/* Header — like Cryps Bitcoin header with icon + name + price */}
       <div className="flex items-center gap-2 mb-2">
-        <div className="w-5 h-5 rounded-md bg-green-500/20 flex items-center justify-center">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        </div>
-        <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-wider font-medium">Agent Network Design</span>
-        <span className="text-[9px] text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full ml-auto">Approved</span>
-      </div>
-      <div className="grid grid-cols-3 gap-2">
-        {agents.map((a, i) => (
-          <motion.div
-            key={i}
-            className="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 + i * 0.06 }}
-          >
-            <div className="w-8 h-8 rounded-lg bg-accent-orange/20 flex items-center justify-center text-[9px] font-bold text-accent-orange">{a.icon}</div>
-            <span className="text-[9px] text-[rgba(255,255,255,0.5)] font-medium">{a.name}</span>
-          </motion.div>
-        ))}
-      </div>
-      <div className="flex items-center gap-4 pt-2">
-        <div className="flex items-center gap-1"><div className="w-4 h-px bg-accent-orange" /><span className="text-[8px] text-[rgba(255,255,255,0.3)]">Data flow</span></div>
-        <div className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-green-400" /><span className="text-[8px] text-[rgba(255,255,255,0.3)]">Active</span></div>
-      </div>
-    </div>
-  );
-}
-
-function AgentsLiveScreen() {
-  const agents = [
-    { name: "Signal Scanner", status: "Scanning", ops: "1,247" },
-    { name: "Research Agent", status: "Enriching", ops: "843" },
-    { name: "Copy Writer", status: "Generating", ops: "3,126" },
-    { name: "Outbound Agent", status: "Sending", ops: "14,208" },
-    { name: "CRM Syncer", status: "Syncing", ops: "892" },
-    { name: "Monitor Agent", status: "Watching", ops: "246" },
-  ];
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
-          <motion.div className="w-2 h-2 rounded-full bg-green-500" animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }} />
-          <span className="text-[11px] font-medium text-[rgba(255,255,255,0.7)]">All Systems Live</span>
-        </div>
-        <span className="text-[10px] text-[rgba(255,255,255,0.3)]">6/6 agents</span>
-      </div>
-      {agents.map((a, i) => (
-        <motion.div
-          key={i}
-          className="flex items-center justify-between py-1.5 border-b border-[rgba(255,255,255,0.04)] last:border-0"
-          initial={{ opacity: 0, x: 15 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.08 + i * 0.05 }}
+        <div
+          className="w-7 h-7 rounded-full flex items-center justify-center"
+          style={{ background: "radial-gradient(circle at 35% 35%, #F09030, #C44800)" }}
         >
-          <div className="flex items-center gap-2">
-            <motion.div className="w-1.5 h-1.5 rounded-full bg-green-500" animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }} />
-            <span className="text-[10px] text-[rgba(255,255,255,0.6)]">{a.name}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-[9px] text-green-400 font-medium">{a.status}</span>
-            <span className="text-[9px] text-[rgba(255,255,255,0.25)]">{a.ops} ops</span>
-          </div>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+        </div>
+        <div>
+          <span className="text-[12px] font-semibold text-white leading-none block">Rev Orchestra</span>
+          <span className="text-[10px] text-[rgba(255,255,255,0.3)]">47 meetings/mo</span>
+        </div>
+      </div>
+
+      {/* Big number — like Cryps "00.343 |" */}
+      <div
+        className="text-[28px] font-medium text-white tracking-tight mb-2 flex items-baseline"
+        style={{ fontFamily: "var(--font-family-heading)" }}
+      >
+        00.343 <span className="text-[rgba(255,255,255,0.15)] ml-1 text-[24px]">|</span>
+      </div>
+
+      {/* Scrolling tool list — like Cryps crypto price list */}
+      <div className="relative flex-1 min-h-0 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-4 z-10 bg-gradient-to-b from-[rgb(22,23,27)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-4 z-10 bg-gradient-to-t from-[rgb(22,23,27)] to-transparent pointer-events-none" />
+        <motion.div
+          className="flex flex-col gap-1"
+          animate={{ y: ["0%", "-50%"] }}
+          transition={{ y: { duration: 22, repeat: Infinity, ease: "linear", repeatType: "loop" } }}
+        >
+          {doubled.map((tool, i) => (
+            <div key={i} className="flex items-center gap-2 py-1.5 px-1">
+              <BrandLogo name={tool.key} size={18} colored />
+              <div className="flex-1 min-w-0">
+                <span className="text-[11px] font-semibold text-white block leading-none">{tool.name}</span>
+                <span className="text-[8px] text-[rgba(255,255,255,0.2)] uppercase">{tool.sub}</span>
+              </div>
+              <span className="text-[10px] font-medium shrink-0" style={{ color: tool.color }}>
+                {tool.stat}
+              </span>
+            </div>
+          ))}
         </motion.div>
-      ))}
-      <div className="pt-2 border-t border-[rgba(255,255,255,0.06)] flex justify-between">
-        <span className="text-[10px] text-green-400 font-semibold">Total (30d)</span>
-        <span className="text-[11px] font-bold text-green-400">20,562</span>
       </div>
     </div>
   );
 }
 
-function ResultsScreen() {
-  const metrics = [
-    { label: "Meetings/mo", value: "47", change: "+450%" },
-    { label: "Reply Rate", value: "8.7%", change: "+625%" },
-    { label: "Pipeline", value: "$1.2M", change: "+340%" },
-    { label: "Cost Saved", value: "$2.8K", change: "/month" },
+/* ── Card 3: Bottom-left — like Cryps "DAPPS" ── */
+function Card3() {
+  const rows = [
+    { initials: "SC", amount: "$120", time: "10:30 pm", name: "Sarah Chen · Acme Corp", stage: "Discovery", stageColor: "#4ade80" },
+    { initials: "MR", amount: "$455", time: "12 June 12:30 pm", name: "Mike Rodriguez · TechFlow", stage: "waiting", stageColor: "#facc15" },
+    { initials: "LP", amount: "$7,775", time: "12 June", name: "Lisa Park · DataSync", stage: "Sent", stageColor: "#4ade80" },
+    { initials: "JW", amount: "$3,200", time: "Today", name: "James Wilson · CloudBase", stage: "Qualified", stageColor: "#4ade80" },
+    { initials: "AN", amount: "$890", time: "2 days ago", name: "Amy Nguyen · ScaleAI", stage: "Outreach", stageColor: "#60a5fa" },
+    { initials: "DK", amount: "$2,100", time: "3 days ago", name: "David Kim · GrowthOS", stage: "Responded", stageColor: "#4ade80" },
   ];
+  const doubled = [...rows, ...rows];
+
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-2">
-        {metrics.map((m, i) => (
+    <div className="flex flex-col h-full">
+      <h3
+        className="text-[20px] font-medium text-white leading-[130%] mb-2"
+        style={{ fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}
+      >
+        Pipeline
+      </h3>
+      <p className="text-[12px] text-[rgba(255,255,255,0.35)] mb-3">
+        Take control of your entire funnel
+      </p>
+
+      {/* Scrolling deal rows — like Cryps DAPPS transactions */}
+      <div className="relative flex-1 min-h-0 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-4 z-10 bg-gradient-to-b from-[rgb(22,23,27)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-4 z-10 bg-gradient-to-t from-[rgb(22,23,27)] to-transparent pointer-events-none" />
+        <motion.div
+          className="flex flex-col gap-1.5"
+          animate={{ y: ["0%", "-50%"] }}
+          transition={{ y: { duration: 25, repeat: Infinity, ease: "linear", repeatType: "loop" } }}
+        >
+          {doubled.map((row, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-2.5 px-3 py-2 rounded-lg"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.03)",
+                border: "0.5px solid rgba(255,255,255,0.05)",
+              }}
+            >
+              <div className="w-7 h-7 rounded-full bg-[rgba(255,255,255,0.07)] flex items-center justify-center text-[8px] font-bold text-[rgba(255,255,255,0.4)] shrink-0">
+                {row.initials}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[11px] font-semibold text-white">{row.amount}</span>
+                  <span className="text-[8px] text-[rgba(255,255,255,0.2)]">{row.time}</span>
+                </div>
+                <span className="text-[8px] text-[rgba(255,255,255,0.2)] truncate block">{row.name}</span>
+              </div>
+              <span
+                className="text-[8px] font-medium px-2 py-0.5 rounded-full shrink-0"
+                style={{ color: row.stageColor, backgroundColor: `${row.stageColor}12` }}
+              >
+                {row.stage}
+              </span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Card 4: Bottom-right — like Cryps "Buy Sell and Swap" with large circular icons ── */
+function Card4() {
+  const tools = [
+    { key: "hubspot", bg: "rgba(255,108,55,0.12)" },
+    { key: "clay", bg: "rgba(138,100,255,0.12)" },
+    { key: "instantly", bg: "rgba(100,180,255,0.12)" },
+    { key: "slack", bg: "rgba(230,160,50,0.12)" },
+    { key: "n8n", bg: "rgba(180,100,200,0.12)" },
+    { key: "claude", bg: "rgba(200,160,100,0.12)" },
+    { key: "apollo", bg: "rgba(80,120,200,0.12)" },
+    { key: "linkedin", bg: "rgba(40,120,200,0.12)" },
+    { key: "salesforce", bg: "rgba(0,160,230,0.12)" },
+    { key: "zapier", bg: "rgba(255,100,50,0.12)" },
+    { key: "google", bg: "rgba(60,180,100,0.12)" },
+    { key: "airtable", bg: "rgba(50,180,200,0.12)" },
+  ];
+
+  return (
+    <div className="flex flex-col h-full justify-between">
+      <h3
+        className="text-[20px] font-medium text-white leading-[130%] mb-2"
+        style={{ fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}
+      >
+        Connect and Orchestrate
+      </h3>
+      {/* 4x3 grid of large circular icons — like Cryps crypto token circles */}
+      <div className="grid grid-cols-4 gap-2.5">
+        {tools.map((tool, i) => (
           <motion.div
-            key={i}
-            className="p-3 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 + i * 0.08 }}
+            key={tool.key}
+            className="aspect-square rounded-full flex items-center justify-center"
+            style={{
+              backgroundColor: tool.bg,
+              border: "1px solid rgba(255,255,255,0.05)",
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false }}
+            transition={{ delay: 0.15 + i * 0.04, type: "spring", stiffness: 300, damping: 20 }}
+            whileHover={{ scale: 1.08 }}
           >
-            <span className="text-[8px] text-[rgba(255,255,255,0.3)] uppercase tracking-wider">{m.label}</span>
-            <div className="text-lg font-bold text-white leading-none mt-1">{m.value}</div>
-            <span className="text-[9px] text-green-400 font-medium">{m.change}</span>
+            <BrandLogo name={tool.key} size={24} colored />
           </motion.div>
         ))}
       </div>
-      <div className="rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-3">
-        <span className="text-[9px] text-[rgba(255,255,255,0.3)] font-medium">Pipeline — 90 Days</span>
-        <div className="flex items-end gap-1 mt-2 h-8">
-          {[15, 20, 18, 35, 42, 38, 55, 62, 58, 75, 82, 90].map((h, i) => (
-            <motion.div
-              key={i}
-              className="flex-1 rounded-t"
-              style={{ background: i >= 8 ? "#E8650A" : "rgba(255,255,255,0.08)" }}
-              initial={{ height: 0 }}
-              animate={{ height: `${h}%` }}
-              transition={{ delay: 0.2 + i * 0.04, duration: 0.4 }}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="pt-2 border-t border-[rgba(255,255,255,0.06)] flex justify-between">
-        <span className="text-[10px] text-accent-orange font-semibold">System Status</span>
-        <span className="text-[10px] font-bold text-accent-orange">Yours — Permanently</span>
-      </div>
     </div>
   );
 }
 
-const screens = [AuditScreen, BlueprintScreen, AgentsLiveScreen, ResultsScreen];
+/* ── Dashed connector between two cards — vertical line with circle endpoints + orange dot (Cryps-style) ── */
+function DashedConnector() {
+  return (
+    <div
+      className="hidden lg:flex items-center justify-center"
+      style={{ width: 28, position: "relative", zIndex: 20, alignSelf: "center" }}
+    >
+      <div className="relative flex flex-col items-center" style={{ height: 80 }}>
+        {/* Top circle */}
+        <div
+          className="shrink-0"
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            backgroundColor: "rgb(20,21,24)",
+            border: "1.5px solid rgba(255,255,255,0.25)",
+          }}
+        />
+        {/* Dashed line */}
+        <div
+          className="flex-1"
+          style={{
+            width: 0,
+            borderLeft: "1.5px dashed rgba(255,255,255,0.2)",
+            margin: "3px 0",
+          }}
+        />
+        {/* Bottom circle */}
+        <div
+          className="shrink-0"
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            backgroundColor: "rgb(20,21,24)",
+            border: "1.5px solid rgba(255,255,255,0.25)",
+          }}
+        />
+        {/* Orange center dot */}
+        <div
+          className="absolute"
+          style={{
+            width: 10,
+            height: 10,
+            borderRadius: "50%",
+            backgroundColor: "#E85600",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            boxShadow: "0 0 8px rgba(232,86,0,0.6)",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function ProcessVisual() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
-
-  // Auto-cycle every 5s
-  useEffect(() => {
-    if (!autoPlay) return;
-    const t = setInterval(() => setActiveStep((i) => (i + 1) % steps.length), 5000);
-    return () => clearInterval(t);
-  }, [autoPlay]);
-
-  const handleClick = (i: number) => {
-    setActiveStep(i);
-    setAutoPlay(false);
-    // Resume after 15s
-    setTimeout(() => setAutoPlay(true), 15000);
-  };
-
-  const ActiveScreen = screens[activeStep];
-
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
-      <div className="max-w-[1200px] mx-auto px-5">
-        {/* Heading */}
-        <Reveal variants={fadeUp} className="text-center mb-16">
-          <p className="text-xs text-[rgba(255,255,255,0.4)] uppercase tracking-widest mb-3">
-            The Process
-          </p>
-          <h2
-            className="text-[clamp(28px,4vw,48px)] font-medium leading-[110%] tracking-[-2px] text-white"
-            style={{ fontFamily: "var(--font-family-heading)" }}
-          >
-            Four steps. 90 days.{" "}
-            <span className="text-accent-orange italic">Then it&apos;s yours.</span>
-          </h2>
-        </Reveal>
+    <section id="how-it-works" className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
+      <div className="max-w-[1100px] mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-start">
+          {/* LEFT — sticky text */}
+          <div className="lg:sticky lg:top-32">
+            <Reveal variants={fadeUp}>
+              {/* Features badge */}
+              <div
+                className="inline-flex items-center gap-2 mb-7"
+                style={{
+                  padding: "8px 14px",
+                  borderRadius: 40,
+                  backgroundColor: "rgb(25,27,31)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                }}
+              >
+                <span className="w-2 h-2 rounded-full bg-accent-orange" />
+                <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.5)" }}>
+                  Features
+                </span>
+              </div>
 
-        {/* ── Framer-style 2-col: Left text steps + Right dark card ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-          {/* LEFT — Step list (clickable, swaps the right card) */}
-          <div className="flex flex-col gap-1">
-            {steps.map((step, i) => {
-              const isActive = activeStep === i;
-              return (
-                <motion.button
-                  key={i}
-                  onClick={() => handleClick(i)}
-                  className={`text-left p-5 rounded-2xl border transition-all duration-300 ${
-                    isActive
-                      ? "border-[rgba(232,86,0,0.2)] bg-[rgba(232,86,0,0.04)]"
-                      : "border-transparent hover:bg-[rgba(255,255,255,0.02)]"
-                  }`}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: false }}
-                  transition={{ delay: i * 0.1, duration: 0.5, ease }}
-                >
-                  <div className="flex items-center gap-3 mb-1.5">
-                    <span className="text-[10px] text-accent-orange bg-accent-orange/10 px-2.5 py-1 rounded-full font-semibold tracking-wide">
-                      {step.timeline}
-                    </span>
-                  </div>
-                  <h3
-                    className={`text-lg font-semibold mb-1 transition-colors ${
-                      isActive ? "text-accent-orange" : "text-white"
-                    }`}
-                    style={{ fontFamily: "var(--font-family-heading)" }}
-                  >
-                    {step.number}. {step.title}
-                  </h3>
-                  <p className="text-sm text-[rgba(255,255,255,0.45)] leading-relaxed">
-                    {step.desc}
-                  </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 3.8vw, 44px)",
+                  fontWeight: 500,
+                  lineHeight: "110%",
+                  letterSpacing: "-1.5px",
+                  color: "white",
+                  marginBottom: 16,
+                }}
+              >
+                AI-Orchestrated GTM System Built for B2B Founders
+              </h2>
 
-                  {/* Expandable details */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.ul
-                        className="mt-3 space-y-1.5"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease }}
-                      >
-                        {step.details.map((d, j) => (
-                          <motion.li
-                            key={j}
-                            className="flex items-start gap-2 text-[13px] text-[rgba(255,255,255,0.5)] leading-relaxed"
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: j * 0.06 }}
-                          >
-                            <svg
-                              className="w-3 h-3 mt-1 shrink-0 text-accent-orange"
-                              viewBox="0 0 10 10"
-                              fill="none"
-                            >
-                              <path
-                                d="M2 5l2.5 2.5L8 3"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                            {d}
-                          </motion.li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
+              <p style={{ fontSize: 16, lineHeight: "155%", color: "rgba(255,255,255,0.38)", marginBottom: 28, maxWidth: 400 }}>
+                A platform to prospect, engage, and close, all from one orchestrated system running 24/7.
+              </p>
 
-                  {/* Progress bar for active step */}
-                  {isActive && autoPlay && (
-                    <motion.div
-                      className="mt-3 h-[2px] bg-accent-orange/30 rounded-full overflow-hidden"
-                    >
-                      <motion.div
-                        className="h-full bg-accent-orange rounded-full"
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 5, ease: "linear" }}
-                        key={`progress-${activeStep}`}
-                      />
-                    </motion.div>
-                  )}
-                </motion.button>
-              );
-            })}
+              <motion.a
+                href="https://cal.com/danny-revorchestra/discovery"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5"
+                style={{
+                  padding: "13px 26px",
+                  borderRadius: 100,
+                  backgroundColor: "#E85600",
+                  color: "white",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                BOOK A CALL
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </motion.a>
+            </Reveal>
           </div>
 
-          {/* RIGHT — Framer-style dark glassmorphic card with swapping screen */}
-          <motion.div
-            className="sticky top-32"
-            initial={{ opacity: 0, x: 60, scale: 0.95 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, ease }}
-          >
-            {/* Outer shell — Framer thin outline */}
-            <div className="rounded-[36px] p-[6px] border border-[rgba(255,255,255,0.03)]">
-              {/* Inner card — Framer dark card with orange glow */}
-              <div className="relative rounded-[30px] bg-[rgba(255,255,255,0.03)] border border-[rgb(41,42,43)] overflow-hidden min-h-[420px]">
-                {/* Orange glow SVG overlay at bottom */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-[50%] pointer-events-none z-0"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse 90% 60% at 50% 100%, rgba(232,86,0,0.12) 0%, rgba(232,86,0,0.04) 40%, transparent 70%)",
-                  }}
-                />
-                {/* Top orange glow */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-[30%] pointer-events-none z-0"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(232,86,0,0.06) 0%, transparent 60%)",
-                  }}
-                />
-                {/* Animated bottom line */}
-                <motion.div
-                  className="absolute bottom-0 left-[10%] right-[10%] h-[2px] rounded-full z-10"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, transparent, #E85600, transparent)",
-                  }}
-                  animate={{ opacity: [0.3, 0.8, 0.3] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                />
+          {/* RIGHT — 2×2 card grid */}
+          <div className="grid gap-5" style={{ gridTemplateRows: "320px 320px" }}>
+            {/* ── Top row ── */}
+            <div className="flex items-stretch gap-0">
+              {/* Card 1 */}
+              <motion.div
+                style={{
+                  flex: "0 0 56%",
+                  backgroundColor: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 36,
+                  padding: 24,
+                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
+                transition={{ duration: 0.5, ease }}
+              >
+                <Card1 />
+              </motion.div>
 
-                {/* Screen content — swaps with AnimatePresence */}
-                <div className="relative z-[1] p-7 md:p-8">
-                  {/* Step indicator dots */}
-                  <div className="flex items-center gap-2 mb-6">
-                    {steps.map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className={`w-2 h-2 rounded-full cursor-pointer transition-colors ${
-                          activeStep === i ? "bg-accent-orange" : "bg-[rgba(255,255,255,0.1)]"
-                        }`}
-                        onClick={() => handleClick(i)}
-                        whileHover={{ scale: 1.3 }}
-                        animate={activeStep === i ? { scale: [1, 1.2, 1] } : {}}
-                        transition={{ duration: 1, repeat: activeStep === i ? Infinity : 0 }}
-                      />
-                    ))}
-                    <span className="ml-auto text-[10px] text-[rgba(255,255,255,0.25)] uppercase tracking-wider">
-                      Step {activeStep + 1} of 4
-                    </span>
-                  </div>
+              {/* Dashed connector */}
+              <DashedConnector />
 
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeStep}
-                      initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, y: -20, filter: "blur(6px)" }}
-                      transition={{ duration: 0.4, ease }}
-                    >
-                      <ActiveScreen />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </div>
+              {/* Card 2 */}
+              <motion.div
+                className="flex-1"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 36,
+                  padding: 20,
+                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
+                transition={{ duration: 0.5, ease, delay: 0.1 }}
+              >
+                <Card2 />
+              </motion.div>
             </div>
-          </motion.div>
+
+            {/* ── Bottom row ── */}
+            <div className="flex items-stretch gap-5">
+              {/* Card 3 */}
+              <motion.div
+                style={{
+                  flex: "0 0 56%",
+                  backgroundColor: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 36,
+                  padding: 24,
+                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
+                transition={{ duration: 0.5, ease, delay: 0.2 }}
+              >
+                <Card3 />
+              </motion.div>
+
+              {/* Card 4 */}
+              <motion.div
+                className="relative flex-1 overflow-hidden"
+                style={{
+                  backgroundColor: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 36,
+                  padding: 22,
+                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
+                transition={{ duration: 0.5, ease, delay: 0.3 }}
+              >
+                {/* Orange glow — like Cryps */}
+                <div
+                  className="absolute bottom-0 right-0 w-full h-[65%] pointer-events-none z-0"
+                  style={{
+                    background: "radial-gradient(ellipse at 100% 100%, rgba(232,86,0,0.18) 0%, rgba(232,86,0,0.05) 45%, transparent 70%)",
+                  }}
+                />
+                <div className="relative z-[1] h-full">
+                  <Card4 />
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

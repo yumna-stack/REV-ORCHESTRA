@@ -28,7 +28,7 @@ const values = [
   },
   {
     title: "Precision > Volume",
-    desc: "Sending more emails isn't a strategy. Reaching the right buyer in the right window with the right message — that's orchestration.",
+    desc: "Sending more emails isn't a strategy. Reaching the right buyer in the right window with the right message, that's orchestration.",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function AboutPage() {
                 Danny Bossa built Rev Orchestra after watching 30+ B2B founders go through the same cycle: raise funding, hire an SDR, buy 5-6 tools, burn through their list in 60 days, and end up with nothing but a messy CRM and a depleted TAM.
               </p>
               <p>
-                The problem was never the tools. It was never the AI. It was the <span className="text-white font-medium">lack of orchestration</span> — no system connecting the signals to the research to the copy to the outreach to the CRM. Just disconnected point solutions running in parallel.
+                The problem was never the tools. It was never the AI. It was the <span className="text-white font-medium">lack of orchestration</span>. No system connecting the signals to the research to the copy to the outreach to the CRM. Just disconnected point solutions running in parallel.
               </p>
               <p>
                 Rev Orchestra is the fix. A <span className="text-accent-orange font-medium">90-day, done-for-you GTM system build</span> that deploys six AI agents into your existing stack. Not another SaaS subscription. Not another retainer. A system you own, permanently.

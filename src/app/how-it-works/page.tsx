@@ -13,7 +13,7 @@ const steps = [
     number: "01",
     title: "Map the Gaps",
     timeline: "Week 1\u20132",
-    description: "We go inside your business before we build anything. ICP audit. Messaging review. Signal gap analysis. CRM health check. Tool overlap mapping. You get a full diagnostic report — what\u2019s working, what\u2019s broken, what\u2019s missing.",
+    description: "We go inside your business before we build anything. ICP audit. Messaging review. Signal gap analysis. CRM health check. Tool overlap mapping. You get a full diagnostic report: what\u2019s working, what\u2019s broken, what\u2019s missing.",
     deliverables: ["ICP audit & scoring model", "Signal gap analysis", "CRM health report", "Tool overlap map", "Messaging scorecard"],
   },
   {
@@ -154,7 +154,7 @@ export default function HowItWorksPage() {
             <h2 className="text-[clamp(24px,3.5vw,40px)] font-medium leading-[115%] tracking-[-1.5px] text-white mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>
               The founders who built their system in Q1 are already booking calls from it.
             </h2>
-            <p className="text-sm text-[rgba(255,255,255,0.4)] mb-8">4 spots available for Q2 2026.</p>
+            <p className="text-sm text-[rgba(255,255,255,0.4)] mb-8">4 spots available for 2026.</p>
             <motion.a
               href={CAL_URL}
               target="_blank"

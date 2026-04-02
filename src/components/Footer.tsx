@@ -7,11 +7,10 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const footerLinks = {
   main: [
-    { label: "What We Do", href: "/what-we-do" },
-    { label: "How It Works", href: "/how-it-works" },
-    { label: "Packages", href: "/packages" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact-us" },
+    { label: "What We Do", href: "/#agents" },
+    { label: "How It Works", href: "/#how-it-works" },
+    { label: "Packages", href: "/#pricing" },
+    { label: "FAQ", href: "/#faq" },
   ],
   resources: [
     { label: "Playbooks", href: "/resources" },
@@ -183,12 +182,19 @@ export default function Footer() {
                     transition={{ delay: i * 0.05, duration: 0.4, ease }}
                   >
                     <motion.div whileHover={linkHover}>
-                      <Link
+                      <a
                         href={link.href}
+                        onClick={(e) => {
+                          const hash = link.href.split("#")[1];
+                          if (hash) {
+                            e.preventDefault();
+                            document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }}
                         className="text-[16px] text-[rgba(255,255,255,0.45)] hover:text-white transition-colors inline-block"
                       >
                         {link.label}
-                      </Link>
+                      </a>
                     </motion.div>
                   </motion.div>
                 ))}

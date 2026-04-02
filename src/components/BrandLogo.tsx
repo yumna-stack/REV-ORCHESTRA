@@ -1,6 +1,12 @@
 "use client";
 
-/* Uses Google's favicon service to get REAL brand logos at runtime */
+/* Brand logos — uses local SVGs first, falls back to Clearbit then Google */
+
+const localLogos = new Set([
+  "airtable", "apollo", "claude", "clay", "google", "hubspot",
+  "instantly", "linkedin", "n8n", "notion", "salesforce", "slack",
+  "stripe", "zapier", "zoom",
+]);
 
 const domains: Record<string, string> = {
   hubspot: "hubspot.com",
@@ -26,28 +32,35 @@ export default function BrandLogo({
   size = 32,
   className = "",
   style,
+  colored = false,
 }: {
   name: string;
   size?: number;
   className?: string;
   style?: React.CSSProperties;
+  colored?: boolean;
 }) {
   const key = name.toLowerCase();
   const domain = domains[key];
   if (!domain) return null;
 
-  /* Always request max 128px for HD quality */
-  const src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  /* Use local SVG if available, otherwise Clearbit then Google */
+  const hasLocal = localLogos.has(key);
+  const src = hasLocal ? `/logos/${key}.svg` : `https://logo.clearbit.com/${domain}`;
+  const fallbackSrc = hasLocal
+    ? `https://logo.clearbit.com/${domain}`
+    : `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  const lastFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 
-  /* X/Twitter favicon is black — invert it so it's visible on dark backgrounds */
-  const needsInvert = key === "twitter";
+  /* Grey by default; colored when prop is set. */
+  const greyFilter = key === "twitter"
+    ? "invert(1) grayscale(1) brightness(1.4) contrast(0.85)"
+    : "grayscale(1) brightness(1.4) contrast(0.85)";
+  const colorFilter = key === "twitter" ? "invert(1)" : undefined;
+  const baseFilter = colored ? colorFilter : greyFilter;
   const mergedStyle: React.CSSProperties = {
     ...style,
-    ...(needsInvert && !style?.filter
-      ? { filter: "invert(1) grayscale(1) brightness(1.4) contrast(0.85)" }
-      : needsInvert && style?.filter
-        ? { filter: `invert(1) ${style.filter}` }
-        : {}),
+    ...(baseFilter ? { filter: style?.filter ? `${baseFilter} ${style.filter}` : baseFilter } : {}),
   };
 
   return (
@@ -60,6 +73,14 @@ export default function BrandLogo({
       className={`rounded-sm ${className}`}
       style={mergedStyle}
       loading="lazy"
+      onError={(e) => {
+        const img = e.currentTarget;
+        if (img.src !== fallbackSrc) {
+          img.src = fallbackSrc;
+        } else if (img.src !== lastFallback) {
+          img.src = lastFallback;
+        }
+      }}
     />
   );
 }

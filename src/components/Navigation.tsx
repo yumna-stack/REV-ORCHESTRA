@@ -9,9 +9,9 @@ import { playClickSound } from "@/lib/sounds";
 const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 
 const navLinks = [
-  { label: "What We Do", href: "/what-we-do" },
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Packages", href: "/packages" },
+  { label: "What We Do", href: "/#agents" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Packages", href: "/#pricing" },
 ];
 
 const resourceLinks = [
@@ -76,22 +76,22 @@ export default function Navigation() {
 
       {/* Center Pill Nav */}
       <div className="hidden md:flex items-center gap-1 bg-[rgba(30,30,30,0.8)] backdrop-blur-xl border border-[rgba(255,255,255,0.06)] rounded-full px-2 py-1.5">
-        {navLinks.map((link) => {
-          const isActive = pathname === link.href;
-          return (
-            <Link
+        {navLinks.map((link) => (
+            <a
               key={link.label}
               href={link.href}
-              className={`px-4 py-2 text-sm rounded-full transition-all duration-300 ${
-                isActive
-                  ? "text-accent-orange bg-[rgba(232,86,0,0.08)]"
-                  : "text-[rgba(255,255,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.05)]"
-              }`}
+              onClick={(e) => {
+                const hash = link.href.split("#")[1];
+                if (hash) {
+                  e.preventDefault();
+                  document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="px-4 py-2 text-sm rounded-full transition-all duration-300 text-[rgba(255,255,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.05)]"
             >
               {link.label}
-            </Link>
-          );
-        })}
+            </a>
+          ))}
 
         {/* Resources Dropdown */}
         <div ref={dropdownRef} className="relative">
@@ -180,13 +180,20 @@ export default function Navigation() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08, duration: 0.3 }}
                 >
-                  <Link
+                  <a
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`text-base transition-colors block py-1 ${pathname === link.href ? "text-accent-orange" : "text-[rgba(255,255,255,0.7)] hover:text-white"}`}
+                    onClick={(e) => {
+                      setMobileOpen(false);
+                      const hash = link.href.split("#")[1];
+                      if (hash) {
+                        e.preventDefault();
+                        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className="text-base transition-colors block py-1 text-[rgba(255,255,255,0.7)] hover:text-white"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </motion.div>
               ))}
 

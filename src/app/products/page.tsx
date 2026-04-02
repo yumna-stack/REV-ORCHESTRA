@@ -38,7 +38,7 @@ const features = [
   },
   {
     title: "DeFi Integration",
-    desc: "Connect seamlessly to top DeFi protocols for lending, borrowing, staking, and yield farming — all from one platform.",
+    desc: "Connect seamlessly to top DeFi protocols for lending, borrowing, staking, and yield farming, all from one platform.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="9" />
@@ -532,7 +532,7 @@ export default function ProductsPage() {
               </h2>
               <p className="text-base text-[rgba(255,255,255,0.45)] max-w-[550px] mx-auto">
                 Plug into the leading DeFi protocols, blockchains, and crypto
-                infrastructure tools — no migration needed.
+                infrastructure tools, no migration needed.
               </p>
             </div>
           </Reveal>

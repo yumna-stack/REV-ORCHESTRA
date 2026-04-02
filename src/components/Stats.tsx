@@ -1,203 +1,222 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import {
   motion,
-  useMotionValue,
   useTransform,
-  animate,
-  useInView,
   useScroll,
+  useSpring,
+  type Variants,
 } from "framer-motion";
 import { Reveal, fadeLeft } from "@/components/motion";
 
-const ease = [0.22, 1, 0.36, 1] as const;
 const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 
-/* ── Animated Counter ── */
-function AnimatedNumber({
-  value,
-  suffix = "",
-  prefix = "",
-  duration = 2,
-}: {
-  value: number;
-  suffix?: string;
-  prefix?: string;
-  duration?: number;
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.5 });
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => `${Math.round(v)}`);
+/* ── Exact Cryps color tokens from Framer MCP ── */
+const COLORS = {
+  lightBlack: "rgb(14, 15, 17)",
+  preHeader: "rgb(25, 27, 31)",
+  lightOutline: "rgba(255, 255, 255, 0.03)",
+  outline: "rgb(41, 42, 43)",
+  orange: "rgb(232, 86, 0)",
+  purple: "rgb(152, 151, 255)",
+  gradientOutline: "rgb(255, 142, 104)",
+  green: "rgb(183, 233, 50)",
+};
 
-  useEffect(() => {
-    if (isInView) {
-      const controls = animate(count, value, { duration, ease: "easeOut" });
-      return controls.stop;
-    } else {
-      count.set(0);
-    }
-  }, [isInView, count, value, duration]);
-
-  return (
-    <span ref={ref} className="inline">
-      {prefix}
-      <motion.span>{rounded}</motion.span>
-      {suffix}
-    </span>
-  );
-}
-
-/* ── Stat card data — Cryps colors + original market research content ── */
+/* ── Offer explanation cards — exact Cryps Stat Card structure ── */
 const stats = [
   {
-    label: "CONVERSION RATE",
-    badge: "LANDBASE 2026",
-    badgeIcon: "circle",
-    animValue: 7,
-    animPrefix: "4\u2013",
-    animSuffix: "\u00D7",
-    headline: "higher conversions for AI-native GTM teams vs. traditional outbound",
-    source: "Source: Landbase, 2026. Companies using agentic, signal-led AI see 4-7x conversion rates vs. batch-and-blast outbound.",
-    color: "#9897FF",
-    glow: "rgba(152,151,255,0.15)",
-    glowMid: "rgba(152,151,255,0.06)",
-    lineColor: "#9897FF",
+    label: "WHAT WE BUILD",
+    badge: "THE SYSTEM",
+    bigNumber: "6 Agents",
+    headline: "AI-orchestrated GTM systems for post-funding B2B founders.",
+    description: "Signals, outreach, CRM, and reporting working as one connected system. Not another tool. A system you own.",
+    accentColor: COLORS.purple,
+    glowImage: `linear-gradient(23deg, transparent 30%, rgba(152, 151, 255, 0.18) 60%, rgba(152, 151, 255, 0.08) 80%, transparent 100%)`,
   },
   {
-    label: "B2B ADOPTION",
-    badge: "GARTNER 2025",
-    badgeIcon: "square",
-    animValue: 70,
-    animPrefix: "",
-    animSuffix: "%",
-    headline: "of B2B companies adopting AI-driven GTM by end of 2026",
-    source: "Source: Gartner, 2025. The window to build early is now. The 30% not doing it yet are the ones still on the 2024 playbook.",
-    color: "#E8650A",
-    glow: "rgba(232,101,10,0.25)",
-    glowMid: "rgba(232,101,10,0.10)",
-    lineColor: "#E8650A",
+    label: "WHAT HAPPENS",
+    badge: "OUTCOMES",
+    bigNumber: "24/7",
+    headline: "Buying signals caught. Outreach triggered. CRM updated. Pipeline moving.",
+    description: "Your agents find warm leads, write contextual outreach, update your CRM, and alert your team. Every day, without you touching it.",
+    accentColor: COLORS.orange,
+    glowImage: `linear-gradient(23deg, transparent 30%, rgba(232, 86, 0, 0.22) 60%, rgba(255, 142, 104, 0.08) 80%, transparent 100%)`,
   },
   {
-    label: "MARKET SIZE",
-    badge: "32.9% CAGR",
-    badgeIcon: "gear",
-    animValue: 240,
-    animPrefix: "$58B \u2192 $",
-    animSuffix: "B",
-    headline: "AI GTM market growing to $240B by 2030",
-    source: "This is not a niche category. This is the new infrastructure of B2B growth.",
-    color: "#E8650A",
-    glow: "rgba(232,101,10,0.10)",
-    glowMid: "rgba(232,101,10,0.04)",
-    lineColor: "rgba(232,101,10,0.4)",
+    label: "WHAT YOU GET",
+    badge: "90 DAYS",
+    bigNumber: "90 Days",
+    headline: "Built on your stack, documented, and handed over permanently.",
+    description: "No subscriptions. No retainers. No vendor lock-in. You own the agents, the workflows, and the IP.",
+    accentColor: "rgba(200, 195, 185, 0.6)",
+    glowImage: `linear-gradient(23deg, transparent 30%, rgba(200, 195, 185, 0.08) 60%, rgba(200, 195, 185, 0.03) 80%, transparent 100%)`,
   },
 ];
 
-/* ── Badge icon component ── */
-function BadgeIcon({ type, color }: { type: string; color: string }) {
-  if (type === "circle") return <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" stroke={color} strokeWidth="1.5" fill="none" /><circle cx="5" cy="5" r="1.5" fill={color} /></svg>;
-  if (type === "square") return <svg width="10" height="10" viewBox="0 0 10 10"><rect x="1" y="1" width="8" height="8" rx="2" fill={color} /></svg>;
-  return <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" stroke={color} strokeWidth="1" fill="none" /><path d="M3 5h4M5 3v4" stroke={color} strokeWidth="1" strokeLinecap="round" /></svg>;
-}
-
-/* ── Card slide variants — alternating left/right per Context7 dynamic variants ── */
-const cardSlideVariants = {
-  hidden: (i: number) => ({
-    opacity: 0,
-    x: i % 2 === 0 ? -120 : 120,
-    rotateY: i % 2 === 0 ? 8 : -8,
-    scale: 0.92,
-    filter: "blur(6px)",
-  }),
-  visible: {
-    opacity: 1,
-    x: 0,
-    rotateY: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.8, ease },
-  },
-};
-
-/* ── Glassmorphic stat card — Cryps screenshot style + sideways slide ── */
-function StatCard({
+/* ── Context7 scroll-driven card — each tracks its own scroll, slides from LEFT ── */
+function ScrollStatCard({
   stat,
   index,
 }: {
   stat: (typeof stats)[number];
   index: number;
 }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  /* Per-element scroll tracking — Context7 useScroll pattern */
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end 0.75"],
+  });
+
+  /* Scroll-driven transforms: slide from LEFT + fade + scale */
+  const rawX = useTransform(scrollYProgress, [0, 1], [-(100 + index * 30), 0]);
+  const rawOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.2, 1]);
+  const rawScale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
+
+  /* Spring-smoothed for natural physics — Context7 useSpring pattern */
+  const x = useSpring(rawX, { stiffness: 100, damping: 22, mass: 0.7 });
+  const opacity = useSpring(rawOpacity, { stiffness: 180, damping: 28 });
+  const scale = useSpring(rawScale, { stiffness: 180, damping: 24 });
+
   return (
     <motion.div
-      custom={index}
-      variants={cardSlideVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.3 }}
-      transition={{ duration: 0.8, ease, delay: index * 0.15 }}
-      whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.25 } }}
-      style={{ transformPerspective: 1200 }}
+      ref={cardRef}
+      style={{ x, opacity, scale, transformPerspective: 1200 }}
+      whileHover={{
+        y: -4,
+        scale: 1.012,
+        transition: { type: "spring", stiffness: 400, damping: 25 },
+      }}
     >
-      {/* Outer shell */}
-      <div className="rounded-[24px] p-[4px] border border-[rgba(255,255,255,0.04)]">
-        {/* Inner card */}
-        <div className="relative rounded-[20px] bg-[rgb(18,19,22)] border border-[rgb(38,39,42)] overflow-hidden">
-          {/* Colored glow — right side, strong like Cryps */}
+      {/* Outer shell — exact Cryps: 42px radius, 8px padding, 0.93px border */}
+      <div
+        className="overflow-hidden"
+        style={{
+          borderRadius: 42,
+          padding: 8,
+          border: `0.93px solid ${COLORS.lightOutline}`,
+          backgroundColor: COLORS.lightBlack,
+        }}
+      >
+        {/* Inner card — exact Cryps: 34px radius, 36px padding, Pre-header bg */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            borderRadius: 34,
+            padding: 36,
+            backgroundColor: COLORS.preHeader,
+          }}
+        >
+          {/* Glow overlay — 23deg rotated like Cryps Mask element */}
           <div
-            className="absolute top-0 right-0 w-[55%] h-full pointer-events-none z-0"
-            style={{
-              background: `radial-gradient(ellipse 90% 80% at 100% 50%, ${stat.glow} 0%, ${stat.glowMid} 40%, transparent 70%)`,
-            }}
+            className="absolute inset-0 pointer-events-none z-0"
+            style={{ background: stat.glowImage }}
           />
+
           {/* Animated bottom glow line */}
           <motion.div
-            className="absolute bottom-0 left-[8%] right-[8%] h-[2px] rounded-full z-10"
+            className="absolute bottom-0 left-[8%] right-[8%] h-px rounded-full z-10"
             style={{
-              background: `linear-gradient(90deg, transparent, ${stat.lineColor}, transparent)`,
+              background: `linear-gradient(90deg, transparent, ${stat.accentColor}, transparent)`,
             }}
-            animate={{ opacity: [0.15, 0.45, 0.15] }}
+            animate={{ opacity: [0.1, 0.35, 0.1] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
           />
 
-          <div className="relative z-[1] px-7 pt-5 pb-6">
-            {/* Top row: label + badge */}
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] text-[rgba(255,255,255,0.35)] uppercase tracking-[0.18em] font-medium">
+          <div className="relative z-[1] flex flex-col" style={{ gap: 12 }}>
+            {/* Label + Badge row — exact Cryps: space-between, 14px Inter-Medium uppercase */}
+            <div className="flex items-center justify-between">
+              <span
+                style={{
+                  fontFamily: "var(--font-family-body)",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  textTransform: "uppercase",
+                  color: stat.accentColor,
+                }}
+              >
                 {stat.label}
               </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] text-[rgba(255,255,255,0.35)] font-medium tracking-wider">
-                {stat.badge}
-                <BadgeIcon type={stat.badgeIcon} color={stat.color} />
-              </span>
+              <div className="flex items-center gap-2">
+                <span
+                  style={{
+                    fontFamily: "var(--font-family-body)",
+                    fontSize: 14,
+                    fontWeight: 500,
+                    lineHeight: "140%",
+                    textTransform: "uppercase",
+                    color: stat.accentColor,
+                  }}
+                >
+                  {stat.badge}
+                </span>
+                {/* Badge icon — exact Cryps: 24x24 circle, Light Outline bg */}
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: 24,
+                    height: 24,
+                    borderRadius: 20,
+                    backgroundColor: COLORS.lightOutline,
+                    border: `1px solid ${COLORS.lightOutline}`,
+                  }}
+                >
+                  <div
+                    className="rounded-full"
+                    style={{
+                      width: 8,
+                      height: 8,
+                      backgroundColor: stat.accentColor,
+                    }}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Big animated number — large like Cryps */}
-            <motion.div
-              className="text-[clamp(40px,6vw,60px)] font-medium leading-[1] tracking-[-2px] mb-3 whitespace-nowrap"
-              style={{ fontFamily: "var(--font-family-heading)", color: stat.color }}
-              initial={{ scale: 0.85, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: false, amount: 0.5 }}
-              transition={{ duration: 0.6, ease, delay: index * 0.12 + 0.1 }}
+            {/* Big number — exact Cryps H3 Big Text: 90px Inter-Medium, -2px letter-spacing */}
+            <motion.p
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(52px, 7.5vw, 90px)",
+                fontWeight: 500,
+                lineHeight: "100%",
+                letterSpacing: "-2px",
+                color: stat.accentColor,
+                whiteSpace: "nowrap",
+              }}
             >
-              <AnimatedNumber
-                value={stat.animValue}
-                prefix={stat.animPrefix}
-                suffix={stat.animSuffix}
-                duration={2 + index * 0.3}
-              />
-            </motion.div>
+              {stat.bigNumber}
+            </motion.p>
 
-            {/* Headline */}
-            <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[160%]">
-              {stat.headline}
-            </p>
-            {/* Source */}
-            <p className="text-[11px] text-[rgba(255,255,255,0.25)] leading-[155%] mt-2 italic">
-              {stat.source}
-            </p>
+            {/* Card content */}
+            <div className="flex flex-col" style={{ gap: 8, marginTop: 8 }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: 17,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  letterSpacing: "-0.3px",
+                  color: "rgba(255,255,255,0.85)",
+                }}
+              >
+                {stat.headline}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-family-body)",
+                  fontSize: 14,
+                  lineHeight: "155%",
+                  color: "rgba(255,255,255,0.35)",
+                }}
+              >
+                {stat.description}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -205,7 +224,7 @@ function StatCard({
   );
 }
 
-/* ── Avatar stack — like screenshot ── */
+/* ── Avatar stack ── */
 const avatarColors = ["#6366F1", "#818CF8", "#A5B4FC", "#C7D2FE", "#9897FF"];
 
 export default function Stats() {
@@ -215,68 +234,110 @@ export default function Stats() {
     offset: ["start end", "end start"],
   });
 
-  const rightY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  /* Smooth spring-damped parallax — Context7 useSpring pattern */
+  const rawY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const rightY = useSpring(rawY, { stiffness: 80, damping: 30, mass: 0.5 });
+
+  /* Scroll-linked left column opacity */
+  const leftOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.4, 1, 1, 0.6]);
 
   return (
     <section ref={sectionRef} id="stats" className="relative w-full py-28 bg-[rgb(14,15,17)]">
-      <div className="max-w-[1200px] mx-auto px-5">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* ── LEFT — Title + subtitle + CTA ── */}
-          <Reveal variants={fadeLeft} className="flex flex-col gap-6 lg:sticky lg:top-32">
-            <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] w-fit">
-              <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
-              <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider">
-                Market Context
-              </span>
-            </div>
-
-            <h2
-              className="text-[clamp(28px,4vw,48px)] font-medium leading-[115%] tracking-[-2px] text-white"
-              style={{ fontFamily: "var(--font-family-heading)" }}
-            >
-              What the Research Shows
-            </h2>
-
-            <p className="text-sm text-[rgba(255,255,255,0.35)] italic leading-relaxed max-w-[400px]">
-              These are real numbers from live market research, March 2026. Use as supporting evidence.
-            </p>
-
-            <div className="flex items-center gap-5 mt-2">
-              <motion.a
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
+      <div className="max-w-[1280px] mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-14 items-start">
+          {/* LEFT — scroll-linked opacity */}
+          <motion.div style={{ opacity: leftOpacity }}>
+            <Reveal variants={fadeLeft} className="flex flex-col gap-6 lg:sticky lg:top-32">
+              <div
+                className="relative inline-flex items-center gap-2 w-fit"
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: 100,
+                  backgroundColor: COLORS.preHeader,
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
               >
-                BOOK A CALL WITH DANNY
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </motion.a>
-
-              {/* Avatar stack */}
-              <div className="flex items-center">
-                <div className="flex -space-x-2">
-                  {avatarColors.map((color, i) => (
-                    <div
-                      key={i}
-                      className="w-8 h-8 rounded-full border-2 border-[rgb(14,15,17)]"
-                      style={{ background: color }}
-                    />
-                  ))}
-                </div>
-                <span className="ml-3 text-sm text-[rgba(255,255,255,0.5)] font-medium">8M</span>
+                <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
+                <span
+                  style={{
+                    fontFamily: "var(--font-family-body)",
+                    fontSize: 12,
+                    color: "rgba(255,255,255,0.6)",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  What We Do
+                </span>
               </div>
-            </div>
-          </Reveal>
 
-          {/* ── RIGHT — Stacked glassmorphic stat cards with parallax ── */}
-          <motion.div style={{ y: rightY }} className="flex flex-col gap-5">
+              <h2
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 4vw, 52px)",
+                  fontWeight: 500,
+                  lineHeight: "110%",
+                  letterSpacing: "-2px",
+                  color: "white",
+                }}
+              >
+                One System. Six Agents. Yours.
+              </h2>
+
+              <p
+                style={{
+                  fontFamily: "var(--font-family-body)",
+                  fontSize: 16,
+                  lineHeight: "150%",
+                  color: "rgba(255,255,255,0.4)",
+                  maxWidth: 400,
+                }}
+              >
+                We don&apos;t sell software. We build your AI GTM engine, connect it to your stack, and hand it over.
+              </p>
+
+              <div className="flex items-center gap-5 mt-2">
+                <motion.a
+                  href={CAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-accent-orange text-white hover:brightness-110 transition-all"
+                  style={{
+                    padding: "14px 28px",
+                    borderRadius: 100,
+                    fontFamily: "var(--font-family-body)",
+                    fontSize: 14,
+                    fontWeight: 500,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.04em",
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  BOOK A CALL WITH DANNY
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </motion.a>
+                <div className="flex items-center">
+                  <div className="flex -space-x-2">
+                    {avatarColors.map((color, i) => (
+                      <div key={i} className="w-8 h-8 rounded-full border-2 border-[rgb(14,15,17)]" style={{ background: color }} />
+                    ))}
+                  </div>
+                  <span className="ml-3 text-sm text-[rgba(255,255,255,0.5)] font-medium">8M</span>
+                </div>
+              </div>
+            </Reveal>
+          </motion.div>
+
+          {/* RIGHT — Cards with spring parallax + scroll-driven slide from left */}
+          <motion.div
+            style={{ y: rightY }}
+            className="flex flex-col gap-4"
+          >
             {stats.map((stat, i) => (
-              <StatCard key={i} stat={stat} index={i} />
+              <ScrollStatCard key={i} stat={stat} index={i} />
             ))}
           </motion.div>
         </div>

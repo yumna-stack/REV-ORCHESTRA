@@ -17,46 +17,36 @@ const row1 = [
   { name: "Instantly", key: "instantly" },
   { name: "Claude", key: "claude" },
   { name: "Apollo", key: "apollo" },
-  { name: "X/Twitter", key: "twitter" },
-];
-
-const row2 = [
   { name: "Salesforce", key: "salesforce" },
-  { name: "Google", key: "google" },
-  { name: "Notion", key: "notion" },
-  { name: "Zoom", key: "zoom" },
-  { name: "Stripe", key: "stripe" },
-  { name: "Airtable", key: "airtable" },
   { name: "Zapier", key: "zapier" },
-  { name: "50+", key: "" },
 ];
 
 const capabilities = [
   {
     title: "Prospect",
     items: [
-      { label: "Signal Detection", tools: ["hubspot", "linkedin", "twitter", "zapier"] },
-      { label: "Account Research", tools: ["clay", "apollo", "google"] },
-      { label: "ICP Matching", tools: ["salesforce", "hubspot", "airtable"] },
-      { label: "Contact Enrichment", tools: ["clay", "apollo", "linkedin"] },
+      { label: "Buying Signal Detection", tools: ["hubspot", "linkedin", "apollo"] },
+      { label: "Deep Account Research", tools: ["clay", "apollo", "claude"] },
+      { label: "ICP-Matched Targeting", tools: ["salesforce", "hubspot", "clay"] },
+      { label: "Auto Contact Enrichment", tools: ["clay", "apollo", "linkedin"] },
     ],
   },
   {
     title: "Engage",
     items: [
-      { label: "Email Sequences", tools: ["instantly", "hubspot", "claude"] },
-      { label: "LinkedIn Outreach", tools: ["linkedin", "clay", "n8n"] },
-      { label: "Multi-Channel", tools: ["slack", "instantly", "hubspot"] },
-      { label: "Follow-up Automation", tools: ["n8n", "instantly", "claude"] },
+      { label: "AI-Written Email Sequences", tools: ["instantly", "claude", "hubspot"] },
+      { label: "LinkedIn Touch Sequences", tools: ["linkedin", "clay", "n8n"] },
+      { label: "Multi-Channel Orchestration", tools: ["slack", "instantly", "hubspot"] },
+      { label: "Smart Follow-up Triggers", tools: ["n8n", "instantly", "claude"] },
     ],
   },
   {
     title: "Orchestrate",
     items: [
-      { label: "CRM Updates", tools: ["hubspot", "salesforce", "n8n"] },
-      { label: "Pipeline Monitoring", tools: ["hubspot", "slack", "airtable"] },
-      { label: "Agent Coordination", tools: ["n8n", "claude", "slack"] },
-      { label: "Performance Alerts", tools: ["slack", "zapier", "n8n"] },
+      { label: "CRM Auto-Updates", tools: ["hubspot", "salesforce", "n8n"] },
+      { label: "Live Pipeline Monitoring", tools: ["hubspot", "slack", "n8n"] },
+      { label: "Agent-to-Agent Handoffs", tools: ["n8n", "claude", "slack"] },
+      { label: "Real-Time Slack Alerts", tools: ["slack", "zapier", "n8n"] },
     ],
   },
 ];
@@ -116,10 +106,6 @@ function AshIcon({
             name={tool.key}
             size={28}
             className="relative z-[1] rounded-sm"
-            style={{
-              filter:
-                "grayscale(1) brightness(1.4) contrast(0.85)",
-            }}
           />
         ) : (
           <span className="relative z-[1] text-[rgba(255,255,255,0.4)] text-sm font-bold">
@@ -170,53 +156,15 @@ export default function StackLogos() {
             Integrations
           </p>
           <h2
-            className="text-[clamp(28px,4vw,48px)] font-medium leading-[110%] tracking-[-2px] text-white"
+            className="text-[clamp(28px,4vw,44px)] font-medium leading-[115%] tracking-[-1.5px] text-white"
             style={{ fontFamily: "var(--font-family-heading)" }}
           >
             Plugs into{" "}
-            <span className="text-accent-orange italic">your entire stack.</span>
+            <span className="text-accent-orange font-semibold">your entire stack.</span>
           </h2>
-          <p className="text-base text-[rgba(255,255,255,0.4)] mt-3 max-w-[500px] mx-auto">
-            We don&apos;t replace your tools — we connect them. One system,
-            every tool talking to each other.
+          <p className="text-[15px] text-[rgba(255,255,255,0.45)] mt-3 max-w-[480px] mx-auto leading-[160%]">
+            We don&apos;t replace your tools. We connect them into one GTM system that actually works together.
           </p>
-        </Reveal>
-
-        {/* ── Framer-style 2-row icon grid ── */}
-        <div className="flex flex-col gap-6 max-w-[750px] mx-auto mb-14">
-          {/* Row 1 */}
-          <div className="flex justify-center gap-5 md:gap-8 flex-wrap">
-            {row1.map((tool, i) => (
-              <AshIcon key={tool.name} tool={tool} index={i} row={0} />
-            ))}
-          </div>
-          {/* Row 2 */}
-          <div className="flex justify-center gap-5 md:gap-8 flex-wrap">
-            {row2.map((tool, i) => (
-              <AshIcon key={tool.name} tool={tool} index={i} row={1} />
-            ))}
-          </div>
-        </div>
-
-        {/* Explore All CTA */}
-        <Reveal variants={fadeUp} className="text-center mb-14">
-          <motion.a
-            href="/resources"
-            className="inline-flex items-center gap-2 px-7 py-3 bg-accent-orange text-white text-sm font-semibold uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            EXPLORE ALL
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M3 8h10M9 4l4 4-4 4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </motion.a>
         </Reveal>
 
         {/* 3-column capability grid */}
@@ -244,7 +192,7 @@ export default function StackLogos() {
                     </span>
                     <div className="flex items-center gap-2">
                       {item.tools.map((t) => (
-                        <BrandLogo key={t} name={t} size={20} />
+                        <BrandLogo key={t} name={t} size={20} colored />
                       ))}
                     </div>
                   </motion.div>
@@ -270,41 +218,13 @@ export default function StackLogos() {
                 With Rev Orchestra
               </span>
               <span className="text-sm text-accent-orange font-bold">
-                $18,000 once — yours forever
+                $18,000 once, yours forever
               </span>
             </div>
           </div>
         </Reveal>
       </div>
 
-      {/* Scrolling logo strip */}
-      <div className="relative mt-14 overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] to-transparent pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] to-transparent pointer-events-none" />
-        <motion.div
-          className="flex items-center gap-16 w-max"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-        >
-          {[...row1, ...row2.filter((t) => t.key), ...row1, ...row2.filter((t) => t.key)].map(
-            (tool, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 shrink-0 opacity-40 hover:opacity-70 transition-opacity"
-              >
-                <BrandLogo
-                  name={tool.key}
-                  size={28}
-                  style={{ filter: "grayscale(1) brightness(1.2)" }}
-                />
-                <span className="text-[rgba(255,255,255,0.3)] text-sm font-medium tracking-wider uppercase">
-                  {tool.name}
-                </span>
-              </div>
-            )
-          )}
-        </motion.div>
-      </div>
     </section>
   );
 }

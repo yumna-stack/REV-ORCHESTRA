@@ -14,19 +14,19 @@ const trustItems = [
   {
     icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
     title: "AI Guardrails",
-    description: "Every AI agent operates within strict guardrails — rate limits, content filters, and action boundaries. No agent can send, delete, or modify without predefined safety checks.",
+    description: "Every AI agent operates within strict guardrails: rate limits, content filters, and action boundaries. No agent can send, delete, or modify without predefined safety checks.",
     tag: "Active",
   },
   {
     icon: "M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z",
     title: "Role-Based Access Control",
-    description: "RBAC ensures every team member only sees and controls what they need. Admin, operator, and viewer roles — granular permissions across all agents and tools.",
+    description: "RBAC ensures every team member only sees and controls what they need. Admin, operator, and viewer roles with granular permissions across all agents and tools.",
     tag: "Enforced",
   },
   {
     icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
     title: "Human-in-the-Loop",
-    description: "Critical actions require human approval before execution. You set the thresholds — which agent actions auto-run and which need your sign-off.",
+    description: "Critical actions require human approval before execution. You set the thresholds: which agent actions auto-run and which need your sign-off.",
     tag: "Default On",
   },
   {
@@ -38,7 +38,7 @@ const trustItems = [
   {
     icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 004 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
     title: "Your Stack, Your Data",
-    description: "Everything runs inside your own tool instances — your n8n, your CRM, your enrichment accounts. Nothing passes through our servers. We build it, you own it.",
+    description: "Everything runs inside your own tool instances: your n8n, your CRM, your enrichment accounts. Nothing passes through our servers. We build it, you own it.",
     tag: "Architecture",
   },
   {
@@ -68,7 +68,7 @@ export default function Compliance() {
 
         <Reveal variants={fadeUp} delay={0.1}>
           <p className="text-center text-[rgba(255,255,255,0.55)] max-w-[550px] mx-auto mb-16 leading-relaxed">
-            Your business data is not our product. Guardrails, role-based access, and full audit trails — built into every system from day one.
+            Your business data is not our product. Guardrails, role-based access, and full audit trails, built into every system from day one.
           </p>
         </Reveal>
 

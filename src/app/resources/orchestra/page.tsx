@@ -15,7 +15,7 @@ const recentIssues = [
   {
     title: "The 6-Agent Architecture: How We Design GTM Systems",
     date: "Mar 18, 2026",
-    excerpt: "A deep dive into why six specialised agents outperform a single AI SDR — and the exact architecture we use with every client.",
+    excerpt: "A deep dive into why six specialised agents outperform a single AI SDR, and the exact architecture we use with every client.",
   },
   {
     title: "Done-For-You vs. DIY: The Real Cost of Building Internally",
@@ -32,7 +32,7 @@ export default function OrchestraPage() {
       <PageHero
         badge="The Orchestra"
         title="Weekly. Free. Actually useful."
-        subtitle="GTM strategy, AI orchestration insights, and founder playbooks — delivered every Tuesday. No spam, no fluff."
+        subtitle="GTM strategy, AI orchestration insights, and founder playbooks, delivered every Tuesday. No spam, no fluff."
       />
 
       {/* Subscribe form placeholder */}

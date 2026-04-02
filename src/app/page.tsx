@@ -1,13 +1,13 @@
 import Navigation from "@/components/Navigation";
+
 import Hero from "@/components/Hero";
 import StackLogos from "@/components/StackLogos";
+import AnimatedText from "@/components/AnimatedText";
 import Stats from "@/components/Stats";
-import StatCallout from "@/components/StatCallout";
-import TheShift from "@/components/TheShift";
-import PhoneMockup from "@/components/PhoneMockup";
+import SixAgents from "@/components/SixAgents";
+import LiveSystem from "@/components/LiveSystem";
 import ProcessVisual from "@/components/ProcessVisual";
-import SocialProof from "@/components/SocialProof";
-import Compliance from "@/components/Compliance";
+import HowItWorks from "@/components/HowItWorks";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
@@ -27,17 +27,15 @@ export default function Home() {
   return (
     <main className="relative w-full overflow-hidden bg-[rgb(14,15,17)]">
       <Navigation />
+
       <Hero />
+      <AnimatedText />
       <StackLogos />
       <Stats />
-      <StatCallout />
-      <TheShift />
-      <PhoneMockup />
+      <SixAgents />
+      <LiveSystem />
       <ProcessVisual />
-      <SocialProof />
-      <SectionBlend from="rgb(14,15,17)" to="rgb(8,8,15)" />
-      <Compliance />
-      <SectionBlend from="rgb(8,8,15)" to="rgb(14,15,17)" />
+      <HowItWorks />
       <Pricing />
       <FAQ />
       <SectionBlend from="rgb(14,15,17)" to="rgb(8,8,15)" />

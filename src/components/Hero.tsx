@@ -3,16 +3,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Float } from "@/components/motion";
-import CommandCenter from "@/components/CommandCenter";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
-const SPOTS_LEFT = 4; // Change to 0 when fully booked — dot turns red automatically
 
 const cyclingWords = [
   "running orchestras",
   "using signal-led outbound",
-  "getting 8–12% reply rates",
+  "getting 8-12% reply rates",
   "deploying AI agents",
   "building pipeline systems",
   "winning with precision",
@@ -49,8 +47,8 @@ const floatingIcons = [
 
 export default function Hero() {
   const [wordIdx, setWordIdx] = useState(0);
-  const [toolIdx, setToolIdx] = useState(0);
-  const [actionIdx, setActionIdx] = useState(0);
+  const [, setToolIdx] = useState(0);
+  const [, setActionIdx] = useState(0);
   const [fomoMode, setFomoMode] = useState(false);
 
   useEffect(() => {
@@ -85,7 +83,7 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* ═══ HERO CONTENT ═══ */}
+      {/* HERO CONTENT */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-[1200px] mx-auto px-5 pt-[150px] gap-8">
 
         {/* Toggle */}
@@ -103,24 +101,24 @@ export default function Hero() {
 
         <AnimatePresence mode="wait">
           {!fomoMode ? (
-            /* ─── ORCHESTRATOR MODE ON ─── */
+            /* ORCHESTRATOR MODE ON */
             <motion.div
               key="on"
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
               transition={{ duration: 0.6, ease }}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center gap-7"
             >
               {/* Badge */}
-              <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-8">
+              <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)]">
                 <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-orange animate-pulse" />
                 <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">The AI GTM System for Post-Funding B2B Founders</span>
               </div>
 
               {/* Headline with cycling words */}
-              <h1 className="text-[clamp(36px,5.5vw,72px)] font-medium leading-[105%] tracking-[-3px] text-white max-w-[900px] mb-8" style={{ fontFamily: "var(--font-family-heading)" }}>
+              <h1 className="text-[clamp(36px,5.5vw,72px)] font-medium leading-[105%] tracking-[-3px] text-white max-w-[900px]" style={{ fontFamily: "var(--font-family-heading)" }}>
                 You&apos;re still doing GTM like it&apos;s 2024.{" "}
                 <span className="text-[rgba(255,255,255,0.5)]">The teams beating you are </span>
                 <span className="relative inline-block align-bottom">
@@ -133,29 +131,25 @@ export default function Hero() {
               </h1>
 
               {/* Sub-headline */}
-              <p className="text-lg text-[rgba(255,255,255,0.45)] leading-[170%] max-w-[620px] mb-10">
-                Rev Orchestra builds AI-orchestrated GTM systems for B2B founders who just raised and need pipeline — not another tool to manage, not another retainer to renew. Six AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.
+              <p className="text-lg text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[620px]">
+                Rev Orchestra builds AI-orchestrated GTM systems for B2B founders who just raised and need pipeline. Not another tool to manage, not another retainer to renew. Six AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.
               </p>
 
-              {/* Scarcity — minimal, no background */}
+              {/* Scarcity badge */}
               <motion.div
-                className="inline-flex items-center gap-2 mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
+                className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-[rgba(232,101,10,0.3)] bg-[rgba(232,101,10,0.08)]"
+                animate={{ borderColor: ["rgba(232,101,10,0.3)", "rgba(232,101,10,0.6)", "rgba(232,101,10,0.3)"] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
-                <motion.span
-                  className={`w-1.5 h-1.5 rounded-full ${SPOTS_LEFT > 0 ? "bg-green-500" : "bg-red-500"}`}
-                  animate={{ opacity: [1, 0.3, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <span className={`text-xs tracking-wide ${SPOTS_LEFT > 0 ? "text-green-500" : "text-red-500"}`}>
-                  {SPOTS_LEFT > 0 ? `${SPOTS_LEFT} spots left for Q2 2026` : "Q2 2026 fully booked"}
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-xs font-semibold text-accent-orange tracking-wide">
+                  4 seats available for 2026
                 </span>
+                <span className="text-[10px] text-[rgba(255,255,255,0.35)]">· Ready to launch</span>
               </motion.div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-5 mb-10">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
                 <motion.a
                   href={CAL_URL}
                   target="_blank"
@@ -183,7 +177,7 @@ export default function Hero() {
 
             </motion.div>
           ) : (
-            /* ─── FOMO MODE OFF ─── */
+            /* FOMO MODE OFF */
             <motion.div
               key="off"
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
@@ -198,10 +192,10 @@ export default function Hero() {
               <p className="text-xl text-accent-orange font-semibold">The gap is already opening. Your competition is on the other side of it.</p>
 
               <div className="text-left space-y-5 text-[15px] text-[rgba(255,255,255,0.5)] leading-[170%]">
-                <p>In 2024, cold outbound got 1.2% reply rates. Today, signal-led outbound — outreach triggered by real buying signals, personalised to the account — gets 8–12%. That&apos;s not a marginal improvement. That&apos;s a different category of result.</p>
+                <p>In 2024, cold outbound got 1.2% reply rates. Today, signal-led outbound gets 8-12%. That&apos;s not a marginal improvement. That&apos;s a different category of result.</p>
                 <p>In 2024, most teams had 5-6 disconnected tools and called it a stack. In 2026, Gartner estimates 70% of B2B companies will be running AI-orchestrated GTM motions. The ones who switched early are compounding their advantage every month.</p>
-                <p>In 2024, AI was a writing tool. In 2025, it became an operator. In 2026, the teams with AI orchestration systems aren&apos;t just more efficient — they&apos;re reaching the right buyer in the right window, with the right message, automatically.</p>
-                <p className="text-white font-medium">The question isn&apos;t whether to make this shift. It already happened. The question is whether you make it now or later — and what that gap costs you in pipeline.</p>
+                <p>In 2024, AI was a writing tool. In 2025, it became an operator. In 2026, the teams with AI orchestration systems aren&apos;t just more efficient. They&apos;re reaching the right buyer in the right window, with the right message, automatically.</p>
+                <p className="text-white font-medium">The question isn&apos;t whether to make this shift. It already happened. The question is whether you make it now or later, and what that gap costs you in pipeline.</p>
               </div>
 
               {/* Reddit quotes */}
@@ -211,7 +205,7 @@ export default function Hero() {
                   {fomoQuotes.map((q, i) => (
                     <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.1, ease }} className="border-l-2 border-accent-orange pl-4 py-2">
                       <p className="text-sm text-[rgba(255,255,255,0.5)] italic">&ldquo;{q.text}&rdquo;</p>
-                      <p className="text-[10px] text-[rgba(255,255,255,0.25)] mt-1">— {q.src}</p>
+                      <p className="text-[10px] text-[rgba(255,255,255,0.25)] mt-1">- {q.src}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -220,24 +214,40 @@ export default function Hero() {
               {/* FOMO CTA */}
               <div className="text-center pt-4">
                 <p className="text-[rgba(255,255,255,0.5)] text-sm mb-2">The founders who built their system in Q1 are already booking calls from it.</p>
-                <p className="text-accent-orange font-semibold text-sm mb-6">4 seats left for Q2 2026. Build yours before the window closes.</p>
-                <a href={CAL_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all">
+                <p className="text-accent-orange font-semibold text-sm mb-6">4 seats left for 2026. Build yours before the window closes.</p>
+                <motion.a
+                  href={CAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
                   Book a Call with Danny <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Command Center — animated dashboard */}
+      {/* Vimeo video */}
       <motion.div
         className="relative z-10 w-full max-w-[1080px] mx-auto px-5 mt-12"
         initial={{ opacity: 0, y: 80, scale: 0.9, filter: "blur(10px)" }}
         animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 1.2, ease, delay: 0.6 }}
       >
-        <CommandCenter />
+        <div className="relative rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.06)] bg-[rgba(20,20,22,0.9)]" style={{ aspectRatio: "16/9" }}>
+          <iframe
+            src="https://player.vimeo.com/video/1157150585?autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0"
+            className="absolute inset-0 w-full h-full"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            title="Rev Orchestra Command Center"
+          />
+        </div>
       </motion.div>
     </section>
 

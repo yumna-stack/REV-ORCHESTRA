@@ -1,17 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import BrandLogo from "@/components/BrandLogo";
 
 const words = [
-  "Rev", "Orchestra", "is", "orchestrating", "the", "future", "of",
-  "go-to-market", "execution", "for",
-  "B2B", "founders", "with", "AI-powered",
-  "signal-led", "pipeline", "systems.",
+  "One", "command", "center.", "Six", "agents.",
+  "Signals", "caught.", "Outreach", "triggered.",
+  "CRM", "updated.",
 ];
 
-const logos = [
-  "CLAY", "INSTANTLY", "HUBSPOT", "SLACK", "N8N", "LINKEDIN",
-  "CLAY", "INSTANTLY", "HUBSPOT", "SLACK", "N8N", "LINKEDIN",
+const techStrip = [
+  { name: "HubSpot", key: "hubspot" },
+  { name: "Slack", key: "slack" },
+  { name: "LinkedIn", key: "linkedin" },
+  { name: "n8n", key: "n8n" },
+  { name: "Clay", key: "clay" },
+  { name: "Instantly", key: "instantly" },
+  { name: "Claude", key: "claude" },
+  { name: "Apollo", key: "apollo" },
+  { name: "Salesforce", key: "salesforce" },
+  { name: "Zapier", key: "zapier" },
 ];
 
 export default function AnimatedText() {
@@ -33,16 +42,15 @@ export default function AnimatedText() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Slower word reveal: multiplier of 1.1 means you need to scroll most of the section */
   const activeWordIndex = Math.floor(progress * words.length * 1.1) - 2;
-  const logoItems = [...logos, ...logos, ...logos];
+  const doubled = [...techStrip, ...techStrip];
 
   return (
     <>
-      {/* Scroll-driven text reveal — compact height, no huge gap */}
+      {/* Scroll-driven text reveal */}
       <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "600px" }}>
         <div className="sticky top-0 h-[60vh] flex items-center justify-center px-5 z-10">
-          <p className="text-[clamp(28px,4.5vw,58px)] font-medium leading-[135%] tracking-[-1.5px] text-center max-w-[850px]">
+          <p className="text-[clamp(32px,5.5vw,72px)] font-medium leading-[120%] tracking-[-2.5px] text-center max-w-[950px]" style={{ fontFamily: "var(--font-family-heading)" }}>
             {words.map((word, i) => {
               let opacity = 0.12;
               if (i <= activeWordIndex) opacity = 1;
@@ -51,8 +59,8 @@ export default function AnimatedText() {
                 opacity = 0.12 + Math.max(0, frac) * 0.88;
               }
 
-              /* Embed small logo icon after "intelligence" (index 9) */
-              if (i === 11) {
+              // Logo icon after "agents." (index 4)
+              if (i === 4) {
                 return (
                   <span key={i} className="inline-flex items-center gap-3 mr-[0.3em]" style={{ color: `rgba(255,255,255,${opacity})`, transition: "color 0.2s ease-out" }}>
                     {word}
@@ -72,12 +80,12 @@ export default function AnimatedText() {
                 );
               }
 
-              /* Highlight "revolutionizing" in orange like Cryps */
-              const isHighlight = word === "orchestrating";
+              // "command" and "center." in orange (not italic)
+              const isHighlight = word === "command" || word === "center.";
               return (
                 <span
                   key={i}
-                  className={`inline-block mr-[0.3em] ${isHighlight ? "italic" : ""}`}
+                  className="inline-block mr-[0.3em]"
                   style={{
                     color: isHighlight && opacity > 0.5 ? "#E85600" : `rgba(255,255,255,${opacity})`,
                     transition: "color 0.3s ease-out",
@@ -91,6 +99,66 @@ export default function AnimatedText() {
         </div>
       </section>
 
+      {/* Supported Tech — Cryps-style divider + infinite marquee */}
+      <section className="relative w-full bg-[rgb(14,15,17)] pb-16">
+        {/* Label with horizontal lines */}
+        <div className="flex items-center gap-4 max-w-[700px] mx-auto px-6 mb-10">
+          <div className="flex-1 h-px bg-[rgba(255,255,255,0.15)]" />
+          <span
+            className="shrink-0"
+            style={{
+              fontSize: 13,
+              fontWeight: 500,
+              letterSpacing: "0.08em",
+              color: "rgba(255,255,255,0.5)",
+            }}
+          >
+            Works with the tools you already use
+          </span>
+          <div className="flex-1 h-px bg-[rgba(255,255,255,0.15)]" />
+        </div>
+
+        {/* Infinite scrolling marquee */}
+        <div className="relative overflow-hidden">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-[12%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-[12%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] to-transparent pointer-events-none" />
+
+          <motion.div
+            className="flex items-center gap-10 w-max"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              x: {
+                duration: 30,
+                repeat: Infinity,
+                ease: "linear",
+                repeatType: "loop",
+              },
+            }}
+          >
+            {doubled.map((tool, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 shrink-0"
+                style={{ opacity: 0.7 }}
+              >
+                <BrandLogo name={tool.key} size={24} />
+                <span
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 600,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.55)",
+                  }}
+                >
+                  {tool.name}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
     </>
   );
 }

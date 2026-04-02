@@ -20,17 +20,17 @@ const included = [
   "Full documentation & runbooks",
   "Team training & handover session",
   "30-day post-launch support",
-  "You own everything permanently — no subscription",
+  "You own everything permanently, no subscription",
 ];
 
 const faqs = [
   {
     q: "Why $18,000 as a one-time fee instead of monthly?",
-    a: "Because you're buying a system, not renting one. After 90 days, you own everything — the agents, the workflows, the IP. No recurring fees, no vendor lock-in. Most founders save $3,500+/month in tool consolidation alone.",
+    a: "Because you're buying a system, not renting one. After 90 days, you own everything: the agents, the workflows, the IP. No recurring fees, no vendor lock-in. Most founders save $3,500+/month in tool consolidation alone.",
   },
   {
     q: "What if I need changes after the 90 days?",
-    a: "You get 30 days of post-launch support included. After that, your team can modify the system — we provide full documentation. We also offer optional retainer packages for ongoing optimisation.",
+    a: "You get 30 days of post-launch support included. After that, your team can modify the system. We provide full documentation. We also offer optional retainer packages for ongoing optimisation.",
   },
   {
     q: "How does this compare to hiring an SDR team?",
@@ -89,7 +89,7 @@ export default function PackagesPage() {
 
                 <div className="relative z-10 p-10">
                   <div className="text-center mb-8">
-                    <p className="text-xs text-[rgba(255,255,255,0.4)] uppercase tracking-wider mb-3">Rev Orchestra — Full Build</p>
+                    <p className="text-xs text-[rgba(255,255,255,0.4)] uppercase tracking-wider mb-3">Rev Orchestra, Full Build</p>
                     <div className="flex items-baseline justify-center gap-2">
                       <span className="text-[64px] font-bold text-white leading-none tracking-[-3px]">$18,000</span>
                     </div>
@@ -128,7 +128,7 @@ export default function PackagesPage() {
                       Book a Call with Danny
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     </motion.a>
-                    <p className="text-xs text-green-500 mt-4">4 spots available for Q2 2026</p>
+                    <p className="text-xs text-green-500 mt-4">4 spots available for 2026</p>
                   </div>
                 </div>
               </div>
@@ -178,7 +178,7 @@ export default function PackagesPage() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-white font-medium">With Rev Orchestra</span>
-                    <span className="text-sm text-accent-orange font-bold">$18,000 once — yours forever</span>
+                    <span className="text-sm text-accent-orange font-bold">$18,000 once, yours forever</span>
                   </div>
                 </div>
               </div>

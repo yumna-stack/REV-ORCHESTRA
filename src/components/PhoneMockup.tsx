@@ -15,7 +15,7 @@ const slackMessages = [
       "New signal detected:",
       "- VP Sales hired at Acme Corp (3 days ago)",
       "- Acme raised $12M Series A (last week)",
-      "- Currently using Outreach.io — contract renews in 45 days",
+      "- Currently using Outreach.io, contract renews in 45 days",
     ],
   },
   {
@@ -37,7 +37,7 @@ const slackMessages = [
     brandKey: "claude",
     lines: [
       "Draft ready for review:",
-      'Subject: "Sarah — re: your SDR scaling plans"',
+      'Subject: "Sarah, re: your SDR scaling plans"',
       "Personalised to hiring signal + renewal window.",
       "\u2192 Sent to outbound queue.",
     ],
@@ -90,7 +90,7 @@ export default function PhoneMockup() {
             <span className="text-accent-orange italic">work together</span> in real time.
           </h2>
           <p className="text-base text-[rgba(255,255,255,0.45)] leading-[170%] max-w-[560px] mx-auto">
-            Every signal, every research brief, every outreach message — visible in your Slack.
+            Every signal, every research brief, every outreach message, visible in your Slack.
             Six agents coordinating automatically.
           </p>
         </Reveal>
@@ -204,7 +204,7 @@ export default function PhoneMockup() {
 
                     {/* Main text */}
                     <p className="text-[rgba(255,255,255,0.85)] text-sm leading-[165%] mb-3">
-                      Your <span className="text-accent-orange font-semibold">6 AI agents</span> are orchestrating your entire GTM motion — from{" "}
+                      Your <span className="text-accent-orange font-semibold">6 AI agents</span> are orchestrating your entire GTM motion, from{" "}
                       <span className="text-accent-orange font-semibold">signal detection</span> to{" "}
                       <span className="text-accent-orange font-semibold">booked meetings</span>, automatically.
                     </p>

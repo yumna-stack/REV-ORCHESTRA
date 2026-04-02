@@ -46,21 +46,21 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
 
   return (
     <motion.div
-      className="border-b border-[rgba(255,255,255,0.06)] last:border-b-0"
-      initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      className="rounded-2xl bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.1)] transition-colors duration-300"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.3 }}
       transition={{ duration: 0.5, ease, delay: index * 0.06 }}
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-6 text-left group"
+        className="w-full flex items-center justify-between px-6 py-5 text-left group"
       >
-        <span className="text-base font-medium text-white group-hover:text-accent-orange transition-colors duration-300 pr-4">
+        <span className="text-[15px] font-medium text-white group-hover:text-accent-orange transition-colors duration-300 pr-4">
           {faq.q}
         </span>
         <motion.div
-          className="w-8 h-8 rounded-full border flex items-center justify-center shrink-0"
+          className="w-7 h-7 rounded-full border flex items-center justify-center shrink-0"
           animate={{
             rotate: open ? 45 : 0,
             backgroundColor: open ? "rgba(232,86,0,0.15)" : "transparent",
@@ -68,7 +68,7 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
           }}
           transition={{ duration: 0.3 }}
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
             <path
               d="M7 2v10M2 7h10"
               stroke={open ? "#E85600" : "rgba(255,255,255,0.5)"}
@@ -87,7 +87,7 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
             transition={{ duration: 0.4, ease }}
             className="overflow-hidden"
           >
-            <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] pb-6 pr-12">
+            <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] px-6 pb-5">
               {faq.a}
             </p>
           </motion.div>
@@ -100,7 +100,7 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
 export default function FAQ() {
   return (
     <section id="faq" className="relative w-full py-28 bg-black-light">
-      <div className="max-w-[800px] mx-auto px-5">
+      <div className="max-w-[1100px] mx-auto px-5">
         <Reveal variants={fadeUp} className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
             <span className="w-2 h-2 rounded-full bg-accent-orange" />
@@ -120,7 +120,7 @@ export default function FAQ() {
           </p>
         </Reveal>
 
-        <div className="flex flex-col">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {faqs.map((faq, i) => (
             <FAQItem key={i} faq={faq} index={i} />
           ))}
