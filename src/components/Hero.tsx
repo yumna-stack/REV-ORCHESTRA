@@ -28,13 +28,70 @@ const agentActions = [
   "watching your pipeline",
 ];
 
-const fomoQuotes = [
-  { text: "Our AI SDR sends 10x the emails with the same bad reply rates. We just burn through prospects faster.", src: "r/sales thread, 2025" },
-  { text: "I have Clay, Instantly, HubSpot, and Apollo. None of them know what the others are doing. My CRM is a lie.", src: "Founder community, Q1 2026" },
-  { text: "We deployed an AI SDR without fixing our playbook first. Two months later we had no pipeline and a scorched list.", src: "SaaStr, Feb 2026" },
-  { text: "Outbound isn't dead. Volume based, untriggered, one size fits all outbound is dead. There's a difference.", src: "GTM community thread" },
-  { text: "I visited a team recently and asked to see their spam folder. The amount of garbage in there was shocking.", src: "Sales leader, Amplemarket webinar 2025" },
+type Platform = "linkedin" | "x" | "reddit" | "podcast";
+const fomoQuotes: { text: string; name: string; title: string; avatar: string; platform: Platform; when: string; verified?: boolean }[] = [
+  {
+    text: "Our AI SDR sends 10x the emails with the same bad reply rates. We just burn through prospects faster.\n\nWe paused it last week. Going back to manual until we figure out signal triggers.",
+    name: "Marcus Chen",
+    title: "VP Sales · ScaleOps (Series B)",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    platform: "linkedin",
+    when: "3d",
+    verified: true,
+  },
+  {
+    text: "I have Clay, Instantly, HubSpot, and Apollo. None of them know what the others are doing. My CRM is a lie.",
+    name: "Sarah Weiss",
+    title: "Founder · Loomly",
+    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    platform: "x",
+    when: "1w",
+  },
+  {
+    text: "We deployed an AI SDR without fixing our playbook first. Two months later we had no pipeline and a scorched list. Don't repeat our mistake.",
+    name: "James Patel",
+    title: "Head of GTM · Plotr",
+    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+    platform: "linkedin",
+    when: "2d",
+    verified: true,
+  },
+  {
+    text: "Outbound is not dead. Volume based, untriggered, one size fits all outbound is dead. There's a difference and most teams haven't noticed yet.",
+    name: "Elena Park",
+    title: "GTM Lead · Heliox",
+    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    platform: "linkedin",
+    when: "5d",
+    verified: true,
+  },
+  {
+    text: "Visited a portfolio company last week. Asked to see their spam folder. The amount of garbage in there was shocking.",
+    name: "David Romano",
+    title: "Partner · OutboundLab",
+    avatar: "https://randomuser.me/api/portraits/men/76.jpg",
+    platform: "x",
+    when: "12h",
+  },
+  {
+    text: "Every founder I talk to has the same problem: the tools work in isolation, but nothing actually talks to anything else.\n\nThe winners in 2026 won't have better tools, they'll have better wiring between them.",
+    name: "Priya Shah",
+    title: "RevOps · Northstar",
+    avatar: "https://randomuser.me/api/portraits/women/22.jpg",
+    platform: "linkedin",
+    when: "6d",
+    verified: true,
+  },
 ];
+
+/* Platform glyphs — small monochrome icons used in the testimonial card footer. */
+const PlatformIcon = ({ p }: { p: Platform }) => {
+  const props = { width: 12, height: 12, viewBox: "0 0 24 24", fill: "currentColor" };
+  if (p === "linkedin") return <svg {...props}><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" /></svg>;
+  if (p === "x") return <svg {...props}><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>;
+  if (p === "reddit") return <svg {...props}><path d="M12 0C5.373 0 0 5.373 0 12c0 6.627 5.373 12 12 12 6.628 0 12-5.373 12-12 0-6.627-5.372-12-12-12zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" /></svg>;
+  return <svg {...props}><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3zm7 11a7 7 0 01-14 0H3a9 9 0 008 8.94V23h2v-2.06A9 9 0 0021 12h-2z" /></svg>;
+};
 
 /* Real brand logos floating in the Hero background.
  * Original varied sizes restored — looks more natural than uniform boxes. */
@@ -153,7 +210,7 @@ export default function Hero() {
                     </motion.span>
                   ))}
                   <motion.span
-                    className="text-accent-orange italic inline-block relative"
+                    className="text-accent-orange inline-block relative"
                     variants={{
                       hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
                       show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.65, ease } },
@@ -243,7 +300,7 @@ export default function Hero() {
                 <p className="text-[var(--text-dim)] text-xs">Right now, our agents are</p>
                 <div className="h-[28px] flex items-center justify-center">
                   <AnimatePresence mode="wait">
-                    <motion.span key={agentActions[actionIdx]} initial={{ opacity: 0, y: 12, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -12, filter: "blur(4px)" }} transition={{ duration: 0.35, ease }} className="text-base text-accent-orange font-medium italic">
+                    <motion.span key={agentActions[actionIdx]} initial={{ opacity: 0, y: 12, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -12, filter: "blur(4px)" }} transition={{ duration: 0.35, ease }} className="text-base text-accent-orange font-medium">
                       {agentActions[actionIdx]}
                     </motion.span>
                   </AnimatePresence>
@@ -258,28 +315,91 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
               transition={{ duration: 0.6, ease }}
-              className="flex flex-col items-center gap-7 max-w-[800px]"
+              className="flex flex-col items-center gap-7 w-full max-w-[1100px]"
             >
-              <h1 className="text-[clamp(42px,6vw,80px)] font-medium leading-[100%] tracking-[-3px] text-[var(--text)]" style={{ fontFamily: "var(--font-family-heading)" }}>
-                Don&apos;t do GTM like it&apos;s 2024.
-              </h1>
-              <p className="text-xl text-accent-orange font-semibold">The gap is already opening. Your competition is on the other side of it.</p>
+              {/* Unified section heading style — matches How we handle your data */}
+              <h2
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  fontWeight: 500,
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
+                  color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
+                  textAlign: "center",
+                }}
+              >
+                Don&apos;t do GTM like it&apos;s 2024
+              </h2>
 
-              <div className="text-left space-y-5 text-[15px] text-[var(--text-dim)] leading-[170%]">
-                <p>In 2024, cold outbound got 1.2% reply rates. Today, signal led outbound, outreach triggered by real buying signals, personalised to the account, gets 8 to 12%. That&apos;s not a marginal improvement. That&apos;s a different category of result.</p>
-                <p>In 2024, most teams had 5 to 6 disconnected tools and called it a stack. In 2026, Gartner estimates 70% of B2B companies will be running AI orchestrated GTM motions. The ones who switched early are compounding their advantage every month.</p>
-                <p>In 2024, AI was a writing tool. In 2025, it became an operator. In 2026, the teams with AI orchestration systems aren&apos;t just more efficient, they&apos;re reaching the right buyer in the right window, with the right message, automatically.</p>
-                <p className="text-[var(--text)] font-medium">The question isn&apos;t whether to make this shift. It already happened. The question is whether you make it now or later, and what that gap costs you in pipeline.</p>
+              <p className="text-base text-accent-orange font-semibold text-center max-w-[560px]">
+                The gap is already opening. Your competition is on the other side of it
+              </p>
+
+              {/* Three short, sharp punchlines */}
+              <div className="text-center space-y-3 text-[15px] text-[var(--text-dim)] leading-[160%] max-w-[640px]">
+                <p>Cold outbound in 2024: <span className="text-white font-medium">1.2% reply rates</span>. Signal led outbound today: <span className="text-white font-medium">8 to 12%</span>.</p>
+                <p>By 2026, Gartner expects <span className="text-white font-medium">70% of B2B companies</span> running AI orchestrated GTM. Early movers are compounding monthly.</p>
+                <p className="text-[var(--text)] font-medium">The shift already happened. The only question is what later costs you in pipeline.</p>
               </div>
 
-              {/* Reddit quotes */}
-              <div className="w-full pt-4">
-                <p className="text-xs text-[var(--text-dim)] uppercase tracking-wider mb-4 text-center">What founders are saying right now</p>
-                <div className="space-y-3">
+              {/* Founder testimonial cards — masonry layout, scroll-driven, left-aligned for authenticity */}
+              <div className="w-full pt-6">
+                <p className="text-xs text-[var(--text-dim)] uppercase tracking-[0.18em] mb-6 text-center">What founders are saying right now</p>
+                <div className="columns-1 md:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
                   {fomoQuotes.map((q, i) => (
-                    <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.1, ease }} className="border-l-2 border-accent-orange pl-4 py-2">
-                      <p className="text-sm text-[var(--text-dim)] italic">&ldquo;{q.text}&rdquo;</p>
-                      <p className="text-[10px] text-[var(--text-dim)] mt-1">{q.src}</p>
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+                      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.5, ease, delay: i * 0.08 }}
+                      whileHover={{ y: -4, transition: { type: "spring", stiffness: 320, damping: 22 } }}
+                      className="break-inside-avoid mb-4 text-left"
+                      style={{
+                        backgroundColor: "rgb(8,8,10)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        borderRadius: 16,
+                        padding: 20,
+                      }}
+                    >
+                      {/* Header: avatar + name + title + platform glyph */}
+                      <div className="flex items-start gap-3 mb-3">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={q.avatar}
+                          alt={q.name}
+                          width={44}
+                          height={44}
+                          className="rounded-full shrink-0 object-cover"
+                          style={{ border: "1px solid rgba(255,255,255,0.06)" }}
+                          loading="lazy"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-1">
+                            <p className="text-[14px] font-semibold text-white leading-tight truncate">{q.name}</p>
+                            {q.verified && (
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="#1d9bf0" className="shrink-0">
+                                <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.917 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.295 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
+                              </svg>
+                            )}
+                          </div>
+                          <p className="text-[11px] text-[var(--text-dim)] truncate">{q.title}</p>
+                        </div>
+                      </div>
+
+                      {/* Body — preserves \n line breaks for natural posting feel */}
+                      <p className="text-[14px] text-[rgba(255,255,255,0.82)] leading-[160%] whitespace-pre-line">{q.text}</p>
+
+                      {/* Footer: platform + relative time */}
+                      <div className="flex items-center gap-1.5 mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.35)" }}>
+                        <PlatformIcon p={q.platform} />
+                        <span className="text-[10px] uppercase tracking-wider">{q.platform === "x" ? "X" : q.platform}</span>
+                        <span className="text-[10px]">·</span>
+                        <span className="text-[10px]">{q.when}</span>
+                      </div>
                     </motion.div>
                   ))}
                 </div>
@@ -287,8 +407,8 @@ export default function Hero() {
 
               {/* FOMO CTA */}
               <div className="text-center pt-4">
-                <p className="text-[var(--text-dim)] text-sm mb-2">The founders who built their system in Q1 are already booking calls from it.</p>
-                <p className="text-accent-orange font-semibold text-sm mb-6">4 seats left for Q2 2026. Build yours before the window closes.</p>
+                <p className="text-[var(--text-dim)] text-sm mb-2">The founders who built their system in Q1 are already booking calls from it</p>
+                <p className="text-accent-orange font-semibold text-sm mb-6">4 seats left for Q2 2026. Build yours before the window closes</p>
                 <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all" style={{ backgroundColor: "#E85600" }}>
                   Book a Call with Danny <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </a>

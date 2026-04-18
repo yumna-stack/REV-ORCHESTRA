@@ -126,7 +126,7 @@ export default function DashboardPreview() {
             }}
           >
             This is what you get,{" "}
-            <span className="text-accent-orange italic">Day 90, handed to you</span>
+            <span className="text-accent-orange">Day 90, handed to you</span>
           </h2>
           <p className="mt-5 text-base md:text-lg text-[rgba(255,255,255,0.5)] leading-[160%] max-w-[640px] mx-auto">
             Not a SaaS login. Not a retainer. A live operating system for your AI ops,

@@ -44,7 +44,7 @@ export default function CTA() {
               }}
             >
               Stop managing tools,{" "}
-              <span className="text-accent-orange italic">Start running a system</span>
+              <span className="text-accent-orange">Start running a system</span>
             </h2>
           </Reveal>
           <Reveal variants={fadeUp} delay={0.15}>
@@ -69,7 +69,7 @@ export default function CTA() {
             <Reveal variants={fadeUp}>
               <div className="flex flex-col gap-5">
                 <h3
-                  className="text-[clamp(28px,3.5vw,42px)] font-medium text-white leading-[115%] tracking-[-1px] italic"
+                  className="text-[clamp(28px,3.5vw,42px)] font-medium text-white leading-[115%] tracking-[-1px]"
                   style={{ fontFamily: "var(--font-family-heading)" }}
                 >
                   Join Our Newsletter

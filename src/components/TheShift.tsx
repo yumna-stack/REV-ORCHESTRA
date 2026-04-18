@@ -101,7 +101,7 @@ function StatCard({
       <p className="text-sm text-white leading-[170%] mb-4 flex-1">
         {description}
       </p>
-      <p className="text-xs text-[rgba(255,255,255,0.3)] italic">{source}</p>
+      <p className="text-xs text-[rgba(255,255,255,0.3)]">{source}</p>
     </div>
   );
 }

@@ -98,7 +98,7 @@ export default function WhatWeDoPage() {
                 margin: "0 auto",
               }}
             >
-              Why most funded founders are <span className="text-accent-orange italic">still stuck</span>
+              Why most funded founders are <span className="text-accent-orange">still stuck</span>
             </h2>
           </Reveal>
 
@@ -145,7 +145,7 @@ export default function WhatWeDoPage() {
                 margin: "0 auto",
               }}
             >
-              Autonomous agents, One system, <span className="text-accent-orange italic">Always talking</span>
+              Autonomous agents, One system, <span className="text-accent-orange">Always talking</span>
             </h2>
           </Reveal>
 

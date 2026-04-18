@@ -107,7 +107,7 @@ export default function OrbitVisual() {
             }}
           >
             Autonomous AI agents,{" "}
-            <span className="text-accent-orange italic">One orchestrated system</span>
+            <span className="text-accent-orange">One orchestrated system</span>
           </h2>
           <p className="text-base text-[rgba(255,255,255,0.4)] mt-3 max-w-[520px] mx-auto">
             Every agent talks to every other. Signals trigger research, research
@@ -250,7 +250,7 @@ export default function OrbitVisual() {
 
         {/* Bottom tagline */}
         <Reveal variants={fadeUp} className="text-center mt-14">
-          <p className="text-sm text-[rgba(255,255,255,0.3)] max-w-[450px] mx-auto italic">
+          <p className="text-sm text-[rgba(255,255,255,0.3)] max-w-[450px] mx-auto">
             Every connection is automated. Every handoff is instant.
             Your pipeline runs while you sleep.
           </p>

@@ -135,7 +135,7 @@ export default function ServiceFlow() {
               </motion.span>
             ))}
             <motion.span
-              className="text-accent-orange italic inline-block mr-[0.25em]"
+              className="text-accent-orange inline-block mr-[0.25em]"
               variants={{
                 hidden: { opacity: 0, y: 18, filter: "blur(8px)" },
                 show:   { opacity: 1, y: 0,  filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },

@@ -96,7 +96,7 @@ export default function PhoneMockup() {
             }}
           >
             Watch your agents{" "}
-            <span className="text-accent-orange italic">work together</span> in real time
+            <span className="text-accent-orange">work together</span> in real time
           </h2>
           <p className="text-base text-[rgba(255,255,255,0.45)] leading-[170%] max-w-[560px] mx-auto">
             Every signal, every research brief, every outreach message, visible in your Slack.

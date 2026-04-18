@@ -226,7 +226,7 @@ export default function SocialProof() {
                       <div className="flex gap-5">
                         <div className="flex-shrink-0 w-[3px] rounded-full bg-accent-orange" />
                         <div>
-                          <p className="text-[rgba(255,255,255,0.8)] italic leading-[170%] text-base md:text-lg mb-4">
+                          <p className="text-[rgba(255,255,255,0.8)] leading-[170%] text-base md:text-lg mb-4">
                             &ldquo;{communityQuotes[activeQuote].text}&rdquo;
                           </p>
                           <span className="text-xs text-[rgba(255,255,255,0.3)] tracking-wide">
@@ -311,7 +311,7 @@ export default function SocialProof() {
           {clientResults.map((result, i) => (
             <GlassCard key={i} index={i} glowColor="#9897FF">
               <div className="flex flex-col justify-between min-h-[140px]">
-                <p className="text-[rgba(255,255,255,0.8)] italic leading-[170%] text-[15px] mb-4">&ldquo;{result.text}&rdquo;</p>
+                <p className="text-[rgba(255,255,255,0.8)] leading-[170%] text-[15px] mb-4">&ldquo;{result.text}&rdquo;</p>
                 <span className="text-xs text-accent-orange tracking-wide font-medium">{result.source}</span>
               </div>
             </GlassCard>
