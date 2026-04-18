@@ -13,9 +13,9 @@ const slackMessages = [
     brandKey: "zapier",
     lines: [
       "New signal detected:",
-      "- VP Sales hired at Acme Corp (3 days ago)",
-      "- Acme raised $12M Series A (last week)",
-      "- Currently using Outreach.io, contract renews in 45 days",
+      "VP Sales hired at Acme Corp (3 days ago)",
+      "Acme raised $12M Series A (last week)",
+      "Currently using Outreach.io, contract renews in 45 days",
     ],
   },
   {
@@ -25,9 +25,9 @@ const slackMessages = [
     brandKey: "notion",
     lines: [
       "Account brief compiled for Acme Corp:",
-      "- 85 employees, B2B SaaS, Series A",
-      "- ICP match score: 94%",
-      "- Key decision maker: Sarah Chen, VP Sales",
+      "85 employees, B2B SaaS, Series A",
+      "ICP match score: 94%",
+      "Key decision maker: Sarah Chen, VP Sales",
     ],
   },
   {
@@ -50,7 +50,7 @@ const slackMessages = [
     lines: [
       "Acme Corp added to pipeline",
       "Sarah Chen created as contact",
-      "Sequence assigned: signal-triggered-vp-sales",
+      "Sequence assigned: signal triggered vp sales",
       "Next touch: LinkedIn connection (Tomorrow 10AM)",
     ],
   },
@@ -78,20 +78,29 @@ export default function PhoneMockup() {
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
         <Reveal variants={fadeUp} className="text-center mb-6">
-          <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
+          <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
             <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Live System</span>
           </div>
           <h2
-            className="text-[clamp(28px,4vw,48px)] font-medium leading-[110%] tracking-[-2px] text-white mb-4"
-            style={{ fontFamily: "var(--font-family-heading)" }}
+            className="mb-4"
+            style={{
+              fontFamily: "var(--font-family-heading)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              fontWeight: 500,
+              lineHeight: "120%",
+              letterSpacing: "-1.2px",
+              color: "white",
+              maxWidth: 560,
+              margin: "0 auto",
+            }}
           >
             Watch your agents{" "}
-            <span className="text-accent-orange italic">work together</span> in real time.
+            <span className="text-accent-orange italic">work together</span> in real time
           </h2>
           <p className="text-base text-[rgba(255,255,255,0.45)] leading-[170%] max-w-[560px] mx-auto">
             Every signal, every research brief, every outreach message, visible in your Slack.
-            Six agents coordinating automatically.
+            Autonomous agents coordinating automatically.
           </p>
         </Reveal>
 
@@ -119,7 +128,7 @@ export default function PhoneMockup() {
           >
             {/* ── MacBook Frame ── */}
             <div
-              className="relative rounded-[16px] overflow-hidden"
+              className="relative rounded-lg overflow-hidden"
               style={{
                 border: "2px solid rgba(60, 60, 60, 0.8)",
                 background: "#1a1a1c",
@@ -128,7 +137,7 @@ export default function PhoneMockup() {
               }}
             >
               {/* Mac menu bar */}
-              <div className="flex items-center justify-between px-4 py-1.5 bg-[rgba(30,30,32,0.95)] border-b border-[rgba(255,255,255,0.06)]">
+              <div className="flex items-center justify-between px-4 py-1.5 bg-[rgb(14,14,16)] border-b border-[rgba(255,255,255,0.06)]">
                 <div className="flex items-center gap-4">
                   {/* Apple icon */}
                   <svg width="12" height="14" viewBox="0 0 17 20" fill="rgba(255,255,255,0.8)">
@@ -180,7 +189,7 @@ export default function PhoneMockup() {
                   <div
                     className="rounded-2xl p-5 backdrop-blur-xl"
                     style={{
-                      background: "rgba(0, 0, 0, 0.75)",
+                      background: "rgb(14,15,17)",
                       border: "1px solid rgba(255,255,255,0.08)",
                       boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
                     }}
@@ -204,20 +213,20 @@ export default function PhoneMockup() {
 
                     {/* Main text */}
                     <p className="text-[rgba(255,255,255,0.85)] text-sm leading-[165%] mb-3">
-                      Your <span className="text-accent-orange font-semibold">6 AI agents</span> are orchestrating your entire GTM motion, from{" "}
+                      Your <span className="text-accent-orange font-semibold">AI agents</span> are orchestrating your entire GTM motion, from{" "}
                       <span className="text-accent-orange font-semibold">signal detection</span> to{" "}
                       <span className="text-accent-orange font-semibold">booked meetings</span>, automatically.
                     </p>
 
                     {/* Tag pills */}
                     <div className="flex items-center gap-2">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[rgba(34,197,94,0.1)] border border-[rgba(34,197,94,0.2)] text-[10px] text-green-400 font-medium">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[rgb(26,50,35)] border border-[rgba(34,197,94,0.2)] text-[10px] text-green-400 font-medium">
                         <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                         Pipeline Active
                       </span>
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.08)] text-[10px] text-[rgba(255,255,255,0.4)] font-medium">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[rgb(14,14,16)] border border-[rgba(255,255,255,0.08)] text-[10px] text-[rgba(255,255,255,0.4)] font-medium">
                         <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                        6 Agents Running
+                        Agents Running
                       </span>
                     </div>
                   </div>
@@ -234,14 +243,14 @@ export default function PhoneMockup() {
                   <div
                     className="rounded-xl p-3 backdrop-blur-xl"
                     style={{
-                      background: "rgba(0, 0, 0, 0.7)",
+                      background: "rgb(14,15,17)",
                       border: "1px solid rgba(255,255,255,0.06)",
                     }}
                   >
                     {/* Slack header */}
                     <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[rgba(255,255,255,0.08)]">
                       <BrandLogo name="slack" size={14} />
-                      <span className="text-white text-[10px] font-medium">#gtm-orchestrator</span>
+                      <span className="text-white text-[10px] font-medium">#gtm orchestrator</span>
                       <span className="text-[rgba(255,255,255,0.2)] text-[8px] ml-auto">Thread</span>
                     </div>
 

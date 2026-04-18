@@ -8,17 +8,17 @@ import { Reveal, fadeUp } from "@/components/motion";
 
 const recentIssues = [
   {
-    title: "Why Signal-Led Outbound is Replacing Volume Plays",
+    title: "Why Signal Led Outbound is Replacing Volume Plays",
     date: "Mar 25, 2026",
-    excerpt: "The data is clear: teams using buying signals to trigger outreach see 4-7x higher conversion rates. Here's exactly how to build a signal layer.",
+    excerpt: "The data is clear: teams using buying signals to trigger outreach see 4 to 7x higher conversion rates. Here's exactly how to build a signal layer.",
   },
   {
-    title: "The 6-Agent Architecture: How We Design GTM Systems",
+    title: "The Multi Agent Architecture: How We Design AI Operations Systems",
     date: "Mar 18, 2026",
-    excerpt: "A deep dive into why six specialised agents outperform a single AI SDR, and the exact architecture we use with every client.",
+    excerpt: "A deep dive into why a fleet of specialised agents outperforms a single AI SDR, and the architecture we tailor to each client&apos;s workflow.",
   },
   {
-    title: "Done-For-You vs. DIY: The Real Cost of Building Internally",
+    title: "Done For You vs. DIY: The Real Cost of Building Internally",
     date: "Mar 11, 2026",
     excerpt: "Most founders underestimate the time cost of stitching together Clay + Instantly + n8n + HubSpot. Here's the honest math.",
   },
@@ -39,7 +39,7 @@ export default function OrchestraPage() {
       <section className="w-full py-16 bg-[rgb(14,15,17)]">
         <div className="max-w-[500px] mx-auto px-5">
           <Reveal variants={fadeUp}>
-            <div className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-8 text-center">
+            <div className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-8 text-center">
               <h3 className="text-white text-lg font-semibold mb-2">Join 200+ B2B founders</h3>
               <p className="text-sm text-[rgba(255,255,255,0.4)] mb-6">One email per week. Unsubscribe anytime.</p>
 
@@ -51,7 +51,8 @@ export default function OrchestraPage() {
                   className="flex-1 px-4 py-3 rounded-full bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.08)] text-white text-sm placeholder:text-[rgba(255,255,255,0.25)] focus:outline-none focus:border-accent-orange transition-colors"
                 />
                 <motion.button
-                  className="px-6 py-3 bg-accent-orange text-white text-sm font-medium rounded-full hover:brightness-110 transition-all"
+                  className="px-6 py-3 text-white text-sm font-medium rounded-full hover:bg-[rgb(22,22,26)] transition-all"
+                  style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -68,14 +69,27 @@ export default function OrchestraPage() {
       <section className="w-full py-16 bg-[rgb(14,15,17)]">
         <div className="max-w-[700px] mx-auto px-5">
           <Reveal variants={fadeUp} className="mb-10">
-            <h2 className="text-white text-2xl font-medium" style={{ fontFamily: "var(--font-family-heading)" }}>Recent Issues</h2>
+            <h2
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
+              Recent Issues
+            </h2>
           </Reveal>
 
           <div className="flex flex-col gap-4">
             {recentIssues.map((issue, i) => (
               <Reveal key={i} variants={fadeUp} delay={i * 0.08}>
                 <motion.div
-                  className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-6"
+                  className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-6"
                   whileHover={{ borderColor: "rgba(232,86,0,0.15)", x: 4 }}
                   transition={{ duration: 0.3 }}
                 >

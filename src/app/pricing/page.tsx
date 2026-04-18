@@ -227,7 +227,19 @@ function ComparisonTable() {
         <Reveal variants={fadeUp}>
           <div className="text-center mb-14">
             <Badge text="Compare" />
-            <h2 className="mt-6 text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-1.5px] text-white">
+            <h2
+              className="mt-6"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               Price Comparison
             </h2>
           </div>
@@ -287,7 +299,7 @@ export default function PricingPage() {
       <PageHero
         badge="About"
         title="Simple Pricing"
-        subtitle="Gain real-time insights into your crypto portfolio and make informed investment decisions."
+        subtitle="Gain real time insights into your crypto portfolio and make informed investment decisions."
       />
 
       {/* Pricing Cards */}

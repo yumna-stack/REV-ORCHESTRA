@@ -34,7 +34,7 @@ export default function LiveSystem() {
               style={{
                 padding: "8px 16px",
                 borderRadius: 100,
-                backgroundColor: "rgb(25,27,31)",
+                backgroundColor: "rgb(8,8,10)",
                 border: "1px solid rgba(255,255,255,0.07)",
               }}
             >
@@ -67,7 +67,7 @@ export default function LiveSystem() {
               }}
             >
               How we handle{" "}
-              <span style={{ color: "rgba(232,86,0,0.8)" }}>your data.</span>
+              <span style={{ color: "rgba(232,86,0,0.8)" }}>your data</span>
             </h2>
           </Reveal>
 
@@ -82,7 +82,7 @@ export default function LiveSystem() {
                 margin: "16px auto 0",
               }}
             >
-              Your business data is not our product. Guardrails, role-based access, and full audit trails, built into every system from day one.
+              Your business data is not our product. Guardrails, role based access, and full audit trails, built into every system from day one.
             </p>
           </Reveal>
 
@@ -92,10 +92,11 @@ export default function LiveSystem() {
                 href={CAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-accent-orange text-white hover:brightness-110 transition-all"
+                className="inline-flex items-center gap-2 text-white hover:brightness-110 transition-all"
                 style={{
                   padding: "11px 22px",
                   borderRadius: 100,
+                  backgroundColor: "#E85600",
                   fontFamily: "var(--font-family-body)",
                   fontSize: 13,
                   fontWeight: 500,
@@ -132,10 +133,73 @@ export default function LiveSystem() {
           </Reveal>
         </div>
 
-        {/* ── MacBook Pro ── */}
+        {/* ── Data-handling cards ── */}
+        <motion.div
+          className="relative mx-auto grid grid-cols-1 md:grid-cols-2 gap-5"
+          style={{ scale, maxWidth: 960 }}
+        >
+          {[
+            {
+              body: "Your business data is not our product. Guardrails, role based access, and full audit trails built into every system from day one.",
+              tags: ["AI Guardrails", "Role Based Access", "Full Audit Trail"],
+            },
+            {
+              body: "Hosted on dedicated VPS infrastructure with end to end GDPR compliance, no shared tenants, no data mining, no surprises.",
+              tags: ["Dedicated VPS", "GDPR Compliant", "EU Data Residency"],
+            },
+          ].map((card, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: 0.1 + i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                backgroundColor: "rgb(8,8,10)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 18,
+                padding: 28,
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--font-family-body)",
+                  fontSize: 15,
+                  lineHeight: "165%",
+                  color: "rgba(255,255,255,0.72)",
+                  marginBottom: 20,
+                }}
+              >
+                {card.body}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {card.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1.5"
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: 100,
+                      backgroundColor: "rgb(14,14,16)",
+                      border: "1px solid rgba(232,86,0,0.25)",
+                      fontSize: 12,
+                      fontWeight: 500,
+                      color: "rgba(255,255,255,0.78)",
+                    }}
+                  >
+                    <span style={{ color: "#E85600", fontWeight: 600 }}>+</span>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* MacBook mockup removed — replaced by the data-handling cards above. */}
         <motion.div
           className="relative mx-auto"
-          style={{ scale, maxWidth: 960 }}
+          style={{ display: "none", scale, maxWidth: 960 }}
         >
           {/* Device body — thick black bezel, heavily rounded like a real MacBook Pro */}
           <div
@@ -226,7 +290,7 @@ export default function LiveSystem() {
                 >
                   <motion.div
                     style={{
-                      backgroundColor: "rgba(8,8,10,0.9)",
+                      backgroundColor: "rgb(8,8,10)",
                       backdropFilter: "blur(40px)",
                       borderRadius: 14,
                       border: "1px solid rgba(255,255,255,0.06)",
@@ -273,7 +337,7 @@ export default function LiveSystem() {
                     >
                       Your business data is <span style={{ color: "rgba(255,255,255,0.95)", fontWeight: 500 }}>not our product</span>.{" "}
                       <span style={{ color: "rgba(255,255,255,0.95)", fontWeight: 500 }}>Guardrails</span>,{" "}
-                      <span style={{ color: "rgba(255,255,255,0.95)", fontWeight: 500 }}>role-based access</span>, and{" "}
+                      <span style={{ color: "rgba(255,255,255,0.95)", fontWeight: 500 }}>role based access</span>, and{" "}
                       <span style={{ color: "rgba(255,255,255,0.95)", fontWeight: 500 }}>full audit trails</span> built into every system from day one.
                     </motion.p>
 
@@ -287,7 +351,7 @@ export default function LiveSystem() {
                     >
                       <motion.span
                         className="inline-flex items-center gap-1 px-2 py-0.5 rounded"
-                        style={{ fontSize: 10, fontWeight: 500, color: "#b8e986", backgroundColor: "rgba(184,233,134,0.08)", border: "1px solid rgba(184,233,134,0.12)" }}
+                        style={{ fontSize: 10, fontWeight: 500, color: "#b8e986", backgroundColor: "rgb(34,46,30)", border: "1px solid rgba(184,233,134,0.12)" }}
                         variants={{
                           hidden: { opacity: 0, scale: 0.8 },
                           visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 200, damping: 15 } },
@@ -297,7 +361,7 @@ export default function LiveSystem() {
                       </motion.span>
                       <motion.span
                         className="inline-flex items-center gap-1 px-2 py-0.5 rounded"
-                        style={{ fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.4)", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+                        style={{ fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.4)", backgroundColor: "rgb(8,8,10)", border: "1px solid rgba(255,255,255,0.06)" }}
                         variants={{
                           hidden: { opacity: 0, scale: 0.8 },
                           visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 200, damping: 15 } },

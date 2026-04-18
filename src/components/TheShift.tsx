@@ -89,7 +89,7 @@ function StatCard({
   const count = useCountUp(rawNumber, 1.8, inView);
 
   return (
-    <div className="rounded-[20px] bg-[rgb(14,15,17)] border border-[rgba(255,255,255,0.06)] p-7 flex flex-col h-full">
+    <div className="rounded-[20px] bg-[rgb(14,15,17)] border border-[rgba(255,255,255,0.06)] p-5 flex flex-col h-full">
       <span
         className="text-accent-orange text-[clamp(32px,4vw,48px)] font-bold leading-[110%] mb-3"
         style={{ fontFamily: "var(--font-family-heading)" }}
@@ -109,10 +109,10 @@ function StatCard({
 const stats = [
   {
     rawNumber: "7",
-    displayPrefix: "4-",
+    displayPrefix: "4 to ",
     displaySuffix: "\u00d7",
     description:
-      "higher conversions for AI-native GTM teams vs. traditional outbound",
+      "higher conversions for AI native GTM teams vs. traditional outbound",
     source: "Source: Landbase, 2026",
   },
   {
@@ -120,7 +120,7 @@ const stats = [
     displayPrefix: "",
     displaySuffix: "%",
     description:
-      "of B2B companies adopting AI-driven GTM by end of 2026",
+      "of B2B companies adopting AI driven GTM by end of 2026",
     source: "Source: Gartner, 2025",
   },
   {
@@ -143,15 +143,24 @@ export default function TheShift() {
         {/* Header */}
         <div className="mb-16 max-w-[800px]">
           <Reveal variants={slideRight}>
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.06)] text-xs text-[rgba(255,255,255,0.5)] tracking-wider uppercase w-fit mb-6">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.06)] text-xs text-[rgba(255,255,255,0.5)] tracking-wider uppercase w-fit mb-6">
               THE SHIFT
             </div>
           </Reveal>
 
           <Reveal variants={slideRight} delay={0.1}>
             <h2
-              className="text-[clamp(28px,4vw,52px)] font-medium leading-[110%] tracking-[-2px] text-white mb-5"
-              style={{ fontFamily: "var(--font-family-heading)" }}
+              className="mb-5"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
             >
               WHY THE OLD PLAYBOOK STOPPED WORKING
             </h2>
@@ -166,7 +175,7 @@ export default function TheShift() {
 
           <Reveal variants={fadeUp} delay={0.2}>
             <p className="text-base text-[rgba(255,255,255,0.5)] leading-[170%] mb-5">
-              Most companies deploying AI in their go-to-market are bolting it
+              Most companies deploying AI in their go to market are bolting it
               onto a broken process. They automate bad sequences. They scale
               generic messaging. They generate more volume into channels that
               already ignore them. The result is the same pipeline problem,
@@ -176,7 +185,7 @@ export default function TheShift() {
 
           <Reveal variants={fadeUp} delay={0.25}>
             <p className="text-base text-[rgba(255,255,255,0.5)] leading-[170%] mb-5">
-              The companies getting 5&ndash;12% reply rates aren&apos;t using
+              The companies getting 5 to 12% reply rates aren&apos;t using
               better AI. They&apos;re using AI on a better system. Signals feed
               the targeting. The targeting shapes the copy. The copy adapts to
               the channel. Every layer is connected, and the AI orchestrates
@@ -186,7 +195,7 @@ export default function TheShift() {
 
           <Reveal variants={fadeUp} delay={0.3}>
             <p className="text-base text-white font-medium leading-[170%]">
-              That playbook-first, system-first approach is exactly what 90
+              That playbook first, system first approach is exactly what 90
               days with Rev Orchestra builds.
             </p>
           </Reveal>

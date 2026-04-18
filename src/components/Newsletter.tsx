@@ -28,7 +28,18 @@ export default function Newsletter() {
         <Reveal variants={fadeLeft}>
           <StaggerContainer className="flex flex-col gap-5" staggerDelay={0.1}>
             <StaggerItem variants={fadeLeft}>
-              <h2 className="text-[clamp(24px,3vw,36px)] font-semibold leading-[120%] tracking-[-1px] text-white">
+              <h2
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  fontWeight: 500,
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
+                  color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
+                }}
+              >
                 Join Our Newsletter
               </h2>
             </StaggerItem>
@@ -57,12 +68,13 @@ export default function Newsletter() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@email.com"
                     required
-                    className="flex-1 max-w-[280px] px-5 py-3.5 text-sm text-white bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.1)] rounded-full outline-none focus:border-accent-orange/50 transition-colors placeholder:text-[rgba(255,255,255,0.25)]"
+                    className="flex-1 max-w-[280px] px-5 py-3.5 text-sm text-white bg-[rgb(14,14,16)] border border-[rgba(255,255,255,0.1)] rounded-full outline-none focus:border-accent-orange/50 transition-colors placeholder:text-[rgba(255,255,255,0.25)]"
                     whileFocus={{ scale: 1.02, borderColor: "rgba(232,86,0,0.5)" }}
                   />
                   <motion.button
                     type="submit"
-                    className="px-6 py-3.5 bg-accent-orange text-white text-sm font-medium rounded-full hover:brightness-110 transition-all whitespace-nowrap"
+                    className="px-6 py-3.5 text-white text-sm font-medium rounded-full hover:bg-[rgb(22,22,26)] transition-all whitespace-nowrap"
+                    style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.97 }}
                   >
@@ -94,7 +106,7 @@ export default function Newsletter() {
 
             <div className="flex flex-col gap-4">
               <p className="text-base text-[rgba(255,255,255,0.6)] leading-[170%]">
-                Our team will respond to you within the next 12-16 hours with the support you need.
+                Our team will respond to you within the next 12 to 16 hours with the support you need.
               </p>
               <motion.a
                 href="#contact"

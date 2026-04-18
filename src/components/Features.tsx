@@ -10,14 +10,27 @@ export default function Features() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left - slides in from left */}
           <Reveal variants={fadeLeft} className="flex flex-col gap-6">
-            <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] w-fit">
+            <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] w-fit">
               <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
               <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
               <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider">Features</span>
             </div>
-            <h2 className="text-[clamp(28px,4vw,48px)] font-medium leading-[115%] tracking-[-2px] text-white">Encryption Build on Web3 Wallet for Crypo</h2>
+            <h2
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
+              Encryption Build on Web3 Wallet for Crypo
+            </h2>
             <p className="text-base text-[rgba(255,255,255,0.45)] leading-[170%]">A platform to buy sell and swap crypto in one place</p>
-            <a href="#contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all w-fit">
+            <a href="#contact" className="inline-flex items-center gap-2 px-7 py-3.5 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:bg-[rgb(22,22,26)] transition-all w-fit" style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}>
               ANALYZER <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </a>
           </Reveal>
@@ -27,7 +40,7 @@ export default function Features() {
             <div className="grid grid-cols-2 gap-4">
               {/* Card 1: Wallet */}
               <StaggerItem>
-                <div className="relative rounded-[20px] border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-6 overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-colors duration-500">
+                <div className="relative rounded-[20px] border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-6 overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-colors duration-500">
                   <div className="absolute -top-8 -right-8 w-20 h-20 rounded-full bg-accent-orange/8 blur-2xl" />
                   <h3 className="text-lg font-semibold text-white mb-2 leading-[130%]">Crypo wallet with secure encryption</h3>
                   <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[160%] mb-6">Leading multi asset management</p>
@@ -50,7 +63,7 @@ export default function Features() {
 
               {/* Card 2: Bitcoin */}
               <StaggerItem>
-                <div className="relative rounded-[20px] border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-5 overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-colors duration-500">
+                <div className="relative rounded-[20px] border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-5 overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-colors duration-500">
                   <div className="flex items-center gap-2 mb-3">
                     <motion.div
                       className="w-7 h-7 rounded-full bg-[#F7931A] flex items-center justify-center"
@@ -61,7 +74,7 @@ export default function Features() {
                     </motion.div>
                     <div><span className="text-sm font-medium text-white">Bitcoin</span><div className="text-[10px] text-[rgba(255,255,255,0.3)]">$ 107297.00</div></div>
                   </div>
-                  <div className="rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] p-3 mb-3">
+                  <div className="rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgb(8,8,10)] p-3 mb-3">
                     <span className="text-xl font-semibold text-white">00.343 </span>
                     <motion.span
                       className="inline-block w-[2px] h-5 bg-white align-middle"
@@ -90,7 +103,7 @@ export default function Features() {
             <div className="grid grid-cols-2 gap-4">
               {/* Card 3: DAPPS */}
               <StaggerItem>
-                <div className="relative rounded-[20px] border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-6 overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-colors duration-500">
+                <div className="relative rounded-[20px] border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-6 overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-colors duration-500">
                   <h3 className="text-2xl font-bold text-white mb-2">DAPPS</h3>
                   <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[160%] mb-4">Take control of your all crypto assets</p>
                   <div className="relative h-[150px] overflow-hidden">
@@ -101,8 +114,8 @@ export default function Features() {
                       transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                     >
                       {[{ a: "$120", s: "Sent", c: "#4CAF50" }, { a: "$455", s: "waiting", c: "rgba(255,255,255,0.3)" }, { a: "$7775", s: "Sent", c: "#4CAF50" }, { a: "$320", s: "Sent", c: "#4CAF50" }, { a: "$1200", s: "pending", c: "#E85600" }, { a: "$890", s: "Sent", c: "#4CAF50" }, { a: "$120", s: "Sent", c: "#4CAF50" }, { a: "$455", s: "waiting", c: "rgba(255,255,255,0.3)" }, { a: "$7775", s: "Sent", c: "#4CAF50" }].map((tx, i) => (
-                        <div key={i} className="flex items-center gap-3 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-2.5 mb-2">
-                          <div className="w-7 h-7 rounded-full bg-[rgba(255,255,255,0.06)] flex items-center justify-center shrink-0"><div className="w-4 h-4 rounded-full bg-gradient-to-br from-[#555] to-[#888]" /></div>
+                        <div key={i} className="flex items-center gap-3 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-2.5 mb-2">
+                          <div className="w-7 h-7 rounded-full bg-[rgb(14,14,16)] flex items-center justify-center shrink-0"><div className="w-4 h-4 rounded-full bg-gradient-to-br from-[#555] to-[#888]" /></div>
                           <span className="text-xs font-semibold text-white">{tx.a}</span>
                           <span className="text-[9px] text-[rgba(255,255,255,0.3)] ml-auto">12 June</span>
                           <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ color: tx.c, border: `1px solid ${tx.c}30` }}>{tx.s}</span>
@@ -122,7 +135,7 @@ export default function Features() {
                     {["▼","N","▲","T","✦","V","T","≡","M","✦","⬡","T"].map((s, i) => (
                       <motion.div
                         key={i}
-                        className="w-10 h-10 rounded-full bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center mx-auto"
+                        className="w-10 h-10 rounded-full bg-[rgb(14,14,16)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center mx-auto"
                         animate={{
                           y: [-3, 3, -3],
                           boxShadow: ["0 0 0px rgba(232,86,0,0)", "0 0 12px rgba(232,86,0,0.15)", "0 0 0px rgba(232,86,0,0)"],

@@ -22,15 +22,27 @@ export default function SupportedBlockchain() {
         {/* Heading */}
         <Reveal variants={fadeUp}>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] mb-6">
               <span className="w-2 h-2 rounded-full bg-accent-orange" />
               <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Supported Blockchain</span>
             </div>
-            <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">
+            <h2
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               Hear the Pulse of Every Crypto Chain
             </h2>
             <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[600px] mx-auto">
-              Multi-chain support across all major blockchain networks with real-time data indexing and analysis.
+              Multi chain support across all major blockchain networks with real time data indexing and analysis.
             </p>
           </div>
         </Reveal>
@@ -41,9 +53,9 @@ export default function SupportedBlockchain() {
             <GridItem key={i}>
               <motion.div
                 whileHover={{ y: -4 }}
-                className="flex flex-col items-center gap-4 p-8 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] hover:border-[rgba(232,86,0,0.2)] hover:bg-[rgba(232,86,0,0.03)] transition-all duration-500 group"
+                className="flex flex-col items-center gap-4 p-6 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] hover:border-[rgba(232,86,0,0.2)] hover:bg-[rgb(34,25,22)] transition-all duration-500 group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center group-hover:bg-accent-orange/10 group-hover:border-accent-orange/20 transition-colors duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-[rgb(14,14,16)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center group-hover:bg-accent-orange/10 group-hover:border-accent-orange/20 transition-colors duration-300">
                   <img src={chain.icon} alt={chain.name} className="w-8 h-8 object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <span className="text-sm font-medium text-[rgba(255,255,255,0.6)] group-hover:text-white transition-colors duration-300">

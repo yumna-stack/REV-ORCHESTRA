@@ -19,7 +19,7 @@ const agents = [
   {
     name: "Research Agent",
     icon: "R",
-    desc: "Compiles account briefs in under 30 seconds \u2014 company size, tech stack, decision makers, recent news. Feeds directly into copy generation.",
+    desc: "Compiles account briefs in under 30 seconds, company size, tech stack, decision makers, recent news. Feeds directly into copy generation.",
     color: "#6366F1",
   },
   {
@@ -31,7 +31,7 @@ const agents = [
   {
     name: "Outbound Agent",
     icon: "O",
-    desc: "Sends multi-channel sequences \u2014 email, LinkedIn, follow-ups. Adapts timing and cadence based on engagement signals.",
+    desc: "Sends multi channel sequences, email, LinkedIn, follow ups. Adapts timing and cadence based on engagement signals.",
     color: "#3B82F6",
   },
   {
@@ -56,12 +56,12 @@ const problems = [
   },
   {
     title: "Tool Soup",
-    desc: "Clay, Instantly, HubSpot, Apollo \u2014 none of them talk to each other. Your CRM is a graveyard of outdated records.",
+    desc: "Clay, Instantly, HubSpot, Apollo, none of them talk to each other. Your CRM is a graveyard of outdated records.",
     icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z",
   },
   {
     title: "Generic Copy",
-    desc: "Your outreach sounds like everyone else\u2019s. AI-written but not AI-orchestrated. More volume, same bad reply rates.",
+    desc: "Your outreach sounds like everyone else\u2019s. AI written but not AI orchestrated. More volume, same bad reply rates.",
     icon: "M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z",
   },
   {
@@ -79,15 +79,26 @@ export default function WhatWeDoPage() {
       <PageHero
         badge="What We Do"
         title="We build AI GTM systems that run without you."
-        subtitle="Six AI agents. Connected to your stack. Orchestrating your entire go-to-market motion \u2014 from signal detection to booked meetings."
+        subtitle="Autonomous AI agents. Connected to your stack. Orchestrating your entire go to market motion, from signal detection to booked meetings."
       />
 
       {/* Problem Section */}
       <section className="w-full py-24 bg-[rgb(14,15,17)]">
         <div className="max-w-[1100px] mx-auto px-5">
           <Reveal variants={fadeLeft} className="mb-14">
-            <h2 className="text-[clamp(24px,3.5vw,40px)] font-medium leading-[115%] tracking-[-1.5px] text-white" style={{ fontFamily: "var(--font-family-heading)" }}>
-              Why most funded founders are <span className="text-accent-orange italic">still stuck.</span>
+            <h2
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
+              Why most funded founders are <span className="text-accent-orange italic">still stuck</span>
             </h2>
           </Reveal>
 
@@ -116,13 +127,25 @@ export default function WhatWeDoPage() {
         </div>
       </section>
 
-      {/* Six Agents */}
+      {/* The Agents */}
       <section className="w-full py-24 bg-[rgb(14,15,17)]">
         <div className="max-w-[1100px] mx-auto px-5">
           <Reveal variants={flipUp} className="text-center mb-14" >
             <Badge text="The System" />
-            <h2 className="text-[clamp(28px,4vw,48px)] font-medium leading-[110%] tracking-[-2px] text-white mt-6" style={{ fontFamily: "var(--font-family-heading)" }}>
-              Six agents. One system. <span className="text-accent-orange italic">Always talking.</span>
+            <h2
+              className="mt-6"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
+              Autonomous agents, One system, <span className="text-accent-orange italic">Always talking</span>
             </h2>
           </Reveal>
 
@@ -159,14 +182,27 @@ export default function WhatWeDoPage() {
       <section className="w-full py-24 bg-[rgb(14,15,17)]">
         <div className="max-w-[600px] mx-auto px-5 text-center">
           <Reveal variants={fadeUp}>
-            <h2 className="text-[clamp(24px,3.5vw,40px)] font-medium leading-[115%] tracking-[-1.5px] text-white mb-6" style={{ fontFamily: "var(--font-family-heading)" }}>
-              Ready to see what orchestration looks like for your business?
+            <h2
+              className="mb-6"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
+              Ready to see what orchestration looks like for your business
             </h2>
             <motion.a
               href={CAL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+              style={{ backgroundColor: "#E85600" }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >

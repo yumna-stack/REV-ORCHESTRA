@@ -69,7 +69,7 @@ function TickerColumn({
         {items.map((logo, i) => (
           <div
             key={i}
-            className="w-12 h-12 rounded-xl bg-[rgba(255,255,255,0.08)] flex items-center justify-center shrink-0"
+            className="w-12 h-12 rounded-xl bg-[rgb(18,18,20)] flex items-center justify-center shrink-0"
           >
             <img
               src={logo.src}

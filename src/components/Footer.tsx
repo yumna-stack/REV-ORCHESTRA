@@ -7,9 +7,9 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const footerLinks = {
   main: [
-    { label: "What We Do", href: "/#agents" },
+    { label: "Benefits", href: "/#stats" },
+    { label: "Services", href: "/#agents" },
     { label: "How It Works", href: "/#how-it-works" },
-    { label: "Packages", href: "/#pricing" },
     { label: "FAQ", href: "/#faq" },
   ],
   resources: [
@@ -116,7 +116,7 @@ export default function Footer() {
 
             {/* Description — Framer 18px content style */}
             <p className="text-[16px] text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[420px]">
-              The AI GTM System for B2B Founders. Six AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.
+              AI powered GTM orchestration for B2B founders. Autonomous agents, one system, connected to your stack. Customized and deployed in 90 days. Yours permanently.
             </p>
 
             {/* Social icons row — Framer: gap 16px, 20x20 */}
@@ -313,7 +313,7 @@ export default function Footer() {
           transition={{ delay: 0.4, duration: 0.5 }}
         >
           <p className="text-xs text-[rgba(255,255,255,0.2)]">
-            Built with {tools.join(" \u00B7 ")} &mdash; US LLC via Stripe Atlas &mdash; Team in Sri Lanka &amp; Singapore
+            Built with {tools.join(" \u00B7 ")}, US LLC via Stripe Atlas, Team in Sri Lanka &amp; Singapore
           </p>
         </motion.div>
       </div>

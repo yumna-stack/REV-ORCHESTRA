@@ -48,7 +48,7 @@ export default function GTMFlowVisual() {
                 <motion.div
                   className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg transition-all duration-600"
                   style={{
-                    background: i === activeSignal ? "rgba(232,86,0,0.15)" : "rgba(255,255,255,0.03)",
+                    background: i === activeSignal ? "rgba(232,86,0,0.15)" : "rgb(8,8,10)",
                     border: `1px solid ${i === activeSignal ? "rgba(232,86,0,0.3)" : "rgba(255,255,255,0.06)"}`,
                     transform: i === activeSignal ? "translateX(4px)" : "translateX(0)",
                   }}
@@ -141,7 +141,7 @@ export default function GTMFlowVisual() {
                 <motion.div
                   className="px-3 py-2 rounded-lg transition-all duration-600"
                   style={{
-                    background: i === pulsePhase ? "rgba(152,151,255,0.12)" : "rgba(255,255,255,0.03)",
+                    background: i === pulsePhase ? "rgba(152,151,255,0.12)" : "rgb(8,8,10)",
                     border: `1px solid ${i === pulsePhase ? "rgba(152,151,255,0.25)" : "rgba(255,255,255,0.06)"}`,
                   }}
                   whileHover={{ scale: 1.03, x: -4 }}

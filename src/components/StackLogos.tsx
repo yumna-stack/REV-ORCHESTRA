@@ -27,26 +27,26 @@ const capabilities = [
     items: [
       { label: "Buying Signal Detection", tools: ["hubspot", "linkedin", "apollo"] },
       { label: "Deep Account Research", tools: ["clay", "apollo", "claude"] },
-      { label: "ICP-Matched Targeting", tools: ["salesforce", "hubspot", "clay"] },
+      { label: "ICP Matched Targeting", tools: ["salesforce", "hubspot", "clay"] },
       { label: "Auto Contact Enrichment", tools: ["clay", "apollo", "linkedin"] },
     ],
   },
   {
     title: "Engage",
     items: [
-      { label: "AI-Written Email Sequences", tools: ["instantly", "claude", "hubspot"] },
+      { label: "AI Written Email Sequences", tools: ["instantly", "claude", "hubspot"] },
       { label: "LinkedIn Touch Sequences", tools: ["linkedin", "clay", "n8n"] },
-      { label: "Multi-Channel Orchestration", tools: ["slack", "instantly", "hubspot"] },
-      { label: "Smart Follow-up Triggers", tools: ["n8n", "instantly", "claude"] },
+      { label: "Multi Channel Orchestration", tools: ["slack", "instantly", "hubspot"] },
+      { label: "Smart Follow up Triggers", tools: ["n8n", "instantly", "claude"] },
     ],
   },
   {
     title: "Orchestrate",
     items: [
-      { label: "CRM Auto-Updates", tools: ["hubspot", "salesforce", "n8n"] },
+      { label: "CRM Auto Updates", tools: ["hubspot", "salesforce", "n8n"] },
       { label: "Live Pipeline Monitoring", tools: ["hubspot", "slack", "n8n"] },
-      { label: "Agent-to-Agent Handoffs", tools: ["n8n", "claude", "slack"] },
-      { label: "Real-Time Slack Alerts", tools: ["slack", "zapier", "n8n"] },
+      { label: "Agent to Agent Handoffs", tools: ["n8n", "claude", "slack"] },
+      { label: "Real Time Slack Alerts", tools: ["slack", "zapier", "n8n"] },
     ],
   },
 ];
@@ -156,11 +156,19 @@ export default function StackLogos() {
             Integrations
           </p>
           <h2
-            className="text-[clamp(28px,4vw,44px)] font-medium leading-[115%] tracking-[-1.5px] text-white"
-            style={{ fontFamily: "var(--font-family-heading)" }}
+            style={{
+              fontFamily: "var(--font-family-heading)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              fontWeight: 500,
+              lineHeight: "120%",
+              letterSpacing: "-1.2px",
+              color: "white",
+              maxWidth: 560,
+              margin: "0 auto",
+            }}
           >
             Plugs into{" "}
-            <span className="text-accent-orange font-semibold">your entire stack.</span>
+            <span className="text-accent-orange font-semibold">your entire stack</span>
           </h2>
           <p className="text-[15px] text-[rgba(255,255,255,0.45)] mt-3 max-w-[480px] mx-auto leading-[160%]">
             We don&apos;t replace your tools. We connect them into one GTM system that actually works together.
@@ -185,7 +193,7 @@ export default function StackLogos() {
                   <motion.div
                     key={j}
                     variants={capItem}
-                    className="flex items-center justify-between px-4 py-3 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] hover:border-[rgba(255,255,255,0.12)] transition-colors"
+                    className="flex items-center justify-between px-4 py-3 rounded-md border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] hover:border-[rgba(255,255,255,0.12)] transition-colors"
                   >
                     <span className="text-xs text-[rgba(255,255,255,0.6)]">
                       {item.label}
@@ -204,7 +212,7 @@ export default function StackLogos() {
 
         {/* Legacy comparison */}
         <Reveal variants={fadeUp} className="max-w-[600px] mx-auto">
-          <div className="relative rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-6">
+          <div className="relative rounded-lg border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-4">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-[rgba(255,255,255,0.06)]">
               <span className="text-sm text-[rgba(255,255,255,0.4)]">
                 Legacy stack

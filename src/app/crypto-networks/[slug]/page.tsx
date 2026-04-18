@@ -20,7 +20,7 @@ export default function NetworkDetailPage() {
               <h1 className="text-[clamp(28px,4vw,44px)] font-medium text-white">Celer Network</h1>
             </div>
             <p className="text-lg text-[rgba(255,255,255,0.5)] leading-[170%] mb-8">
-              Celer Network is a leading inter-blockchain and cross-layer communication platform. CRYPS provides comprehensive indexing for Celer Network data.
+              Celer Network is a leading inter blockchain and cross layer communication platform. CRYPS provides comprehensive indexing for Celer Network data.
             </p>
           </Section>
 
@@ -31,7 +31,7 @@ export default function NetworkDetailPage() {
                 { label: "Consensus", value: "State Channels" },
                 { label: "TPS", value: "15,000+" },
               ].map((item, i) => (
-                <div key={i} className="p-6 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
+                <div key={i} className="p-6 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)]">
                   <span className="text-xs text-[rgba(255,255,255,0.35)] uppercase tracking-wider">{item.label}</span>
                   <p className="text-2xl font-medium text-accent-orange mt-2">{item.value}</p>
                 </div>

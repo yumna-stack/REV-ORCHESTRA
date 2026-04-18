@@ -31,7 +31,7 @@ export default function ContactPage() {
       <PageHero
         badge="Contact"
         title="Let's talk about your GTM."
-        subtitle="30-minute discovery call. We'll review your current stack live and show you exactly where the gaps are."
+        subtitle="30 minute discovery call. We'll review your current stack live and show you exactly where the gaps are."
       />
 
       {/* Contact Card */}
@@ -57,7 +57,7 @@ export default function ContactPage() {
                       </StaggerItem>
                       <StaggerItem>
                         <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[170%]">
-                          30-minute discovery call. No pitch deck, no hard sell, just an honest review of your GTM stack and where orchestration could help.
+                          30 minute discovery call. No pitch deck, no hard sell, just an honest review of your GTM stack and where orchestration could help.
                         </p>
                       </StaggerItem>
                     </StaggerContainer>
@@ -66,7 +66,7 @@ export default function ContactPage() {
                       {/* Calendly link */}
                       <StaggerItem>
                         <div className="flex items-start gap-4">
-                          <div className="w-11 h-11 rounded-xl bg-[rgba(232,86,0,0.1)] border border-[rgba(232,86,0,0.2)] flex items-center justify-center shrink-0">
+                          <div className="w-11 h-11 rounded-xl bg-[rgb(52,30,22)] border border-[rgba(232,86,0,0.2)] flex items-center justify-center shrink-0">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
                             </svg>
@@ -83,7 +83,7 @@ export default function ContactPage() {
                       {/* Email */}
                       <StaggerItem>
                         <div className="flex items-start gap-4">
-                          <div className="w-11 h-11 rounded-xl bg-[rgba(232,86,0,0.1)] border border-[rgba(232,86,0,0.2)] flex items-center justify-center shrink-0">
+                          <div className="w-11 h-11 rounded-xl bg-[rgb(52,30,22)] border border-[rgba(232,86,0,0.2)] flex items-center justify-center shrink-0">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
                             </svg>
@@ -98,7 +98,7 @@ export default function ContactPage() {
                       {/* Location */}
                       <StaggerItem>
                         <div className="flex items-start gap-4">
-                          <div className="w-11 h-11 rounded-xl bg-[rgba(232,86,0,0.1)] border border-[rgba(232,86,0,0.2)] flex items-center justify-center shrink-0">
+                          <div className="w-11 h-11 rounded-xl bg-[rgb(52,30,22)] border border-[rgba(232,86,0,0.2)] flex items-center justify-center shrink-0">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
                             </svg>
@@ -116,7 +116,7 @@ export default function ContactPage() {
                   <Reveal variants={fadeRight} className="p-10 md:p-14 border-t lg:border-t-0 lg:border-l border-[rgba(255,255,255,0.06)]">
                     {submitted ? (
                       <div className="flex flex-col items-center justify-center h-full gap-4 py-16">
-                        <div className="w-16 h-16 rounded-full bg-[rgba(232,86,0,0.15)] flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-[rgb(64,34,22)] flex items-center justify-center">
                           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
@@ -151,9 +151,9 @@ export default function ContactPage() {
                             <label className="text-xs text-[rgba(255,255,255,0.4)] uppercase tracking-wider">Current ARR</label>
                             <select className="px-5 py-3.5 text-sm text-white bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] rounded-xl outline-none focus:border-[#E85600]/50 transition-colors" onChange={(e) => setFormData({ ...formData, arr: e.target.value })}>
                               <option value="" className="bg-[rgb(14,15,17)]">Select range</option>
-                              <option value="pre-revenue" className="bg-[rgb(14,15,17)]">Pre-revenue</option>
+                              <option value="pre-revenue" className="bg-[rgb(14,15,17)]">Pre revenue</option>
                               <option value="under-500k" className="bg-[rgb(14,15,17)]">&lt;$500K</option>
-                              <option value="500k-2m" className="bg-[rgb(14,15,17)]">$500K - $2M</option>
+                              <option value="500k-2m" className="bg-[rgb(14,15,17)]">$500K to $2M</option>
                               <option value="2m-plus" className="bg-[rgb(14,15,17)]">$2M+</option>
                             </select>
                           </div>
@@ -165,7 +165,7 @@ export default function ContactPage() {
                           </div>
                         </StaggerItem>
                         <StaggerItem>
-                          <button type="submit" onClick={handleSubmit} className="mt-2 px-8 py-4 bg-[#E85600] text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all w-full">
+                          <button type="submit" onClick={handleSubmit} className="mt-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:bg-[rgb(22,22,26)] transition-all w-full" style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}>
                             Request a Call
                           </button>
                         </StaggerItem>

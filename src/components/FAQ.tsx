@@ -8,36 +8,40 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const faqs = [
   {
-    q: "What exactly does Rev Orchestra build?",
-    a: "We build a complete AI-orchestrated GTM system tailored to your business. This includes 6 AI sub-agents (Signal, Research, Copy, Outbound, CRM, and Monitor) connected to your existing tools like HubSpot, Clay, Instantly, Slack, and n8n. The system detects buying signals, researches accounts, writes personalised outreach, manages sequences, updates your CRM, and monitors performance \u2014 all automatically.",
+    q: "What do you actually build?",
+    a: "An AI orchestrated operations system tailored to your workflow. We start by mapping your entire motion, whatever that is: outbound, inbound, research, CX, ops, and then build a fleet of specialized AI agents that run it. Every deployment is custom. Outbound clients get Research \u2192 Draft \u2192 Review \u2192 Finalize \u2192 Outbound pipelines. Inbound clients get triage and qualification agents. Ops clients get workflow automation. Whatever your business actually needs, we build the agents to match.",
   },
   {
-    q: "How long does the full build take?",
-    a: "90 days from kickoff to handoff. Weeks 1\u20132 are discovery and audit. Weeks 2\u20133 are system architecture and blueprint sign-off. Weeks 3\u201310 are the build and integration phase. Weeks 11\u201312 are optimisation, documentation, and team training. After handoff, you get 30 days of post-launch support included.",
+    q: "How long does deployment take?",
+    a: "90 days from kickoff to handoff. Weeks 1 to 2 are discovery and workflow mapping. Weeks 2 to 3 are system architecture and configuration. Weeks 3 to 10 are the build phase, agents go live one by one, connected to your existing stack. Weeks 11 to 12 are optimization, documentation, and team training. After handoff, you get 30 days of post launch support included.",
   },
   {
-    q: "Do I actually own the system after the build?",
-    a: "Yes, 100%. Every workflow, every agent, every piece of IP \u2014 it\u2019s yours permanently. We build inside your tool instances (your n8n, your CRM, your accounts). There are no subscriptions, no retainers, and no lock-in. When we hand the keys over, you own it completely.",
+    q: "Do I own the system after deployment?",
+    a: "Yes, 100%. The entire dashboard, every workflow, every agent, every piece of IP, it\u2019s yours permanently. We deploy inside your tool instances (your n8n, your CRM, your accounts). There are no subscriptions, no retainers, and no lock in.",
   },
   {
     q: "What tools do I need before we start?",
-    a: "We work with whatever you have. Most clients use some combination of HubSpot/Salesforce, Clay, Instantly, Slack, and a few enrichment tools. If you\u2019re missing something, we\u2019ll recommend the right tools during the audit phase. We integrate with 50+ platforms.",
+    a: "We work with whatever you have. Common stacks include HubSpot or Salesforce for CRM, Instantly or Clay for outreach and enrichment, Slack for internal coordination, LinkedIn and X for distribution, n8n or webhooks for custom flows. If you\u2019re missing something, we\u2019ll recommend the right tools during discovery. The system integrates with 50+ platforms.",
   },
   {
-    q: "What kind of results can I expect?",
-    a: "Teams using signal-led, AI-orchestrated outbound see 4\u20137\u00D7 higher conversion rates vs. traditional batch-and-blast outbound. Our clients typically go from 1\u20132% reply rates to 8\u201312%. Pipeline generation increases by 3\u20135\u00D7 within the first 90 days of the system being live.",
+    q: "What kinds of workflows can you automate?",
+    a: "Any repeatable, rules driven workflow where AI can reason, draft, decide, or route. The most common: outbound prospecting and outreach; inbound lead triage and qualification; research and enrichment; CRM hygiene; pipeline monitoring and reporting; customer success playbooks; competitive signal tracking. We design the agent mix around your workflow, not the other way around.",
   },
   {
-    q: "Is my data safe? What about compliance?",
-    a: "Everything runs inside your own tool instances \u2014 nothing passes through our servers. Every agent has built-in guardrails, rate limits, and action boundaries. We include RBAC (role-based access control), human-in-the-loop approval gates, and full audit trails. All enrichment sources operate under GDPR-compliant data processing agreements.",
+    q: "What does the dashboard show me?",
+    a: "Every agent we built, their role, their current task, and their status. The issue pipeline, what\u2019s queued, in progress, in review, and done. The monthly budget with automatic hard stop ceiling (no runaway spend). Pending approvals for anything that needs your sign off. And a live activity feed showing every action every agent has taken. You see your whole operation in one place.",
+  },
+  {
+    q: "Is my data safe?",
+    a: "Everything runs inside your own tool instances, nothing passes through our servers. Every agent has built in guardrails, rate limits, and action boundaries. The system includes role based access control, human in the loop approval gates, and full audit trails. All enrichment sources operate under GDPR compliant data processing agreements.",
   },
   {
     q: "How many clients do you take per quarter?",
-    a: "Four, maximum. Danny personally oversees every build. We deliberately limit capacity to ensure quality. If we\u2019re full for the current quarter, we\u2019ll let you know on the discovery call and can reserve a slot for the next one.",
+    a: "Four, maximum. Danny personally oversees every deployment. We deliberately limit capacity to ensure quality. If we\u2019re full for the current quarter, we\u2019ll let you know on the discovery call and can reserve a slot for the next one.",
   },
   {
     q: "What happens on the discovery call?",
-    a: "It\u2019s 30 minutes with Danny. We\u2019ll review your current GTM setup live, identify the biggest gaps, and tell you honestly whether Rev Orchestra is the right fit. No pitch deck, no sales pressure. If it\u2019s not the right time or right solution, we\u2019ll tell you.",
+    a: "It\u2019s 30 minutes with Danny. We\u2019ll review your current workflow live, identify the biggest gaps, and show you exactly what we\u2019d build for your business. No pitch deck, no sales pressure. If it\u2019s not the right fit, we\u2019ll tell you.",
   },
 ];
 
@@ -46,7 +50,7 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
 
   return (
     <motion.div
-      className="rounded-2xl bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.1)] transition-colors duration-300"
+      className="rounded-lg bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.1)] transition-colors duration-300"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.3 }}
@@ -102,20 +106,29 @@ export default function FAQ() {
     <section id="faq" className="relative w-full py-28 bg-black-light">
       <div className="max-w-[1100px] mx-auto px-5">
         <Reveal variants={fadeUp} className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] mb-6">
             <span className="w-2 h-2 rounded-full bg-accent-orange" />
             <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">
               Questions Answered
             </span>
           </div>
           <h2
-            className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4"
-            style={{ fontFamily: "var(--font-family-heading)" }}
+            className="mb-4"
+            style={{
+              fontFamily: "var(--font-family-heading)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              fontWeight: 500,
+              lineHeight: "120%",
+              letterSpacing: "-1.2px",
+              color: "white",
+              maxWidth: 560,
+              margin: "0 auto",
+            }}
           >
             FAQ&apos;S
           </h2>
           <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[550px] mx-auto">
-            Everything you need to know about Rev Orchestra, the build process,
+            Everything you need to know about what we build, how we deploy,
             and what you get at the end of 90 days.
           </p>
         </Reveal>

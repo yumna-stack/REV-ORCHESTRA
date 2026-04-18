@@ -26,9 +26,9 @@ const blogs = [
   },
   {
     slug: "cross-chain-bridges-explained",
-    title: "Cross-Chain Bridges Explained",
+    title: "Cross Chain Bridges Explained",
     excerpt:
-      "How cross-chain bridges enable seamless asset transfers between different blockchain networks.",
+      "How cross chain bridges enable seamless asset transfers between different blockchain networks.",
     tag: "Infrastructure",
   },
   {
@@ -56,7 +56,7 @@ const blogs = [
     slug: "ai-meets-blockchain",
     title: "AI Meets Blockchain",
     excerpt:
-      "How artificial intelligence is transforming on-chain analytics, trading strategies, and protocol governance.",
+      "How artificial intelligence is transforming on chain analytics, trading strategies, and protocol governance.",
     tag: "AI",
   },
 ];
@@ -80,7 +80,7 @@ export default function BlogsPage() {
             <a href={`/blogs/${featuredBlog.slug}`} className="block group">
               <motion.div
                 whileHover={{ y: -4, scale: 1.01 }}
-                className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300"
+                className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Image area */}
@@ -136,7 +136,7 @@ export default function BlogsPage() {
                       {featuredBlog.excerpt}
                     </p>
                     <div>
-                      <span className="inline-flex items-center gap-2 px-6 py-3 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full group-hover:brightness-110 transition-all">
+                      <span className="inline-flex items-center gap-2 px-6 py-3 text-white text-sm font-medium uppercase tracking-wider rounded-full group-hover:bg-[rgb(22,22,26)] transition-all" style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}>
                         Learn More
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -160,7 +160,7 @@ export default function BlogsPage() {
                 <a href={`/blogs/${blog.slug}`} className="block group h-full">
                   <motion.div
                     whileHover={{ y: -4 }}
-                    className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300 h-full flex flex-col"
+                    className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300 h-full flex flex-col"
                   >
                     {/* Card image/placeholder */}
                     <div

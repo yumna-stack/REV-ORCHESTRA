@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const items = [
   "4 seats available for 2026",
-  "90-day AI GTM system build",
+  "90 day AI GTM system build",
   "You own it permanently",
   "Applications closing soon",
 ];

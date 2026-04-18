@@ -65,7 +65,7 @@ function OrbitNode({
         }}
       >
         <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-sm backdrop-blur-sm"
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-sm"
           style={{
             background: `${node.color}18`,
             border: `1px solid ${node.color}35`,
@@ -95,11 +95,19 @@ export default function OrbitVisual() {
             The System
           </p>
           <h2
-            className="text-[clamp(28px,4vw,48px)] font-medium leading-[110%] tracking-[-2px] text-white"
-            style={{ fontFamily: "var(--font-family-heading)" }}
+            style={{
+              fontFamily: "var(--font-family-heading)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              fontWeight: 500,
+              lineHeight: "120%",
+              letterSpacing: "-1.2px",
+              color: "white",
+              maxWidth: 560,
+              margin: "0 auto",
+            }}
           >
-            Six AI agents.{" "}
-            <span className="text-accent-orange italic">One orchestrated system.</span>
+            Autonomous AI agents,{" "}
+            <span className="text-accent-orange italic">One orchestrated system</span>
           </h2>
           <p className="text-base text-[rgba(255,255,255,0.4)] mt-3 max-w-[520px] mx-auto">
             Every agent talks to every other. Signals trigger research, research

@@ -12,30 +12,30 @@ const steps = [
   {
     number: "01",
     title: "Map the Gaps",
-    timeline: "Week 1\u20132",
+    timeline: "Week 1 to 2",
     description: "We go inside your business before we build anything. ICP audit. Messaging review. Signal gap analysis. CRM health check. Tool overlap mapping. You get a full diagnostic report: what\u2019s working, what\u2019s broken, what\u2019s missing.",
     deliverables: ["ICP audit & scoring model", "Signal gap analysis", "CRM health report", "Tool overlap map", "Messaging scorecard"],
   },
   {
     number: "02",
     title: "Design the Machine",
-    timeline: "Week 2\u20133",
-    description: "Nothing gets built until you\u2019ve signed off on the blueprint. We design the full system architecture on paper \u2014 which agents do what, how they connect, what triggers what, and how data flows between your tools.",
-    deliverables: ["Agent architecture diagram", "Data flow map", "Trigger & signal definitions", "Integration plan", "Your sign-off before a line of code"],
+    timeline: "Week 2 to 3",
+    description: "Nothing gets built until you\u2019ve signed off on the blueprint. We design the full system architecture on paper, which agents do what, how they connect, what triggers what, and how data flows between your tools.",
+    deliverables: ["Agent architecture diagram", "Data flow map", "Trigger & signal definitions", "Integration plan", "Your sign off before a line of code"],
   },
   {
     number: "03",
     title: "Build the Orchestra",
-    timeline: "Week 3\u201310",
-    description: "Six agents go live, one by one, connected to your existing stack. Signal detection. Research. Copy generation. Multi-channel outbound. CRM sync. Pipeline monitoring. Each agent is tested individually, then connected to the full system.",
-    deliverables: ["6 AI agents deployed", "Connected to your HubSpot/Salesforce", "Clay + Instantly + n8n integrations", "Slack notifications", "Multi-channel sequences live"],
+    timeline: "Week 3 to 10",
+    description: "Agents go live, one by one, connected to your existing stack. Signal detection. Research. Copy generation. Multi channel outbound. CRM sync. Pipeline monitoring. Each agent is tested individually, then connected to the full system.",
+    deliverables: ["AI agents deployed", "Connected to your HubSpot/Salesforce", "Clay + Instantly + n8n integrations", "Slack notifications", "Multi channel sequences live"],
   },
   {
     number: "04",
     title: "Hand the Keys Over",
-    timeline: "Week 11\u201312",
-    description: "Two weeks of live optimisation and monitoring. We tune the system, fix edge cases, and make sure everything runs smoothly. Then we hand it over \u2014 all of it. The system, the workflows, the agents, the IP. Yours permanently.",
-    deliverables: ["Full system ownership transfer", "Documentation & runbooks", "Team training session", "30-day support window", "No ongoing subscription"],
+    timeline: "Week 11 to 12",
+    description: "Two weeks of live optimisation and monitoring. We tune the system, fix edge cases, and make sure everything runs smoothly. Then we hand it over, all of it. The system, the workflows, the agents, the IP. Yours permanently.",
+    deliverables: ["Full system ownership transfer", "Documentation & runbooks", "Team training session", "30 day support window", "No ongoing subscription"],
   },
 ];
 
@@ -50,7 +50,7 @@ export default function HowItWorksPage() {
       <PageHero
         badge="How It Works"
         title="Four steps. 90 days. Then it's yours."
-        subtitle="A systematic approach to building your AI-orchestrated GTM system. No rushing, no shortcuts, no half-built systems."
+        subtitle="A systematic approach to building your AI orchestrated GTM system. No rushing, no shortcuts, no half built systems."
       />
 
       {/* Timeline */}
@@ -151,15 +151,28 @@ export default function HowItWorksPage() {
       <section className="w-full py-20 bg-[rgb(14,15,17)]">
         <div className="max-w-[600px] mx-auto px-5 text-center">
           <Reveal variants={fadeUp} once={false}>
-            <h2 className="text-[clamp(24px,3.5vw,40px)] font-medium leading-[115%] tracking-[-1.5px] text-white mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>
-              The founders who built their system in Q1 are already booking calls from it.
+            <h2
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
+              The founders who built their system in Q1 are already booking calls from it
             </h2>
             <p className="text-sm text-[rgba(255,255,255,0.4)] mb-8">4 spots available for 2026.</p>
             <motion.a
               href={CAL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+              style={{ backgroundColor: "#E85600" }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
             >

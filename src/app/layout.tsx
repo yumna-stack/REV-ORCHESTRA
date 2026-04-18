@@ -14,9 +14,9 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Rev Orchestra — AI GTM System for B2B Founders",
+  title: "Rev Orchestra, AI GTM System for B2B Founders",
   description:
-    "Rev Orchestra builds AI-orchestrated GTM systems for B2B founders who just raised and need pipeline. Six AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.",
+    "Rev Orchestra builds AI orchestrated GTM systems for B2B founders who just raised and need pipeline. Autonomous AI agents, connected to your stack, running 24/7. Yours permanently in 90 days.",
 };
 
 export default function RootLayout({
@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${instrumentSerif.variable} antialiased`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} ${instrumentSerif.variable} antialiased`} suppressHydrationWarning>{children}</body>
     </html>
   );
 }

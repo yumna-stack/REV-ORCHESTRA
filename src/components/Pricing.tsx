@@ -19,8 +19,8 @@ const plans = [
       { text: "ICP and messaging framework", included: true },
       { text: "System architecture blueprint", included: true },
       { text: "Tool stack recommendations", included: true },
-      { text: "90-minute strategy session", included: true },
-      { text: "6 AI sub-agents deployed", included: false },
+      { text: "90 minute strategy session", included: true },
+      { text: "AI sub agents deployed", included: false },
       { text: "Full tool integration", included: false },
     ],
   },
@@ -33,12 +33,12 @@ const plans = [
     dotColor: "#E85600",
     features: [
       { text: "Everything in Starter", included: true },
-      { text: "6 AI sub-agents deployed", included: true },
+      { text: "AI sub agents deployed", included: true },
       { text: "Full tool integration & automation", included: true },
       { text: "Custom workflows in your stack", included: true },
-      { text: "90-day async build support", included: true },
+      { text: "90 day async build support", included: true },
       { text: "You own 100% of everything", included: true },
-      { text: "Extended 6-month support", included: false },
+      { text: "Extended 6 month support", included: false },
     ],
   },
   {
@@ -50,7 +50,7 @@ const plans = [
     dotColor: "rgb(80,200,170)",
     features: [
       { text: "Everything in Pro", included: true },
-      { text: "Extended 6-month support", included: true },
+      { text: "Extended 6 month support", included: true },
       { text: "Monthly optimization sprints", included: true },
       { text: "Priority Slack access to Danny", included: true },
       { text: "Quarterly strategy reviews", included: true },
@@ -92,7 +92,7 @@ function PricingIcon({ included, highlighted }: { included: boolean; highlighted
         width: 26,
         height: 26,
         borderRadius: "50%",
-        backgroundColor: "rgba(255,255,255,0.04)",
+        backgroundColor: "rgb(8,8,10)",
       }}
     >
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -118,9 +118,9 @@ function PricingCard({ plan, index }: { plan: (typeof plans)[number]; index: num
       <div
         className="relative h-full flex flex-col overflow-hidden"
         style={{
-          borderRadius: 36,
+          borderRadius: 18,
           backgroundColor: "rgb(14,15,17)",
-          border: `1px solid ${plan.highlighted ? "rgba(232,86,0,0.25)" : "rgb(30,30,30)"}`,
+          border: `1px solid ${plan.highlighted ? "rgba(232,86,0,0.25)" : "rgb(14,14,16)"}`,
         }}
       >
         {/* Orange glow for highlighted Pro card */}
@@ -221,7 +221,7 @@ function PricingCard({ plan, index }: { plan: (typeof plans)[number]; index: num
               letterSpacing: "0.06em",
               marginBottom: 32,
               ...(plan.highlighted
-                ? { backgroundColor: "#E85600", color: "white" }
+                ? { backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)", color: "white" }
                 : {
                     backgroundColor: "transparent",
                     color: "white",
@@ -273,7 +273,7 @@ export default function Pricing() {
               style={{
                 padding: "10px 20px",
                 borderRadius: 100,
-                backgroundColor: "rgb(25,27,31)",
+                backgroundColor: "rgb(8,8,10)",
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
             >
@@ -286,11 +286,13 @@ export default function Pricing() {
             <h2
               style={{
                 fontFamily: "var(--font-family-heading)",
-                fontSize: "clamp(36px, 5vw, 72px)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
                 fontWeight: 500,
-                lineHeight: "110%",
-                letterSpacing: "-2.88px",
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
                 color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
               }}
             >
               Simplest Membership
@@ -330,7 +332,7 @@ export default function Pricing() {
               color: "rgba(255,255,255,0.3)",
             }}
           >
-            Applications only. Discovery call first. If it&apos;s not the right fit, we&apos;ll tell you on the call &mdash; before you spend anything.
+            Applications only. Discovery call first. If it&apos;s not the right fit, we&apos;ll tell you on the call, before you spend anything.
           </p>
         </Reveal>
       </div>

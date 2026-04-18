@@ -9,9 +9,9 @@ import { playClickSound } from "@/lib/sounds";
 const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 
 const navLinks = [
-  { label: "What We Do", href: "/#agents" },
+  { label: "Benefits", href: "/#stats" },
+  { label: "Services", href: "/#agents" },
   { label: "How It Works", href: "/#how-it-works" },
-  { label: "Packages", href: "/#pricing" },
 ];
 
 const resourceLinks = [
@@ -21,19 +21,17 @@ const resourceLinks = [
 ];
 
 export default function Navigation() {
-  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
-  const lastScrollY = useRef(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      setHidden(currentY > 100 && currentY > lastScrollY.current);
-      lastScrollY.current = currentY;
+      setScrolled(window.scrollY > 40);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -54,11 +52,31 @@ export default function Navigation() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-12 py-4"
+      className="fixed left-0 right-0 z-50 flex justify-center pointer-events-none"
       initial={{ y: -80, opacity: 0 }}
-      animate={{ y: hidden ? -80 : 0, opacity: hidden ? 0 : 1 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      style={{ top: 0 }}
     >
+      <motion.div
+        className="pointer-events-auto flex items-center justify-between"
+        animate={{
+          width: scrolled ? "min(92%, 960px)" : "100%",
+          marginTop: scrolled ? 16 : 0,
+          paddingLeft: scrolled ? 20 : 24,
+          paddingRight: scrolled ? 8 : 24,
+          paddingTop: scrolled ? 8 : 16,
+          paddingBottom: scrolled ? 8 : 16,
+          borderRadius: scrolled ? 9999 : 0,
+          backgroundColor: scrolled ? "var(--surface)" : "transparent",
+          borderColor: scrolled ? "var(--border)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
+          WebkitBackdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
+          boxShadow: scrolled ? "0 10px 30px rgba(0,0,0,0.35)" : "0 0 0 rgba(0,0,0,0)",
+        }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        style={{ borderWidth: 1, borderStyle: "solid", overflow: "visible" }}
+      >
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2.5" onClick={playClickSound}>
         <motion.div
@@ -71,11 +89,11 @@ export default function Navigation() {
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
           </svg>
         </motion.div>
-        <span className="text-white font-semibold text-base">Rev Orchestra</span>
+        <span className="font-semibold text-base" style={{ color: "var(--text)" }}>Rev Orchestra</span>
       </Link>
 
       {/* Center Pill Nav */}
-      <div className="hidden md:flex items-center gap-1 bg-[rgba(30,30,30,0.8)] backdrop-blur-xl border border-[rgba(255,255,255,0.06)] rounded-full px-2 py-1.5">
+      <div className="hidden md:flex items-center gap-1 backdrop-blur-xl rounded-full px-2 py-1.5" style={{ backgroundColor: "var(--surface)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--border)" }}>
         {navLinks.map((link) => (
             <a
               key={link.label}
@@ -87,7 +105,7 @@ export default function Navigation() {
                   document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className="px-4 py-2 text-sm rounded-full transition-all duration-300 text-[rgba(255,255,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.05)]"
+              className="px-4 py-2 text-sm rounded-full transition-all duration-300 nav-link"
             >
               {link.label}
             </a>
@@ -97,7 +115,7 @@ export default function Navigation() {
         <div ref={dropdownRef} className="relative">
           <button
             onClick={() => setResourcesOpen(!resourcesOpen)}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm rounded-full transition-all duration-300 text-[rgba(255,255,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.05)]"
+            className="flex items-center gap-1.5 px-4 py-2 text-sm rounded-full transition-all duration-300 nav-link"
           >
             Resources
             <motion.svg
@@ -112,7 +130,7 @@ export default function Navigation() {
           <AnimatePresence>
             {resourcesOpen && (
               <motion.div
-                className="absolute top-full right-0 mt-2 w-48 bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] rounded-xl overflow-hidden shadow-2xl"
+                className="absolute top-full right-0 mt-2 w-48 bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] rounded-xl overflow-hidden shadow-2xl"
                 initial={{ opacity: 0, y: -8, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
@@ -145,7 +163,8 @@ export default function Navigation() {
         href={CAL_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="hidden md:flex items-center px-6 py-3 text-sm font-medium text-white bg-accent-orange rounded-full hover:brightness-110 transition-all uppercase tracking-wider border border-[rgba(255,255,255,0.1)]"
+        className="hidden md:flex items-center px-6 py-3 text-sm font-medium text-white rounded-full hover:brightness-110 transition-all uppercase tracking-wider"
+        style={{ backgroundColor: "#E85600" }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.97 }}
       >
@@ -221,7 +240,8 @@ export default function Navigation() {
                   href={CAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-accent-orange rounded-full uppercase tracking-wider"
+                  className="mt-4 flex items-center justify-center px-6 py-3 text-sm font-medium text-white rounded-full uppercase tracking-wider"
+                  style={{ backgroundColor: "#E85600" }}
                 >
                   BOOK A CALL WITH DANNY
                 </a>
@@ -230,6 +250,7 @@ export default function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
+      </motion.div>
     </motion.nav>
   );
 }

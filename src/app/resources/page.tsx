@@ -22,7 +22,7 @@ const resources = [
   },
   {
     title: "Blog",
-    desc: "Deep dives into AI-orchestrated GTM, signal-led outbound, agent architecture, and founder strategy. No fluff, no SEO filler.",
+    desc: "Deep dives into AI orchestrated GTM, signal led outbound, agent architecture, and founder strategy. No fluff, no SEO filler.",
     href: "/blogs",
     cta: "Read Articles",
     icon: (
@@ -66,7 +66,7 @@ export default function ResourcesPage() {
             {resources.map((r, i) => (
               <GridItem key={i}>
                 <motion.div
-                  className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-8 h-full flex flex-col"
+                  className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-8 h-full flex flex-col"
                   whileHover={{ borderColor: "rgba(232,86,0,0.2)", y: -4 }}
                   transition={{ duration: 0.3 }}
                 >

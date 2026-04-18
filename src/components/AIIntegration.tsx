@@ -9,12 +9,12 @@ const items = [
     description: "Experience the strength of the CRYPS Network, where crypto indexing meets decentralization for unmatched reliability.",
   },
   {
-    title: "AI-Powered Crypto Toolkit",
-    description: "Unlock advanced tools for analyzing blockchain data, market trends, and on-chain signals with cutting-edge AI.",
+    title: "AI Powered Crypto Toolkit",
+    description: "Unlock advanced tools for analyzing blockchain data, market trends, and on chain signals with cutting edge AI.",
   },
   {
-    title: "Support for Multi-Chain Protocols",
-    description: "Seamlessly integrate and index data across every major blockchain network with real-time synchronization.",
+    title: "Support for Multi Chain Protocols",
+    description: "Seamlessly integrate and index data across every major blockchain network with real time synchronization.",
   },
 ];
 
@@ -26,7 +26,7 @@ export default function AIIntegration() {
       <div className="max-w-[1200px] mx-auto px-5">
         <Reveal variants={fadeUp}>
           <div
-            className="rounded-3xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-10 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+            className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-10 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
           >
             {/* Left - Accordion */}
             <div className="flex flex-col gap-6">
@@ -36,7 +36,18 @@ export default function AIIntegration() {
                 </span>
               </div>
 
-              <h2 className="text-[clamp(24px,3vw,38px)] font-semibold leading-[120%] tracking-[-1px] text-white">
+              <h2
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  fontWeight: 500,
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
+                  color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
+                }}
+              >
                 Your Gateway to Advanced Crypto Data Indexing
               </h2>
 
@@ -88,14 +99,14 @@ export default function AIIntegration() {
                 {[0, 1, 2].map((n) => (
                   <div
                     key={n}
-                    className="w-20 h-32 rounded-[40px] border-2 border-accent-orange/60 flex items-center justify-center"
+                    className="w-20 h-32 rounded-2xl border-2 border-accent-orange/60 flex items-center justify-center"
                     style={{
                       background: `linear-gradient(160deg, rgba(232,86,0,0.3) 0%, rgba(232,86,0,0.05) 100%)`,
                       boxShadow: "0 0 30px rgba(232,86,0,0.15)",
                       animation: `float${(n % 3) + 1} ${5 + n}s ease-in-out infinite`,
                     }}
                   >
-                    <div className="w-10 h-16 rounded-[20px] bg-[rgba(14,15,17,0.8)] border border-[rgba(232,86,0,0.2)]" />
+                    <div className="w-10 h-16 rounded-[20px] bg-[rgb(14,15,17)] border border-[rgba(232,86,0,0.2)]" />
                   </div>
                 ))}
               </div>

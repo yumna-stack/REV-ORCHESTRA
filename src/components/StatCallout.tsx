@@ -9,7 +9,7 @@ export default function StatCallout() {
     <section className="relative w-full py-16 bg-[rgb(14,15,17)] overflow-hidden">
       <div className="max-w-[900px] mx-auto px-5">
         <Reveal variants={fadeUp}>
-          <div className="relative rounded-[28px] border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] p-10 overflow-hidden">
+          <div className="relative rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-10 overflow-hidden">
             <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-accent-orange/8 blur-[80px] rounded-full pointer-events-none" />
 
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">

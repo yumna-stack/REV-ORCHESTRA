@@ -22,7 +22,7 @@ const liveEvents = [
   { agent: "CRM", action: "Deal moved to Stage 2", target: "Acme Corp", color: "#F59E0B" },
   { agent: "Monitor", action: "Reply rate alert: 12.4%", target: "Q2 Campaign", color: "#9897FF" },
   { agent: "Signal", action: "Funding round detected", target: "NovaPay", color: "#E8650A" },
-  { agent: "Copy", action: "Follow-up generated", target: "TechFlow Inc", color: "#22C55E" },
+  { agent: "Copy", action: "Follow up generated", target: "TechFlow Inc", color: "#22C55E" },
   { agent: "Outbound", action: "Email delivered", target: "DataSync AI", color: "#3B82F6" },
   { agent: "CRM", action: "Contact created in HubSpot", target: "NovaPay", color: "#F59E0B" },
   { agent: "Monitor", action: "Pipeline health: strong", target: "All campaigns", color: "#9897FF" },
@@ -60,7 +60,7 @@ export default function CommandCenter() {
   return (
     <div className="relative w-full rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.08)] bg-[rgb(10,11,13)]" style={{ aspectRatio: "16/9" }}>
       {/* Top bar */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)]">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
           <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
@@ -89,7 +89,7 @@ export default function CommandCenter() {
               {agents.map((agent, i) => (
                 <motion.div
                   key={agent.name}
-                  className="rounded-lg p-2 border border-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.02)] flex flex-col items-center gap-1"
+                  className="rounded-lg p-2 border border-[rgba(255,255,255,0.04)] bg-[rgb(8,8,10)] flex flex-col items-center gap-1"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.1, duration: 0.4 }}
@@ -119,7 +119,7 @@ export default function CommandCenter() {
               {metrics.map((m, i) => (
                 <motion.div
                   key={m.label}
-                  className="rounded-lg p-2.5 border border-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.02)]"
+                  className="rounded-lg p-2.5 border border-[rgba(255,255,255,0.04)] bg-[rgb(8,8,10)]"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 + i * 0.1 }}
@@ -167,7 +167,7 @@ export default function CommandCenter() {
                 return (
                   <motion.div
                     key={`${idx}-${pos}-${visibleEvents.length}`}
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.02)]"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-[rgba(255,255,255,0.04)] bg-[rgb(8,8,10)]"
                     initial={{ opacity: 0, x: 30, scale: 0.95 }}
                     animate={{ opacity: pos === 0 ? 1 : Math.max(0.15, 0.5 - pos * 0.1), x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -20 }}
@@ -200,7 +200,7 @@ export default function CommandCenter() {
               <div className="flex items-center gap-2">
                 <span className="text-[8px] text-[rgba(255,255,255,0.2)] uppercase tracking-wider">Connected:</span>
                 {["HubSpot", "Clay", "Instantly", "Slack", "n8n"].map((tool) => (
-                  <span key={tool} className="text-[8px] text-[rgba(255,255,255,0.35)] px-1.5 py-0.5 rounded bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.04)]">{tool}</span>
+                  <span key={tool} className="text-[8px] text-[rgba(255,255,255,0.35)] px-1.5 py-0.5 rounded bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.04)]">{tool}</span>
                 ))}
               </div>
               <div className="flex items-center gap-1.5">

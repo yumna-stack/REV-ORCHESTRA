@@ -15,7 +15,7 @@ const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 /* ── Exact Cryps color tokens from Framer MCP ── */
 const COLORS = {
   lightBlack: "rgb(14, 15, 17)",
-  preHeader: "rgb(25, 27, 31)",
+  preHeader: "rgb(8, 8, 10)",
   lightOutline: "rgba(255, 255, 255, 0.03)",
   outline: "rgb(41, 42, 43)",
   orange: "rgb(232, 86, 0)",
@@ -24,32 +24,32 @@ const COLORS = {
   green: "rgb(183, 233, 50)",
 };
 
-/* ── Offer explanation cards — exact Cryps Stat Card structure ── */
+/* ── Benefit cards — zyner.io style ── */
 const stats = [
   {
-    label: "WHAT WE BUILD",
-    badge: "THE SYSTEM",
-    bigNumber: "6 Agents",
-    headline: "AI-orchestrated GTM systems for post-funding B2B founders.",
-    description: "Signals, outreach, CRM, and reporting working as one connected system. Not another tool. A system you own.",
+    label: "YOUR DASHBOARD",
+    badge: "COMMAND CENTER",
+    bigNumber: "1 System",
+    headline: "One dashboard. Autonomous agents working in sync.",
+    description: "Research, drafting, review, outbound, CRM management, signal monitoring, whatever your workflow needs, all running from one unified dashboard you control.",
     accentColor: COLORS.purple,
     glowImage: `linear-gradient(23deg, transparent 30%, rgba(152, 151, 255, 0.18) 60%, rgba(152, 151, 255, 0.08) 80%, transparent 100%)`,
   },
   {
-    label: "WHAT HAPPENS",
-    badge: "OUTCOMES",
+    label: "ALWAYS ON",
+    badge: "AUTONOMOUS",
     bigNumber: "24/7",
-    headline: "Buying signals caught. Outreach triggered. CRM updated. Pipeline moving.",
-    description: "Your agents find warm leads, write contextual outreach, update your CRM, and alert your team. Every day, without you touching it.",
+    headline: "Pipeline generation that never sleeps.",
+    description: "Your system catches signals the moment they appear, triggers the right agent, updates your CRM, and routes hot leads to your team. Automatically.",
     accentColor: COLORS.orange,
     glowImage: `linear-gradient(23deg, transparent 30%, rgba(232, 86, 0, 0.22) 60%, rgba(255, 142, 104, 0.08) 80%, transparent 100%)`,
   },
   {
-    label: "WHAT YOU GET",
-    badge: "90 DAYS",
+    label: "YOURS FOREVER",
+    badge: "NO RETAINERS",
     bigNumber: "90 Days",
-    headline: "Built on your stack, documented, and handed over permanently.",
-    description: "No subscriptions. No retainers. No vendor lock-in. You own the agents, the workflows, and the IP.",
+    headline: "Customized, deployed, and handed over permanently.",
+    description: "We configure the system for your ICP, your workflow, your tools. After 90 days, you own the entire system. No subscriptions. No lock in.",
     accentColor: "rgba(200, 195, 185, 0.6)",
     glowImage: `linear-gradient(23deg, transparent 30%, rgba(200, 195, 185, 0.08) 60%, rgba(200, 195, 185, 0.03) 80%, transparent 100%)`,
   },
@@ -91,25 +91,16 @@ function ScrollStatCard({
         transition: { type: "spring", stiffness: 400, damping: 25 },
       }}
     >
-      {/* Outer shell — exact Cryps: 42px radius, 8px padding, 0.93px border */}
+      {/* Single-shell card — solid bg, one border, one radius */}
       <div
-        className="overflow-hidden"
+        className="relative overflow-hidden"
         style={{
-          borderRadius: 42,
-          padding: 8,
-          border: `0.93px solid ${COLORS.lightOutline}`,
-          backgroundColor: COLORS.lightBlack,
+          borderRadius: 18,
+          padding: 22,
+          border: `1px solid ${COLORS.outline}`,
+          backgroundColor: COLORS.preHeader,
         }}
       >
-        {/* Inner card — exact Cryps: 34px radius, 36px padding, Pre-header bg */}
-        <div
-          className="relative overflow-hidden"
-          style={{
-            borderRadius: 34,
-            padding: 36,
-            backgroundColor: COLORS.preHeader,
-          }}
-        >
           {/* Glow overlay — 23deg rotated like Cryps Mask element */}
           <div
             className="absolute inset-0 pointer-events-none z-0"
@@ -219,7 +210,6 @@ function ScrollStatCard({
             </div>
           </div>
         </div>
-      </div>
     </motion.div>
   );
 }
@@ -267,21 +257,23 @@ export default function Stats() {
                     letterSpacing: "0.05em",
                   }}
                 >
-                  What We Do
+                  Why This Works
                 </span>
               </div>
 
               <h2
                 style={{
                   fontFamily: "var(--font-family-heading)",
-                  fontSize: "clamp(28px, 4vw, 52px)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
                   fontWeight: 500,
-                  lineHeight: "110%",
-                  letterSpacing: "-2px",
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
                   color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
                 }}
               >
-                One System. Six Agents. Yours.
+                Your GTM System, Customized, Deployed, Owned
               </h2>
 
               <p
@@ -293,7 +285,7 @@ export default function Stats() {
                   maxWidth: 400,
                 }}
               >
-                We don&apos;t sell software. We build your AI GTM engine, connect it to your stack, and hand it over.
+An AI powered operations system we customize around your workflow and deploy inside your own tools. Not another SaaS subscription, a system you own permanently.
               </p>
 
               <div className="flex items-center gap-5 mt-2">
@@ -301,10 +293,11 @@ export default function Stats() {
                   href={CAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-accent-orange text-white hover:brightness-110 transition-all"
+                  className="inline-flex items-center gap-2 text-white hover:brightness-110 transition-all"
                   style={{
                     padding: "14px 28px",
                     borderRadius: 100,
+                    backgroundColor: "#E85600",
                     fontFamily: "var(--font-family-body)",
                     fontSize: 14,
                     fontWeight: 500,

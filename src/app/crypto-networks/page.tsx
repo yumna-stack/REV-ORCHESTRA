@@ -29,7 +29,7 @@ export default function CryptoNetworksPage() {
       <PageHero
         badge="Best Crypto Networks"
         title="All Supported Crypto Networks"
-        subtitle="Tap into real-time blockchain data from 35+ crypto networks. CRYPS provides seamless multi-chain indexing, analytics, and AI-enhanced insights across every major chain."
+        subtitle="Tap into real time blockchain data from 35+ crypto networks. CRYPS provides seamless multi chain indexing, analytics, and AI enhanced insights across every major chain."
       />
 
       {/* Animated Crypto Ticker Row */}
@@ -40,7 +40,7 @@ export default function CryptoNetworksPage() {
               {[...tickerIcons, ...tickerIcons].map((icon, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]"
+                  className="flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)]"
                 >
                   <div
                     className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
@@ -72,7 +72,19 @@ export default function CryptoNetworksPage() {
           <Reveal variants={fadeUp}>
             <div className="text-center mb-16 flex flex-col items-center gap-5">
               <Badge text="About Networks" />
-              <h2 className="text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-1.5px] text-white mt-2">
+              <h2
+                className="mt-2"
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  fontWeight: 500,
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
+                  color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
+                }}
+              >
                 Our Networks
               </h2>
               <p className="text-base text-[rgba(255,255,255,0.45)] max-w-[600px] mx-auto leading-[170%]">
@@ -89,7 +101,7 @@ export default function CryptoNetworksPage() {
                   <motion.div
                     whileHover={{ y: -4, scale: 1.02 }}
                     transition={{ duration: 0.25 }}
-                    className="relative p-8 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] hover:border-[rgba(232,86,0,0.25)] transition-colors duration-300 overflow-hidden"
+                    className="relative p-8 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] hover:border-[rgba(232,86,0,0.25)] transition-colors duration-300 overflow-hidden"
                   >
                     {/* Subtle glow background */}
                     <div
@@ -153,7 +165,18 @@ export default function CryptoNetworksPage() {
       <Reveal variants={fadeUp}>
         <section className="py-28 border-t border-[rgba(255,255,255,0.04)]">
           <div className="max-w-[800px] mx-auto px-5 text-center flex flex-col items-center gap-6">
-            <h2 className="text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-1.5px] text-white">
+            <h2
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               Explore All 35+ Supported Chains
             </h2>
             <p className="text-base text-[rgba(255,255,255,0.45)] max-w-[500px]">

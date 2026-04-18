@@ -88,18 +88,30 @@ export default function Integrations() {
         <Reveal variants={fadeUp}>
           <div className="text-center mb-16">
             <motion.div
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] mb-6"
               animate={{ y: [-2, 2, -2] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
               <span className="w-2 h-2 rounded-full bg-accent-orange" />
               <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Best Crypto Networks</span>
             </motion.div>
-            <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">
+            <h2
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               Best Crypto Networks
             </h2>
             <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[600px] mx-auto">
-              Effortlessly tap into real-time data from all major blockchain networks with AI-enhanced insights.
+              Effortlessly tap into real time data from all major blockchain networks with AI enhanced insights.
             </p>
           </div>
         </Reveal>

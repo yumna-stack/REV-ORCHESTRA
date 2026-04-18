@@ -24,7 +24,7 @@ function OrbitalAnimation({ scale }: { scale: number }) {
       {/* Outer orbit ring with dashed border */}
       <div className="absolute w-[340px] h-[340px] rounded-full border border-dashed border-[rgba(232,86,0,0.15)]" style={{ animation: "orbit 35s linear infinite" }}>
         {[0, 60, 120, 180, 240, 300].map((deg, i) => (
-          <div key={i} className="absolute w-8 h-8 rounded-xl bg-[rgba(30,30,30,0.9)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center" style={{
+          <div key={i} className="absolute w-8 h-8 rounded-xl bg-[rgb(14,14,16)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center" style={{
             top: "50%", left: "50%",
             transform: `rotate(${deg}deg) translateX(170px) translate(-50%, -50%) rotate(-${deg}deg)`,
           }}>
@@ -38,7 +38,7 @@ function OrbitalAnimation({ scale }: { scale: number }) {
       {/* Middle orbit ring */}
       <div className="absolute w-[230px] h-[230px] rounded-full border border-[rgba(255,255,255,0.06)]" style={{ animation: "orbit 22s linear infinite reverse" }}>
         {[30, 150, 270].map((deg, i) => (
-          <div key={i} className="absolute w-5 h-5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.06)]" style={{
+          <div key={i} className="absolute w-5 h-5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.06)]" style={{
             top: "50%", left: "50%",
             transform: `rotate(${deg}deg) translateX(115px) translate(-50%, -50%)`,
           }} />
@@ -126,13 +126,24 @@ export default function BlockchainIndexing() {
           {/* Left - Content */}
           <Reveal variants={fadeLeft}>
             <div className="flex flex-col gap-6">
-              <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] w-fit">
+              <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] w-fit">
                 <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
                 <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider">Blockchain Indexing</span>
               </div>
 
-              <h2 className="text-[clamp(28px,4vw,48px)] font-medium leading-[115%] tracking-[-2px] text-white">
+              <h2
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  fontWeight: 500,
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
+                  color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
+                }}
+              >
                 Your Gateway to Advanced Crypto Data Indexing
               </h2>
 
@@ -142,7 +153,7 @@ export default function BlockchainIndexing() {
 
               {/* Feature points */}
               <StaggerContainer className="flex flex-col gap-3 mt-2">
-                {["Deep Crypto Indexing", "Robust API Suite", "Client-Focused Support", "True Crypto SaaS"].map((point, i) => (
+                {["Deep Crypto Indexing", "Robust API Suite", "Client Focused Support", "True Crypto SaaS"].map((point, i) => (
                   <StaggerItem key={i}>
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-accent-orange/10 border border-accent-orange/20 flex items-center justify-center shrink-0">
@@ -156,7 +167,7 @@ export default function BlockchainIndexing() {
                 ))}
               </StaggerContainer>
 
-              <a href="#contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all w-fit mt-2">
+              <a href="#contact" className="inline-flex items-center gap-2 px-7 py-3.5 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:bg-[rgb(22,22,26)] transition-all w-fit mt-2" style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}>
                 JOIN CRYPS NOW
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </a>

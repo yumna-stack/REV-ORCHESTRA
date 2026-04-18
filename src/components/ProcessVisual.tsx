@@ -6,19 +6,47 @@ import BrandLogo from "@/components/BrandLogo";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-/* ── Card 1: Top-left — like Cryps "Crypo wallet with secure encryption" ── */
+/* ── Small step badge: "01 / SIGNAL" — ties each card to its stage in the flow ── */
+function StepBadge({ n, label }: { n: string; label: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 mb-3">
+      <span
+        className="inline-flex items-center justify-center rounded-full text-[10px] font-semibold"
+        style={{
+          width: 22,
+          height: 22,
+          backgroundColor: "rgb(40,27,22)",
+          border: "1px solid rgba(232,86,0,0.35)",
+          color: "#E85600",
+          fontFamily: "var(--font-family-heading)",
+        }}
+      >
+        {n}
+      </span>
+      <span
+        className="text-[10px] uppercase tracking-[0.18em]"
+        style={{ color: "rgba(255,255,255,0.45)", fontWeight: 600 }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
+
+/* ── Card 1: SIGNAL — the moment a buying signal fires ── */
 function Card1() {
   return (
     <div className="flex flex-col h-full justify-between">
       <div>
+        <StepBadge n="01" label="Signal" />
         <h3
           className="text-[20px] font-medium text-white leading-[130%] mb-2"
           style={{ fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}
         >
-          Signal-led prospecting with secure orchestration
+          A buying signal fires
         </h3>
         <p className="text-[13px] text-[rgba(255,255,255,0.4)] leading-[160%]">
-          Leading multi-agent AI pipeline management
+          Funding, hiring, intent data, LinkedIn activity, detected the moment it happens
         </p>
       </div>
       {/* Avatar circles + dashed connector + orb — like Cryps profile pics */}
@@ -85,7 +113,8 @@ function Card2() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header — like Cryps Bitcoin header with icon + name + price */}
+      <StepBadge n="02" label="GTM Running" />
+      {/* Header — Rev Orchestra mark + running metric */}
       <div className="flex items-center gap-2 mb-2">
         <div
           className="w-7 h-7 rounded-full flex items-center justify-center"
@@ -101,18 +130,10 @@ function Card2() {
         </div>
       </div>
 
-      {/* Big number — like Cryps "00.343 |" */}
-      <div
-        className="text-[28px] font-medium text-white tracking-tight mb-2 flex items-baseline"
-        style={{ fontFamily: "var(--font-family-heading)" }}
-      >
-        00.343 <span className="text-[rgba(255,255,255,0.15)] ml-1 text-[24px]">|</span>
-      </div>
-
-      {/* Scrolling tool list — like Cryps crypto price list */}
+      {/* Scrolling tool list */}
       <div className="relative flex-1 min-h-0 overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-4 z-10 bg-gradient-to-b from-[rgb(22,23,27)] to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 h-4 z-10 bg-gradient-to-t from-[rgb(22,23,27)] to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-4 z-10 bg-gradient-to-b from-[rgb(8,8,10)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-4 z-10 bg-gradient-to-t from-[rgb(8,8,10)] to-transparent pointer-events-none" />
         <motion.div
           className="flex flex-col gap-1"
           animate={{ y: ["0%", "-50%"] }}
@@ -136,63 +157,61 @@ function Card2() {
   );
 }
 
-/* ── Card 3: Bottom-left — like Cryps "DAPPS" ── */
+/* ── Card 3: AGENTS — the fleet that the signal hands off to ── */
 function Card3() {
-  const rows = [
-    { initials: "SC", amount: "$120", time: "10:30 pm", name: "Sarah Chen · Acme Corp", stage: "Discovery", stageColor: "#4ade80" },
-    { initials: "MR", amount: "$455", time: "12 June 12:30 pm", name: "Mike Rodriguez · TechFlow", stage: "waiting", stageColor: "#facc15" },
-    { initials: "LP", amount: "$7,775", time: "12 June", name: "Lisa Park · DataSync", stage: "Sent", stageColor: "#4ade80" },
-    { initials: "JW", amount: "$3,200", time: "Today", name: "James Wilson · CloudBase", stage: "Qualified", stageColor: "#4ade80" },
-    { initials: "AN", amount: "$890", time: "2 days ago", name: "Amy Nguyen · ScaleAI", stage: "Outreach", stageColor: "#60a5fa" },
-    { initials: "DK", amount: "$2,100", time: "3 days ago", name: "David Kim · GrowthOS", stage: "Responded", stageColor: "#4ade80" },
+  const agents = [
+    { name: "Signal Agent",     role: "catches the trigger", status: "firing",    color: "#E85600" },
+    { name: "Research Agent",   role: "builds account context", status: "active",  color: "#4ade80" },
+    { name: "Copy Agent",       role: "writes personalised", status: "drafting", color: "#4ade80" },
+    { name: "Outbound Agent",   role: "sends multi channel", status: "sending", color: "#60a5fa" },
+    { name: "CRM Agent",        role: "updates records", status: "syncing",    color: "#facc15" },
+    { name: "Monitoring Agent", role: "watches the pipeline", status: "watching", color: "#4ade80" },
   ];
-  const doubled = [...rows, ...rows];
 
   return (
     <div className="flex flex-col h-full">
+      <StepBadge n="03" label="Agents" />
       <h3
-        className="text-[20px] font-medium text-white leading-[130%] mb-2"
+        className="text-[20px] font-medium text-white leading-[130%] mb-1"
         style={{ fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}
       >
-        Pipeline
+        A fleet of agents takes over
       </h3>
       <p className="text-[12px] text-[rgba(255,255,255,0.35)] mb-3">
-        Take control of your entire funnel
+        Each has one job and hands off cleanly
       </p>
 
-      {/* Scrolling deal rows — like Cryps DAPPS transactions */}
+      {/* Agent rows — scrolling ticker (same animation as Card 2) */}
       <div className="relative flex-1 min-h-0 overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-4 z-10 bg-gradient-to-b from-[rgb(22,23,27)] to-transparent pointer-events-none" />
-        <div className="absolute bottom-0 left-0 right-0 h-4 z-10 bg-gradient-to-t from-[rgb(22,23,27)] to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-4 z-10 bg-gradient-to-b from-[rgb(10,10,12)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-4 z-10 bg-gradient-to-t from-[rgb(10,10,12)] to-transparent pointer-events-none" />
         <motion.div
           className="flex flex-col gap-1.5"
           animate={{ y: ["0%", "-50%"] }}
-          transition={{ y: { duration: 25, repeat: Infinity, ease: "linear", repeatType: "loop" } }}
+          transition={{ y: { duration: 22, repeat: Infinity, ease: "linear", repeatType: "loop" } }}
         >
-          {doubled.map((row, i) => (
+          {[...agents, ...agents].map((agent, i) => (
             <div
-              key={i}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-lg"
+              key={`${agent.name}-${i}`}
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg"
               style={{
-                backgroundColor: "rgba(255,255,255,0.03)",
+                backgroundColor: "rgb(18,18,20)",
                 border: "0.5px solid rgba(255,255,255,0.05)",
               }}
             >
-              <div className="w-7 h-7 rounded-full bg-[rgba(255,255,255,0.07)] flex items-center justify-center text-[8px] font-bold text-[rgba(255,255,255,0.4)] shrink-0">
-                {row.initials}
-              </div>
+              <span
+                className="w-1.5 h-1.5 rounded-full shrink-0"
+                style={{ backgroundColor: agent.color, boxShadow: `0 0 6px ${agent.color}80` }}
+              />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] font-semibold text-white">{row.amount}</span>
-                  <span className="text-[8px] text-[rgba(255,255,255,0.2)]">{row.time}</span>
-                </div>
-                <span className="text-[8px] text-[rgba(255,255,255,0.2)] truncate block">{row.name}</span>
+                <span className="text-[11px] font-semibold text-white block leading-tight truncate">{agent.name}</span>
+                <span className="text-[9px] text-[rgba(255,255,255,0.35)] truncate block">{agent.role}</span>
               </div>
               <span
-                className="text-[8px] font-medium px-2 py-0.5 rounded-full shrink-0"
-                style={{ color: row.stageColor, backgroundColor: `${row.stageColor}12` }}
+                className="text-[9px] font-medium px-2 py-0.5 rounded-full shrink-0"
+                style={{ color: agent.color, backgroundColor: `${agent.color}14` }}
               >
-                {row.stage}
+                {agent.status}
               </span>
             </div>
           ))}
@@ -202,50 +221,62 @@ function Card3() {
   );
 }
 
-/* ── Card 4: Bottom-right — like Cryps "Buy Sell and Swap" with large circular icons ── */
+/* ── Card 4: PIPELINE — the final stage, closed deals ── */
 function Card4() {
-  const tools = [
-    { key: "hubspot", bg: "rgba(255,108,55,0.12)" },
-    { key: "clay", bg: "rgba(138,100,255,0.12)" },
-    { key: "instantly", bg: "rgba(100,180,255,0.12)" },
-    { key: "slack", bg: "rgba(230,160,50,0.12)" },
-    { key: "n8n", bg: "rgba(180,100,200,0.12)" },
-    { key: "claude", bg: "rgba(200,160,100,0.12)" },
-    { key: "apollo", bg: "rgba(80,120,200,0.12)" },
-    { key: "linkedin", bg: "rgba(40,120,200,0.12)" },
-    { key: "salesforce", bg: "rgba(0,160,230,0.12)" },
-    { key: "zapier", bg: "rgba(255,100,50,0.12)" },
-    { key: "google", bg: "rgba(60,180,100,0.12)" },
-    { key: "airtable", bg: "rgba(50,180,200,0.12)" },
+  const rows = [
+    { initials: "JW", amount: "$3,200", name: "James Wilson · CloudBase", stage: "Qualified",  stageColor: "#4ade80" },
+    { initials: "LP", amount: "$7,775", name: "Lisa Park · DataSync",     stage: "Meeting",    stageColor: "#4ade80" },
+    { initials: "SC", amount: "$4,120", name: "Sarah Chen · Acme Corp",   stage: "Discovery",  stageColor: "#4ade80" },
+    { initials: "AN", amount: "$890",   name: "Amy Nguyen · ScaleAI",     stage: "Outreach",   stageColor: "#60a5fa" },
+    { initials: "DK", amount: "$2,100", name: "David Kim · GrowthOS",     stage: "Responded",  stageColor: "#4ade80" },
   ];
 
   return (
-    <div className="flex flex-col h-full justify-between">
+    <div className="relative flex flex-col h-full">
+      <StepBadge n="04" label="Pipeline" />
       <h3
-        className="text-[20px] font-medium text-white leading-[130%] mb-2"
+        className="text-[20px] font-medium text-white leading-[130%] mb-1"
         style={{ fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}
       >
-        Connect and Orchestrate
+        Deals flow into your pipeline
       </h3>
-      {/* 4x3 grid of large circular icons — like Cryps crypto token circles */}
-      <div className="grid grid-cols-4 gap-2.5">
-        {tools.map((tool, i) => (
-          <motion.div
-            key={tool.key}
-            className="aspect-square rounded-full flex items-center justify-center"
+      <p className="text-[12px] text-[rgba(255,255,255,0.35)] mb-3">
+        Automatically logged, enriched, routed
+      </p>
+
+      <div className="relative flex-1 min-h-0 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-4 z-10 bg-gradient-to-b from-[rgb(10,10,12)] to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-4 z-10 bg-gradient-to-t from-[rgb(10,10,12)] to-transparent pointer-events-none" />
+        <motion.div
+          className="flex flex-col gap-1.5"
+          animate={{ y: ["0%", "-50%"] }}
+          transition={{ y: { duration: 25, repeat: Infinity, ease: "linear", repeatType: "loop" } }}
+        >
+        {[...rows, ...rows].map((row, i) => (
+          <div
+            key={`${row.initials}-${i}`}
+            className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg"
             style={{
-              backgroundColor: tool.bg,
-              border: "1px solid rgba(255,255,255,0.05)",
+              backgroundColor: "rgb(18,18,20)",
+              border: "0.5px solid rgba(255,255,255,0.05)",
             }}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
-            transition={{ delay: 0.15 + i * 0.04, type: "spring", stiffness: 300, damping: 20 }}
-            whileHover={{ scale: 1.08 }}
           >
-            <BrandLogo name={tool.key} size={24} colored />
-          </motion.div>
+            <div className="w-6 h-6 rounded-full bg-[rgb(18,18,20)] flex items-center justify-center text-[8px] font-bold text-[rgba(255,255,255,0.55)] shrink-0">
+              {row.initials}
+            </div>
+            <div className="flex-1 min-w-0">
+              <span className="text-[11px] font-semibold text-white block leading-tight">{row.amount}</span>
+              <span className="text-[9px] text-[rgba(255,255,255,0.3)] truncate block">{row.name}</span>
+            </div>
+            <span
+              className="text-[9px] font-medium px-2 py-0.5 rounded-full shrink-0"
+              style={{ color: row.stageColor, backgroundColor: `${row.stageColor}14` }}
+            >
+              {row.stage}
+            </span>
+          </div>
         ))}
+        </motion.div>
       </div>
     </div>
   );
@@ -312,8 +343,8 @@ export default function ProcessVisual() {
                 className="inline-flex items-center gap-2 mb-7"
                 style={{
                   padding: "8px 14px",
-                  borderRadius: 40,
-                  backgroundColor: "rgb(25,27,31)",
+                  borderRadius: 20,
+                  backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.06)",
                 }}
               >
@@ -326,15 +357,16 @@ export default function ProcessVisual() {
               <h2
                 style={{
                   fontFamily: "var(--font-family-heading)",
-                  fontSize: "clamp(28px, 3.8vw, 44px)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
                   fontWeight: 500,
-                  lineHeight: "110%",
-                  letterSpacing: "-1.5px",
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
                   color: "white",
-                  marginBottom: 16,
+                  maxWidth: 560,
+                  margin: "0 auto",
                 }}
               >
-                AI-Orchestrated GTM System Built for B2B Founders
+                AI Orchestrated GTM System Built for B2B Founders
               </h2>
 
               <p style={{ fontSize: 16, lineHeight: "155%", color: "rgba(255,255,255,0.38)", marginBottom: 28, maxWidth: 400 }}>
@@ -375,9 +407,9 @@ export default function ProcessVisual() {
               <motion.div
                 style={{
                   flex: "0 0 56%",
-                  backgroundColor: "rgba(255,255,255,0.04)",
+                  backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 36,
+                  borderRadius: 18,
                   padding: 24,
                 }}
                 initial={{ opacity: 0, y: 30 }}
@@ -395,9 +427,9 @@ export default function ProcessVisual() {
               <motion.div
                 className="flex-1"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.04)",
+                  backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 36,
+                  borderRadius: 18,
                   padding: 20,
                 }}
                 initial={{ opacity: 0, y: 30 }}
@@ -410,14 +442,14 @@ export default function ProcessVisual() {
             </div>
 
             {/* ── Bottom row ── */}
-            <div className="flex items-stretch gap-5">
+            <div className="flex items-stretch gap-0">
               {/* Card 3 */}
               <motion.div
                 style={{
                   flex: "0 0 56%",
-                  backgroundColor: "rgba(255,255,255,0.04)",
+                  backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 36,
+                  borderRadius: 18,
                   padding: 24,
                 }}
                 initial={{ opacity: 0, y: 30 }}
@@ -428,13 +460,16 @@ export default function ProcessVisual() {
                 <Card3 />
               </motion.div>
 
+              {/* Dashed connector linking Agents → Pipeline */}
+              <DashedConnector />
+
               {/* Card 4 */}
               <motion.div
                 className="relative flex-1 overflow-hidden"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.04)",
+                  backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 36,
+                  borderRadius: 18,
                   padding: 22,
                 }}
                 initial={{ opacity: 0, y: 30 }}

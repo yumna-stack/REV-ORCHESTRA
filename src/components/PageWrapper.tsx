@@ -33,7 +33,7 @@ export function Section({ children, className = "", id, delay = 0 }: { children:
 
 export function Badge({ text }: { text: string }) {
   return (
-    <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)]">
+    <div className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)]">
       <div className="absolute top-0 left-[20%] right-[20%] h-px bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.15)] to-transparent" />
       <span className="w-2 h-2 rounded-full bg-accent-orange" />
       <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">{text}</span>
@@ -84,7 +84,8 @@ export function CTAButton({ text, href = "#contact", variant = "primary" }: { te
   return variant === "primary" ? (
     <motion.a
       href={href}
-      className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+      className="inline-flex items-center gap-2 px-7 py-3.5 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:bg-[rgb(22,22,26)] transition-all"
+      style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}
       whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.97 }}
     >

@@ -2,7 +2,7 @@
 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Section, Badge, CTAButton } from "@/components/PageWrapper";
+import { Section, Badge } from "@/components/PageWrapper";
 
 export default function BlogDetailPage() {
   return (
@@ -37,9 +37,9 @@ export default function BlogDetailPage() {
               <div className="flex flex-col gap-6 text-base text-[rgba(255,255,255,0.6)] leading-[180%]">
                 <p>When a B2B SaaS founder came to us, their pipeline was scattered across 8 different tools. Their SDRs were manually copying data between Instantly, HubSpot, and Google Sheets. Signals were being missed. Pipeline felt random.</p>
                 <h2 className="text-2xl font-medium text-white mt-4">The Challenge</h2>
-                <p>The team had invested in best-in-class tools individually, but none of them talked to each other. A prospect could visit the pricing page, open 3 emails, and attend a webinar, yet still receive a generic cold outbound sequence.</p>
+                <p>The team had invested in best in class tools individually, but none of them talked to each other. A prospect could visit the pricing page, open 3 emails, and attend a webinar, yet still receive a generic cold outbound sequence.</p>
                 <h2 className="text-2xl font-medium text-white mt-4">Our Approach</h2>
-                <p>We audited their entire stack in Week 1, identified 23 broken workflows, and mapped out the ideal signal-to-action flow. By Week 4, we had rebuilt their CRM architecture and connected every tool through n8n automations.</p>
+                <p>We audited their entire stack in Week 1, identified 23 broken workflows, and mapped out the ideal signal to action flow. By Week 4, we had rebuilt their CRM architecture and connected every tool through n8n automations.</p>
                 <h2 className="text-2xl font-medium text-white mt-4">The Results</h2>
                 <p>Within 90 days, their pipeline increased by 47%, response time dropped by 3x, and their team saved 15+ hours per week on manual data entry. The system was fully handed over. They own it completely.</p>
               </div>
@@ -48,7 +48,14 @@ export default function BlogDetailPage() {
 
           <Section delay={400} className="mt-16 text-center flex flex-col items-center gap-4">
             <h3 className="text-2xl font-medium text-white">Want Similar Results?</h3>
-            <CTAButton text="BOOK A CALL" />
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-7 py-3.5 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+              style={{ backgroundColor: "#E85600" }}
+            >
+              BOOK A CALL
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </a>
           </Section>
         </div>
       </section>

@@ -11,30 +11,30 @@ const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 const included = [
   "Full GTM diagnostic & gap analysis",
   "Custom system architecture design",
-  "6 AI agents built & deployed",
+  "AI agents built & deployed",
   "Connected to your existing stack (HubSpot, Salesforce, Clay, Instantly, etc.)",
-  "Multi-channel outbound sequences (email + LinkedIn)",
-  "Signal-led targeting & ICP matching",
+  "Multi channel outbound sequences (email + LinkedIn)",
+  "Signal led targeting & ICP matching",
   "CRM automation & pipeline sync",
-  "Slack-based monitoring & alerts",
+  "Slack based monitoring & alerts",
   "Full documentation & runbooks",
   "Team training & handover session",
-  "30-day post-launch support",
+  "30 day post launch support",
   "You own everything permanently, no subscription",
 ];
 
 const faqs = [
   {
-    q: "Why $18,000 as a one-time fee instead of monthly?",
-    a: "Because you're buying a system, not renting one. After 90 days, you own everything: the agents, the workflows, the IP. No recurring fees, no vendor lock-in. Most founders save $3,500+/month in tool consolidation alone.",
+    q: "Why $18,000 as a one time fee instead of monthly?",
+    a: "Because you're buying a system, not renting one. After 90 days, you own everything: the agents, the workflows, the IP. No recurring fees, no vendor lock in. Most founders save $3,500+/month in tool consolidation alone.",
   },
   {
     q: "What if I need changes after the 90 days?",
-    a: "You get 30 days of post-launch support included. After that, your team can modify the system. We provide full documentation. We also offer optional retainer packages for ongoing optimisation.",
+    a: "You get 30 days of post launch support included. After that, your team can modify the system. We provide full documentation. We also offer optional retainer packages for ongoing optimisation.",
   },
   {
     q: "How does this compare to hiring an SDR team?",
-    a: "A single SDR costs $60-80K/year fully loaded. Rev Orchestra replaces the manual work of 2-3 SDRs with a system that runs 24/7, never takes holidays, and improves over time. The $18K pays for itself within the first quarter.",
+    a: "A single SDR costs $60 to 80K/year fully loaded. Rev Orchestra replaces the manual work of 2 to 3 SDRs with a system that runs 24/7, never takes holidays, and improves over time. The $18K pays for itself within the first quarter.",
   },
   {
     q: "Why only 4 clients per quarter?",
@@ -50,7 +50,7 @@ export default function PackagesPage() {
       <PageHero
         badge="Packages"
         title="One system. One price. Yours forever."
-        subtitle="$18,000 one-time investment for a complete AI-orchestrated GTM system built in 90 days."
+        subtitle="$18,000 one time investment for a complete AI orchestrated GTM system built in 90 days."
       />
 
       {/* Pricing card */}
@@ -93,7 +93,7 @@ export default function PackagesPage() {
                     <div className="flex items-baseline justify-center gap-2">
                       <span className="text-[64px] font-bold text-white leading-none tracking-[-3px]">$18,000</span>
                     </div>
-                    <p className="text-sm text-[rgba(255,255,255,0.4)] mt-2">One-time. You own everything. No subscription.</p>
+                    <p className="text-sm text-[rgba(255,255,255,0.4)] mt-2">One time. You own everything. No subscription.</p>
                   </div>
 
                   <div className="w-full h-px bg-[rgba(255,255,255,0.06)] my-8" />
@@ -121,7 +121,8 @@ export default function PackagesPage() {
                       href={CAL_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+                      className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+                      style={{ backgroundColor: "#E85600" }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.97 }}
                     >
@@ -191,7 +192,18 @@ export default function PackagesPage() {
       <section className="w-full py-20 bg-[rgb(14,15,17)]">
         <div className="max-w-[700px] mx-auto px-5">
           <Reveal variants={fadeUp} className="text-center mb-12" once={false}>
-            <h2 className="text-[clamp(24px,3.5vw,40px)] font-medium leading-[115%] tracking-[-1.5px] text-white" style={{ fontFamily: "var(--font-family-heading)" }}>
+            <h2
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               Common questions
             </h2>
           </Reveal>

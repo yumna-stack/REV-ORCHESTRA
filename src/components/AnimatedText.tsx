@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import BrandLogo from "@/components/BrandLogo";
 
 const words = [
-  "One", "command", "center.", "Six", "agents.",
+  "One", "command", "center.", "Autonomous", "agents.",
   "Signals", "caught.", "Outreach", "triggered.",
   "CRM", "updated.",
 ];
@@ -47,10 +47,10 @@ export default function AnimatedText() {
 
   return (
     <>
-      {/* Scroll-driven text reveal */}
-      <section ref={sectionRef} className="relative w-full bg-[rgb(14,15,17)]" style={{ height: "600px" }}>
+      {/* Scroll-driven word-by-word reveal — transparent so body gradient shows through */}
+      <section ref={sectionRef} className="relative w-full" style={{ height: "600px" }}>
         <div className="sticky top-0 h-[60vh] flex items-center justify-center px-5 z-10">
-          <p className="text-[clamp(32px,5.5vw,72px)] font-medium leading-[120%] tracking-[-2.5px] text-center max-w-[950px]" style={{ fontFamily: "var(--font-family-heading)" }}>
+          <p className="text-[clamp(28px,4.5vw,52px)] font-medium leading-[120%] tracking-[-1px] text-center max-w-[950px]" style={{ fontFamily: "var(--font-family-heading)" }}>
             {words.map((word, i) => {
               let opacity = 0.12;
               if (i <= activeWordIndex) opacity = 1;
@@ -59,7 +59,6 @@ export default function AnimatedText() {
                 opacity = 0.12 + Math.max(0, frac) * 0.88;
               }
 
-              // Logo icon after "agents." (index 4)
               if (i === 4) {
                 return (
                   <span key={i} className="inline-flex items-center gap-3 mr-[0.3em]" style={{ color: `rgba(255,255,255,${opacity})`, transition: "color 0.2s ease-out" }}>
@@ -80,7 +79,6 @@ export default function AnimatedText() {
                 );
               }
 
-              // "command" and "center." in orange (not italic)
               const isHighlight = word === "command" || word === "center.";
               return (
                 <span
@@ -99,8 +97,8 @@ export default function AnimatedText() {
         </div>
       </section>
 
-      {/* Supported Tech — Cryps-style divider + infinite marquee */}
-      <section className="relative w-full bg-[rgb(14,15,17)] pb-16">
+      {/* Supported Tech — transparent so body gradient flows continuously */}
+      <section className="relative w-full pb-16">
         {/* Label with horizontal lines */}
         <div className="flex items-center gap-4 max-w-[700px] mx-auto px-6 mb-10">
           <div className="flex-1 h-px bg-[rgba(255,255,255,0.15)]" />

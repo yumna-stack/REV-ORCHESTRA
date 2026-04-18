@@ -20,7 +20,7 @@ const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 const values = [
   {
     title: "Ownership > Subscriptions",
-    desc: "You pay once, you own everything. No monthly fees, no vendor lock-in, no surprise price hikes. The system is yours permanently.",
+    desc: "You pay once, you own everything. No monthly fees, no vendor lock in, no surprise price hikes. The system is yours permanently.",
   },
   {
     title: "Playbook > Tools",
@@ -40,7 +40,7 @@ export default function AboutPage() {
       <PageHero
         badge="About"
         title="Built by a founder, for founders."
-        subtitle="Rev Orchestra exists because too many post-funding B2B founders are burning through pipeline budgets on disconnected tools."
+        subtitle="Rev Orchestra exists because too many post funding B2B founders are burning through pipeline budgets on disconnected tools."
       />
 
       {/* Story */}
@@ -49,16 +49,16 @@ export default function AboutPage() {
           <Reveal variants={slideRight}>
             <div className="space-y-6 text-base text-[rgba(255,255,255,0.5)] leading-[180%]">
               <p>
-                Danny Bossa built Rev Orchestra after watching 30+ B2B founders go through the same cycle: raise funding, hire an SDR, buy 5-6 tools, burn through their list in 60 days, and end up with nothing but a messy CRM and a depleted TAM.
+                Danny Bossa built Rev Orchestra after watching 30+ B2B founders go through the same cycle: raise funding, hire an SDR, buy 5 to 6 tools, burn through their list in 60 days, and end up with nothing but a messy CRM and a depleted TAM.
               </p>
               <p>
                 The problem was never the tools. It was never the AI. It was the <span className="text-white font-medium">lack of orchestration</span>. No system connecting the signals to the research to the copy to the outreach to the CRM. Just disconnected point solutions running in parallel.
               </p>
               <p>
-                Rev Orchestra is the fix. A <span className="text-accent-orange font-medium">90-day, done-for-you GTM system build</span> that deploys six AI agents into your existing stack. Not another SaaS subscription. Not another retainer. A system you own, permanently.
+                Rev Orchestra is the fix. A <span className="text-accent-orange font-medium">90 day, done for you GTM system build</span> that deploys autonomous AI agents into your existing stack. Not another SaaS subscription. Not another retainer. A system you own, permanently.
               </p>
               <p className="text-white font-medium">
-                Small team. High-touch. 4 clients per quarter, max. Based between Sri Lanka and Singapore.
+                Small team. High touch. 4 clients per quarter, max. Based between Sri Lanka and Singapore.
               </p>
             </div>
           </Reveal>
@@ -70,7 +70,19 @@ export default function AboutPage() {
         <div className="max-w-[1000px] mx-auto px-5">
           <Reveal variants={flipUp} className="text-center mb-14">
             <Badge text="Our Values" />
-            <h2 className="text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-2px] text-white mt-6" style={{ fontFamily: "var(--font-family-heading)" }}>
+            <h2
+              className="mt-6"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               What we believe
             </h2>
           </Reveal>
@@ -121,13 +133,14 @@ export default function AboutPage() {
                 <h3 className="text-white text-xl font-semibold mb-1">Danny Bossa</h3>
                 <p className="text-sm text-accent-orange mb-4">Founder, Rev Orchestra</p>
                 <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] mb-8">
-                  GTM strategist and AI systems builder. Previously built and scaled outbound engines for B2B SaaS companies across APAC and Europe. Now focused on one thing: building AI-orchestrated GTM systems that founders own permanently.
+                  GTM strategist and AI systems builder. Previously built and scaled outbound engines for B2B SaaS companies across APAC and Europe. Now focused on one thing: building AI orchestrated GTM systems that founders own permanently.
                 </p>
                 <motion.a
                   href={CAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-accent-orange text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+                  className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all"
+                  style={{ backgroundColor: "#E85600" }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
                 >

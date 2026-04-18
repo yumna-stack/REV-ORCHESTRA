@@ -9,7 +9,7 @@ const steps = [
   {
     number: "01",
     title: "Map the Gaps",
-    timeline: "Week 1\u20132",
+    timeline: "Week 1 to 2",
     description:
       "We audit your ICP, messaging, signals, CRM, and tools to find what\u2019s broken, what\u2019s missing, and what the system needs to fix first.",
     icon: (
@@ -23,7 +23,7 @@ const steps = [
   {
     number: "02",
     title: "Design the Machine",
-    timeline: "Week 2\u20133",
+    timeline: "Week 2 to 3",
     description:
       "We design the full architecture before anything goes live: agent roles, signal triggers, outreach logic, CRM flows, and review checkpoints.",
     icon: (
@@ -36,9 +36,9 @@ const steps = [
   {
     number: "03",
     title: "Build the Orchestra",
-    timeline: "Week 3\u201310",
+    timeline: "Week 3 to 10",
     description:
-      "We deploy six agents into your stack and connect the handoffs between signals, research, copy, outreach, CRM, and monitoring.",
+      "We deploy autonomous agents into your stack and connect the handoffs between signals, research, copy, outreach, CRM, and monitoring.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2L2 7l10 5 10-5-10-5z" />
@@ -50,7 +50,7 @@ const steps = [
   {
     number: "04",
     title: "Hand the Keys Over",
-    timeline: "Week 11\u201312",
+    timeline: "Week 11 to 12",
     description:
       "We test on live data, document everything, train your team, and hand over a system you own and can keep running after we leave.",
     icon: (
@@ -119,7 +119,7 @@ function MiniVisual({ step }: { step: number }) {
             key={a}
             className="w-7 h-7 rounded-full flex items-center justify-center text-[8px] font-bold"
             style={{
-              backgroundColor: "rgba(232,86,0,0.08)",
+              backgroundColor: "rgb(40,27,22)",
               border: "1px solid rgba(232,86,0,0.15)",
               color: "rgba(232,86,0,0.7)",
             }}
@@ -171,17 +171,26 @@ export default function HowItWorks() {
       <div className="max-w-[1200px] mx-auto px-6">
         {/* ── Centered header ── */}
         <Reveal variants={fadeUp} className="text-center mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] mb-6">
             <span className="w-2 h-2 rounded-full bg-accent-orange" />
             <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">
               How It Works
             </span>
           </div>
           <h2
-            className="text-[clamp(28px,4.2vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4"
-            style={{ fontFamily: "var(--font-family-heading)" }}
+            className="mb-4"
+            style={{
+              fontFamily: "var(--font-family-heading)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              fontWeight: 500,
+              lineHeight: "120%",
+              letterSpacing: "-1.2px",
+              color: "white",
+              maxWidth: 560,
+              margin: "0 auto",
+            }}
           >
-            Four steps. 90 days.<br className="hidden sm:block" /> One system you own.
+            Four steps, 90 days,<br className="hidden sm:block" /> One system you own
           </h2>
           <p className="text-base text-[rgba(255,255,255,0.42)] leading-[160%] max-w-[580px] mx-auto">
             We map the gaps, design the system, build the agents, and hand over a working GTM engine your team can actually run.
@@ -221,13 +230,13 @@ export default function HowItWorks() {
               >
                 {/* Outer wrapper — Cryps double-border style */}
                 <div
-                  className="rounded-[28px] p-[1px] h-full"
+                  className="rounded-2xl p-[1px] h-full"
                   style={{
                     border: "1px solid rgba(255,255,255,0.03)",
                   }}
                 >
                   <div
-                    className="relative rounded-[26px] overflow-hidden h-full flex flex-col"
+                    className="relative rounded-2xl overflow-hidden h-full flex flex-col"
                     style={{
                       background: "rgb(18,19,22)",
                       border: "1px solid rgba(41,42,43,0.8)",
@@ -263,7 +272,7 @@ export default function HowItWorks() {
                         <div
                           className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-300"
                           style={{
-                            backgroundColor: "rgba(232,86,0,0.06)",
+                            backgroundColor: "rgb(34,25,22)",
                             border: "1px solid rgba(232,86,0,0.1)",
                             color: "rgba(232,86,0,0.6)",
                           }}

@@ -3,12 +3,13 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import StackLogos from "@/components/StackLogos";
 import AnimatedText from "@/components/AnimatedText";
+import ServiceFlow from "@/components/ServiceFlow";
 import Stats from "@/components/Stats";
 import SixAgents from "@/components/SixAgents";
+import DashboardPreview from "@/components/DashboardPreview";
 import LiveSystem from "@/components/LiveSystem";
 import ProcessVisual from "@/components/ProcessVisual";
 import HowItWorks from "@/components/HowItWorks";
-import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
@@ -25,18 +26,19 @@ function SectionBlend({ from = "rgb(14,15,17)", to = "rgb(8,8,15)" }: { from?: s
 
 export default function Home() {
   return (
-    <main className="relative w-full overflow-hidden bg-[rgb(14,15,17)]">
+    <main className="relative w-full overflow-hidden" style={{ background: "var(--bg)" }}>
       <Navigation />
 
       <Hero />
       <AnimatedText />
       <StackLogos />
+      <ServiceFlow />
       <Stats />
       <SixAgents />
+      <DashboardPreview />
       <LiveSystem />
       <ProcessVisual />
       <HowItWorks />
-      <Pricing />
       <FAQ />
       <SectionBlend from="rgb(14,15,17)" to="rgb(8,8,15)" />
       <CTA />

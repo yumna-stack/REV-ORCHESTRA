@@ -111,22 +111,22 @@ function ScrollCard({
       onMouseEnter={onHover}
     >
       <div
-        className="relative rounded-2xl px-5 py-5 transition-all duration-300"
+        className="relative rounded-lg px-5 py-5 transition-all duration-300 hover:bg-[rgb(34,25,22)]"
         style={{
-          backgroundColor: isActive ? "rgba(232,86,0,0.04)" : "rgba(255,255,255,0.02)",
+          backgroundColor: "rgb(8,8,10)",
           border: isActive
-            ? "1px solid rgba(232,86,0,0.18)"
-            : "1px solid rgba(255,255,255,0.06)",
+            ? "1px solid rgba(232,86,0,0.35)"
+            : "1px solid rgb(40,41,44)",
         }}
       >
         <div className="flex items-start gap-3.5">
           <div
             className="shrink-0 w-9 h-9 rounded-lg flex items-center justify-center transition-colors duration-300"
             style={{
-              backgroundColor: isActive ? "rgba(232,86,0,0.1)" : "rgba(255,255,255,0.04)",
+              backgroundColor: "rgb(14,14,16)",
               border: isActive
-                ? "1px solid rgba(232,86,0,0.2)"
-                : "1px solid rgba(255,255,255,0.06)",
+                ? "1px solid rgba(232,86,0,0.35)"
+                : "1px solid rgb(40,41,44)",
               color: isActive ? "#E85600" : "rgba(255,255,255,0.4)",
             }}
           >
@@ -367,7 +367,7 @@ export default function SixAgents() {
                 style={{
                   padding: "8px 16px",
                   borderRadius: 100,
-                  backgroundColor: "rgb(25,27,31)",
+                  backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.07)",
                 }}
               >
@@ -391,15 +391,17 @@ export default function SixAgents() {
               <h2
                 style={{
                   fontFamily: "var(--font-family-heading)",
-                  fontSize: "clamp(28px, 3.5vw, 40px)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
                   fontWeight: 500,
                   lineHeight: "120%",
-                  letterSpacing: "-1px",
+                  letterSpacing: "-1.2px",
                   color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
                 }}
               >
-                Six agents.{" "}
-                <span style={{ color: "rgba(232,86,0,0.8)" }}>One command center.</span>
+                Autonomous agents,{" "}
+                <span style={{ color: "rgba(232,86,0,0.8)" }}>one unified dashboard</span>
               </h2>
             </Reveal>
 
@@ -414,7 +416,7 @@ export default function SixAgents() {
                   maxWidth: 420,
                 }}
               >
-                Each agent handles one part of the GTM motion: signals, research, copy, outreach, CRM, and monitoring. They hand off to each other automatically. One system, always moving pipeline forward.
+                We orchestrate a fleet of specialized agents custom built for your workflow. Each handles one part of your motion and hands off to the next automatically. One system, always moving work forward.
               </p>
             </Reveal>
 
@@ -424,10 +426,11 @@ export default function SixAgents() {
                 href={CAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-accent-orange text-white hover:brightness-110 transition-all w-fit"
+                className="inline-flex items-center gap-2 text-white hover:brightness-110 transition-all w-fit"
                 style={{
                   padding: "11px 22px",
                   borderRadius: 100,
+                  backgroundColor: "#E85600",
                   fontFamily: "var(--font-family-body)",
                   fontSize: 13,
                   fontWeight: 500,

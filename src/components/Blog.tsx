@@ -28,11 +28,23 @@ export default function Blog() {
         {/* Heading */}
         <Reveal variants={fadeUp}>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(25,27,31)] border border-[rgba(255,255,255,0.08)] mb-6">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] mb-6">
               <span className="w-2 h-2 rounded-full bg-accent-orange" />
               <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Blog</span>
             </div>
-            <h2 className="text-[clamp(28px,4vw,52px)] font-semibold leading-[110%] tracking-[-2px] text-white mb-4">
+            <h2
+              className="mb-4"
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               Latest Insights
             </h2>
           </div>
@@ -43,14 +55,14 @@ export default function Blog() {
           {blogPosts.map((post, i) => (
             <GridItem key={i}>
               <motion.div
-                className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] overflow-hidden hover:border-[rgba(255,255,255,0.12)] transition-all duration-500"
+                className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] overflow-hidden hover:border-[rgba(255,255,255,0.12)] transition-all duration-500"
                 whileHover={{ y: -6, scale: 1.01 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 {/* Image placeholder */}
                 <div className={`w-full aspect-[16/9] bg-gradient-to-br ${post.gradient} flex items-center justify-center`}>
                   <motion.div
-                    className="w-16 h-16 rounded-2xl bg-[rgba(232,86,0,0.15)] flex items-center justify-center"
+                    className="w-16 h-16 rounded-2xl bg-[rgb(64,34,22)] flex items-center justify-center"
                     animate={{ y: [-3, 3, -3] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   >
@@ -61,7 +73,7 @@ export default function Blog() {
                 </div>
 
                 {/* Content */}
-                <div className="p-8">
+                <div className="p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-xs text-accent-orange">{post.category}</span>
                     <span className="text-xs text-[rgba(255,255,255,0.3)]">&bull;</span>

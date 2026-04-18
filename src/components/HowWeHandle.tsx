@@ -10,36 +10,36 @@ const INTERVAL = 5000; // 5s per tab
 const tabs = [
   {
     badge: "Signal Detection",
-    heading: "AI-Powered Prospect Intelligence for B2B Founders",
+    heading: "AI Powered Prospect Intelligence for B2B Founders",
     description:
       "Our signal agents continuously scan LinkedIn, job boards, funding announcements, and intent data to identify prospects the moment they enter a buying window, before your competitors even know they exist.",
     features: [
-      { title: "Real-Time Signal Scanning", desc: "Monitor 50+ intent signals across LinkedIn, G2, job boards, and funding events." },
-      { title: "ICP Auto-Matching", desc: "AI scores and ranks every prospect against your ideal customer profile in real time." },
+      { title: "Real Time Signal Scanning", desc: "Monitor 50+ intent signals across LinkedIn, G2, job boards, and funding events." },
+      { title: "ICP Auto Matching", desc: "AI scores and ranks every prospect against your ideal customer profile in real time." },
       { title: "Contact Enrichment", desc: "Automatically enrich contacts with verified emails, roles, and company data." },
     ],
     image: "https://framerusercontent.com/images/5eVCkZ7V9x8vrhxhXkhhJA9HI4.png",
   },
   {
-    badge: "Multi-Channel Outreach",
+    badge: "Multi Channel Outreach",
     heading: "Automated Engagement That Feels Human, at Scale",
     description:
-      "Six AI sub-agents coordinate personalized email sequences, LinkedIn touches, and follow-ups across every channel, adapting tone, timing, and messaging based on prospect behavior and engagement signals.",
+      "Autonomous AI sub agents coordinate personalized email sequences, LinkedIn touches, and follow ups across every channel, adapting tone, timing, and messaging based on prospect behavior and engagement signals.",
     features: [
-      { title: "Hyper-Personalized Sequences", desc: "AI crafts unique messages per prospect using their signals, not templates." },
-      { title: "Multi-Channel Sync", desc: "Email, LinkedIn, and Slack sequences coordinated by one orchestration layer." },
-      { title: "Smart Follow-Ups", desc: "Agents auto-adjust timing and messaging based on opens, clicks, and replies." },
+      { title: "Hyper Personalized Sequences", desc: "AI crafts unique messages per prospect using their signals, not templates." },
+      { title: "Multi Channel Sync", desc: "Email, LinkedIn, and Slack sequences coordinated by one orchestration layer." },
+      { title: "Smart Follow Ups", desc: "Agents auto adjust timing and messaging based on opens, clicks, and replies." },
     ],
     image: "https://framerusercontent.com/images/2qxaCbzVSu847anr6AxRstGMDI.png",
   },
   {
     badge: "Pipeline Orchestration",
-    heading: "Full-Funnel Visibility with Zero Manual Work",
+    heading: "Full Funnel Visibility with Zero Manual Work",
     description:
-      "From first touch to closed deal, every interaction is logged, every pipeline stage is updated, and every bottleneck is flagged, automatically. You get a dashboard, not a to-do list.",
+      "From first touch to closed deal, every interaction is logged, every pipeline stage is updated, and every bottleneck is flagged, automatically. You get a dashboard, not a to do list.",
     features: [
       { title: "Auto CRM Updates", desc: "HubSpot and Salesforce stay current without your team touching a record." },
-      { title: "Pipeline Monitoring", desc: "Real-time alerts when deals stall, spike, or need attention." },
+      { title: "Pipeline Monitoring", desc: "Real time alerts when deals stall, spike, or need attention." },
       { title: "Performance Dashboards", desc: "Track conversion rates, response times, and agent effectiveness at a glance." },
     ],
     image: "https://framerusercontent.com/images/hQx8gVA45mQkkScjXcMzAbZYg.png",
@@ -83,7 +83,7 @@ export default function HowWeHandle() {
               style={{
                 padding: "10px 20px",
                 borderRadius: 100,
-                backgroundColor: "rgb(25,27,31)",
+                backgroundColor: "rgb(8,8,10)",
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
             >
@@ -96,14 +96,16 @@ export default function HowWeHandle() {
             <h2
               style={{
                 fontFamily: "var(--font-family-heading)",
-                fontSize: "clamp(28px, 4vw, 52px)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
                 fontWeight: 500,
-                lineHeight: "110%",
-                letterSpacing: "-2px",
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
                 color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
               }}
             >
-              One System. Three Engines.
+              One System, Three Engines
             </h2>
           </div>
         </Reveal>
@@ -117,18 +119,18 @@ export default function HowWeHandle() {
         >
           <div
             style={{
-              borderRadius: 36,
-              border: "1px solid rgb(30,30,30)",
+              borderRadius: 18,
+              border: "1px solid rgb(14,14,16)",
               overflow: "hidden",
-              padding: 40,
-              backgroundColor: "rgba(255,255,255,0.015)",
+              padding: 24,
+              backgroundColor: "rgb(8,8,10)",
             }}
           >
             {/* ── Tab bar ── */}
             <div
               className="inline-flex items-center gap-0 mb-10"
               style={{
-                backgroundColor: "rgb(25,27,31)",
+                backgroundColor: "rgb(8,8,10)",
                 borderRadius: 16,
                 padding: 8,
               }}
@@ -173,8 +175,8 @@ export default function HowWeHandle() {
                       className="inline-flex items-center gap-1.5 mb-4"
                       style={{
                         padding: "9px 14px",
-                        borderRadius: 40,
-                        backgroundColor: "rgb(25,27,31)",
+                        borderRadius: 20,
+                        backgroundColor: "rgb(8,8,10)",
                       }}
                     >
                       <span style={{ fontSize: 14, color: "rgba(255,255,255,0.5)" }}>

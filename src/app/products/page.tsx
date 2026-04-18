@@ -13,7 +13,7 @@ const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const features = [
   {
     title: "Blockchain Indexing",
-    desc: "Index and query on-chain data across 35+ networks with sub-second latency and full historical coverage.",
+    desc: "Index and query on chain data across 35+ networks with sub second latency and full historical coverage.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -49,7 +49,7 @@ const features = [
   },
   {
     title: "Smart Contracts",
-    desc: "Deploy, monitor, and interact with smart contracts across multiple chains with built-in verification and audit tools.",
+    desc: "Deploy, monitor, and interact with smart contracts across multiple chains with built in verification and audit tools.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
@@ -59,7 +59,7 @@ const features = [
     ),
   },
   {
-    title: "Cross-Chain Bridge",
+    title: "Cross Chain Bridge",
     desc: "Move assets and data across blockchains with our secure, trustless bridge infrastructure supporting 35+ networks.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -71,7 +71,7 @@ const features = [
   },
   {
     title: "Security Suite",
-    desc: "Enterprise-grade security with real-time threat detection, wallet monitoring, and smart contract vulnerability scanning.",
+    desc: "Enterprise grade security with real time threat detection, wallet monitoring, and smart contract vulnerability scanning.",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -188,7 +188,7 @@ export default function ProductsPage() {
             transition={{ duration: 0.7, ease }}
             className="text-lg text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[520px]"
           >
-            Real-time insights across 35+ chains Powered by AI and Decentralization
+            Real time insights across 35+ chains Powered by AI and Decentralization
           </motion.p>
 
           {/* CTA Button */}
@@ -292,7 +292,7 @@ export default function ProductsPage() {
                   </div>
 
                   {/* Sell section */}
-                  <div className="rounded-2xl border border-[rgba(41,42,43,0.8)] bg-[rgba(255,255,255,0.02)] p-4 mb-2">
+                  <div className="rounded-2xl border border-[rgba(41,42,43,0.8)] bg-[rgb(8,8,10)] p-4 mb-2">
                     <span className="text-[10px] text-[rgba(255,255,255,0.35)] uppercase tracking-wider">
                       Sell
                     </span>
@@ -345,7 +345,7 @@ export default function ProductsPage() {
                   </div>
 
                   {/* Buy section */}
-                  <div className="rounded-2xl border border-[rgba(41,42,43,0.8)] bg-[rgba(255,255,255,0.02)] p-4 mt-2">
+                  <div className="rounded-2xl border border-[rgba(41,42,43,0.8)] bg-[rgb(8,8,10)] p-4 mt-2">
                     <span className="text-[10px] text-[rgba(255,255,255,0.35)] uppercase tracking-wider">
                       Buy
                     </span>
@@ -378,7 +378,7 @@ export default function ProductsPage() {
                 {/* ─── Right Panel: Seller -> Buyer Flow ─── */}
                 <div className="p-6 flex flex-col relative min-h-[320px]">
                   {/* Seller card */}
-                  <div className="absolute top-8 left-6 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-[rgba(41,42,43,0.8)] bg-[rgba(255,255,255,0.03)]">
+                  <div className="absolute top-8 left-6 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-[rgba(41,42,43,0.8)] bg-[rgb(8,8,10)]">
                     <div className="w-7 h-7 rounded-lg bg-[#F7931A] flex items-center justify-center">
                       <svg
                         width="14"
@@ -449,7 +449,7 @@ export default function ProductsPage() {
                   </svg>
 
                   {/* Buyer card */}
-                  <div className="absolute bottom-8 right-6 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-[rgba(41,42,43,0.8)] bg-[rgba(255,255,255,0.03)]">
+                  <div className="absolute bottom-8 right-6 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-[rgba(41,42,43,0.8)] bg-[rgb(8,8,10)]">
                     <div className="w-7 h-7 rounded-lg bg-[rgba(255,255,255,0.08)] flex items-center justify-center">
                       <svg
                         width="14"
@@ -495,7 +495,7 @@ export default function ProductsPage() {
               <GridItem key={i}>
                 <motion.div
                   whileHover={{ y: -4, borderColor: "rgba(232,86,0,0.3)" }}
-                  className="relative p-8 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] transition-all duration-300 h-full group overflow-hidden"
+                  className="relative p-8 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] transition-all duration-300 h-full group overflow-hidden"
                 >
                   <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-accent-orange/0 group-hover:bg-accent-orange/[0.04] blur-3xl transition-all duration-500 pointer-events-none" />
                   <div className="relative z-10">
@@ -527,7 +527,19 @@ export default function ProductsPage() {
           <Reveal variants={fadeUp}>
             <div className="text-center mb-16 flex flex-col items-center gap-5">
               <Badge text="Integrations" />
-              <h2 className="text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-1.5px] text-white mt-2">
+              <h2
+                className="mt-2"
+                style={{
+                  fontFamily: "var(--font-family-heading)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  fontWeight: 500,
+                  lineHeight: "120%",
+                  letterSpacing: "-1.2px",
+                  color: "white",
+                  maxWidth: 560,
+                  margin: "0 auto",
+                }}
+              >
                 Connects With Top Crypto Protocols
               </h2>
               <p className="text-base text-[rgba(255,255,255,0.45)] max-w-[550px] mx-auto">
@@ -541,7 +553,7 @@ export default function ProductsPage() {
               <GridItem key={i}>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="flex flex-col items-center gap-3 p-4 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] hover:border-accent-orange/20 hover:bg-[rgba(255,255,255,0.03)] transition-all duration-300"
+                  className="flex flex-col items-center gap-3 p-4 rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] hover:border-accent-orange/20 hover:bg-[rgb(8,8,10)] transition-all duration-300"
                 >
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold"
@@ -569,7 +581,18 @@ export default function ProductsPage() {
       <section className="py-28">
         <Reveal variants={fadeUp}>
           <div className="max-w-[800px] mx-auto px-5 text-center flex flex-col items-center gap-6">
-            <h2 className="text-[clamp(28px,4vw,44px)] font-medium leading-[110%] tracking-[-1.5px] text-white">
+            <h2
+              style={{
+                fontFamily: "var(--font-family-heading)",
+                fontSize: "clamp(28px, 3.5vw, 42px)",
+                fontWeight: 500,
+                lineHeight: "120%",
+                letterSpacing: "-1.2px",
+                color: "white",
+                maxWidth: 560,
+                margin: "0 auto",
+              }}
+            >
               Ready to Build on CRYPS?
             </h2>
             <p className="text-base text-[rgba(255,255,255,0.45)] max-w-[500px]">
