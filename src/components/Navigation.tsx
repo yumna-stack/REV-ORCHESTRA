@@ -71,11 +71,10 @@ export default function Navigation() {
           backgroundColor: scrolled ? "var(--surface)" : "transparent",
           borderColor: scrolled ? "var(--border)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
-          WebkitBackdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
           boxShadow: scrolled ? "0 10px 30px rgba(0,0,0,0.35)" : "0 0 0 rgba(0,0,0,0)",
         }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        style={{ borderWidth: 1, borderStyle: "solid", overflow: "visible" }}
+        style={{ borderWidth: 1, borderStyle: "solid", overflow: "visible", WebkitBackdropFilter: scrolled ? "blur(16px)" : "blur(0px)" }}
       >
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2.5" onClick={playClickSound}>
