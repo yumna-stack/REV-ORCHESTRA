@@ -955,7 +955,7 @@ export function NewIssueDialog() {
               </PopoverContent>
             </Popover>
             <span className="text-muted-foreground/60">&rsaquo;</span>
-            <span>New issue</span>
+            <span>New task</span>
           </div>
           <div className="flex items-center gap-1">
             <Button

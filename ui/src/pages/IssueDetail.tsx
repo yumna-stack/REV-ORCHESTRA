@@ -376,7 +376,7 @@ export function IssueDetail() {
     [activeRun, liveRuns],
   );
   const sourceBreadcrumb = useMemo(
-    () => readIssueDetailBreadcrumb(location.state, location.search) ?? { label: "Issues", href: "/issues" },
+    () => readIssueDetailBreadcrumb(location.state, location.search) ?? { label: "Tasks", href: "/issues" },
     [location.state, location.search],
   );
 
