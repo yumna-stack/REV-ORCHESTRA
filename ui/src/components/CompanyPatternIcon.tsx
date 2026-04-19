@@ -101,7 +101,11 @@ function makeCompanyPatternDataUrl(seed: string, brandColor?: string | null, log
 
   const rand = mulberry32(hashString(seed));
 
-  const hue = brandColor ? hexToHue(brandColor) : Math.floor(rand() * 360);
+  // Default to orange (~#f97316, hue ≈ 22°) so untagged companies pick up
+  // the Taxxa-style accent. Variance is kept small so every logo reads orange.
+  const hue = brandColor
+    ? hexToHue(brandColor)
+    : 18 + Math.floor(rand() * 16);
   const [offR, offG, offB] = hslToRgb(
     hue,
     54 + Math.floor(rand() * 14),

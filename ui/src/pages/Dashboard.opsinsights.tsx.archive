@@ -1,0 +1,1789 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "@/lib/router";
+import { useQuery } from "@tanstack/react-query";
+import { dashboardApi } from "../api/dashboard";
+import { activityApi } from "../api/activity";
+import { issuesApi } from "../api/issues";
+import { agentsApi } from "../api/agents";
+import { projectsApi } from "../api/projects";
+import { heartbeatsApi } from "../api/heartbeats";
+import { useCompany } from "../context/CompanyContext";
+import { useDialog } from "../context/DialogContext";
+import { useBreadcrumbs } from "../context/BreadcrumbContext";
+import { queryKeys } from "../lib/queryKeys";
+import { EmptyState } from "../components/EmptyState";
+import { StatusIcon } from "../components/StatusIcon";
+import { ActivityRow } from "../components/ActivityRow";
+import { Identity } from "../components/Identity";
+import { timeAgo } from "../lib/timeAgo";
+import { formatCents } from "../lib/utils";
+import {
+  Bot,
+  CircleDot,
+  LayoutDashboard,
+  PauseCircle,
+  TrendingUp,
+  TrendingDown,
+  Send,
+  RefreshCw,
+  CheckCircle2,
+  ShieldCheck,
+  ArrowRight,
+  Mail,
+  Sparkles,
+  AlertTriangle,
+  Zap,
+  Target,
+  Lightbulb,
+} from "lucide-react";
+import { PageSkeleton } from "../components/PageSkeleton";
+import type { Agent, Issue } from "@paperclipai/shared";
+import { PluginSlotOutlet } from "@/plugins/slots";
+
+/* ─── Palette (Taxxa-style warm orange + neutrals) ─────────────────
+   Orange is the theme. Secondary hues only when they carry semantics
+   (rose = error, emerald = success). */
+const P = {
+  orange: "#f97316",
+  orangeDeep: "#ea580c",
+  orangeSoft: "#fb923c",
+  orangePale: "#fdba74",
+  amberSoft: "#fbbf24",
+  emerald: "#10b981",
+  rose: "#ef4444",
+  slate: "#94a3b8",
+  slateDim: "#475569",
+};
+
+/* ─── Primitives ─────────────────────────────────────────────────── */
+
+function SectionLabel({
+  children,
+  right,
+}: {
+  children: React.ReactNode;
+  right?: React.ReactNode;
+}) {
+  return (
+    <div className="mb-3 flex items-center justify-between">
+      <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
+        {children}
+      </h2>
+      {right}
+    </div>
+  );
+}
+
+function Tile({
+  label,
+  value,
+  hint,
+  icon,
+  iconColor,
+  trend,
+  to,
+}: {
+  label: string;
+  value: React.ReactNode;
+  hint?: React.ReactNode;
+  icon?: React.ReactNode;
+  iconColor?: string;
+  trend?: "up" | "down" | null;
+  to?: string;
+}) {
+  const content = (
+    <div className="group h-full rounded-xl border border-white/10 bg-white/[0.015] px-4 py-4 transition-colors hover:border-orange-500/40 hover:bg-orange-500/[0.03]">
+      <div className="flex items-start justify-between gap-2">
+        <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-neutral-500">
+          {label}
+        </p>
+        {icon && (
+          <span
+            className="shrink-0"
+            style={{ color: iconColor ?? "rgb(115 115 115)" }}
+          >
+            {icon}
+          </span>
+        )}
+      </div>
+      <div className="mt-3 flex items-baseline gap-2">
+        <span className="text-2xl font-semibold tracking-tight tabular-nums text-neutral-50">
+          {value}
+        </span>
+        {trend === "up" && (
+          <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+        )}
+        {trend === "down" && (
+          <TrendingDown className="h-3.5 w-3.5 text-red-400" />
+        )}
+      </div>
+      {hint && (
+        <p className="mt-1.5 text-[11px] text-neutral-500">{hint}</p>
+      )}
+    </div>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className="no-underline text-inherit">
+        {content}
+      </Link>
+    );
+  }
+  return content;
+}
+
+function CardFrame({
+  title,
+  right,
+  children,
+  className = "",
+}: {
+  title?: string;
+  right?: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`rounded-xl border border-white/10 bg-white/[0.015] p-4 ${className}`}
+    >
+      {(title || right) && (
+        <div className="mb-3 flex items-center justify-between">
+          {title && (
+            <h3 className="text-sm font-medium text-neutral-200">{title}</h3>
+          )}
+          {right}
+        </div>
+      )}
+      {children}
+    </div>
+  );
+}
+
+/* ─── DonutChart — Taxxa-style orange-dominant donut + legend ───── */
+
+type DonutSegment = { label: string; value: number; color: string };
+
+function DonutChart({
+  segments,
+  centerTop,
+  centerBottom,
+  size = 140,
+  stroke = 18,
+}: {
+  segments: DonutSegment[];
+  centerTop: React.ReactNode;
+  centerBottom?: React.ReactNode;
+  size?: number;
+  stroke?: number;
+}) {
+  const total = segments.reduce((s, x) => s + x.value, 0);
+  const r = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * r;
+
+  let offset = 0;
+  const arcs = segments.map((seg) => {
+    const fraction = total > 0 ? seg.value / total : 0;
+    const len = circumference * fraction;
+    const arc = {
+      ...seg,
+      fraction,
+      dasharray: `${len} ${circumference - len}`,
+      dashoffset: -offset,
+    };
+    offset += len;
+    return arc;
+  });
+
+  return (
+    <div className="flex items-center gap-4">
+      <div
+        className="relative shrink-0"
+        style={{ width: size, height: size }}
+      >
+        <svg
+          width={size}
+          height={size}
+          viewBox={`0 0 ${size} ${size}`}
+          className="-rotate-90"
+        >
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke="rgba(255,255,255,0.06)"
+            strokeWidth={stroke}
+          />
+          {total > 0 &&
+            arcs.map((a) => (
+              <circle
+                key={a.label}
+                cx={size / 2}
+                cy={size / 2}
+                r={r}
+                fill="none"
+                stroke={a.color}
+                strokeWidth={stroke}
+                strokeDasharray={a.dasharray}
+                strokeDashoffset={a.dashoffset}
+                strokeLinecap="butt"
+              />
+            ))}
+        </svg>
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-lg font-semibold tabular-nums text-neutral-100">
+            {centerTop}
+          </span>
+          {centerBottom && (
+            <span className="text-[10px] uppercase tracking-wider text-neutral-500">
+              {centerBottom}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="min-w-0 flex-1 space-y-1.5">
+        {segments.map((seg) => {
+          const pct =
+            total > 0 ? ((seg.value / total) * 100).toFixed(1) : "0.0";
+          return (
+            <div
+              key={seg.label}
+              className="flex items-center justify-between gap-3 text-[11px]"
+            >
+              <div className="flex min-w-0 items-center gap-2">
+                <span
+                  className="h-2 w-2 shrink-0 rounded-full"
+                  style={{ backgroundColor: seg.color }}
+                />
+                <span className="truncate text-neutral-300">
+                  {seg.label}
+                  <span className="text-neutral-500"> — {seg.value}</span>
+                </span>
+              </div>
+              <span className="shrink-0 font-mono text-neutral-400 tabular-nums">
+                {pct}%
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Horizontal bar chart ──────────────────────────────────────── */
+
+function BarColumnChart({
+  data,
+  height = 160,
+}: {
+  data: { label: string; value: number; color: string; sub?: string }[];
+  height?: number;
+}) {
+  const max = Math.max(...data.map((d) => d.value), 1);
+  return (
+    <div>
+      <div
+        className="flex items-end gap-3"
+        style={{ height }}
+      >
+        {data.map((d) => {
+          const h = (d.value / max) * (height - 30);
+          return (
+            <div
+              key={d.label}
+              className="flex flex-1 flex-col items-center justify-end gap-2"
+            >
+              <span className="text-[11px] font-medium text-neutral-200 tabular-nums">
+                {d.sub ?? d.value}
+              </span>
+              <div
+                className="w-full rounded-t-md transition-all"
+                style={{
+                  height: Math.max(h, 4),
+                  backgroundColor: d.color,
+                  boxShadow: `0 -6px 20px ${d.color}22`,
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className="mt-2 flex items-start gap-3">
+        {data.map((d) => (
+          <div
+            key={`lbl-${d.label}`}
+            className="flex-1 text-center"
+          >
+            <span className="text-[10px] font-medium uppercase tracking-wider text-neutral-500">
+              {d.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Horizontal progress row (Billing Frequency / MRR by Segment) ─ */
+
+function ProgressRow({
+  label,
+  value,
+  displayValue,
+  max,
+  color,
+}: {
+  label: string;
+  value: number;
+  displayValue: string;
+  max: number;
+  color: string;
+}) {
+  const pct = max > 0 ? (value / max) * 100 : 0;
+  return (
+    <div>
+      <div className="mb-1 flex items-center justify-between">
+        <span className="text-[12px] text-neutral-300">{label}</span>
+        <span className="font-mono text-[12px] text-neutral-200 tabular-nums">
+          {displayValue}
+        </span>
+      </div>
+      <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.05]">
+        <div
+          className="h-full rounded-full transition-all"
+          style={{ width: `${pct}%`, backgroundColor: color }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ─── Dashboard ─────────────────────────────────────────────────── */
+
+function getRecentIssues(issues: Issue[]): Issue[] {
+  return [...issues].sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
+}
+
+export function Dashboard() {
+  const { selectedCompanyId, companies } = useCompany();
+  const { openOnboarding } = useDialog();
+  const { setBreadcrumbs } = useBreadcrumbs();
+  const [animatedActivityIds, setAnimatedActivityIds] = useState<Set<string>>(
+    new Set(),
+  );
+  const seenActivityIdsRef = useRef<Set<string>>(new Set());
+  const hydratedActivityRef = useRef(false);
+  const activityAnimationTimersRef = useRef<number[]>([]);
+
+  useEffect(() => {
+    setBreadcrumbs([{ label: "Dashboard" }]);
+  }, [setBreadcrumbs]);
+
+  const { data: agents } = useQuery({
+    queryKey: queryKeys.agents.list(selectedCompanyId!),
+    queryFn: () => agentsApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: queryKeys.dashboard(selectedCompanyId!),
+    queryFn: () => dashboardApi.summary(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: activity } = useQuery({
+    queryKey: queryKeys.activity(selectedCompanyId!),
+    queryFn: () => activityApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: issues } = useQuery({
+    queryKey: queryKeys.issues.list(selectedCompanyId!),
+    queryFn: () => issuesApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: projects } = useQuery({
+    queryKey: queryKeys.projects.list(selectedCompanyId!),
+    queryFn: () => projectsApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: runs } = useQuery({
+    queryKey: queryKeys.heartbeats(selectedCompanyId!),
+    queryFn: () => heartbeatsApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const recentIssues = issues ? getRecentIssues(issues) : [];
+  const recentActivity = useMemo(() => (activity ?? []).slice(0, 8), [activity]);
+
+  useEffect(() => {
+    for (const timer of activityAnimationTimersRef.current) {
+      window.clearTimeout(timer);
+    }
+    activityAnimationTimersRef.current = [];
+    seenActivityIdsRef.current = new Set();
+    hydratedActivityRef.current = false;
+    setAnimatedActivityIds(new Set());
+  }, [selectedCompanyId]);
+
+  useEffect(() => {
+    if (recentActivity.length === 0) return;
+    const seen = seenActivityIdsRef.current;
+    const currentIds = recentActivity.map((event) => event.id);
+    if (!hydratedActivityRef.current) {
+      for (const id of currentIds) seen.add(id);
+      hydratedActivityRef.current = true;
+      return;
+    }
+    const newIds = currentIds.filter((id) => !seen.has(id));
+    if (newIds.length === 0) {
+      for (const id of currentIds) seen.add(id);
+      return;
+    }
+    setAnimatedActivityIds((prev) => {
+      const next = new Set(prev);
+      for (const id of newIds) next.add(id);
+      return next;
+    });
+    for (const id of newIds) seen.add(id);
+    const timer = window.setTimeout(() => {
+      setAnimatedActivityIds((prev) => {
+        const next = new Set(prev);
+        for (const id of newIds) next.delete(id);
+        return next;
+      });
+      activityAnimationTimersRef.current =
+        activityAnimationTimersRef.current.filter((t) => t !== timer);
+    }, 980);
+    activityAnimationTimersRef.current.push(timer);
+  }, [recentActivity]);
+
+  useEffect(() => {
+    return () => {
+      for (const timer of activityAnimationTimersRef.current) {
+        window.clearTimeout(timer);
+      }
+    };
+  }, []);
+
+  const agentMap = useMemo(() => {
+    const map = new Map<string, Agent>();
+    for (const a of agents ?? []) map.set(a.id, a);
+    return map;
+  }, [agents]);
+
+  const entityNameMap = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const i of issues ?? [])
+      map.set(`issue:${i.id}`, i.identifier ?? i.id.slice(0, 8));
+    for (const a of agents ?? []) map.set(`agent:${a.id}`, a.name);
+    for (const p of projects ?? []) map.set(`project:${p.id}`, p.name);
+    return map;
+  }, [issues, agents, projects]);
+
+  const entityTitleMap = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const i of issues ?? []) map.set(`issue:${i.id}`, i.title);
+    return map;
+  }, [issues]);
+
+  const agentName = (id: string | null) => {
+    if (!id || !agents) return null;
+    return agents.find((a) => a.id === id)?.name ?? null;
+  };
+
+  /* ─── Derived analytics ──────────────── */
+
+  const analytics = useMemo(() => {
+    const a = agents ?? [];
+    const i = issues ?? [];
+    const r = runs ?? [];
+    const p = projects ?? [];
+
+    const agentByStatus = {
+      running: a.filter((x) => x.status === "running").length,
+      active: a.filter((x) => x.status === "active").length,
+      paused: a.filter((x) => x.status === "paused").length,
+      error: a.filter((x) => x.status === "error").length,
+      idle: a.filter((x) => x.status === "idle").length,
+    };
+
+    const roleBuckets = new Map<string, number>();
+    for (const ag of a) {
+      const key = ag.role ?? "other";
+      roleBuckets.set(key, (roleBuckets.get(key) ?? 0) + 1);
+    }
+
+    const issueByStatus = {
+      todo: i.filter((x) => x.status === "todo").length,
+      in_progress: i.filter((x) => x.status === "in_progress").length,
+      in_review: i.filter((x) => x.status === "in_review").length,
+      done: i.filter((x) => x.status === "done").length,
+      blocked: i.filter((x) => x.status === "blocked").length,
+      backlog: i.filter((x) => x.status === "backlog").length,
+      cancelled: i.filter((x) => x.status === "cancelled").length,
+    };
+
+    const issueByPriority = {
+      critical: i.filter((x) => x.priority === "critical").length,
+      high: i.filter((x) => x.priority === "high").length,
+      medium: i.filter((x) => x.priority === "medium").length,
+      low: i.filter((x) => x.priority === "low").length,
+    };
+
+    const runStats = {
+      succeeded: r.filter((x) => x.status === "succeeded").length,
+      failed: r.filter(
+        (x) => x.status === "failed" || x.status === "timed_out",
+      ).length,
+      total: r.length,
+    };
+    const successRate =
+      runStats.succeeded + runStats.failed > 0
+        ? Math.round(
+            (runStats.succeeded /
+              (runStats.succeeded + runStats.failed)) *
+              100,
+          )
+        : 0;
+
+    // Issues per project — for the "seats by country" style table
+    const projectStats = p
+      .map((proj) => {
+        const projIssues = i.filter((x) => x.projectId === proj.id);
+        const done = projIssues.filter((x) => x.status === "done").length;
+        return {
+          id: proj.id,
+          name: proj.name,
+          total: projIssues.length,
+          done,
+          inFlight: projIssues.filter(
+            (x) => x.status === "in_progress" || x.status === "in_review",
+          ).length,
+        };
+      })
+      .sort((x, y) => y.total - x.total);
+
+    // ── Derived insights — actionable signals, not just metrics ──
+    const now = Date.now();
+    const DAY_MS = 24 * 60 * 60 * 1000;
+
+    const staleIssues = i.filter((x) => {
+      if (x.status === "done" || x.status === "cancelled") return false;
+      return now - new Date(x.updatedAt).getTime() > 7 * DAY_MS;
+    });
+
+    const unassignedHigh = i.filter(
+      (x) =>
+        (x.priority === "critical" || x.priority === "high") &&
+        !x.assigneeAgentId &&
+        x.status !== "done" &&
+        x.status !== "cancelled",
+    );
+
+    const blockedIssues = i.filter((x) => x.status === "blocked");
+
+    const errorAgents = a.filter((x) => x.status === "error");
+    const idleAgents = a.filter((x) => x.status === "idle");
+
+    // Workload distribution — agent with most active tasks
+    const agentLoad = new Map<string, number>();
+    for (const issue of i) {
+      if (issue.assigneeAgentId && issue.status === "in_progress") {
+        agentLoad.set(
+          issue.assigneeAgentId,
+          (agentLoad.get(issue.assigneeAgentId) ?? 0) + 1,
+        );
+      }
+    }
+    const topLoaded = Array.from(agentLoad.entries())
+      .sort((x, y) => y[1] - x[1])
+      .slice(0, 1)[0];
+    const topLoadedAgent = topLoaded
+      ? {
+          agent: a.find((x) => x.id === topLoaded[0]),
+          load: topLoaded[1],
+        }
+      : null;
+
+    // Fleet utilization
+    const activeFleet = agentByStatus.running + agentByStatus.active;
+    const fleetUtilization =
+      a.length > 0 ? Math.round((activeFleet / a.length) * 100) : 0;
+
+    const insights: {
+      type: "critical" | "warning" | "positive" | "neutral";
+      title: string;
+      detail: string;
+      action?: { label: string; to: string };
+    }[] = [];
+
+    if (successRate > 0 && successRate < 80 && runStats.total >= 5) {
+      insights.push({
+        type: "critical",
+        title: `Success rate at ${successRate}% — below healthy threshold`,
+        detail: `${runStats.failed} of ${runStats.total} recent runs failed. Review adapter health and agent error logs.`,
+        action: { label: "Open runs", to: "/activity" },
+      });
+    }
+
+    if (errorAgents.length > 0) {
+      insights.push({
+        type: "critical",
+        title: `${errorAgents.length} agent${errorAgents.length === 1 ? "" : "s"} in error state`,
+        detail: `${errorAgents
+          .slice(0, 3)
+          .map((x) => x.name)
+          .join(", ")}${errorAgents.length > 3 ? " + more" : ""} need attention before new tasks can be dispatched.`,
+        action: { label: "Inspect agents", to: "/agents" },
+      });
+    }
+
+    if (unassignedHigh.length > 0) {
+      insights.push({
+        type: "warning",
+        title: `${unassignedHigh.length} high-priority task${unassignedHigh.length === 1 ? "" : "s"} unassigned`,
+        detail: `Critical and high priority issues without an owner — assign to clear the queue.`,
+        action: { label: "Triage", to: "/issues" },
+      });
+    }
+
+    if (staleIssues.length > 0) {
+      insights.push({
+        type: "warning",
+        title: `${staleIssues.length} issue${staleIssues.length === 1 ? "" : "s"} stale for >7 days`,
+        detail: `No updates in over a week. Consider closing or re-prioritizing.`,
+        action: { label: "Review stale", to: "/issues" },
+      });
+    }
+
+    if (blockedIssues.length > 0) {
+      insights.push({
+        type: "warning",
+        title: `${blockedIssues.length} blocked issue${blockedIssues.length === 1 ? "" : "s"}`,
+        detail: `Work cannot advance until blockers are cleared.`,
+        action: { label: "Unblock", to: "/issues" },
+      });
+    }
+
+    if (fleetUtilization < 30 && a.length >= 3) {
+      insights.push({
+        type: "neutral",
+        title: `Fleet ${fleetUtilization}% utilized — ${idleAgents.length} agent${idleAgents.length === 1 ? "" : "s"} idle`,
+        detail: `Most of the fleet is waiting for work. Queue more tasks or pause unused agents.`,
+        action: { label: "Assign tasks", to: "/issues" },
+      });
+    }
+
+    if (topLoadedAgent && topLoadedAgent.load >= 5) {
+      insights.push({
+        type: "warning",
+        title: `${topLoadedAgent.agent?.name ?? "An agent"} is overloaded — ${topLoadedAgent.load} in-flight tasks`,
+        detail: `Consider redistributing tasks to prevent bottlenecks.`,
+        action: { label: "View agent", to: `/agents/${topLoadedAgent.agent?.id ?? ""}` },
+      });
+    }
+
+    if (successRate >= 95 && runStats.total >= 10 && insights.length < 3) {
+      insights.push({
+        type: "positive",
+        title: `Pipeline healthy — ${successRate}% success over ${runStats.total} runs`,
+        detail: `Fleet is operating within target reliability.`,
+      });
+    }
+
+    if (
+      data_tasks_done_ratio() > 0.7 &&
+      insights.filter((x) => x.type === "positive").length === 0 &&
+      insights.length < 3
+    ) {
+      insights.push({
+        type: "positive",
+        title: `${Math.round(data_tasks_done_ratio() * 100)}% of issues completed`,
+        detail: `Strong throughput — keep feeding the pipeline.`,
+      });
+    }
+
+    function data_tasks_done_ratio() {
+      return i.length > 0 ? issueByStatus.done / i.length : 0;
+    }
+
+    return {
+      agentByStatus,
+      roleBuckets,
+      issueByStatus,
+      issueByPriority,
+      runStats,
+      successRate,
+      projectStats,
+      totalAgents: a.length,
+      totalIssues: i.length,
+      totalProjects: p.length,
+      insights: insights.slice(0, 4),
+      fleetUtilization,
+      staleCount: staleIssues.length,
+      unassignedHighCount: unassignedHigh.length,
+      topLoadedAgent,
+    };
+  }, [agents, issues, runs, projects]);
+
+  if (!selectedCompanyId) {
+    if (companies.length === 0) {
+      return (
+        <EmptyState
+          icon={LayoutDashboard}
+          message="Welcome to Paperclip. Set up your first company and agent to get started."
+          action="Get Started"
+          onAction={openOnboarding}
+        />
+      );
+    }
+    return (
+      <EmptyState
+        icon={LayoutDashboard}
+        message="Create or select a company to view the dashboard."
+      />
+    );
+  }
+
+  if (isLoading) {
+    return <PageSkeleton variant="dashboard" />;
+  }
+
+  const hasNoAgents = agents !== undefined && agents.length === 0;
+
+  return (
+    <div className="relative min-h-full bg-neutral-950 text-neutral-100">
+      <div className="space-y-8 p-1">
+        {/* ── Top bar with sync actions ── */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-4">
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              Overview / Dashboard
+            </p>
+            <h1 className="mt-1 text-lg font-semibold text-neutral-50">
+              {companies.find((c) => c.id === selectedCompanyId)?.name ??
+                "Workspace"}
+            </h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <button className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 text-[12px] text-neutral-300 transition-colors hover:border-orange-500/40 hover:text-neutral-50">
+              <RefreshCw className="h-3.5 w-3.5" />
+              Sync Heartbeats
+            </button>
+            <Link
+              to="/costs"
+              className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 text-[12px] text-neutral-300 no-underline transition-colors hover:border-orange-500/40 hover:text-neutral-50"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              Sync Budgets
+            </Link>
+          </div>
+        </div>
+
+        {error && <p className="text-sm text-red-400">{error.message}</p>}
+
+        {hasNoAgents && (
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-orange-500/25 bg-orange-500/[0.06] px-4 py-3">
+            <div className="flex items-center gap-2.5">
+              <Bot className="h-4 w-4 shrink-0 text-orange-300" />
+              <p className="text-sm text-orange-100">You have no agents.</p>
+            </div>
+            <button
+              onClick={() =>
+                openOnboarding({ initialStep: 2, companyId: selectedCompanyId! })
+              }
+              className="rounded-md border border-orange-400/40 bg-orange-500/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-orange-200 transition-colors hover:bg-orange-500/20"
+            >
+              Create one
+            </button>
+          </div>
+        )}
+
+        {data && (
+          <>
+            {data.budgets.activeIncidents > 0 && (
+              <div className="flex items-start justify-between gap-3 rounded-xl border border-red-500/25 bg-red-500/[0.05] px-4 py-3">
+                <div className="flex items-start gap-2.5">
+                  <PauseCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
+                  <div>
+                    <p className="text-sm font-medium text-red-50">
+                      {data.budgets.activeIncidents} active budget incident
+                      {data.budgets.activeIncidents === 1 ? "" : "s"}
+                    </p>
+                    <p className="text-xs text-red-100/70">
+                      {data.budgets.pausedAgents} agents paused ·{" "}
+                      {data.budgets.pausedProjects} projects paused
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  to="/costs"
+                  className="text-sm text-red-100 underline underline-offset-2"
+                >
+                  Open budgets
+                </Link>
+              </div>
+            )}
+
+            {/* ── TOP INSIGHTS (like Taxxa top insights row) ── */}
+            {analytics.insights.length > 0 && (
+              <section>
+                <SectionLabel
+                  right={
+                    <span className="flex items-center gap-1.5 text-[10px] text-neutral-500">
+                      <Lightbulb className="h-3 w-3 text-orange-400" />
+                      derived from live data
+                    </span>
+                  }
+                >
+                  Top Insights
+                </SectionLabel>
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+                  {analytics.insights.map((ins, idx) => {
+                    const styleMap = {
+                      critical: {
+                        border: "border-red-500/30",
+                        bg: "bg-red-500/[0.04]",
+                        accent: "bg-red-500",
+                        label: "text-red-300",
+                        labelBg: "bg-red-500/15",
+                        icon: <AlertTriangle className="h-3.5 w-3.5" />,
+                        tag: "Critical",
+                      },
+                      warning: {
+                        border: "border-orange-500/30",
+                        bg: "bg-orange-500/[0.04]",
+                        accent: "bg-orange-500",
+                        label: "text-orange-300",
+                        labelBg: "bg-orange-500/15",
+                        icon: <Zap className="h-3.5 w-3.5" />,
+                        tag: "Attention",
+                      },
+                      positive: {
+                        border: "border-emerald-500/25",
+                        bg: "bg-emerald-500/[0.03]",
+                        accent: "bg-emerald-500",
+                        label: "text-emerald-300",
+                        labelBg: "bg-emerald-500/15",
+                        icon: <CheckCircle2 className="h-3.5 w-3.5" />,
+                        tag: "Healthy",
+                      },
+                      neutral: {
+                        border: "border-white/10",
+                        bg: "bg-white/[0.015]",
+                        accent: "bg-orange-500/60",
+                        label: "text-orange-200",
+                        labelBg: "bg-orange-500/10",
+                        icon: <Target className="h-3.5 w-3.5" />,
+                        tag: "Opportunity",
+                      },
+                    }[ins.type];
+                    return (
+                      <div
+                        key={idx}
+                        className={`relative overflow-hidden rounded-xl border ${styleMap.border} ${styleMap.bg} p-4`}
+                      >
+                        <div
+                          className={`absolute left-0 top-0 h-full w-[3px] ${styleMap.accent}`}
+                        />
+                        <div className="flex items-start justify-between gap-2">
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider ${styleMap.labelBg} ${styleMap.label}`}
+                          >
+                            {styleMap.icon}
+                            {styleMap.tag}
+                          </span>
+                        </div>
+                        <p className="mt-2 text-[13px] font-medium leading-snug text-neutral-100">
+                          {ins.title}
+                        </p>
+                        <p className="mt-1 text-[11px] leading-relaxed text-neutral-400">
+                          {ins.detail}
+                        </p>
+                        {ins.action && (
+                          <Link
+                            to={ins.action.to}
+                            className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-orange-300 no-underline hover:text-orange-200"
+                          >
+                            {ins.action.label}
+                            <ArrowRight className="h-3 w-3" />
+                          </Link>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
+            {/* ── OPS OVERVIEW (like MRR OVERVIEW) ── */}
+            <section>
+              <SectionLabel>Ops Overview</SectionLabel>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+                <Tile
+                  label="Agents Enabled"
+                  value={
+                    data.agents.active +
+                    data.agents.running +
+                    data.agents.paused +
+                    data.agents.error
+                  }
+                  hint={`${analytics.totalAgents} total`}
+                  icon={<Bot className="h-4 w-4" />}
+                  iconColor={P.orange}
+                  to="/agents"
+                />
+                <Tile
+                  label="Active Runs"
+                  value={data.agents.running}
+                  hint={`${data.agents.paused} paused`}
+                  icon={<Sparkles className="h-4 w-4" />}
+                  iconColor={P.orange}
+                />
+                <Tile
+                  label="Tasks In Progress"
+                  value={data.tasks.inProgress}
+                  hint={`${data.tasks.open} open`}
+                  icon={<CircleDot className="h-4 w-4" />}
+                  iconColor={P.orangeSoft}
+                  to="/issues"
+                />
+                <Tile
+                  label="Total Issues"
+                  value={analytics.totalIssues}
+                  hint={`${analytics.issueByStatus.done} completed`}
+                  icon={<CheckCircle2 className="h-4 w-4" />}
+                  iconColor={P.emerald}
+                />
+                <Tile
+                  label="Month Spend"
+                  value={formatCents(data.costs.monthSpendCents)}
+                  hint={
+                    data.costs.monthBudgetCents > 0
+                      ? `${data.costs.monthUtilizationPercent}% of budget`
+                      : "Unlimited"
+                  }
+                  trend={
+                    data.costs.monthUtilizationPercent > 50 ? "up" : "down"
+                  }
+                  to="/costs"
+                />
+                <Tile
+                  label="Pending Approvals"
+                  value={data.pendingApprovals + data.budgets.pendingApprovals}
+                  hint="Awaiting board"
+                  icon={<ShieldCheck className="h-4 w-4" />}
+                  iconColor={P.amberSoft}
+                  to="/approvals"
+                />
+              </div>
+            </section>
+
+            {/* ── BREAKDOWN & ANALYTICS ── */}
+            <section>
+              <SectionLabel>Breakdown & Analytics</SectionLabel>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+                {/* Agents by Status — donut (orange-dominant) */}
+                <CardFrame title="Agents by Status">
+                  <DonutChart
+                    centerTop={analytics.totalAgents}
+                    centerBottom="Agents"
+                    segments={[
+                      {
+                        label: "Running",
+                        value: analytics.agentByStatus.running,
+                        color: P.orange,
+                      },
+                      {
+                        label: "Active",
+                        value: analytics.agentByStatus.active,
+                        color: P.orangeSoft,
+                      },
+                      {
+                        label: "Paused",
+                        value: analytics.agentByStatus.paused,
+                        color: P.orangePale,
+                      },
+                      {
+                        label: "Error",
+                        value: analytics.agentByStatus.error,
+                        color: P.rose,
+                      },
+                      {
+                        label: "Idle",
+                        value: analytics.agentByStatus.idle,
+                        color: P.slateDim,
+                      },
+                    ].filter((s) => s.value > 0)}
+                  />
+                </CardFrame>
+
+                {/* Agents by role — bar column (orange-only) */}
+                <CardFrame title="Agents by Role">
+                  <BarColumnChart
+                    data={Array.from(analytics.roleBuckets.entries())
+                      .sort((a, b) => b[1] - a[1])
+                      .slice(0, 5)
+                      .map(([role, count], idx) => ({
+                        label:
+                          role.length > 8 ? role.slice(0, 8) + "…" : role,
+                        value: count,
+                        color: [
+                          P.orange,
+                          P.orangeSoft,
+                          P.orangePale,
+                          P.amberSoft,
+                          P.orangeDeep,
+                        ][idx % 5],
+                      }))}
+                  />
+                </CardFrame>
+
+                {/* Issues by status — donut (orange-dominant) */}
+                <CardFrame title="Issues by Status">
+                  <DonutChart
+                    centerTop={analytics.totalIssues}
+                    centerBottom="Issues"
+                    segments={[
+                      {
+                        label: "To Do",
+                        value: analytics.issueByStatus.todo,
+                        color: P.orange,
+                      },
+                      {
+                        label: "In Progress",
+                        value: analytics.issueByStatus.in_progress,
+                        color: P.orangeSoft,
+                      },
+                      {
+                        label: "In Review",
+                        value: analytics.issueByStatus.in_review,
+                        color: P.orangePale,
+                      },
+                      {
+                        label: "Done",
+                        value: analytics.issueByStatus.done,
+                        color: P.emerald,
+                      },
+                      {
+                        label: "Blocked",
+                        value: analytics.issueByStatus.blocked,
+                        color: P.rose,
+                      },
+                      {
+                        label: "Backlog",
+                        value: analytics.issueByStatus.backlog,
+                        color: P.slateDim,
+                      },
+                    ].filter((s) => s.value > 0)}
+                  />
+                </CardFrame>
+
+                {/* Issues by priority — bars (orange-dominant) */}
+                <CardFrame title="Issues by Priority">
+                  <BarColumnChart
+                    data={[
+                      {
+                        label: "Critical",
+                        value: analytics.issueByPriority.critical,
+                        color: P.rose,
+                      },
+                      {
+                        label: "High",
+                        value: analytics.issueByPriority.high,
+                        color: P.orangeDeep,
+                      },
+                      {
+                        label: "Medium",
+                        value: analytics.issueByPriority.medium,
+                        color: P.orangeSoft,
+                      },
+                      {
+                        label: "Low",
+                        value: analytics.issueByPriority.low,
+                        color: P.slateDim,
+                      },
+                    ]}
+                  />
+                </CardFrame>
+              </div>
+            </section>
+
+            {/* ── Segmented progress rows + Projects table (like Billing / Seats) ── */}
+            <section>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                <CardFrame title="Priority Mix">
+                  <div className="space-y-3">
+                    {[
+                      {
+                        label: "Critical",
+                        v: analytics.issueByPriority.critical,
+                        color: P.rose,
+                      },
+                      {
+                        label: "High",
+                        v: analytics.issueByPriority.high,
+                        color: P.orangeDeep,
+                      },
+                      {
+                        label: "Medium",
+                        v: analytics.issueByPriority.medium,
+                        color: P.orangeSoft,
+                      },
+                      {
+                        label: "Low",
+                        v: analytics.issueByPriority.low,
+                        color: P.slateDim,
+                      },
+                    ].map((row) => (
+                      <ProgressRow
+                        key={row.label}
+                        label={`${row.label} (${row.v})`}
+                        value={row.v}
+                        displayValue={String(row.v)}
+                        max={analytics.totalIssues}
+                        color={row.color}
+                      />
+                    ))}
+                  </div>
+                </CardFrame>
+
+                <CardFrame title="Run Pipeline">
+                  <div className="space-y-3">
+                    <ProgressRow
+                      label={`Succeeded (${analytics.runStats.succeeded})`}
+                      value={analytics.runStats.succeeded}
+                      displayValue={String(analytics.runStats.succeeded)}
+                      max={analytics.runStats.total}
+                      color={P.emerald}
+                    />
+                    <ProgressRow
+                      label={`Failed (${analytics.runStats.failed})`}
+                      value={analytics.runStats.failed}
+                      displayValue={String(analytics.runStats.failed)}
+                      max={analytics.runStats.total}
+                      color={P.rose}
+                    />
+                    <ProgressRow
+                      label={`Other (${analytics.runStats.total - analytics.runStats.succeeded - analytics.runStats.failed})`}
+                      value={
+                        analytics.runStats.total -
+                        analytics.runStats.succeeded -
+                        analytics.runStats.failed
+                      }
+                      displayValue={String(
+                        analytics.runStats.total -
+                          analytics.runStats.succeeded -
+                          analytics.runStats.failed,
+                      )}
+                      max={analytics.runStats.total}
+                      color={P.slate}
+                    />
+                    <div className="mt-2 border-t border-white/5 pt-3 text-center">
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-500">
+                        Success rate
+                      </p>
+                      <p className="mt-1 text-2xl font-semibold tabular-nums text-orange-400">
+                        {analytics.successRate}%
+                      </p>
+                    </div>
+                  </div>
+                </CardFrame>
+
+                <CardFrame
+                  title="Issues by Project"
+                  className="md:col-span-1"
+                >
+                  {analytics.projectStats.length === 0 ? (
+                    <p className="text-xs text-neutral-500">No projects yet.</p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-[12px]">
+                        <thead>
+                          <tr className="border-b border-white/5 text-[10px] uppercase tracking-wider text-neutral-500">
+                            <th className="py-2 text-left font-medium">
+                              Project
+                            </th>
+                            <th className="py-2 text-right font-medium">
+                              Total
+                            </th>
+                            <th className="py-2 text-right font-medium">
+                              Done
+                            </th>
+                            <th className="py-2 text-right font-medium">
+                              Active
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {analytics.projectStats
+                            .slice(0, 6)
+                            .map((p) => (
+                              <tr
+                                key={p.id}
+                                className="border-b border-white/5 last:border-0"
+                              >
+                                <td className="max-w-[160px] truncate py-2 text-neutral-200">
+                                  {p.name}
+                                </td>
+                                <td className="py-2 text-right font-mono tabular-nums text-neutral-200">
+                                  {p.total}
+                                </td>
+                                <td className="py-2 text-right font-mono tabular-nums text-emerald-400">
+                                  {p.done}
+                                </td>
+                                <td className="py-2 text-right font-mono tabular-nums text-violet-300">
+                                  {p.inFlight}
+                                </td>
+                              </tr>
+                            ))}
+                          <tr className="text-[11px] font-medium">
+                            <td className="pt-2 text-neutral-500 uppercase tracking-wider">
+                              Total
+                            </td>
+                            <td className="pt-2 text-right font-mono tabular-nums text-neutral-200">
+                              {analytics.totalIssues}
+                            </td>
+                            <td className="pt-2 text-right font-mono tabular-nums text-emerald-400">
+                              {analytics.issueByStatus.done}
+                            </td>
+                            <td className="pt-2 text-right font-mono tabular-nums text-violet-300">
+                              {analytics.issueByStatus.in_progress +
+                                analytics.issueByStatus.in_review}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </CardFrame>
+              </div>
+            </section>
+
+            {/* ── RUN HEALTH (like Deliverability Health) ── */}
+            <section>
+              <SectionLabel>Run Health</SectionLabel>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                <Tile
+                  label="Success Rate"
+                  value={`${analytics.successRate}%`}
+                  hint={
+                    analytics.successRate >= 95
+                      ? "Under 5% failure threshold ✓"
+                      : "Above healthy range"
+                  }
+                  icon={<ShieldCheck className="h-4 w-4" />}
+                  iconColor={
+                    analytics.successRate >= 95 ? P.emerald : P.amberSoft
+                  }
+                />
+                <Tile
+                  label="Failed Runs"
+                  value={analytics.runStats.failed}
+                  hint={`of ${analytics.runStats.total} total`}
+                  icon={<PauseCircle className="h-4 w-4" />}
+                  iconColor={P.rose}
+                />
+                <Tile
+                  label="Active Agents"
+                  value={
+                    analytics.agentByStatus.running +
+                    analytics.agentByStatus.active
+                  }
+                  hint={`${analytics.agentByStatus.running} running · ${analytics.agentByStatus.active} active`}
+                  icon={<Send className="h-4 w-4" />}
+                  iconColor={P.orangeSoft}
+                />
+                <Tile
+                  label="Monthly Budget"
+                  value={
+                    data.costs.monthBudgetCents > 0
+                      ? formatCents(data.costs.monthBudgetCents)
+                      : "∞"
+                  }
+                  hint={
+                    data.costs.monthBudgetCents > 0
+                      ? `${data.costs.monthUtilizationPercent}% used`
+                      : "Unlimited"
+                  }
+                  icon={<Mail className="h-4 w-4" />}
+                  iconColor={P.orange}
+                />
+              </div>
+            </section>
+
+            {/* ── ACTIVE PIPELINE (kanban) + YOUR APPROVALS (actionable) ── */}
+            <section>
+              <div className="grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+                <div>
+                  <SectionLabel
+                    right={
+                      <span className="text-[10px] text-neutral-500">
+                        goal → task flow
+                      </span>
+                    }
+                  >
+                    Active Pipeline
+                  </SectionLabel>
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                    {(
+                      [
+                        {
+                          key: "todo",
+                          label: "To Do",
+                          color: P.orange,
+                        },
+                        {
+                          key: "in_progress",
+                          label: "In Progress",
+                          color: P.orangeSoft,
+                        },
+                        {
+                          key: "in_review",
+                          label: "In Review",
+                          color: P.orangePale,
+                        },
+                      ] as const
+                    ).map((col) => {
+                      const colIssues = (issues ?? [])
+                        .filter((x) => x.status === col.key)
+                        .slice()
+                        .sort(
+                          (a, b) =>
+                            new Date(b.updatedAt).getTime() -
+                            new Date(a.updatedAt).getTime(),
+                        );
+                      return (
+                        <div
+                          key={col.key}
+                          className="rounded-xl border border-white/10 bg-white/[0.015] p-3"
+                        >
+                          <div className="mb-2 flex items-center justify-between">
+                            <span
+                              className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+                              style={{ color: col.color }}
+                            >
+                              {col.label}
+                            </span>
+                            <span
+                              className="rounded-md px-1.5 py-0.5 font-mono text-[10px] tabular-nums"
+                              style={{
+                                color: col.color,
+                                backgroundColor: `${col.color}18`,
+                              }}
+                            >
+                              {colIssues.length}
+                            </span>
+                          </div>
+                          <div className="space-y-1.5">
+                            {colIssues.slice(0, 3).map((issue) => {
+                              const assignee = issue.assigneeAgentId
+                                ? agentName(issue.assigneeAgentId)
+                                : null;
+                              const isLive = col.key === "in_progress";
+                              return (
+                                <Link
+                                  key={issue.id}
+                                  to={`/issues/${issue.identifier ?? issue.id}`}
+                                  className="block rounded-lg border border-white/5 bg-black/20 p-2.5 no-underline text-inherit transition-colors hover:border-orange-500/40"
+                                >
+                                  <p className="line-clamp-2 text-[12px] leading-snug text-neutral-100">
+                                    {issue.title}
+                                  </p>
+                                  <div className="mt-1.5 flex items-center justify-between gap-2">
+                                    <div className="flex min-w-0 items-center gap-1.5">
+                                      {assignee && (
+                                        <span className="truncate text-[10px] text-neutral-400">
+                                          {assignee.length > 10
+                                            ? assignee.slice(0, 10) + "…"
+                                            : assignee}
+                                        </span>
+                                      )}
+                                      <span className="shrink-0 font-mono text-[9px] text-neutral-500">
+                                        {timeAgo(issue.updatedAt)}
+                                      </span>
+                                    </div>
+                                    {isLive && (
+                                      <span className="flex shrink-0 items-center gap-1 text-[9px] font-medium text-emerald-400">
+                                        <span className="relative flex h-1.5 w-1.5">
+                                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                                        </span>
+                                        live
+                                      </span>
+                                    )}
+                                    {col.key === "in_review" &&
+                                      issue.priority === "critical" && (
+                                        <span className="shrink-0 rounded-full bg-orange-500/15 px-1.5 py-0.5 text-[9px] font-medium text-orange-300">
+                                          needs approval
+                                        </span>
+                                      )}
+                                  </div>
+                                </Link>
+                              );
+                            })}
+                            {colIssues.length === 0 && (
+                              <div className="py-3 text-center text-[10px] text-neutral-600">
+                                —
+                              </div>
+                            )}
+                            {colIssues.length > 3 && (
+                              <Link
+                                to="/issues"
+                                className="block rounded-md py-1 text-center text-[10px] text-neutral-500 no-underline hover:text-orange-300"
+                              >
+                                + {colIssues.length - 3} more
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <SectionLabel
+                    right={
+                      data.pendingApprovals + data.budgets.pendingApprovals >
+                      0 ? (
+                        <span className="rounded-full bg-orange-500/15 px-2 py-0.5 text-[10px] font-semibold text-orange-300">
+                          {data.pendingApprovals +
+                            data.budgets.pendingApprovals}{" "}
+                          pending
+                        </span>
+                      ) : undefined
+                    }
+                  >
+                    Your Approvals
+                  </SectionLabel>
+                  {data.pendingApprovals + data.budgets.pendingApprovals ===
+                  0 ? (
+                    <div className="rounded-xl border border-white/10 bg-white/[0.015] p-6 text-center">
+                      <ShieldCheck className="mx-auto mb-2 h-6 w-6 text-emerald-400/70" />
+                      <p className="text-[12px] text-neutral-300">
+                        All clear
+                      </p>
+                      <p className="mt-0.5 text-[11px] text-neutral-500">
+                        No approvals needed
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {analytics.unassignedHighCount > 0 && (
+                        <div className="rounded-xl border border-orange-500/30 bg-orange-500/[0.04] p-3">
+                          <div className="mb-2 inline-flex items-center gap-1 rounded-md bg-orange-500/20 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-orange-200">
+                            Triage
+                          </div>
+                          <p className="text-[13px] font-medium text-orange-50">
+                            {analytics.unassignedHighCount} high-priority tasks
+                            unassigned
+                          </p>
+                          <p className="mt-1 text-[11px] text-orange-200/70">
+                            Assign agents to unblock the queue.
+                          </p>
+                          <div className="mt-3 flex gap-2">
+                            <Link
+                              to="/issues"
+                              className="flex-1 rounded-md bg-orange-500 px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-wider text-white no-underline shadow-[0_4px_14px_0_rgba(249,115,22,0.35)] transition-colors hover:bg-orange-600"
+                            >
+                              Triage
+                            </Link>
+                            <Link
+                              to="/issues"
+                              className="flex-1 rounded-md border border-white/15 px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-wider text-neutral-200 no-underline transition-colors hover:border-white/25"
+                            >
+                              Review
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+
+                      {data.budgets.pendingApprovals > 0 && (
+                        <div className="rounded-xl border border-orange-500/30 bg-orange-500/[0.04] p-3">
+                          <div className="mb-2 inline-flex items-center gap-1 rounded-md bg-orange-500/20 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-orange-200">
+                            Budget
+                          </div>
+                          <p className="text-[13px] font-medium text-orange-50">
+                            {data.budgets.pendingApprovals} budget overrides
+                          </p>
+                          <p className="mt-1 text-[11px] text-orange-200/70">
+                            Agents requesting spend above policy threshold.
+                          </p>
+                          <div className="mt-3 flex gap-2">
+                            <Link
+                              to="/costs"
+                              className="flex-1 rounded-md bg-orange-500 px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-wider text-white no-underline shadow-[0_4px_14px_0_rgba(249,115,22,0.35)] transition-colors hover:bg-orange-600"
+                            >
+                              Approve
+                            </Link>
+                            <Link
+                              to="/costs"
+                              className="flex-1 rounded-md border border-white/15 px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-wider text-neutral-200 no-underline transition-colors hover:border-white/25"
+                            >
+                              Review
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+
+                      {data.pendingApprovals > 0 && (
+                        <div className="rounded-xl border border-orange-500/30 bg-orange-500/[0.04] p-3">
+                          <div className="mb-2 inline-flex items-center gap-1 rounded-md bg-orange-500/20 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-orange-200">
+                            Strategy
+                          </div>
+                          <p className="text-[13px] font-medium text-orange-50">
+                            {data.pendingApprovals} item
+                            {data.pendingApprovals === 1 ? "" : "s"} awaiting
+                            board review
+                          </p>
+                          <p className="mt-1 text-[11px] text-orange-200/70">
+                            Strategic decisions requiring your approval.
+                          </p>
+                          <div className="mt-3 flex gap-2">
+                            <Link
+                              to="/approvals"
+                              className="flex-1 rounded-md bg-orange-500 px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-wider text-white no-underline shadow-[0_4px_14px_0_rgba(249,115,22,0.35)] transition-colors hover:bg-orange-600"
+                            >
+                              Approve
+                            </Link>
+                            <Link
+                              to="/approvals"
+                              className="flex-1 rounded-md border border-white/15 px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-wider text-neutral-200 no-underline transition-colors hover:border-white/25"
+                            >
+                              Review
+                            </Link>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {/* ── Sending Accounts + Campaigns style — here: Agents + Projects ── */}
+            <section>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <CardFrame
+                  title="Agent Roster"
+                  right={
+                    <span className="text-[10px] text-neutral-500">
+                      {analytics.totalAgents} total
+                    </span>
+                  }
+                >
+                  <div className="space-y-1">
+                    {(agents ?? []).length === 0 ? (
+                      <p className="text-xs text-neutral-500">No agents yet.</p>
+                    ) : (
+                      (agents ?? []).slice(0, 6).map((a) => {
+                        const dot =
+                          a.status === "running"
+                            ? P.orange
+                            : a.status === "active"
+                              ? P.emerald
+                              : a.status === "paused"
+                                ? P.amberSoft
+                                : a.status === "error"
+                                  ? P.rose
+                                  : P.slate;
+                        const badge = {
+                          running: {
+                            text: "Healthy",
+                            color: "text-emerald-400",
+                          },
+                          active: {
+                            text: "Healthy",
+                            color: "text-emerald-400",
+                          },
+                          paused: {
+                            text: "Paused",
+                            color: "text-amber-300",
+                          },
+                          error: {
+                            text: "Error",
+                            color: "text-red-400",
+                          },
+                          idle: {
+                            text: "Idle",
+                            color: "text-neutral-400",
+                          },
+                        }[a.status ?? "idle"] ?? {
+                          text: a.status ?? "—",
+                          color: "text-neutral-400",
+                        };
+                        return (
+                          <Link
+                            key={a.id}
+                            to={`/agents/${a.id}`}
+                            className="flex items-center justify-between gap-3 rounded-lg px-2 py-2 no-underline text-inherit transition-colors hover:bg-white/[0.03]"
+                          >
+                            <div className="flex min-w-0 items-center gap-2.5">
+                              <span
+                                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                                style={{
+                                  backgroundColor: dot,
+                                  boxShadow: `0 0 6px ${dot}`,
+                                }}
+                              />
+                              <div className="min-w-0">
+                                <p className="truncate text-[13px] text-neutral-100">
+                                  {a.name}
+                                </p>
+                                <p className="truncate text-[10px] text-neutral-500">
+                                  {a.title ?? a.role ?? "Agent"}
+                                </p>
+                              </div>
+                            </div>
+                            <span
+                              className={`shrink-0 text-[11px] ${badge.color}`}
+                            >
+                              ◉ {badge.text}
+                            </span>
+                          </Link>
+                        );
+                      })
+                    )}
+                  </div>
+                </CardFrame>
+
+                <CardFrame
+                  title="Projects"
+                  right={
+                    <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
+                      {
+                        (projects ?? []).filter((p) => p.status === "active")
+                          .length
+                      }{" "}
+                      active
+                    </span>
+                  }
+                >
+                  <div className="space-y-1">
+                    {(projects ?? []).length === 0 ? (
+                      <p className="text-xs text-neutral-500">No projects.</p>
+                    ) : (
+                      (projects ?? []).slice(0, 6).map((p) => {
+                        const proj = analytics.projectStats.find(
+                          (x) => x.id === p.id,
+                        );
+                        const isActive = p.status === "active";
+                        return (
+                          <Link
+                            key={p.id}
+                            to={`/projects/${p.id}`}
+                            className="flex items-center justify-between gap-3 rounded-lg px-2 py-2 no-underline text-inherit transition-colors hover:bg-white/[0.03]"
+                          >
+                            <div className="min-w-0">
+                              <p className="truncate text-[13px] text-neutral-100">
+                                {p.name}
+                              </p>
+                              <p className="truncate text-[10px] text-neutral-500">
+                                {proj?.total ?? 0} issues · {proj?.done ?? 0}{" "}
+                                done
+                              </p>
+                            </div>
+                            <span
+                              className={`shrink-0 rounded-md px-2 py-0.5 text-[10px] font-medium ${
+                                isActive
+                                  ? "bg-emerald-500/10 text-emerald-400"
+                                  : "bg-amber-500/10 text-amber-300"
+                              }`}
+                            >
+                              {p.status ?? "active"}
+                            </span>
+                            <ArrowRight className="h-3 w-3 shrink-0 text-neutral-600" />
+                          </Link>
+                        );
+                      })
+                    )}
+                  </div>
+                </CardFrame>
+              </div>
+            </section>
+
+            <PluginSlotOutlet
+              slotTypes={["dashboardWidget"]}
+              context={{ companyId: selectedCompanyId }}
+              className="grid gap-3 md:grid-cols-2"
+              itemClassName="rounded-xl border border-white/10 bg-white/[0.015] p-4"
+            />
+
+            {/* ── Activity + Recent Tasks ── */}
+            <section>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                {recentActivity.length > 0 && (
+                  <CardFrame title="Recent Activity">
+                    <div className="-mx-1 divide-y divide-white/5">
+                      {recentActivity.map((event) => (
+                        <ActivityRow
+                          key={event.id}
+                          event={event}
+                          agentMap={agentMap}
+                          entityNameMap={entityNameMap}
+                          entityTitleMap={entityTitleMap}
+                          className={
+                            animatedActivityIds.has(event.id)
+                              ? "activity-row-enter"
+                              : undefined
+                          }
+                        />
+                      ))}
+                    </div>
+                  </CardFrame>
+                )}
+
+                <CardFrame title="Recent Tasks">
+                  {recentIssues.length === 0 ? (
+                    <p className="text-xs text-neutral-500">No tasks yet.</p>
+                  ) : (
+                    <div className="divide-y divide-white/5">
+                      {recentIssues.slice(0, 8).map((issue) => (
+                        <Link
+                          key={issue.id}
+                          to={`/issues/${issue.identifier ?? issue.id}`}
+                          className="flex items-center gap-3 px-1 py-2.5 no-underline text-inherit transition-colors hover:bg-white/[0.02]"
+                        >
+                          <StatusIcon status={issue.status} />
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-[13px] text-neutral-100">
+                              {issue.title}
+                            </p>
+                            <div className="mt-0.5 flex items-center gap-2">
+                              <span className="font-mono text-[10px] text-neutral-500">
+                                {issue.identifier ?? issue.id.slice(0, 8)}
+                              </span>
+                              {issue.assigneeAgentId &&
+                                (() => {
+                                  const name = agentName(issue.assigneeAgentId);
+                                  return name ? (
+                                    <Identity name={name} size="sm" />
+                                  ) : null;
+                                })()}
+                            </div>
+                          </div>
+                          <span className="shrink-0 text-[10px] text-neutral-500">
+                            {timeAgo(issue.updatedAt)}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </CardFrame>
+              </div>
+            </section>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}

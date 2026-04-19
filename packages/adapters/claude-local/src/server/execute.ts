@@ -53,10 +53,13 @@ async function buildSkillsDir(config: Record<string, unknown>): Promise<string> 
   );
   for (const entry of availableEntries) {
     if (!desiredNames.has(entry.key)) continue;
-    await fs.symlink(
-      entry.source,
-      path.join(target, entry.runtimeName),
-    );
+    // WINDOWS_SYMLINK_FIX: On Windows, symlinks require Developer Mode or admin privileges.
+    // Always use copy to avoid EPERM errors.
+    if (process.platform === "win32") {
+      await fs.cp(entry.source, path.join(target, entry.runtimeName), { recursive: true });
+    } else {
+      await fs.symlink(entry.source, path.join(target, entry.runtimeName));
+    }
   }
   return tmp;
 }

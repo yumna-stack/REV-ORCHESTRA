@@ -1,0 +1,1033 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "@/lib/router";
+import { useQuery } from "@tanstack/react-query";
+import { dashboardApi } from "../api/dashboard";
+import { activityApi } from "../api/activity";
+import { issuesApi } from "../api/issues";
+import { agentsApi } from "../api/agents";
+import { projectsApi } from "../api/projects";
+import { heartbeatsApi } from "../api/heartbeats";
+import { useCompany } from "../context/CompanyContext";
+import { useDialog } from "../context/DialogContext";
+import { useBreadcrumbs } from "../context/BreadcrumbContext";
+import { queryKeys } from "../lib/queryKeys";
+import { EmptyState } from "../components/EmptyState";
+import { StatusIcon } from "../components/StatusIcon";
+import { ActivityRow } from "../components/ActivityRow";
+import { Identity } from "../components/Identity";
+import { timeAgo } from "../lib/timeAgo";
+import { formatCents } from "../lib/utils";
+import {
+  Bot,
+  CircleDot,
+  DollarSign,
+  ShieldCheck,
+  LayoutDashboard,
+  PauseCircle,
+  Activity,
+  Radio,
+  Sparkles,
+  ArrowUpRight,
+} from "lucide-react";
+import { PageSkeleton } from "../components/PageSkeleton";
+import type { Agent, Issue } from "@paperclipai/shared";
+import { PluginSlotOutlet } from "@/plugins/slots";
+import { VennDiagram } from "../components/VennDiagram";
+
+/* ─── Revorchestra palette ─────────────────────────────────────────
+   Warm amber/orange primary, emerald success, cyan signal, violet review.
+   Kept local so the dashboard can own its visual identity without
+   polluting the global design tokens. */
+const RC = {
+  amber: "#f59e0b",
+  orange: "#f97316",
+  emerald: "#10b981",
+  cyan: "#22d3ee",
+  violet: "#a78bfa",
+  rose: "#f43f5e",
+  slate: "#64748b",
+};
+
+function getRecentIssues(issues: Issue[]): Issue[] {
+  return [...issues].sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
+}
+
+/* ─── Small inline widgets ─────────────────────────────────────── */
+
+function SectionLabel({
+  children,
+  accent,
+  right,
+}: {
+  children: React.ReactNode;
+  accent?: string;
+  right?: React.ReactNode;
+}) {
+  return (
+    <div className="mb-3 flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <span
+          className="h-1.5 w-1.5 rounded-full"
+          style={{
+            backgroundColor: accent ?? RC.amber,
+            boxShadow: `0 0 8px ${accent ?? RC.amber}`,
+          }}
+        />
+        <h2 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-400">
+          {children}
+        </h2>
+      </div>
+      {right}
+    </div>
+  );
+}
+
+function StatTile({
+  value,
+  label,
+  accent,
+  to,
+  description,
+}: {
+  value: string | number;
+  label: string;
+  accent?: string;
+  to?: string;
+  description?: React.ReactNode;
+}) {
+  const inner = (
+    <div className="group relative overflow-hidden rounded-xl border border-white/5 bg-gradient-to-b from-white/[0.03] to-transparent px-4 py-4 transition-colors hover:border-amber-500/30 hover:bg-amber-500/[0.02]">
+      <div
+        className="absolute left-0 top-0 h-[1px] w-10"
+        style={{ backgroundColor: accent ?? RC.amber }}
+      />
+      <p
+        className="font-mono text-3xl font-semibold tracking-tight tabular-nums text-neutral-50"
+        style={{ textShadow: `0 0 24px ${(accent ?? RC.amber)}22` }}
+      >
+        {value}
+      </p>
+      <p className="mt-1 text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+        {label}
+      </p>
+      {description && (
+        <div className="mt-2 text-[10px] text-neutral-500">{description}</div>
+      )}
+    </div>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className="no-underline text-inherit">
+        {inner}
+      </Link>
+    );
+  }
+  return inner;
+}
+
+function StatusBar({
+  segments,
+}: {
+  segments: { label: string; value: number; color: string }[];
+}) {
+  const total = segments.reduce((s, x) => s + x.value, 0) || 1;
+  return (
+    <div>
+      <div className="flex h-2 overflow-hidden rounded-full bg-white/[0.04]">
+        {segments.map((s) => (
+          <div
+            key={s.label}
+            title={`${s.label}: ${s.value}`}
+            className="transition-all"
+            style={{
+              width: `${(s.value / total) * 100}%`,
+              backgroundColor: s.color,
+              boxShadow: `inset 0 0 6px ${s.color}66`,
+            }}
+          />
+        ))}
+      </div>
+      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+        {segments.map((s) => (
+          <span
+            key={s.label}
+            className="flex items-center gap-1.5 text-[10px] text-neutral-400"
+          >
+            <span
+              className="h-1.5 w-1.5 rounded-full"
+              style={{ backgroundColor: s.color }}
+            />
+            {s.label}
+            <span className="font-mono text-neutral-500">{s.value}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AgentRosterRow({ agent }: { agent: Agent }) {
+  const dotColor =
+    agent.status === "running"
+      ? RC.cyan
+      : agent.status === "active"
+        ? RC.emerald
+        : agent.status === "paused"
+          ? RC.amber
+          : agent.status === "error"
+            ? RC.rose
+            : RC.slate;
+
+  return (
+    <Link
+      to={`/agents/${agent.id}`}
+      className="group flex items-center justify-between gap-3 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2.5 no-underline text-inherit transition-colors hover:border-amber-500/30 hover:bg-amber-500/[0.04]"
+    >
+      <div className="flex min-w-0 items-center gap-2.5">
+        <span className="relative flex h-2 w-2 shrink-0">
+          {agent.status === "running" && (
+            <span
+              className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+              style={{ backgroundColor: dotColor }}
+            />
+          )}
+          <span
+            className="relative inline-flex h-2 w-2 rounded-full"
+            style={{
+              backgroundColor: dotColor,
+              boxShadow: `0 0 8px ${dotColor}`,
+            }}
+          />
+        </span>
+        <div className="min-w-0">
+          <p className="truncate text-[13px] font-medium text-neutral-100">
+            {agent.name}
+          </p>
+          <p className="truncate text-[10px] text-neutral-500">
+            {agent.title ?? agent.role ?? "Agent"}
+          </p>
+        </div>
+      </div>
+      <span
+        className="rounded-full border px-1.5 py-0.5 text-[9px] uppercase tracking-wider"
+        style={{
+          color: dotColor,
+          borderColor: `${dotColor}44`,
+          backgroundColor: `${dotColor}12`,
+        }}
+      >
+        {agent.status}
+      </span>
+    </Link>
+  );
+}
+
+/* ─── Dashboard ────────────────────────────────────────────────── */
+
+export function Dashboard() {
+  const { selectedCompanyId, companies } = useCompany();
+  const { openOnboarding } = useDialog();
+  const { setBreadcrumbs } = useBreadcrumbs();
+  const [animatedActivityIds, setAnimatedActivityIds] = useState<Set<string>>(
+    new Set(),
+  );
+  const seenActivityIdsRef = useRef<Set<string>>(new Set());
+  const hydratedActivityRef = useRef(false);
+  const activityAnimationTimersRef = useRef<number[]>([]);
+
+  const { data: agents } = useQuery({
+    queryKey: queryKeys.agents.list(selectedCompanyId!),
+    queryFn: () => agentsApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  useEffect(() => {
+    setBreadcrumbs([{ label: "Dashboard" }]);
+  }, [setBreadcrumbs]);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: queryKeys.dashboard(selectedCompanyId!),
+    queryFn: () => dashboardApi.summary(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: activity } = useQuery({
+    queryKey: queryKeys.activity(selectedCompanyId!),
+    queryFn: () => activityApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: issues } = useQuery({
+    queryKey: queryKeys.issues.list(selectedCompanyId!),
+    queryFn: () => issuesApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: projects } = useQuery({
+    queryKey: queryKeys.projects.list(selectedCompanyId!),
+    queryFn: () => projectsApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const { data: runs } = useQuery({
+    queryKey: queryKeys.heartbeats(selectedCompanyId!),
+    queryFn: () => heartbeatsApi.list(selectedCompanyId!),
+    enabled: !!selectedCompanyId,
+  });
+
+  const recentIssues = issues ? getRecentIssues(issues) : [];
+  const recentActivity = useMemo(() => (activity ?? []).slice(0, 8), [activity]);
+
+  useEffect(() => {
+    for (const timer of activityAnimationTimersRef.current) {
+      window.clearTimeout(timer);
+    }
+    activityAnimationTimersRef.current = [];
+    seenActivityIdsRef.current = new Set();
+    hydratedActivityRef.current = false;
+    setAnimatedActivityIds(new Set());
+  }, [selectedCompanyId]);
+
+  useEffect(() => {
+    if (recentActivity.length === 0) return;
+    const seen = seenActivityIdsRef.current;
+    const currentIds = recentActivity.map((event) => event.id);
+    if (!hydratedActivityRef.current) {
+      for (const id of currentIds) seen.add(id);
+      hydratedActivityRef.current = true;
+      return;
+    }
+    const newIds = currentIds.filter((id) => !seen.has(id));
+    if (newIds.length === 0) {
+      for (const id of currentIds) seen.add(id);
+      return;
+    }
+    setAnimatedActivityIds((prev) => {
+      const next = new Set(prev);
+      for (const id of newIds) next.add(id);
+      return next;
+    });
+    for (const id of newIds) seen.add(id);
+    const timer = window.setTimeout(() => {
+      setAnimatedActivityIds((prev) => {
+        const next = new Set(prev);
+        for (const id of newIds) next.delete(id);
+        return next;
+      });
+      activityAnimationTimersRef.current =
+        activityAnimationTimersRef.current.filter((t) => t !== timer);
+    }, 980);
+    activityAnimationTimersRef.current.push(timer);
+  }, [recentActivity]);
+
+  useEffect(() => {
+    return () => {
+      for (const timer of activityAnimationTimersRef.current) {
+        window.clearTimeout(timer);
+      }
+    };
+  }, []);
+
+  const agentMap = useMemo(() => {
+    const map = new Map<string, Agent>();
+    for (const a of agents ?? []) map.set(a.id, a);
+    return map;
+  }, [agents]);
+
+  const entityNameMap = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const i of issues ?? [])
+      map.set(`issue:${i.id}`, i.identifier ?? i.id.slice(0, 8));
+    for (const a of agents ?? []) map.set(`agent:${a.id}`, a.name);
+    for (const p of projects ?? []) map.set(`project:${p.id}`, p.name);
+    return map;
+  }, [issues, agents, projects]);
+
+  const entityTitleMap = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const i of issues ?? []) map.set(`issue:${i.id}`, i.title);
+    return map;
+  }, [issues]);
+
+  const agentName = (id: string | null) => {
+    if (!id || !agents) return null;
+    return agents.find((a) => a.id === id)?.name ?? null;
+  };
+
+  /* ─── Derived venn inputs ──── */
+  const vennData = useMemo(() => {
+    const a = agents ?? [];
+    const i = issues ?? [];
+    const r = runs ?? [];
+
+    const running = a.filter((x) => x.status === "running").length;
+    const active = a.filter((x) => x.status === "active").length;
+    const paused = a.filter((x) => x.status === "paused").length;
+
+    const todo = i.filter((x) => x.status === "todo").length;
+    const inProgress = i.filter((x) => x.status === "in_progress").length;
+    const done = i.filter((x) => x.status === "done").length;
+    const inReview = i.filter((x) => x.status === "in_review").length;
+
+    const succeeded = r.filter((x) => x.status === "succeeded").length;
+    const failed = r.filter(
+      (x) => x.status === "failed" || x.status === "timed_out",
+    ).length;
+    const pending = r.filter(
+      (x) => x.status !== "succeeded" && x.status !== "failed" && x.status !== "timed_out",
+    ).length;
+
+    const assignedInProgress = i.filter(
+      (x) => x.status === "in_progress" && x.assigneeAgentId,
+    ).length;
+    const inProgressWithProject = i.filter(
+      (x) => x.status === "in_progress" && x.projectId,
+    ).length;
+    const assignedTodo = i.filter(
+      (x) => x.status === "todo" && x.assigneeAgentId,
+    ).length;
+
+    return {
+      agents: { running, active, paused },
+      issues: { todo, inProgress, done, inReview },
+      runs: { succeeded, failed, pending },
+      cross: { assignedInProgress, inProgressWithProject, assignedTodo },
+    };
+  }, [agents, issues, runs]);
+
+  if (!selectedCompanyId) {
+    if (companies.length === 0) {
+      return (
+        <EmptyState
+          icon={LayoutDashboard}
+          message="Welcome to Paperclip. Set up your first company and agent to get started."
+          action="Get Started"
+          onAction={openOnboarding}
+        />
+      );
+    }
+    return (
+      <EmptyState
+        icon={LayoutDashboard}
+        message="Create or select a company to view the dashboard."
+      />
+    );
+  }
+
+  if (isLoading) {
+    return <PageSkeleton variant="dashboard" />;
+  }
+
+  const hasNoAgents = agents !== undefined && agents.length === 0;
+
+  const rosterAgents = (agents ?? [])
+    .slice()
+    .sort((a, b) => {
+      const order = ["running", "active", "paused", "error", "idle"];
+      return (
+        order.indexOf(a.status ?? "idle") - order.indexOf(b.status ?? "idle")
+      );
+    })
+    .slice(0, 8);
+
+  const totalAgents = (agents ?? []).length;
+  const deployedAgents = (agents ?? []).filter(
+    (a) => a.status === "running" || a.status === "active",
+  ).length;
+
+  return (
+    <div className="relative min-h-full bg-gradient-to-b from-neutral-950 via-neutral-950 to-black text-neutral-100">
+      {/* Ambient amber glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-64 opacity-60"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 100% at 50% 0%, rgba(245,158,11,0.08), transparent 70%)",
+        }}
+      />
+
+      <div className="relative space-y-6 p-1">
+        {/* ── Hero / status strip ── */}
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/5 bg-gradient-to-r from-amber-500/[0.04] via-transparent to-transparent px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_#10b981]" />
+            </div>
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-neutral-400">
+                Paperclip Control Room
+              </p>
+              <p className="font-mono text-xs text-neutral-500">
+                Live · all agents nominal · {deployedAgents}/{totalAgents || 0} deployed
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-[11px] text-neutral-400">
+            <Radio className="h-3 w-3 text-amber-400" />
+            <span className="font-mono">
+              {new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
+            <span className="mx-1 text-neutral-700">│</span>
+            <Sparkles className="h-3 w-3 text-amber-400" />
+            <span>revorchestra · mainline</span>
+          </div>
+        </div>
+
+        {error && <p className="text-sm text-rose-400">{error.message}</p>}
+
+        {hasNoAgents && (
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3">
+            <div className="flex items-center gap-2.5">
+              <Bot className="h-4 w-4 shrink-0 text-amber-300" />
+              <p className="text-sm text-amber-100">You have no agents.</p>
+            </div>
+            <button
+              onClick={() =>
+                openOnboarding({ initialStep: 2, companyId: selectedCompanyId! })
+              }
+              className="shrink-0 rounded-md border border-amber-400/40 bg-amber-500/10 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-amber-200 transition-colors hover:bg-amber-500/20"
+            >
+              Create one
+            </button>
+          </div>
+        )}
+
+        {data && (
+          <>
+            {data.budgets.activeIncidents > 0 && (
+              <div className="flex items-start justify-between gap-3 rounded-xl border border-rose-500/25 bg-gradient-to-r from-rose-500/10 to-transparent px-4 py-3">
+                <div className="flex items-start gap-2.5">
+                  <PauseCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-300" />
+                  <div>
+                    <p className="text-sm font-medium text-rose-50">
+                      {data.budgets.activeIncidents} active budget incident
+                      {data.budgets.activeIncidents === 1 ? "" : "s"}
+                    </p>
+                    <p className="text-xs text-rose-100/70">
+                      {data.budgets.pausedAgents} agents paused ·{" "}
+                      {data.budgets.pausedProjects} projects paused ·{" "}
+                      {data.budgets.pendingApprovals} pending budget approvals
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  to="/costs"
+                  className="text-sm text-rose-100 underline underline-offset-2"
+                >
+                  Open budgets
+                </Link>
+              </div>
+            )}
+
+            {/* ── Metric tiles ── */}
+            <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+              <StatTile
+                accent={RC.amber}
+                value={
+                  data.agents.active +
+                  data.agents.running +
+                  data.agents.paused +
+                  data.agents.error
+                }
+                label="Agents Enabled"
+                to="/agents"
+                description={
+                  <span>
+                    <span className="text-cyan-300">{data.agents.running}</span>{" "}
+                    running ·{" "}
+                    <span className="text-amber-300">{data.agents.paused}</span>{" "}
+                    paused ·{" "}
+                    <span className="text-rose-300">{data.agents.error}</span>{" "}
+                    errors
+                  </span>
+                }
+              />
+              <StatTile
+                accent={RC.cyan}
+                value={data.tasks.inProgress}
+                label="Tasks In Progress"
+                to="/issues"
+                description={
+                  <span>
+                    {data.tasks.open} open · {data.tasks.blocked} blocked
+                  </span>
+                }
+              />
+              <StatTile
+                accent={RC.emerald}
+                value={formatCents(data.costs.monthSpendCents)}
+                label="Month Spend"
+                to="/costs"
+                description={
+                  <span>
+                    {data.costs.monthBudgetCents > 0
+                      ? `${data.costs.monthUtilizationPercent}% of ${formatCents(data.costs.monthBudgetCents)} budget`
+                      : "Unlimited budget"}
+                  </span>
+                }
+              />
+              <StatTile
+                accent={RC.orange}
+                value={data.pendingApprovals + data.budgets.pendingApprovals}
+                label="Pending Approvals"
+                to="/approvals"
+                description={
+                  <span>
+                    {data.budgets.pendingApprovals > 0
+                      ? `${data.budgets.pendingApprovals} budget overrides awaiting board`
+                      : "Awaiting board review"}
+                  </span>
+                }
+              />
+            </div>
+
+            {/* ── Three venn diagrams ── */}
+            <div>
+              <SectionLabel accent={RC.amber}>
+                Operational Overlap · Euler View
+              </SectionLabel>
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                <VennDiagram
+                  title="Agent Fleet"
+                  subtitle="Status distribution"
+                  segments={[
+                    {
+                      label: "Running",
+                      value: vennData.agents.running,
+                      color: RC.cyan,
+                    },
+                    {
+                      label: "Active",
+                      value: vennData.agents.active,
+                      color: RC.emerald,
+                    },
+                    {
+                      label: "Paused",
+                      value: vennData.agents.paused,
+                      color: RC.amber,
+                    },
+                  ]}
+                  intersectAB={Math.min(
+                    vennData.agents.running,
+                    vennData.agents.active,
+                  )}
+                  intersectAC={Math.min(
+                    vennData.agents.running,
+                    vennData.agents.paused,
+                  )}
+                  intersectBC={Math.min(
+                    vennData.agents.active,
+                    vennData.agents.paused,
+                  )}
+                  intersectAll={deployedAgents}
+                  footer={`${deployedAgents} agents currently deployed`}
+                />
+
+                <VennDiagram
+                  title="Issue Flow"
+                  subtitle="Pipeline membership"
+                  segments={[
+                    {
+                      label: "To Do",
+                      value: vennData.issues.todo,
+                      color: "#3b82f6",
+                    },
+                    {
+                      label: "In Progress",
+                      value: vennData.issues.inProgress,
+                      color: RC.violet,
+                    },
+                    {
+                      label: "Done",
+                      value: vennData.issues.done,
+                      color: RC.emerald,
+                    },
+                  ]}
+                  intersectAB={vennData.cross.assignedTodo}
+                  intersectBC={vennData.cross.assignedInProgress}
+                  intersectAC={vennData.issues.inReview}
+                  intersectAll={vennData.cross.inProgressWithProject}
+                  footer="Center: in-progress issues linked to a project"
+                />
+
+                <VennDiagram
+                  title="Run Outcomes"
+                  subtitle="Last 14 days"
+                  segments={[
+                    {
+                      label: "Succeeded",
+                      value: vennData.runs.succeeded,
+                      color: RC.emerald,
+                    },
+                    {
+                      label: "Failed",
+                      value: vennData.runs.failed,
+                      color: RC.rose,
+                    },
+                    {
+                      label: "Pending",
+                      value: vennData.runs.pending,
+                      color: RC.amber,
+                    },
+                  ]}
+                  intersectAll={
+                    vennData.runs.succeeded + vennData.runs.failed > 0
+                      ? Math.round(
+                          (vennData.runs.succeeded /
+                            (vennData.runs.succeeded + vennData.runs.failed)) *
+                            100,
+                        )
+                      : 0
+                  }
+                  footer="Center: success rate (%)"
+                />
+              </div>
+            </div>
+
+            {/* ── Main operations layout ── */}
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_minmax(0,1fr)]">
+              {/* Left: Agent Roster */}
+              <div>
+                <SectionLabel
+                  accent={RC.cyan}
+                  right={
+                    <span className="text-[10px] text-neutral-500">
+                      {totalAgents} total
+                    </span>
+                  }
+                >
+                  Agent Roster
+                </SectionLabel>
+                <div className="space-y-1.5">
+                  {rosterAgents.length === 0 ? (
+                    <div className="rounded-lg border border-white/5 p-4 text-xs text-neutral-500">
+                      No agents yet.
+                    </div>
+                  ) : (
+                    rosterAgents.map((a) => (
+                      <AgentRosterRow key={a.id} agent={a} />
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Middle: Active Pipeline kanban-lite */}
+              <div>
+                <SectionLabel
+                  accent={RC.amber}
+                  right={
+                    <span className="text-[10px] text-neutral-500">
+                      goal → task flow
+                    </span>
+                  }
+                >
+                  Active Pipeline
+                </SectionLabel>
+                <div className="grid grid-cols-3 gap-2">
+                  {(["todo", "in_progress", "in_review"] as const).map(
+                    (status) => {
+                      const col = (issues ?? []).filter(
+                        (i) => i.status === status,
+                      );
+                      const colorMap: Record<string, string> = {
+                        todo: "#3b82f6",
+                        in_progress: RC.violet,
+                        in_review: RC.amber,
+                      };
+                      const labelMap: Record<string, string> = {
+                        todo: "To Do",
+                        in_progress: "In Progress",
+                        in_review: "In Review",
+                      };
+                      return (
+                        <div
+                          key={status}
+                          className="rounded-lg border border-white/5 bg-white/[0.02] p-2"
+                        >
+                          <div className="mb-2 flex items-center justify-between">
+                            <span
+                              className="text-[10px] font-medium uppercase tracking-wider"
+                              style={{ color: colorMap[status] }}
+                            >
+                              {labelMap[status]}
+                            </span>
+                            <span className="font-mono text-[10px] text-neutral-500">
+                              {col.length}
+                            </span>
+                          </div>
+                          <div className="space-y-1.5">
+                            {col.slice(0, 3).map((issue) => (
+                              <Link
+                                key={issue.id}
+                                to={`/issues/${issue.identifier ?? issue.id}`}
+                                className="block rounded-md border border-white/5 bg-black/30 p-2 no-underline text-inherit transition-colors hover:border-amber-500/30"
+                              >
+                                <p className="line-clamp-2 text-[11px] leading-tight text-neutral-100">
+                                  {issue.title}
+                                </p>
+                                <div className="mt-1.5 flex items-center justify-between gap-1">
+                                  <span className="font-mono text-[9px] text-neutral-500">
+                                    {issue.identifier ?? issue.id.slice(0, 6)}
+                                  </span>
+                                  <span className="text-[9px] text-neutral-600">
+                                    {timeAgo(issue.updatedAt)}
+                                  </span>
+                                </div>
+                              </Link>
+                            ))}
+                            {col.length === 0 && (
+                              <div className="py-4 text-center text-[10px] text-neutral-600">
+                                —
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    },
+                  )}
+                </div>
+
+                <div className="mt-4">
+                  <SectionLabel accent={RC.violet}>
+                    Status Distribution
+                  </SectionLabel>
+                  <div className="rounded-lg border border-white/5 bg-white/[0.02] p-3">
+                    <StatusBar
+                      segments={[
+                        {
+                          label: "To Do",
+                          value: vennData.issues.todo,
+                          color: "#3b82f6",
+                        },
+                        {
+                          label: "In Progress",
+                          value: vennData.issues.inProgress,
+                          color: RC.violet,
+                        },
+                        {
+                          label: "In Review",
+                          value: vennData.issues.inReview,
+                          color: RC.amber,
+                        },
+                        {
+                          label: "Done",
+                          value: vennData.issues.done,
+                          color: RC.emerald,
+                        },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Throughput + Approvals */}
+              <div className="space-y-4">
+                <div>
+                  <SectionLabel
+                    accent={RC.emerald}
+                    right={
+                      <span className="text-[10px] text-neutral-500">
+                        this week
+                      </span>
+                    }
+                  >
+                    Throughput
+                  </SectionLabel>
+                  <div className="grid grid-cols-2 gap-2">
+                    <StatTile
+                      accent={RC.emerald}
+                      value={vennData.runs.succeeded}
+                      label="Runs succeeded"
+                    />
+                    <StatTile
+                      accent={RC.rose}
+                      value={vennData.runs.failed}
+                      label="Runs failed"
+                    />
+                    <StatTile
+                      accent={RC.cyan}
+                      value={vennData.issues.inProgress}
+                      label="In-flight tasks"
+                    />
+                    <StatTile
+                      accent={RC.amber}
+                      value={vennData.issues.done}
+                      label="Issues completed"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <SectionLabel
+                    accent={RC.orange}
+                    right={
+                      data.pendingApprovals + data.budgets.pendingApprovals >
+                      0 ? (
+                        <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-amber-300">
+                          {data.pendingApprovals + data.budgets.pendingApprovals}{" "}
+                          pending
+                        </span>
+                      ) : undefined
+                    }
+                  >
+                    Your Approvals
+                  </SectionLabel>
+
+                  {data.pendingApprovals + data.budgets.pendingApprovals ===
+                  0 ? (
+                    <div className="rounded-lg border border-white/5 bg-white/[0.02] p-4 text-center">
+                      <ShieldCheck className="mx-auto mb-2 h-5 w-5 text-emerald-400/70" />
+                      <p className="text-xs text-neutral-400">
+                        All clear · no approvals needed
+                      </p>
+                    </div>
+                  ) : (
+                    <Link
+                      to="/approvals"
+                      className="group block rounded-xl border border-amber-500/20 bg-gradient-to-b from-amber-500/10 to-amber-500/[0.02] p-4 no-underline text-inherit transition-colors hover:border-amber-400/40"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="rounded-md bg-amber-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-200">
+                          Review
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 text-amber-300 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </div>
+                      <p className="mt-2 text-sm font-medium text-amber-50">
+                        {data.pendingApprovals + data.budgets.pendingApprovals}{" "}
+                        item
+                        {data.pendingApprovals + data.budgets.pendingApprovals ===
+                        1
+                          ? ""
+                          : "s"}{" "}
+                        awaiting board decision
+                      </p>
+                      <p className="mt-1 text-[10px] text-amber-200/70">
+                        Open approvals queue →
+                      </p>
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <PluginSlotOutlet
+              slotTypes={["dashboardWidget"]}
+              context={{ companyId: selectedCompanyId }}
+              className="grid gap-4 md:grid-cols-2"
+              itemClassName="rounded-xl border border-white/5 bg-white/[0.02] p-4"
+            />
+
+            {/* ── Recent activity + tasks ── */}
+            <div className="grid gap-4 md:grid-cols-2">
+              {recentActivity.length > 0 && (
+                <div className="min-w-0">
+                  <SectionLabel accent={RC.cyan}>
+                    <span className="flex items-center gap-1.5">
+                      <Activity className="h-3 w-3" /> Signal Stream
+                    </span>
+                  </SectionLabel>
+                  <div className="overflow-hidden rounded-lg border border-white/5 bg-white/[0.02] divide-y divide-white/5">
+                    {recentActivity.map((event) => (
+                      <ActivityRow
+                        key={event.id}
+                        event={event}
+                        agentMap={agentMap}
+                        entityNameMap={entityNameMap}
+                        entityTitleMap={entityTitleMap}
+                        className={
+                          animatedActivityIds.has(event.id)
+                            ? "activity-row-enter"
+                            : undefined
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="min-w-0">
+                <SectionLabel accent={RC.amber}>
+                  <span className="flex items-center gap-1.5">
+                    <CircleDot className="h-3 w-3" /> Recent Tasks
+                  </span>
+                </SectionLabel>
+                {recentIssues.length === 0 ? (
+                  <div className="rounded-lg border border-white/5 bg-white/[0.02] p-4">
+                    <p className="text-sm text-neutral-500">No tasks yet.</p>
+                  </div>
+                ) : (
+                  <div className="overflow-hidden rounded-lg border border-white/5 bg-white/[0.02] divide-y divide-white/5">
+                    {recentIssues.slice(0, 8).map((issue) => (
+                      <Link
+                        key={issue.id}
+                        to={`/issues/${issue.identifier ?? issue.id}`}
+                        className="block px-4 py-3 text-sm no-underline text-inherit transition-colors hover:bg-amber-500/[0.04]"
+                      >
+                        <div className="flex items-start gap-2 sm:items-center sm:gap-3">
+                          <span className="shrink-0 sm:hidden">
+                            <StatusIcon status={issue.status} />
+                          </span>
+                          <span className="flex min-w-0 flex-1 flex-col gap-1 sm:contents">
+                            <span className="line-clamp-2 text-[13px] text-neutral-100 sm:order-2 sm:flex-1 sm:min-w-0 sm:line-clamp-none sm:truncate">
+                              {issue.title}
+                            </span>
+                            <span className="flex items-center gap-2 sm:order-1 sm:shrink-0">
+                              <span className="hidden sm:inline-flex">
+                                <StatusIcon status={issue.status} />
+                              </span>
+                              <span className="font-mono text-[10px] text-neutral-500">
+                                {issue.identifier ?? issue.id.slice(0, 8)}
+                              </span>
+                              {issue.assigneeAgentId &&
+                                (() => {
+                                  const name = agentName(issue.assigneeAgentId);
+                                  return name ? (
+                                    <span className="hidden sm:inline-flex">
+                                      <Identity name={name} size="sm" />
+                                    </span>
+                                  ) : null;
+                                })()}
+                              <span className="text-[10px] text-neutral-600 sm:hidden">
+                                &middot;
+                              </span>
+                              <span className="shrink-0 text-[10px] text-neutral-500 sm:order-last">
+                                {timeAgo(issue.updatedAt)}
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between border-t border-white/5 pt-3 text-[10px] text-neutral-600">
+              <span className="font-mono">
+                paperclip · control-room · revorchestra-theme
+              </span>
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1">
+                  <DollarSign className="h-3 w-3" />
+                  {formatCents(data.costs.monthSpendCents)}
+                </span>
+                <span>
+                  {(agents ?? []).length} agents · {(issues ?? []).length} issues
+                </span>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
