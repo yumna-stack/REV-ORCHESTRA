@@ -189,17 +189,12 @@ export default function ServiceFlow() {
               <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(232,101,10,0.10) 0%, transparent 70%)" }} />
 
               <div className="relative z-10">
-                {/* Stage number + icon + timeline tag */}
-                <div className="flex items-start justify-between mb-5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-accent-orange/10 border border-accent-orange/25 flex items-center justify-center text-accent-orange">
-                      {s.icon}
-                    </div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[rgba(255,255,255,0.4)]">{s.tag}</span>
+                {/* Icon + timeline tag */}
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-lg bg-accent-orange/10 border border-accent-orange/25 flex items-center justify-center text-accent-orange">
+                    {s.icon}
                   </div>
-                  <span className="text-[36px] font-medium text-[rgba(255,255,255,0.12)] leading-none" style={{ fontFamily: "var(--font-family-heading)" }}>
-                    {s.n}
-                  </span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[rgba(255,255,255,0.4)]">{s.tag}</span>
                 </div>
 
                 {/* Title */}
