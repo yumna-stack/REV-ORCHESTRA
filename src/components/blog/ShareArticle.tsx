@@ -78,6 +78,7 @@ export default function ShareArticle({ title }: { title: string }) {
         ))}
         <motion.button
           type="button"
+          suppressHydrationWarning
           onClick={handleCopy}
           whileHover={{ scale: 1.08, y: -2 }}
           whileTap={{ scale: 0.95 }}

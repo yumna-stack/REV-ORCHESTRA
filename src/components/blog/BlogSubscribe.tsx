@@ -40,6 +40,7 @@ export default function BlogSubscribe() {
             onChange={(e) => setFirstName(e.target.value)}
             placeholder="First name"
             className={inputClass}
+            suppressHydrationWarning
           />
           <input
             type="text"
@@ -47,6 +48,7 @@ export default function BlogSubscribe() {
             onChange={(e) => setLastName(e.target.value)}
             placeholder="Last name"
             className={inputClass}
+            suppressHydrationWarning
           />
           <input
             type="email"
@@ -55,6 +57,7 @@ export default function BlogSubscribe() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email*"
             className={inputClass}
+            suppressHydrationWarning
           />
           <input
             type="text"
@@ -62,9 +65,11 @@ export default function BlogSubscribe() {
             onChange={(e) => setReferral(e.target.value)}
             placeholder="How did you hear about Rev Orchestra?"
             className={inputClass}
+            suppressHydrationWarning
           />
           <motion.button
             type="submit"
+            suppressHydrationWarning
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="mt-1 px-6 py-3 text-sm font-medium text-white rounded-xl uppercase tracking-wider transition-all"

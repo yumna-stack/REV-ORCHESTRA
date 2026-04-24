@@ -34,6 +34,9 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
   const rafRef = useRef<number | null>(null);
   const playingRef = useRef<boolean>(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const scrubbingRef = useRef<boolean>(false);
+  const wasPlayingBeforeScrub = useRef<boolean>(false);
 
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -105,15 +108,20 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
     rafRef.current = requestAnimationFrame(tick);
   };
 
+  const pausePlayback = () => {
+    if (!playingRef.current) return;
+    elapsedRef.current =
+      elapsedRef.current + (performance.now() - startRef.current);
+    window.speechSynthesis.cancel();
+    playingRef.current = false;
+    setPlaying(false);
+    stopRaf();
+  };
+
   const handlePlayPause = () => {
     if (!supported) return;
     if (playingRef.current) {
-      window.speechSynthesis.cancel();
-      // Freeze current elapsed
-      elapsedRef.current = elapsedRef.current + (performance.now() - startRef.current);
-      playingRef.current = false;
-      setPlaying(false);
-      stopRaf();
+      pausePlayback();
       return;
     }
     if (elapsedRef.current >= totalMs()) elapsedRef.current = 0;
@@ -123,12 +131,7 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
 
   const handleSkip = (deltaSec: number) => {
     const wasPlaying = playingRef.current;
-    if (wasPlaying) {
-      elapsedRef.current = elapsedRef.current + (performance.now() - startRef.current);
-      window.speechSynthesis.cancel();
-      playingRef.current = false;
-      stopRaf();
-    }
+    if (wasPlaying) pausePlayback();
     elapsedRef.current = Math.max(
       0,
       Math.min(totalMs(), elapsedRef.current + deltaSec * 1000)
@@ -137,55 +140,74 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
     if (wasPlaying) speakFromElapsed(true);
   };
 
+  const seekToFraction = (frac: number) => {
+    const clamped = Math.max(0, Math.min(1, frac));
+    elapsedRef.current = clamped * totalMs();
+    setElapsedMs(elapsedRef.current);
+  };
+
+  const getFractionFromEvent = (clientX: number): number => {
+    const el = pillRef.current;
+    if (!el) return 0;
+    const rect = el.getBoundingClientRect();
+    return (clientX - rect.left) / rect.width;
+  };
+
+  const handleScrubStart = (e: React.PointerEvent) => {
+    if (!started) return;
+    // Don't scrub if the user clicked a control button
+    const target = e.target as HTMLElement;
+    if (target.closest("[data-control]")) return;
+    e.preventDefault();
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    scrubbingRef.current = true;
+    wasPlayingBeforeScrub.current = playingRef.current;
+    if (playingRef.current) pausePlayback();
+    seekToFraction(getFractionFromEvent(e.clientX));
+  };
+
+  const handleScrubMove = (e: React.PointerEvent) => {
+    if (!scrubbingRef.current) return;
+    seekToFraction(getFractionFromEvent(e.clientX));
+  };
+
+  const handleScrubEnd = (e: React.PointerEvent) => {
+    if (!scrubbingRef.current) return;
+    scrubbingRef.current = false;
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {}
+    if (wasPlayingBeforeScrub.current) speakFromElapsed(true);
+  };
+
   const handleSpeed = (next: number) => {
     setSpeedOpen(false);
-    // Keep elapsed proportional so progress stays visually consistent
-    if (playingRef.current) {
-      elapsedRef.current = elapsedRef.current + (performance.now() - startRef.current);
-      window.speechSynthesis.cancel();
-      playingRef.current = false;
-      stopRaf();
-    }
+    const wasPlaying = playingRef.current;
+    if (wasPlaying) pausePlayback();
     const oldTotal = totalMs();
     const frac = oldTotal > 0 ? elapsedRef.current / oldTotal : 0;
     setRate(next);
-    // recompute elapsed for new rate
     queueMicrotask(() => {
       elapsedRef.current = frac * (baseDurationRef.current / next);
       setElapsedMs(elapsedRef.current);
-      if (playing) speakFromElapsed(true);
+      if (wasPlaying) speakFromElapsed(true);
     });
   };
 
   const handleMute = () => {
-    setMuted((m) => {
-      const next = !m;
-      if (playingRef.current) {
-        // Restart from current position with new volume
-        elapsedRef.current =
-          elapsedRef.current + (performance.now() - startRef.current);
-        window.speechSynthesis.cancel();
-        playingRef.current = false;
-        stopRaf();
-        // Use a flag-bearing variable to avoid reading stale state inside speakFromElapsed
-        setTimeout(() => {
-          // speakFromElapsed reads `muted` via closure; setState is async, so force it
-        }, 0);
-      }
-      return next;
-    });
+    const wasPlaying = playingRef.current;
+    const nextMuted = !muted;
+    if (wasPlaying) pausePlayback();
+    setMuted(nextMuted);
+    if (wasPlaying) {
+      queueMicrotask(() => speakFromElapsed(true));
+    }
   };
-
-  // Restart playback with new mute state after state updates
-  useEffect(() => {
-    if (!playingRef.current) return;
-    // no-op; speakFromElapsed reads current `muted` via closure when called next
-  }, [muted]);
 
   useEffect(() => {
     if (!speedOpen) return;
-    const onDocClick = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setSpeedOpen(false);
+    const onDocClick = (ev: MouseEvent) => {
+      if (!rootRef.current?.contains(ev.target as Node)) setSpeedOpen(false);
     };
     document.addEventListener("mousedown", onDocClick);
     return () => document.removeEventListener("mousedown", onDocClick);
@@ -210,6 +232,7 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
       >
         <motion.button
           type="button"
+          suppressHydrationWarning
           onClick={handlePlayPause}
           whileHover={{ scale: 1.005 }}
           whileTap={{ scale: 0.99 }}
@@ -240,7 +263,7 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
     );
   }
 
-  // PLAYING / PAUSED state — full controls
+  // PLAYING / PAUSED state — full controls (scrub-enabled)
   return (
     <div
       ref={rootRef}
@@ -248,24 +271,44 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
       aria-label={`Audio narration: ${title}`}
     >
       <motion.div
+        ref={pillRef}
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.25 }}
-        className="relative flex items-center gap-1 px-4 py-2 rounded-full overflow-hidden"
+        onPointerDown={handleScrubStart}
+        onPointerMove={handleScrubMove}
+        onPointerUp={handleScrubEnd}
+        onPointerCancel={handleScrubEnd}
+        className="relative flex items-center gap-1 px-4 py-2 rounded-full overflow-hidden cursor-pointer select-none"
         style={{
           backgroundColor: "#0B1544",
           width: "100%",
           maxWidth: "720px",
+          touchAction: "none",
         }}
+        role="slider"
+        aria-label="Seek"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(progressPct)}
       >
         {/* Progress fill */}
         <span
           className="absolute left-0 top-0 bottom-0 bg-white/10 pointer-events-none"
-          style={{ width: `${progressPct}%`, transition: "width 120ms linear" }}
+          style={{ width: `${progressPct}%`, transition: scrubbingRef.current ? "none" : "width 120ms linear" }}
+        />
+        {/* Scrub handle */}
+        <span
+          className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white pointer-events-none shadow-[0_0_0_3px_rgba(255,255,255,0.15)]"
+          style={{
+            left: `calc(${progressPct}% - 6px)`,
+            transition: scrubbingRef.current ? "none" : "left 120ms linear",
+          }}
         />
 
         {/* Skip back 15s */}
         <IconButton
+          dataControl
           onClick={() => handleSkip(-15)}
           ariaLabel="Skip back 15 seconds"
         >
@@ -293,6 +336,7 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
 
         {/* Play / Pause */}
         <IconButton
+          dataControl
           onClick={handlePlayPause}
           ariaLabel={playing ? "Pause" : "Play"}
         >
@@ -310,6 +354,7 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
 
         {/* Skip forward 15s */}
         <IconButton
+          dataControl
           onClick={() => handleSkip(15)}
           ariaLabel="Skip forward 15 seconds"
         >
@@ -336,18 +381,19 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
         </IconButton>
 
         {/* Time */}
-        <span className="relative z-10 text-white text-sm font-medium tabular-nums ml-2 mr-1">
+        <span className="relative z-10 text-white text-sm font-medium tabular-nums ml-2 mr-1 pointer-events-none">
           {elapsedDisplay} / {totalDisplay}
         </span>
 
-        {/* Dot */}
-        <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-white/80 shrink-0" />
-
         {/* Spacer */}
-        <span className="relative z-10 flex-1" />
+        <span className="relative z-10 flex-1 pointer-events-none" />
 
         {/* Volume / Mute */}
-        <IconButton onClick={handleMute} ariaLabel={muted ? "Unmute" : "Mute"}>
+        <IconButton
+          dataControl
+          onClick={handleMute}
+          ariaLabel={muted ? "Unmute" : "Mute"}
+        >
           {muted ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="white" stroke="white" />
@@ -366,6 +412,8 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
         {/* Speed */}
         <button
           type="button"
+          data-control
+          suppressHydrationWarning
           onClick={() => setSpeedOpen((v) => !v)}
           aria-label="Playback speed"
           aria-haspopup="menu"
@@ -393,6 +441,7 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
                 key={s}
                 type="button"
                 role="menuitem"
+                suppressHydrationWarning
                 onClick={() => handleSpeed(s)}
                 className={`flex items-center justify-between gap-4 px-4 py-2 text-sm transition-colors ${
                   active
@@ -428,16 +477,24 @@ function IconButton({
   onClick,
   ariaLabel,
   children,
+  dataControl,
 }: {
   onClick: () => void;
   ariaLabel: string;
   children: React.ReactNode;
+  dataControl?: boolean;
 }) {
   return (
     <button
       type="button"
-      onClick={onClick}
+      suppressHydrationWarning
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      onPointerDown={(e) => e.stopPropagation()}
       aria-label={ariaLabel}
+      {...(dataControl ? { "data-control": "" } : {})}
       className="relative z-10 flex items-center justify-center w-9 h-9 rounded-full text-white hover:bg-white/10 transition-colors shrink-0"
     >
       {children}
