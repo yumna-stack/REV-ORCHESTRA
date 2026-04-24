@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Benefits", href: "/#stats" },
   { label: "Services", href: "/#agents" },
   { label: "How It Works", href: "/#how-it-works" },
+  { label: "Blog", href: "/blogs" },
 ];
 
 const resourceLinks = [
@@ -23,8 +24,6 @@ const resourceLinks = [
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -38,17 +37,6 @@ export default function Navigation() {
 
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false); }, [pathname]);
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setResourcesOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
     <motion.nav
@@ -76,23 +64,25 @@ export default function Navigation() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         style={{ borderWidth: 1, borderStyle: "solid", overflow: "visible", WebkitBackdropFilter: scrolled ? "blur(16px)" : "blur(0px)" }}
       >
-      {/* Logo */}
-      <Link href="/" className="flex items-center gap-2.5" onClick={playClickSound}>
-        <motion.div
-          className="w-8 h-8 rounded-lg bg-accent-orange flex items-center justify-center"
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          whileTap={{ scale: 0.9 }}
-          transition={{ type: "spring", stiffness: 400, damping: 15 }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-          </svg>
-        </motion.div>
-        <span className="font-semibold text-base" style={{ color: "var(--text)" }}>Rev Orchestra</span>
+      {/* Wordmark — also resets Orchestrator Mode toggle to ON */}
+      <Link
+        href="/"
+        className="flex items-center"
+        onClick={(e) => {
+          playClickSound();
+          // If already on home, prevent route change, scroll to top, reset toggle
+          if (pathname === "/") {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+          window.dispatchEvent(new CustomEvent("revorchestra:orchestrator-on"));
+        }}
+      >
+        <span className="font-semibold text-base tracking-tight" style={{ color: "var(--text)" }}>Rev Orchestra</span>
       </Link>
 
-      {/* Center Pill Nav */}
-      <div className="hidden md:flex items-center gap-1 backdrop-blur-xl rounded-full px-2 py-1.5" style={{ backgroundColor: "var(--surface)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--border)" }}>
+      {/* Center Pill Nav — absolutely positioned so it's truly viewport-centered */}
+      <div className="hidden md:flex items-center gap-6 backdrop-blur-xl rounded-full px-6 py-2 absolute left-1/2 -translate-x-1/2" style={{ backgroundColor: "var(--surface)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--border)" }}>
         {navLinks.map((link) => (
             <a
               key={link.label}
@@ -104,57 +94,12 @@ export default function Navigation() {
                   document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className="px-4 py-2 text-sm rounded-full transition-all duration-300 nav-link"
+              className="px-3 py-2 text-sm rounded-full transition-all duration-300 nav-link whitespace-nowrap"
             >
               {link.label}
             </a>
           ))}
 
-        {/* Resources Dropdown */}
-        <div ref={dropdownRef} className="relative">
-          <button
-            onClick={() => setResourcesOpen(!resourcesOpen)}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm rounded-full transition-all duration-300 nav-link"
-          >
-            Resources
-            <motion.svg
-              width="10" height="10" viewBox="0 0 10 10" fill="none"
-              animate={{ rotate: resourcesOpen ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <path d="M2 4l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </motion.svg>
-          </button>
-
-          <AnimatePresence>
-            {resourcesOpen && (
-              <motion.div
-                className="absolute top-full right-0 mt-2 w-48 bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] rounded-xl overflow-hidden shadow-2xl"
-                initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {resourceLinks.map((link, i) => (
-                  <motion.div
-                    key={link.label}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05, duration: 0.2 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setResourcesOpen(false)}
-                      className="block px-4 py-3 text-sm text-[rgba(255,255,255,0.6)] hover:text-white hover:bg-[rgba(255,255,255,0.05)] transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
       </div>
 
       {/* CTA Button */}
@@ -184,7 +129,7 @@ export default function Navigation() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="absolute top-full left-0 right-0 bg-[rgb(14,15,17)] border-b border-[rgba(255,255,255,0.06)] p-6 md:hidden"
+            className="absolute top-full left-0 right-0 bg-[rgb(0, 0, 0)] border-b border-[rgba(255,255,255,0.06)] p-6 md:hidden"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

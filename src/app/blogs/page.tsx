@@ -3,207 +3,158 @@
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Section, Badge, PageHero, CTAButton } from "@/components/PageWrapper";
-import { Reveal, StaggerContainer, StaggerItem, fadeUp, fadeLeft, fadeRight, popIn, scaleUp } from "@/components/motion";
-import { StaggerGrid, GridItem } from "@/components/PageWrapper";
-
-const featuredBlog = {
-  slug: "we-can-build-for-you",
-  title: "We Can Build For You",
-  excerpt:
-    "Experts from CRYPS Network can understand your crypto requirements and build custom blockchain solutions that scale with your business.",
-  image:
-    "linear-gradient(135deg, rgba(232,86,0,0.2) 0%, rgba(152,151,255,0.15) 50%, rgba(14,15,17,1) 100%)",
-};
+import { PageHero } from "@/components/PageWrapper";
+import { Reveal, popIn } from "@/components/motion";
 
 const blogs = [
   {
-    slug: "understanding-defi-protocols",
-    title: "Understanding DeFi Protocols",
+    slug: "outbound-2026-gtm-systems-problem",
+    title: "Outbound in 2026 Is Not a Channel Problem. It Is a GTM Systems Problem.",
     excerpt:
-      "A deep dive into how decentralized finance protocols work and what they mean for the future of banking.",
-    tag: "DeFi",
-  },
-  {
-    slug: "cross-chain-bridges-explained",
-    title: "Cross Chain Bridges Explained",
-    excerpt:
-      "How cross chain bridges enable seamless asset transfers between different blockchain networks.",
-    tag: "Infrastructure",
-  },
-  {
-    slug: "nft-marketplaces-2026",
-    title: "NFT Marketplaces in 2026",
-    excerpt:
-      "The evolution of NFT marketplaces and new trends shaping digital asset ownership this year.",
-    tag: "NFTs",
-  },
-  {
-    slug: "smart-contract-security",
-    title: "Smart Contract Security",
-    excerpt:
-      "Best practices and common vulnerabilities every developer should know when building smart contracts.",
-    tag: "Security",
-  },
-  {
-    slug: "ethereum-layer2-landscape",
-    title: "Ethereum Layer 2 Landscape",
-    excerpt:
-      "Comparing rollups, sidechains, and state channels in the Ethereum scaling ecosystem.",
-    tag: "Ethereum",
-  },
-  {
-    slug: "ai-meets-blockchain",
-    title: "AI Meets Blockchain",
-    excerpt:
-      "How artificial intelligence is transforming on chain analytics, trading strategies, and protocol governance.",
-    tag: "AI",
+      "The real shift in 2026: outbound is no longer judged one message at a time. It is being judged as a system — timing, signal arbitration, deliverability, and AI all working as one decision layer.",
+    tag: "GTM Strategy",
+    date: "Apr 24, 2026",
+    readTime: "8 min read",
   },
 ];
 
 export default function BlogsPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-black">
       <Navigation />
 
       {/* Hero */}
       <PageHero
         badge="Blog"
-        title="Crypto Reads"
-        subtitle="Learn about every update from the crypto world. Insights, tutorials, and deep dives into blockchain technology."
+        title="GTM Reads"
+        subtitle="Deep dives into AI-orchestrated GTM, signal-led outbound, agent architecture, and founder strategy. No fluff, no SEO filler."
       />
 
-      {/* Featured Blog Card */}
-      <section className="py-16">
+      {/* Vertical card grid — centered when fewer than 3 posts */}
+      <section className="pb-28 pt-4">
         <div className="max-w-[1200px] mx-auto px-5">
-          <Reveal variants={popIn} delay={0.2}>
-            <a href={`/blogs/${featuredBlog.slug}`} className="block group">
-              <motion.div
-                whileHover={{ y: -4, scale: 1.01 }}
-                className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  {/* Image area */}
-                  <div
-                    className="w-full aspect-[16/10] lg:aspect-auto lg:min-h-[360px] relative overflow-hidden"
-                    style={{ background: featuredBlog.image }}
-                  >
-                    {/* Decorative elements */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="relative">
-                        <motion.div
-                          animate={{ scale: [1, 1.08, 1] }}
-                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                          className="w-40 h-40 rounded-full border border-[rgba(255,255,255,0.06)] flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity group-hover:scale-110 duration-700"
-                        >
-                          <motion.div
-                            animate={{ scale: [1, 1.12, 1] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-                            className="w-24 h-24 rounded-full border border-[rgba(255,255,255,0.08)] flex items-center justify-center"
-                          >
-                            <motion.div
-                              animate={{ scale: [1, 1.2, 1] }}
-                              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-                              className="w-10 h-10 rounded-full bg-accent-orange/20"
-                            />
-                          </motion.div>
-                        </motion.div>
-                        {/* Floating dots */}
-                        <motion.div
-                          animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
-                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                          className="absolute -top-4 -right-4 w-3 h-3 rounded-full bg-[#9897FF]/30"
-                        />
-                        <motion.div
-                          animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.7, 0.4] }}
-                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                          className="absolute -bottom-6 -left-2 w-2 h-2 rounded-full bg-accent-orange/40"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-10 lg:p-12 flex flex-col justify-center">
-                    <span className="inline-flex items-center gap-2 text-xs text-accent-orange uppercase tracking-wider font-medium mb-4">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
-                      Featured
-                    </span>
-                    <h2 className="text-[clamp(24px,3vw,36px)] font-semibold text-white mb-4 leading-[120%] group-hover:text-accent-orange transition-colors">
-                      {featuredBlog.title}
-                    </h2>
-                    <p className="text-base text-[rgba(255,255,255,0.45)] leading-[170%] mb-8 max-w-[440px]">
-                      {featuredBlog.excerpt}
-                    </p>
-                    <div>
-                      <span className="inline-flex items-center gap-2 px-6 py-3 text-white text-sm font-medium uppercase tracking-wider rounded-full group-hover:bg-[rgb(22,22,26)] transition-all" style={{ backgroundColor: "rgb(14,14,16)", border: "1px solid rgb(60,50,42)" }}>
-                        Learn More
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </a>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Blog Grid - 3x2 */}
-      <section className="pb-28">
-        <div className="max-w-[1200px] mx-auto px-5">
-          <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            className={`grid gap-6 ${
+              blogs.length === 1
+                ? "grid-cols-1 max-w-[420px] mx-auto"
+                : blogs.length === 2
+                ? "grid-cols-1 md:grid-cols-2 max-w-[880px] mx-auto"
+                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            }`}
+          >
             {blogs.map((blog, i) => (
-              <GridItem key={blog.slug}>
+              <Reveal key={blog.slug} variants={popIn} delay={0.1 + i * 0.08}>
                 <a href={`/blogs/${blog.slug}`} className="block group h-full">
                   <motion.div
-                    whileHover={{ y: -4 }}
-                    className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] overflow-hidden hover:border-[rgba(232,86,0,0.2)] transition-all duration-300 h-full flex flex-col"
+                    whileHover={{ y: -6 }}
+                    className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] overflow-hidden hover:border-[rgba(232,86,0,0.25)] transition-all duration-300 h-full flex flex-col"
                   >
                     {/* Card image/placeholder */}
                     <div
-                      className="w-full aspect-[16/10] relative overflow-hidden"
+                      className="w-full aspect-[4/3] relative overflow-hidden"
                       style={{
-                        background: `linear-gradient(135deg, ${
-                          i % 2 === 0
-                            ? "rgba(232,86,0,0.1) 0%, rgba(14,15,17,0.8) 100%"
-                            : "rgba(152,151,255,0.1) 0%, rgba(14,15,17,0.8) 100%"
-                        })`,
+                        background:
+                          "linear-gradient(135deg, rgba(232,86,0,0.18) 0%, rgba(152,151,255,0.12) 55%, rgba(14,15,17,1) 100%)",
                       }}
                     >
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-full border border-[rgba(255,255,255,0.06)] flex items-center justify-center opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">
-                          <div className="w-8 h-8 rounded-full border border-[rgba(255,255,255,0.08)]" />
+                        <div className="relative">
+                          <motion.div
+                            animate={{ scale: [1, 1.08, 1] }}
+                            transition={{
+                              duration: 3,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                            className="w-28 h-28 rounded-full border border-[rgba(255,255,255,0.08)] flex items-center justify-center opacity-40 group-hover:opacity-70 transition-opacity duration-500"
+                          >
+                            <motion.div
+                              animate={{ scale: [1, 1.12, 1] }}
+                              transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "easeInOut",
+                                delay: 0.3,
+                              }}
+                              className="w-16 h-16 rounded-full border border-[rgba(255,255,255,0.1)] flex items-center justify-center"
+                            >
+                              <motion.div
+                                animate={{ scale: [1, 1.2, 1] }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                  delay: 0.6,
+                                }}
+                                className="w-6 h-6 rounded-full bg-accent-orange/30"
+                              />
+                            </motion.div>
+                          </motion.div>
+                          <motion.div
+                            animate={{
+                              scale: [1, 1.3, 1],
+                              opacity: [0.3, 0.6, 0.3],
+                            }}
+                            transition={{
+                              duration: 2.5,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                            className="absolute -top-3 -right-3 w-2.5 h-2.5 rounded-full bg-[#9897FF]/40"
+                          />
+                          <motion.div
+                            animate={{
+                              scale: [1, 1.3, 1],
+                              opacity: [0.4, 0.7, 0.4],
+                            }}
+                            transition={{
+                              duration: 2.5,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                              delay: 0.5,
+                            }}
+                            className="absolute -bottom-4 -left-2 w-2 h-2 rounded-full bg-accent-orange/50"
+                          />
                         </div>
                       </div>
                     </div>
 
                     {/* Card content */}
                     <div className="p-6 flex flex-col flex-1">
-                      {/* Tag */}
-                      <span className="inline-flex self-start items-center px-3 py-1 rounded-full bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.06)] text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-wider mb-4">
+                      <span className="inline-flex self-start items-center px-3 py-1 rounded-full bg-[rgba(232,86,0,0.08)] border border-[rgba(232,86,0,0.2)] text-[11px] text-accent-orange uppercase tracking-wider mb-4 font-medium">
                         {blog.tag}
                       </span>
-                      <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-accent-orange transition-colors">
+                      <h3 className="text-lg font-semibold text-white mb-3 leading-[130%] group-hover:text-accent-orange transition-colors">
                         {blog.title}
                       </h3>
-                      <p className="text-sm text-[rgba(255,255,255,0.4)] leading-[170%] mb-5 flex-1">
+                      <p className="text-sm text-[rgba(255,255,255,0.45)] leading-[170%] mb-5 flex-1">
                         {blog.excerpt}
                       </p>
-                      <span className="inline-flex items-center gap-2 text-sm font-medium text-accent-orange">
-                        Read More
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </span>
+                      <div className="flex items-center justify-between pt-4 border-t border-[rgba(255,255,255,0.06)]">
+                        <div className="flex items-center gap-2 text-xs text-[rgba(255,255,255,0.4)]">
+                          <span>{blog.date}</span>
+                          <span className="w-1 h-1 rounded-full bg-[rgba(255,255,255,0.3)]" />
+                          <span>{blog.readTime}</span>
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-orange">
+                          Read
+                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                            <path
+                              d="M3 8h10M9 4l4 4-4 4"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </span>
+                      </div>
                     </div>
                   </motion.div>
                 </a>
-              </GridItem>
+              </Reveal>
             ))}
-          </StaggerGrid>
+          </div>
         </div>
       </section>
 
