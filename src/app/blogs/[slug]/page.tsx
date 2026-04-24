@@ -39,7 +39,7 @@ const posts: BlogPost[] = [
       "Outbound in 2026 Is Not a Channel Problem. It Is a GTM Systems Problem.",
     date: "APR 24, 2026",
     readTime: "8 min read",
-    author: { name: "Danny Dulina", initial: "D" },
+    author: { name: "Danny", initial: "D" },
     audio: {
       title: "Outbound in 2026: A GTM Systems Problem",
       durationLabel: "8:00",
