@@ -20,6 +20,7 @@ function formatTime(ms: number) {
 
 export default function AudioPlayer({ title, text, durationLabel }: Props) {
   const [playing, setPlaying] = useState(false);
+  const [started, setStarted] = useState(false);
   const [supported, setSupported] = useState(true);
   const [elapsedMs, setElapsedMs] = useState(0);
   const [rate, setRate] = useState<number>(1);
@@ -116,6 +117,7 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
       return;
     }
     if (elapsedRef.current >= totalMs()) elapsedRef.current = 0;
+    setStarted(true);
     speakFromElapsed(false);
   };
 
@@ -198,6 +200,47 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
   const progressPct =
     totalMs() > 0 ? Math.min(100, (elapsedMs / totalMs()) * 100) : 0;
 
+  // IDLE state — simple pill (play + title + sparkle + duration)
+  if (!started) {
+    return (
+      <div
+        ref={rootRef}
+        className="relative w-full my-6"
+        aria-label={`Audio narration: ${title}`}
+      >
+        <motion.button
+          type="button"
+          onClick={handlePlayPause}
+          whileHover={{ scale: 1.005 }}
+          whileTap={{ scale: 0.99 }}
+          className="relative flex items-center gap-3 pl-2 pr-5 py-2 rounded-full overflow-hidden"
+          style={{
+            backgroundColor: "#0B1544",
+            maxWidth: "620px",
+            width: "100%",
+          }}
+          aria-label="Play narration"
+        >
+          <span className="relative z-10 flex items-center justify-center w-9 h-9 rounded-full bg-white/10 shrink-0">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="white">
+              <path d="M1 1 L11 7 L1 13 Z" />
+            </svg>
+          </span>
+          <span className="relative z-10 text-white text-sm font-medium truncate flex-1 text-left">
+            {title}
+          </span>
+          <span className="relative z-10 flex items-center gap-2 text-white/80 text-xs shrink-0">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+              <path d="M5 0 L6.5 3.5 L10 5 L6.5 6.5 L5 10 L3.5 6.5 L0 5 L3.5 3.5 Z" />
+            </svg>
+            {durationLabel ?? formatTime(totalMs())}
+          </span>
+        </motion.button>
+      </div>
+    );
+  }
+
+  // PLAYING / PAUSED state — full controls
   return (
     <div
       ref={rootRef}
@@ -205,7 +248,9 @@ export default function AudioPlayer({ title, text, durationLabel }: Props) {
       aria-label={`Audio narration: ${title}`}
     >
       <motion.div
-        whileHover={{ scale: 1.005 }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.25 }}
         className="relative flex items-center gap-1 px-4 py-2 rounded-full overflow-hidden"
         style={{
           backgroundColor: "#0B1544",
