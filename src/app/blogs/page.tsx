@@ -66,21 +66,26 @@ const TECH_TOOLS = [
     ),
   },
   {
-    name: "n8n",
+    name: "Notion",
     path: (
       <g>
-        <circle cx="12" cy="6" r="1.8" />
-        <circle cx="18" cy="9" r="1.8" />
-        <circle cx="18" cy="15" r="1.8" />
-        <circle cx="12" cy="18" r="1.8" />
-        <circle cx="6" cy="15" r="1.8" />
-        <circle cx="6" cy="9" r="1.8" />
-        <circle cx="12" cy="12" r="1.6" />
-        <path
-          d="M12 7.8 L12 10.4 M16.6 9.6 L13.4 11.2 M16.6 14.4 L13.4 12.8 M12 13.6 L12 16.2 M7.4 14.4 L10.6 12.8 M7.4 9.6 L10.6 11.2"
+        <rect
+          x="3"
+          y="3"
+          width="18"
+          height="18"
+          rx="3"
           stroke="currentColor"
-          strokeWidth="1.3"
+          strokeWidth="1.5"
+          fill="none"
+        />
+        <path
+          d="M8.5 17 V7 L15.5 17 V7"
+          stroke="currentColor"
+          strokeWidth="2"
           strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
         />
       </g>
     ),
