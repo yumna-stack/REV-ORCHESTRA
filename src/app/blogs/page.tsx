@@ -69,16 +69,14 @@ const TECH_TOOLS = [
     name: "n8n",
     path: (
       <g>
-        <circle cx="5" cy="12" r="1.8" />
-        <circle cx="12" cy="6" r="1.8" />
-        <circle cx="12" cy="12" r="1.8" />
-        <circle cx="12" cy="18" r="1.8" />
-        <circle cx="19" cy="12" r="1.8" />
+        <circle cx="5" cy="12" r="2.6" />
+        <circle cx="12" cy="12" r="2.6" />
+        <circle cx="19" cy="12" r="2.6" />
         <path
-          d="M6.8 12 L10.2 12 M13.8 12 L17.2 12 M12 7.8 L12 10.2 M12 13.8 L12 16.2"
+          d="M7.6 12 L9.4 12 M14.6 12 L16.4 12"
           stroke="currentColor"
-          strokeWidth="1.6"
-          fill="none"
+          strokeWidth="2"
+          strokeLinecap="round"
         />
       </g>
     ),
