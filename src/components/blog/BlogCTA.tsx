@@ -20,11 +20,20 @@ const TECH_TOOLS = [
     ),
   },
   {
-    name: "Instantly",
+    name: "n8n",
     path: (
       <g>
-        <circle cx="12" cy="5.5" r="2.1" />
-        <path d="M9.6 10.5h4.8v10.5a1.2 1.2 0 0 1-1.2 1.2h-2.4a1.2 1.2 0 0 1-1.2-1.2z" />
+        <circle cx="5" cy="12" r="1.8" />
+        <circle cx="12" cy="6" r="1.8" />
+        <circle cx="12" cy="12" r="1.8" />
+        <circle cx="12" cy="18" r="1.8" />
+        <circle cx="19" cy="12" r="1.8" />
+        <path
+          d="M6.8 12 L10.2 12 M13.8 12 L17.2 12 M12 7.8 L12 10.2 M12 13.8 L12 16.2"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          fill="none"
+        />
       </g>
     ),
   },
@@ -81,7 +90,7 @@ function OrbitingLogos({
                 ease: EASE,
               }}
               whileHover={{ scale: 1.18 }}
-              className="w-10 h-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/70 border border-white/15 backdrop-blur-md flex items-center justify-center text-white/65 hover:text-[#E8650A] hover:border-[#E8650A]/45 transition-colors duration-300"
+              className="w-10 h-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#161619] border border-[#2a2a30] flex items-center justify-center text-white/65 hover:text-[#E8650A] hover:border-[#E8650A] transition-colors duration-300"
               aria-label={tool.name}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
