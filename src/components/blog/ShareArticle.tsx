@@ -69,8 +69,8 @@ export default function ShareArticle({ title }: { title: string }) {
             aria-label={`Share on ${l.name}`}
             className="w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
             style={{
-              backgroundColor: "rgba(232,86,0,0.12)",
-              border: "1px solid rgba(232,86,0,0.25)",
+              backgroundColor: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.1)",
             }}
           >
             {l.svg}
