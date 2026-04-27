@@ -21,7 +21,12 @@ const TECH_TOOLS = [
   },
   {
     name: "Instantly",
-    path: <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />,
+    path: (
+      <g>
+        <circle cx="12" cy="5.5" r="2.1" />
+        <path d="M9.6 10.5h4.8v10.5a1.2 1.2 0 0 1-1.2 1.2h-2.4a1.2 1.2 0 0 1-1.2-1.2z" />
+      </g>
+    ),
   },
   {
     name: "GitHub",
