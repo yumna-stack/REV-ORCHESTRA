@@ -16,24 +16,24 @@ export default function BlogSubscribe() {
   };
 
   const inputClass =
-    "w-full px-4 py-3 text-sm text-white bg-[rgb(14,14,16)] border border-[rgba(255,255,255,0.08)] rounded-xl outline-none focus:border-accent-orange/50 transition-colors placeholder:text-[rgba(255,255,255,0.3)]";
+    "premium-input w-full px-4 py-3 text-sm text-white bg-black border border-[rgba(255,255,255,0.12)] rounded-[14px] outline-none focus:border-[rgba(255,255,255,0.3)] focus:ring-1 focus:ring-[rgba(255,255,255,0.1)] transition-all placeholder:text-[rgba(255,255,255,0.3)]";
 
   return (
     <div className="flex flex-col gap-4">
-      <h4 className="text-sm font-semibold text-white tracking-wide">
+      <h4 className="text-[13px] font-bold text-white tracking-[0.1em] uppercase">
         Subscribe
       </h4>
       {submitted ? (
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-xl border border-[rgba(232,86,0,0.25)] bg-[rgba(232,86,0,0.08)] px-4 py-4 text-sm text-white"
+          className="rounded-[14px] border border-[rgba(255,255,255,0.1)] bg-[#050505] px-5 py-4 text-[14px] text-[rgba(255,255,255,0.8)]"
         >
-          <span className="text-accent-orange mr-2">&#10003;</span>
+          <span className="text-white font-bold mr-2">&#10003;</span>
           You&apos;re in. The next Orchestra drops Tuesday.
         </motion.div>
       ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
           <input
             type="text"
             value={firstName}
@@ -70,14 +70,7 @@ export default function BlogSubscribe() {
           <motion.button
             type="submit"
             suppressHydrationWarning
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="mt-1 px-6 py-3 text-sm font-medium text-white rounded-xl uppercase tracking-wider transition-all"
-            style={{
-              backgroundColor: "transparent",
-              border: "1.5px solid #E85600",
-              color: "#E85600",
-            }}
+            className="mt-2 w-full py-3.5 text-sm btn-primary"
           >
             Join
           </motion.button>

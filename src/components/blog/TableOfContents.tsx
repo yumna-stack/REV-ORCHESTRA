@@ -41,34 +41,37 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
   };
 
   return (
-    <aside className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] overflow-hidden">
-      <div className="px-5 py-4 border-b border-[rgba(255,255,255,0.06)] bg-[rgba(232,86,0,0.04)]">
-        <h4 className="text-sm font-semibold text-white tracking-wide">
-          Relevant Contents
-        </h4>
-      </div>
-      <nav className="px-5 py-5">
-        <ul className="flex flex-col gap-3">
+    <aside aria-label="On this page">
+      <p className="text-[11px] font-semibold tracking-[0.16em] text-[rgba(255,255,255,0.45)] uppercase mb-4 pl-4">
+        On this page
+      </p>
+      <nav className="border-l border-[rgba(255,255,255,0.08)]">
+        <ul className="flex flex-col">
           {items.map((item) => {
             const isActive = active === item.id;
+            const baseIndent = item.level === 2 ? "pl-8" : "pl-4";
             return (
-              <li
-                key={item.id}
-                className={item.level === 2 ? "pl-4" : ""}
-                style={{
-                  listStyle: item.level === 1 ? "disc" : "circle",
-                  listStylePosition: "inside",
-                }}
-              >
+              <li key={item.id}>
                 <a
                   href={`#${item.id}`}
                   onClick={(e) => handleClick(e, item.id)}
-                  className={`inline text-sm leading-[150%] transition-colors ${
+                  className={`relative block py-2 pr-3 ${baseIndent} text-sm leading-[150%] transition-colors duration-200 ${
                     isActive
-                      ? "text-accent-orange"
-                      : "text-[rgba(255,255,255,0.55)] hover:text-white"
+                      ? "text-white font-medium"
+                      : "text-[rgba(255,255,255,0.45)] hover:text-white"
                   }`}
                 >
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-0 bottom-0 w-px transition-colors duration-200"
+                    style={{
+                      backgroundColor: isActive
+                        ? "var(--color-accent-orange, #E85600)"
+                        : "transparent",
+                      marginLeft: -1,
+                      width: isActive ? 2 : 1,
+                    }}
+                  />
                   {item.label}
                 </a>
               </li>
