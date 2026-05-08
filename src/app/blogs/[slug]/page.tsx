@@ -69,7 +69,7 @@ const posts: BlogPost[] = [
     author: {
       name: "Danny",
       initial: "D",
-      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders. 12 builds shipped, 4 founders per quarter.",
+      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders.",
       url: "https://www.linkedin.com/in/dannydulina",
     },
     audio: {
@@ -404,7 +404,7 @@ const posts: BlogPost[] = [
     author: {
       name: "Danny",
       initial: "D",
-      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders. 12 builds shipped, 4 founders per quarter.",
+      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders.",
       url: "https://www.linkedin.com/in/dannydulina",
     },
     audio: {
@@ -601,7 +601,7 @@ const posts: BlogPost[] = [
           },
           {
             type: "p",
-            text: "Across the last twelve Rev Orchestra builds, the same four roles keep showing up. A research agent that synthesizes account context across CRM, intent feeds, and public sources. A drafting agent that turns context into first pass outreach drafts (email, LinkedIn, rep tasks) and never sends autonomously. A reply triage agent that classifies inbound responses into intent buckets and routes them. A CRM hygiene agent that keeps the system of record clean enough for the other three to trust.",
+            text: "From the operator engagements we have worked on, the same four roles keep showing up. A research agent that synthesizes account context across CRM, intent feeds, and public sources. A drafting agent that turns context into first pass outreach drafts (email, LinkedIn, rep tasks) and never sends autonomously. A reply triage agent that classifies inbound responses into intent buckets and routes them. A CRM hygiene agent that keeps the system of record clean enough for the other three to trust.",
           },
           {
             type: "p",
@@ -761,7 +761,7 @@ const posts: BlogPost[] = [
     author: {
       name: "Danny",
       initial: "D",
-      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders. 12 builds shipped, 4 founders per quarter.",
+      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders.",
       url: "https://www.linkedin.com/in/dannydulina",
     },
     audio: {
@@ -877,7 +877,7 @@ const posts: BlogPost[] = [
           },
           {
             type: "p",
-            text: "The point is not to collect every signal. The point is to know which signals deserve action. Across the last twelve Rev Orchestra builds, our orchestrator surfaces only about 18% of incoming signals to a human, suppresses or merges the rest, and the meetings that come from that filtered queue convert at roughly 3.4 times the rate of meetings booked from raw intent feeds. Median time to first meeting after a Rev Orchestra deployment is around 11 days. The orchestrator scores incoming signals against your ICP and surfaces only the moments worth a human conversation, so your team works the right account on the right day, not the biggest list.",
+            text: "The point is not to collect every signal. The point is to know which signals deserve action. The orchestrator scores incoming signals against your ICP and surfaces only the moments worth a human conversation, so your team works the right account on the right day, not the biggest list. The teams running this well book noticeably more meetings per rep against a sharper queue, while suppressing the noise that used to consume their time.",
           },
         ],
       },
@@ -911,7 +911,7 @@ const posts: BlogPost[] = [
           },
           {
             type: "p",
-            text: "That is not a copywriting layer. That is a decision layer. And that decision layer is the core of every Rev Orchestra build. Detection is commodity. Arbitration is what we engineer for each customer's stack. Tools we routinely arbitrate across in builds: 6sense, Bombora, Common Room, Koala, Default, RB2B, Apollo's signal stack, and Clearbit Reveal. Across our builds, the orchestrator suppresses about 38% of incoming signals before they ever trigger a send, because the account state, channel fatigue, or active deal check made the action wrong at that moment. We covered the four arbitration decisions (strength, state, channel, timing) in [how signal arbitration breaks most AI outbound stacks](/blogs/signal-arbitration-b2b-outbound/).",
+            text: "That is not a copywriting layer. That is a decision layer. And that decision layer is the core of every Rev Orchestra build. Detection is commodity. Arbitration is what we engineer for each customer's stack. Tools we typically arbitrate across: 6sense, Bombora, Common Room, Koala, Default, RB2B, Apollo's signal stack, and Clearbit Reveal. A meaningful share of incoming signals get suppressed before they ever trigger a send, because the account state, channel fatigue, or active deal check makes the action wrong at that moment. We covered the four arbitration decisions (strength, state, channel, timing) in [how signal arbitration breaks most AI outbound stacks](/blogs/signal-arbitration-b2b-outbound/).",
           },
         ],
       },
@@ -1114,7 +1114,7 @@ const posts: BlogPost[] = [
     author: {
       name: "Danny",
       initial: "D",
-      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders. 12 builds shipped, 4 founders per quarter.",
+      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders.",
       url: "https://www.linkedin.com/in/dannydulina",
     },
     audio: {
@@ -1267,7 +1267,7 @@ const posts: BlogPost[] = [
           },
           {
             type: "p",
-            text: "Across the last twelve Rev Orchestra builds, accounts that enter outreach through the arbitrated queue convert to a first meeting at roughly 3.4 times the rate of accounts contacted from raw intent feeds. We also suppress around 38% of incoming signals before they ever trigger a send. Not because the signal was wrong, but because the account state, channel fatigue, or active deal check made the action wrong at that moment. Median time to first meeting after deployment is around 11 days.",
+            text: "Accounts that enter outreach through the arbitrated queue convert to a first meeting at meaningfully higher rates than accounts contacted from raw intent feeds. A significant share of incoming signals get suppressed before they ever trigger a send. Not because the signal was wrong, but because the account state, channel fatigue, or active deal check made the action wrong at that moment.",
           },
           {
             type: "ul",
