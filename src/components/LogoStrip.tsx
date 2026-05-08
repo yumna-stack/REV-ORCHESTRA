@@ -33,8 +33,8 @@ export default function LogoStrip() {
       <Reveal variants={fadeUp} delay={0.2}>
         <div className="relative w-full overflow-hidden">
           {/* Edge fades */}
-          <div className="absolute left-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] to-transparent pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-r from-[rgb(0, 0, 0)] to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-[15%] z-10 bg-gradient-to-l from-[rgb(0, 0, 0)] to-transparent pointer-events-none" />
 
           <div
             className="flex items-center gap-[70px] w-max"

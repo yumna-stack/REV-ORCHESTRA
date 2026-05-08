@@ -44,7 +44,7 @@ const faqs = [
 
 export default function PackagesPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       <PageHero
@@ -54,7 +54,7 @@ export default function PackagesPage() {
       />
 
       {/* Pricing card */}
-      <section className="w-full py-16 bg-[rgb(14,15,17)]">
+      <section className="w-full py-16 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[700px] mx-auto px-5">
           <Reveal variants={popIn} once={false}>
             {/* Outer shell - glassmorphic */}
@@ -64,7 +64,7 @@ export default function PackagesPage() {
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               {/* Inner card */}
-              <div className="rounded-[30px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden relative">
+              <div className="rounded-[30px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden relative">
                 {/* Orange glow at bottom */}
                 <div
                   className="absolute inset-0 pointer-events-none"
@@ -139,7 +139,7 @@ export default function PackagesPage() {
       </section>
 
       {/* Comparison */}
-      <section className="w-full py-16 bg-[rgb(14,15,17)]">
+      <section className="w-full py-16 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[600px] mx-auto px-5">
           <Reveal variants={flipUp} once={false}>
             {/* Outer shell - glassmorphic */}
@@ -149,7 +149,7 @@ export default function PackagesPage() {
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               {/* Inner card */}
-              <div className="rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden relative p-6">
+              <div className="rounded-[24px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden relative p-6">
                 {/* Orange glow at bottom */}
                 <div
                   className="absolute inset-0 pointer-events-none"
@@ -189,7 +189,7 @@ export default function PackagesPage() {
       </section>
 
       {/* FAQ */}
-      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+      <section className="w-full py-20 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[700px] mx-auto px-5">
           <Reveal variants={fadeUp} className="text-center mb-12" once={false}>
             <h2
@@ -218,7 +218,7 @@ export default function PackagesPage() {
                   transition={{ duration: 0.35, ease: "easeOut" }}
                 >
                   {/* Inner card */}
-                  <div className="rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden relative p-6">
+                  <div className="rounded-[24px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden relative p-6">
                     {/* Orange glow at bottom */}
                     <div
                       className="absolute inset-0 pointer-events-none"

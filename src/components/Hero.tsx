@@ -1,116 +1,89 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
+import posthog from "posthog-js";
 import { Float } from "@/components/motion";
 import BrandLogo, { BrandWordmark } from "@/components/BrandLogo";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const CALENDLY = "https://calendly.com/danny-revorchestra";
 
-const toolLogos: { name: string; key: string }[] = [
-  { name: "Clay", key: "clay" },
-  { name: "Instantly", key: "instantly" },
-  { name: "HubSpot", key: "hubspot" },
-  { name: "Slack", key: "slack" },
-  { name: "n8n", key: "n8n" },
-  { name: "LinkedIn", key: "linkedin" },
-  { name: "Apollo", key: "apollo" },
-  { name: "HeyReach", key: "heyreach" },
-  { name: "Smartlead", key: "smartlead" },
-];
-const agentActions = [
-  "finding warm leads",
-  "writing personalised outreach",
-  "updating your CRM",
-  "monitoring buying signals",
-  "briefing your reps",
-  "watching your pipeline",
-];
-
-type Platform = "linkedin" | "x" | "reddit" | "podcast";
-const fomoQuotes: { text: string; name: string; title: string; avatar: string; platform: Platform; when: string; verified?: boolean }[] = [
+const fomoQuotes: { text: string; name: string; title: string; avatar: string }[] = [
   {
-    text: "Our AI SDR sends 10x the emails with the same bad reply rates. We just burn through prospects faster.\n\nWe paused it last week. Going back to manual until we figure out signal triggers.",
+    text: "Our AI SDR sends 10x the emails with the same bad reply rates. We just burn through prospects faster.\n\nWe paused it last week. We're rebuilding the whole thing with Rev Orchestra.",
     name: "Marcus Chen",
     title: "VP Sales · ScaleOps (Series B)",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    platform: "linkedin",
-    when: "3d",
-    verified: true,
+    avatar: "https://i.pravatar.cc/150?img=12",
   },
   {
-    text: "I have Clay, Instantly, HubSpot, and Apollo. None of them know what the others are doing. My CRM is a lie.",
+    text: "I had Clay, Instantly, HubSpot, and Apollo. None of them knew what the others were doing. My CRM was a lie.\n\nRev Orchestra is the first team I've seen actually wire them together.",
     name: "Sarah Weiss",
     title: "Founder · Loomly",
-    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-    platform: "x",
-    when: "1w",
+    avatar: "https://i.pravatar.cc/150?img=47",
   },
   {
-    text: "We deployed an AI SDR without fixing our playbook first. Two months later we had no pipeline and a scorched list. Don't repeat our mistake.",
+    text: "We deployed an AI SDR without fixing our playbook first. Two months later we had no pipeline and a scorched list.\n\nRev Orchestra is what I wish we'd hired from day one. Don't repeat our mistake.",
     name: "James Patel",
     title: "Head of GTM · Plotr",
-    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-    platform: "linkedin",
-    when: "2d",
-    verified: true,
+    avatar: "https://i.pravatar.cc/150?img=59",
   },
   {
-    text: "Outbound is not dead. Volume based, untriggered, one size fits all outbound is dead. There's a difference and most teams haven't noticed yet.",
+    text: "Outbound is not dead. Volume based, untriggered, one size fits all outbound is dead. There's a difference and most teams haven't noticed yet.\n\nRev Orchestra gets it. Most agencies still don't.",
     name: "Elena Park",
     title: "GTM Lead · Heliox",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    platform: "linkedin",
-    when: "5d",
-    verified: true,
+    avatar: "https://i.pravatar.cc/150?img=45",
   },
   {
-    text: "Visited a portfolio company last week. Asked to see their spam folder. The amount of garbage in there was shocking.",
+    text: "Visited a portfolio company last week. Asked to see their spam folder. The amount of garbage in there was shocking.\n\nTold them to talk to Rev Orchestra before they send another email.",
     name: "David Romano",
     title: "Partner · OutboundLab",
-    avatar: "https://randomuser.me/api/portraits/men/76.jpg",
-    platform: "x",
-    when: "12h",
+    avatar: "https://i.pravatar.cc/150?img=33",
   },
   {
-    text: "Every founder I talk to has the same problem: the tools work in isolation, but nothing actually talks to anything else.\n\nThe winners in 2026 won't have better tools, they'll have better wiring between them.",
+    text: "Every founder I talk to has the same problem: the tools work in isolation, nothing actually talks to anything else.\n\nThe winners in 2026 won't have better tools, they'll have better wiring. Rev Orchestra is the first team I've seen solve this end to end.",
     name: "Priya Shah",
     title: "RevOps · Northstar",
-    avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-    platform: "linkedin",
-    when: "6d",
-    verified: true,
+    avatar: "https://i.pravatar.cc/150?img=44",
   },
 ];
-
-/* Platform glyphs — small monochrome icons used in the testimonial card footer. */
-const PlatformIcon = ({ p }: { p: Platform }) => {
-  const props = { width: 12, height: 12, viewBox: "0 0 24 24", fill: "currentColor" };
-  if (p === "linkedin") return <svg {...props}><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z" /></svg>;
-  if (p === "x") return <svg {...props}><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>;
-  if (p === "reddit") return <svg {...props}><path d="M12 0C5.373 0 0 5.373 0 12c0 6.627 5.373 12 12 12 6.628 0 12-5.373 12-12 0-6.627-5.372-12-12-12zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" /></svg>;
-  return <svg {...props}><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3zm7 11a7 7 0 01-14 0H3a9 9 0 008 8.94V23h2v-2.06A9 9 0 0021 12h-2z" /></svg>;
-};
 
 /* Real brand logos floating in the Hero background.
  * Original varied sizes restored — looks more natural than uniform boxes. */
 const floatingIcons: { key: string; x: number; y: number; size: number; dur: number }[] = [
-  { key: "hubspot",   x: 8,  y: 18, size: 44, dur: 6   },
-  { key: "instantly", x: 4,  y: 42, size: 40, dur: 7   },
-  { key: "linkedin",  x: 10, y: 68, size: 48, dur: 8   },
-  { key: "slack",     x: 88, y: 15, size: 42, dur: 5.5 },
-  { key: "clay",      x: 92, y: 40, size: 38, dur: 7.5 },
-  { key: "n8n",       x: 90, y: 65, size: 46, dur: 6.5 },
-  { key: "salesforce",x: 2,  y: 82, size: 36, dur: 8.5 },
-  { key: "apollo",    x: 86, y: 82, size: 40, dur: 9   },
+  /* Scattered organically — varied x AND y so it doesn't look like a grid.
+   * Stays out of the centered text zone (roughly x:25–75 & y:20–75). */
+  /* Left side — staircase down from top to bottom, inset distances vary */
+  { key: "hubspot",   x: 16, y: 4,  size: 88,  dur: 6   },
+  { key: "notion",    x: 3,  y: 14, size: 70,  dur: 7.8 },
+  { key: "linkedin",  x: 12, y: 26, size: 96,  dur: 8   },
+  { key: "claude",    x: 4,  y: 38, size: 78,  dur: 6.4 },
+  { key: "instantly", x: 14, y: 52, size: 80,  dur: 7   },
+  { key: "zapier",    x: 5,  y: 66, size: 70,  dur: 7.6 },
+  { key: "salesforce",x: 18, y: 82, size: 72,  dur: 8.5 },
+  /* Right side — staircase down too, but offset rhythm */
+  { key: "n8n",       x: 84, y: 6,  size: 92,  dur: 6.5 },
+  { key: "stripe",    x: 96, y: 18, size: 66,  dur: 8.4 },
+  { key: "clay",      x: 88, y: 30, size: 76,  dur: 7.5 },
+  { key: "airtable",  x: 97, y: 42, size: 72,  dur: 8.8 },
+  { key: "slack",     x: 86, y: 56, size: 84,  dur: 5.5 },
+  { key: "figma",     x: 95, y: 70, size: 72,  dur: 6.2 },
+  { key: "apollo",    x: 82, y: 84, size: 80,  dur: 9   },
+  /* Top + bottom edges — fill the dead zones that aren't behind text */
+  { key: "discord",   x: 36, y: 2,  size: 70,  dur: 7.2 },
+  { key: "loom",      x: 64, y: 3,  size: 72,  dur: 5.8 },
 ];
 
 export default function Hero() {
-  const [toolIdx, setToolIdx] = useState(0);
-  const [actionIdx, setActionIdx] = useState(0);
   const [fomoMode, setFomoMode] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+
+  /* Nav-logo click → force Orchestrator Mode back ON */
+  useEffect(() => {
+    const handler = () => setFomoMode(false);
+    window.addEventListener("revorchestra:orchestrator-on", handler);
+    return () => window.removeEventListener("revorchestra:orchestrator-on", handler);
+  }, []);
 
   /* Scroll-linked headline: fades + lifts as visitor scrolls past hero */
   const { scrollYProgress } = useScroll({
@@ -125,12 +98,6 @@ export default function Hero() {
   const headlineOpacity = useSpring(rawOpacity, { stiffness: 160, damping: 28 });
   const headlineScale   = useSpring(rawScale,   { stiffness: 160, damping: 26 });
 
-  useEffect(() => {
-    const t2 = setInterval(() => setToolIdx((i) => (i + 1) % toolLogos.length), 2500);
-    const t3 = setInterval(() => setActionIdx((i) => (i + 1) % agentActions.length), 3200);
-    return () => { clearInterval(t2); clearInterval(t3); };
-  }, []);
-
   return (
     <>
     <section ref={sectionRef} className="relative w-full flex flex-col items-center overflow-hidden" style={{ background: "var(--bg)" }}>
@@ -143,7 +110,7 @@ export default function Hero() {
           <Float key={icon.key} duration={icon.dur} y={10} delay={i * 0.5} className="absolute" style={{ left: `${icon.x}%`, top: `${icon.y}%` }}>
             <div
               className="flex items-center justify-center"
-              style={{ width: icon.size, height: icon.size, transform: "translate(-50%, -50%)", opacity: 0.08 }}
+              style={{ width: icon.size, height: icon.size, transform: "translate(-50%, -50%)", opacity: 0.18 }}
             >
               <BrandLogo name={icon.key} size={Math.round(icon.size * 0.5)} />
             </div>
@@ -176,13 +143,15 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
               transition={{ duration: 0.6, ease }}
-              className="flex flex-col items-center gap-7"
+              className="flex flex-col items-center gap-10"
             >
               {/* Headline — word-by-word stagger on load + scroll-linked fade/lift */}
               <motion.h1
-                className="text-[clamp(28px,4vw,44px)] font-medium leading-[115%] tracking-[-1.5px] text-[var(--text)] max-w-none will-change-transform"
+                className="text-[clamp(32px,5vw,56px)] font-medium leading-[112%] tracking-[-1.6px] text-[var(--text)] max-w-full will-change-transform"
                 style={{
                   fontFamily: "var(--font-family-heading)",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
                   y: headlineY,
                   opacity: headlineOpacity,
                   scale: headlineScale,
@@ -196,8 +165,8 @@ export default function Hero() {
                   show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
                 }}
               >
-                <span className="whitespace-nowrap inline-block">
-                  {["GTM", "Orchestration", "&"].map((w, i) => (
+                <span className="inline-block">
+                  {["GTM", "engineering", "for"].map((w, i) => (
                     <motion.span
                       key={`a-${i}`}
                       className="inline-block mr-[0.25em]"
@@ -209,40 +178,28 @@ export default function Hero() {
                       {w}
                     </motion.span>
                   ))}
-                  <motion.span
-                    className="text-accent-orange inline-block relative"
-                    variants={{
-                      hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-                      show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.65, ease } },
-                    }}
-                  >
-                    <motion.span
-                      className="inline-block"
-                      animate={{ filter: ["drop-shadow(0 0 0px rgba(232,101,10,0))", "drop-shadow(0 0 18px rgba(232,101,10,0.35))", "drop-shadow(0 0 0px rgba(232,101,10,0))"] }}
-                      transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-                    >
-                      Revenue Engines
-                    </motion.span>
-                  </motion.span>
                 </span>
                 <br />
-                {["for", "B2B", "Founders"].map((w, i) => (
+                <motion.span
+                  className="text-accent-orange inline-block relative"
+                  variants={{
+                    hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+                    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.65, ease } },
+                  }}
+                >
                   <motion.span
-                    key={`b-${i}`}
-                    className="inline-block mr-[0.25em]"
-                    variants={{
-                      hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-                      show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.55, ease } },
-                    }}
+                    className="inline-block"
+                    animate={{ filter: ["drop-shadow(0 0 0px rgba(232,101,10,0))", "drop-shadow(0 0 18px rgba(232,101,10,0.35))", "drop-shadow(0 0 0px rgba(232,101,10,0))"] }}
+                    transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
                   >
-                    {w}
+                    B2B startups
                   </motion.span>
-                ))}
+                </motion.span>
               </motion.h1>
 
               {/* Sub-headline */}
               <p className="text-lg text-[var(--text-dim)] leading-[160%] max-w-[620px]">
-                Custom AI agents running your GTM directly inside your stack. Not a tool. Not a retainer. Yours permanently in 90 days.
+                The orchestration runtime for modern GTM teams
               </p>
 
               {/* Scarcity — green pill */}
@@ -259,53 +216,34 @@ export default function Hero() {
                   <span className="absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping" style={{ background: "#6EE787" }} />
                   <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: "#6EE787" }} />
                 </span>
-                4 seats available for Q3 2026
+                4 seats available for Q2 2026
               </div>
 
               {/* CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all" style={{ backgroundColor: "#E85600" }}>
-                  Book a Call with Danny <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </a>
-                <a href="#how-it-works" className="inline-flex items-center gap-2 px-8 py-4 text-[var(--text)] text-sm font-medium uppercase tracking-wider rounded-full border border-[var(--border-strong)] hover:opacity-80 transition-all">
-                  See How It Works <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </a>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-24 mb-20 px-6 w-full"
+              >
+                <motion.a
+                  href={CALENDLY}
+                  target="_blank"
+                  onClick={() => posthog.capture("cta_clicked", { location: "hero_primary", destination: CALENDLY })}
+                  className="w-full sm:w-auto h-14 px-10 flex items-center justify-center text-[15px] btn-primary"
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Book a Call
+                </motion.a>
+                <motion.button
+                  onClick={() => setFomoMode(!fomoMode)}
+                  className="w-full sm:w-auto h-14 px-10 flex items-center justify-center text-[15px] font-bold text-white bg-black border border-[rgba(255,255,255,0.2)] rounded-full hover:bg-[rgba(255,255,255,0.05)] transition-all uppercase tracking-widest"
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {fomoMode ? "Exit FOMO" : "See How It Works"}
+                </motion.button>
+              </motion.div>
 
-              {/* Trust Strip */}
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-[var(--text-dim)]">
-                <span>90 day build</span><span className="text-[var(--border-strong)]">·</span><span>You own everything</span><span className="text-[var(--border-strong)]">·</span><span>Autonomous orchestration</span><span className="text-[var(--border-strong)]">·</span><span>Plugs into your stack</span><span className="text-[var(--border-strong)]">·</span><span>4 founders per quarter, max</span>
-              </div>
-
-              {/* ─── Rotating Tool Logos (SiteFire-style) ─── */}
-              <div className="flex flex-col items-center gap-3 pt-4">
-                <p className="text-[var(--text-dim)] text-sm">We&apos;re building GTM systems connected to</p>
-                <div className="h-[32px] flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={toolLogos[toolIdx].key}
-                      initial={{ opacity: 0, y: 16, filter: "blur(6px)", scale: 0.9 }}
-                      animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-                      exit={{ opacity: 0, y: -16, filter: "blur(6px)", scale: 0.9 }}
-                      transition={{ duration: 0.4, ease }}
-                    >
-                      <BrandWordmark name={toolLogos[toolIdx].key} height={22} />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-              </div>
-
-              {/* ─── Rotating Agent Actions ─── */}
-              <div className="flex flex-col items-center gap-2">
-                <p className="text-[var(--text-dim)] text-xs">Right now, our agents are</p>
-                <div className="h-[28px] flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    <motion.span key={agentActions[actionIdx]} initial={{ opacity: 0, y: 12, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -12, filter: "blur(4px)" }} transition={{ duration: 0.35, ease }} className="text-base text-accent-orange font-medium">
-                      {agentActions[actionIdx]}
-                    </motion.span>
-                  </AnimatePresence>
-                </div>
-              </div>
             </motion.div>
           ) : (
             /* ─── FOMO MODE OFF ─── */
@@ -322,9 +260,9 @@ export default function Hero() {
                 style={{
                   fontFamily: "var(--font-family-heading)",
                   fontSize: "clamp(28px, 3.5vw, 42px)",
-                  fontWeight: 500,
+                  fontWeight: 600,
                   lineHeight: "120%",
-                  letterSpacing: "-1.2px",
+                  letterSpacing: "-0.02em",
                   color: "white",
                   maxWidth: 560,
                   margin: "0 auto",
@@ -339,16 +277,16 @@ export default function Hero() {
               </p>
 
               {/* Three short, sharp punchlines */}
-              <div className="text-center space-y-3 text-[15px] text-[var(--text-dim)] leading-[160%] max-w-[640px]">
-                <p>Cold outbound in 2024: <span className="text-white font-medium">1.2% reply rates</span>. Signal led outbound today: <span className="text-white font-medium">8 to 12%</span>.</p>
-                <p>By 2026, Gartner expects <span className="text-white font-medium">70% of B2B companies</span> running AI orchestrated GTM. Early movers are compounding monthly.</p>
-                <p className="text-[var(--text)] font-medium">The shift already happened. The only question is what later costs you in pipeline.</p>
+              <div className="text-center space-y-3 text-[16px] text-[rgba(255,255,255,0.78)] leading-[160%] max-w-[640px]">
+                <p>Cold outbound in 2024: <span className="text-white font-semibold">1.2% reply rates</span>. Signal led outbound today: <span className="text-white font-semibold">8 to 12%</span>.</p>
+                <p>By 2026, Gartner expects <span className="text-white font-semibold">70% of B2B companies</span> running AI orchestrated GTM. Early movers are compounding monthly.</p>
+                <p className="text-white font-semibold">The shift already happened. The only question is what later costs you in pipeline.</p>
               </div>
 
               {/* Founder testimonial cards — masonry layout, scroll-driven, left-aligned for authenticity */}
               <div className="w-full pt-6">
                 <p className="text-xs text-[var(--text-dim)] uppercase tracking-[0.18em] mb-6 text-center">What founders are saying right now</p>
-                <div className="columns-1 md:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+                <div className="columns-1 md:columns-2 lg:columns-3 gap-5 [column-fill:_balance]">
                   {fomoQuotes.map((q, i) => (
                     <motion.div
                       key={i}
@@ -356,49 +294,30 @@ export default function Hero() {
                       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                       viewport={{ once: true, amount: 0.2 }}
                       transition={{ duration: 0.5, ease, delay: i * 0.08 }}
-                      whileHover={{ y: -4, transition: { type: "spring", stiffness: 320, damping: 22 } }}
-                      className="break-inside-avoid mb-4 text-left"
+                      whileHover="hover"
+                      variants={{
+                        hover: {
+                          y: -6,
+                          borderColor: "rgba(255, 255, 255, 0.2)",
+                          boxShadow: "0 20px 40px -12px rgba(0,0,0,0.55)",
+                          transition: { type: "spring", stiffness: 280, damping: 22 },
+                        },
+                      }}
+                      className="break-inside-avoid mb-5 text-left relative overflow-hidden group"
                       style={{
-                        backgroundColor: "rgb(8,8,10)",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        borderRadius: 16,
-                        padding: 20,
+                        backgroundColor: "rgb(0, 0, 0)",
+                        border: "1px solid rgba(255, 255, 255, 0.07)",
+                        borderRadius: 24,
+                        padding: "24px 24px 26px",
                       }}
                     >
-                      {/* Header: avatar + name + title + platform glyph */}
-                      <div className="flex items-start gap-3 mb-3">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={q.avatar}
-                          alt={q.name}
-                          width={44}
-                          height={44}
-                          className="rounded-full shrink-0 object-cover"
-                          style={{ border: "1px solid rgba(255,255,255,0.06)" }}
-                          loading="lazy"
-                        />
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-1">
-                            <p className="text-[14px] font-semibold text-white leading-tight truncate">{q.name}</p>
-                            {q.verified && (
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="#1d9bf0" className="shrink-0">
-                                <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.917 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.295 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
-                              </svg>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-[var(--text-dim)] truncate">{q.title}</p>
-                        </div>
-                      </div>
+                      {/* Quote first — pull quote style */}
+                      <p className="text-[15px] text-[rgba(255,255,255,0.85)] leading-[165%] whitespace-pre-line mb-5">&ldquo;{q.text}&rdquo;</p>
 
-                      {/* Body — preserves \n line breaks for natural posting feel */}
-                      <p className="text-[14px] text-[rgba(255,255,255,0.82)] leading-[160%] whitespace-pre-line">{q.text}</p>
-
-                      {/* Footer: platform + relative time */}
-                      <div className="flex items-center gap-1.5 mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.35)" }}>
-                        <PlatformIcon p={q.platform} />
-                        <span className="text-[10px] uppercase tracking-wider">{q.platform === "x" ? "X" : q.platform}</span>
-                        <span className="text-[10px]">·</span>
-                        <span className="text-[10px]">{q.when}</span>
+                      {/* Attribution */}
+                      <div className="pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                        <p className="text-[14px] font-semibold text-white leading-tight">{q.name}</p>
+                        <p className="text-[12.5px] text-[rgba(255,255,255,0.45)] mt-1 leading-snug">{q.title}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -409,7 +328,7 @@ export default function Hero() {
               <div className="text-center pt-4">
                 <p className="text-[var(--text-dim)] text-sm mb-2">The founders who built their system in Q1 are already booking calls from it</p>
                 <p className="text-accent-orange font-semibold text-sm mb-6">4 seats left for Q2 2026. Build yours before the window closes</p>
-                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all" style={{ backgroundColor: "#E85600" }}>
+                <a href={CALENDLY} target="_blank" rel="noopener noreferrer" onClick={() => posthog.capture("cta_clicked", { location: "hero_fomo", destination: CALENDLY })} className="inline-flex items-center gap-2 px-8 py-4 text-white text-sm font-medium uppercase tracking-wider rounded-full hover:brightness-110 transition-all" style={{ backgroundColor: "#E85600" }}>
                   Book a Call with Danny <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </a>
               </div>
@@ -418,33 +337,59 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
-      {/* Vimeo video */}
-      <motion.div
-        className="relative z-10 w-full max-w-[1080px] mx-auto px-5 mt-12"
-        initial={{ opacity: 0, y: 80, scale: 0.9, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 1.2, ease, delay: 0.6 }}
-      >
-        <div className="relative rounded-lg overflow-hidden border border-[var(--border)] bg-[rgb(8,8,10)]" style={{ aspectRatio: "16/9" }}>
-          <iframe
-            src="https://player.vimeo.com/video/1157150585?autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0"
-            className="absolute inset-0 w-full h-full"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            title="Rev Orchestra Command Center"
-          />
-        </div>
-      </motion.div>
     </section>
 
-    {/* Warm amber gradient glow zone */}
-    <div className="relative w-full h-[400px] -mb-[200px] z-10 pointer-events-none overflow-visible" style={{ background: "var(--bg)" }}>
-      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 130% 60% at 50% 10%, rgba(180, 90, 15, 0.35) 0%, rgba(140, 65, 10, 0.2) 20%, rgba(80, 35, 5, 0.08) 45%, transparent 70%)" }} />
-      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 35% 80% at 0% 25%, rgba(140, 70, 10, 0.18) 0%, transparent 55%)" }} />
-      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 35% 80% at 100% 25%, rgba(140, 70, 10, 0.18) 0%, transparent 55%)" }} />
-      <div className="absolute bottom-0 left-0 right-0 h-[40%]" style={{ background: "linear-gradient(to bottom, transparent, var(--bg))" }} />
-    </div>
+    {/* Trust Strip — right-to-left marquee, alternating orange/white words */}
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.9, ease }}
+      className="relative z-20 w-full pt-40 pb-16"
+    >
+      <div className="relative overflow-hidden">
+        {/* Soft fade edges so words enter/exit smoothly */}
+        <div className="absolute left-0 top-0 bottom-0 w-[10%] z-10 bg-gradient-to-r from-black to-transparent pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-[10%] z-10 bg-gradient-to-l from-black to-transparent pointer-events-none" />
+
+        <div className="flex items-center w-max marquee-track text-[15px]">
+          {(() => {
+            // 6 words (even count) so each word has a fixed color AND
+            // the doubled marquee loops seamlessly without color flicker.
+            const words = [
+              "90 day build",
+              "You own everything",
+              "Autonomous orchestration",
+              "Plugs into your stack",
+              "4 founders per quarter, max",
+              "Production ready",
+            ];
+            const doubled = [...words, ...words];
+            return doubled.map((word, i) => {
+              // Color by word identity → both copies render identically →
+              // perfect seamless loop. With even word count, ABAB alternation
+              // also lines up perfectly across the seam.
+              const originalIndex = i % words.length;
+              const isOrange = originalIndex % 2 === 0;
+              return (
+                <span
+                  key={i}
+                  className="inline-flex items-center shrink-0 mr-12"
+                  style={{
+                    color: isOrange ? "#E85600" : "#ffffff",
+                    fontWeight: 500,
+                    letterSpacing: "0.01em",
+                  }}
+                >
+                  {word}
+                  <span className="ml-12" style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
+                </span>
+              );
+            });
+          })()}
+        </div>
+      </div>
+    </motion.div>
     </>
   );
 }

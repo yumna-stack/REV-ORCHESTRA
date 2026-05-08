@@ -143,7 +143,7 @@ function PricingCard({ plan }: { plan: Plan }) {
 
       <div
         className="relative z-10 flex flex-col p-8"
-        style={{ borderRadius: 36, border: innerBorder, background: "rgb(14,15,17)" }}
+        style={{ borderRadius: 36, border: innerBorder, background: "rgb(0, 0, 0)" }}
       >
         {/* Icon + Name */}
         <div className="flex items-center gap-3 mb-6">
@@ -293,7 +293,7 @@ function ComparisonTable() {
 
 export default function PricingPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)] font-[Inter,sans-serif]">
+    <main className="w-full bg-[rgb(0, 0, 0)] font-[Inter,sans-serif]">
       <Navigation />
 
       <PageHero

@@ -57,6 +57,698 @@ const SITE_URL = "https://revorchestra.com";
 
 const posts: BlogPost[] = [
   {
+    slug: "future-of-b2b-gtm-2026",
+    badge: "GTM Strategy",
+    category: "GTM STRATEGY",
+    title: "The future of B2B GTM",
+    metaDescription:
+      "The traditional SaaS playbook of large SDR pods, MQL targets, and last click attribution is breaking. AI made content and outbound effectively free, around 81% of B2B buying happens before sales is contacted, and capital markets stopped paying for growth at all costs. Here is what is replacing the old GTM engine, why AI exposes weak GTM rather than fixing it, and the architecture the teams winning in 2026 are running underneath the hood.",
+    date: "MAY 22, 2026",
+    isoDate: "2026-05-22",
+    readTime: "12 min read",
+    author: {
+      name: "Danny",
+      initial: "D",
+      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders. 12 builds shipped, 4 founders per quarter.",
+      url: "https://www.linkedin.com/in/dannydulina",
+    },
+    audio: {
+      title: "The future of B2B GTM",
+      durationLabel: "12:00",
+    },
+    cta: {
+      tag: "GTM Strategy",
+      title: "Want a GTM runtime",
+      titleAccent: "Built for the AI Era in 90 Days?",
+      body: "Rev Orchestra wires signal arbitration, AI agent execution, and human approval gates into one runtime inside your existing CRM and channels. You own it permanently after handover. Four founders per quarter.",
+    },
+    sections: [
+      {
+        id: "collapse",
+        tocLabel: "The old GTM engine is collapsing",
+        blocks: [
+          {
+            type: "p",
+            text: "For years, the SaaS playbook was predictable. Hire SDRs. Buy data. Run outbound sequences. Push demos. Track MQLs. Scale headcount when pipeline slows. That playbook is breaking, and not because GTM matters less. It matters more.",
+          },
+          {
+            type: "p",
+            text: "The world the old playbook was built for is gone. AI made content, research, and outbound cheap to produce. Buyers now educate themselves long before any conversation with sales. By the time a vendor knows an account is active, the buyer has already discovered the company on LinkedIn, validated it inside a private Slack group, searched Reddit for honest opinions, watched a YouTube breakdown, asked ChatGPT for alternatives, and quietly compared pricing. McKinsey's 2025 B2B Buyer Behavior Study found that around 81% of B2B buyers complete their vendor selection process before ever talking to a sales rep. By the time you enter the conversation, most of the decision has already been shaped.",
+          },
+          {
+            type: "p",
+            text: "GTM cannot stay a set of disconnected teams running disconnected motions. Marketing owns awareness, SDRs own prospecting, sales owns closing, customer success owns retention, RevOps cleans up the mess afterward. That structure was built for a buyer journey you could control. The current buyer journey is not controllable. It is fragmented across feeds, communities, search engines, and AI assistants you do not own.",
+          },
+          {
+            type: "p",
+            text: "The future of GTM is not more automation. It is better orchestration.",
+          },
+        ],
+      },
+      {
+        id: "exposes",
+        heading: "AI is not replacing GTM. It is exposing weak GTM.",
+        tocLabel: "AI exposes weak GTM",
+        blocks: [
+          {
+            type: "p",
+            text: "The biggest mistake teams are making in 2026 is putting AI on top of broken processes.",
+          },
+          {
+            type: "p",
+            text: "If your ICP is unclear, AI will help you target the wrong people faster. If your messaging is generic, AI will produce more generic messaging at scale. If your outbound already underperforms, an AI SDR will not fix it. It will industrialize the same failure mode and burn your sender reputation in the process.",
+          },
+          {
+            type: "p",
+            text: "The data backs this up. Cold email reply rates collapsed from 6.8% in 2023 to 3.43% in 2026 (Instantly's 2026 benchmark). 16.9% of commercial emails never reach the inbox at all (Validity, 2025). 19% of B2B buyers using GenAI tools say they feel less confident in their purchase decisions because of inaccurate AI information (Forrester, 2026). The volume bet is not failing because the models are bad. It is failing because the system around them is bad.",
+          },
+          {
+            type: "p",
+            text: "AI is powerful when it supports the GTM system. It can research accounts, enrich data, summarize calls, identify signals, draft content, personalize outreach, route leads, and analyze patterns. What it cannot do is replace judgment.",
+          },
+          {
+            type: "p",
+            text: "The winning teams are not asking how to automate everything. They are asking where AI creates leverage and where the human still creates trust. That distinction is the entire game.",
+          },
+        ],
+      },
+      {
+        id: "team",
+        heading: "The future GTM team will be smaller, sharper, and more technical",
+        tocLabel: "The future GTM team",
+        blocks: [
+          {
+            type: "p",
+            text: "The GTM team of the future is not built around large SDR pods and bloated tool stacks. It is built around operators who understand systems.",
+          },
+          {
+            type: "p",
+            text: "ICONIQ's State of Software 2025 report, analyzing 127 software companies, frames the shift cleanly. Cursor reached $100M ARR in one year with around 19 employees. Lovable did it in eight months with 45 people. Perplexity got to 5,000 customers with five sales people. The traditional benchmark for $100M ARR was five plus years and 500 to 700 employees. That benchmark no longer holds. AI native companies under $100M ARR have a median FCF margin of negative 126%, but their burn multiple is 0.4x against 1.8x for non AI peers. They burn more absolute dollars and generate ARR fast enough that capital efficiency is actually better.",
+          },
+          {
+            type: "p",
+            text: "Jason Lemkin of SaaStr ran the most cited operator experiment of the cycle. After two salespeople quit in May 2025, Lemkin doubled down on AI agents instead of replacing them. SaaStr now generates the same revenue with 1.2 humans and 20 AI agents instead of eight to nine human salespeople. One agent autonomously closed a $70K deal at 11 PM on a Saturday. Another closed $100K on New Year's Eve. Lemkin's blunt line: \"Classic email based SDRs are going extinct.\"",
+          },
+          {
+            type: "p",
+            text: "The roles emerging in this new shape are different. GTM Engineers connect tools, signals, data, and workflows. Forward Deployed Engineers, originally a Palantir model now central to Anthropic and OpenAI's enterprise GTM, embed inside customer environments to build production code on site. ICONIQ data shows FDE headcount up 12x. AI Operators manage agents, prompts, and quality assurance. RevOps leaders are becoming closer to system architects than dashboard owners. The best SDRs are not sending hundreds of manual emails. They are managing AI assisted workflows, inspecting outputs, following up with judgment, and focusing on the moments where human trust matters.",
+          },
+          {
+            type: "p",
+            text: "The role is not disappearing. The low skill version of the role is.",
+          },
+        ],
+      },
+      {
+        id: "signals",
+        heading: "Signal based selling becomes the new outbound",
+        tocLabel: "Signal based selling",
+        blocks: [
+          {
+            type: "p",
+            text: "Cold outbound is not dead. Lazy outbound is.",
+          },
+          {
+            type: "p",
+            text: "The future of outbound is not \"send more emails.\" It is \"act on better signals.\" McKinsey's 2025 B2B Buyer Behavior Study found prospects contacted within 48 hours of a buying signal are 4.2x more likely to engage than prospects contacted with no signal context. HubSpot's 2025 State of Outbound report shows 67% of top performing teams now use intent signals to trigger outreach, up from 31% in 2023.",
+          },
+          {
+            type: "p",
+            text: "A signal could be a funding round, a new sales hire, a pricing page visit, a competitor mention, a job change, a product launch, a hiring pattern, a tech stack change, a public complaint. The value is not the signal itself. It is how the system interprets it. UserGems found that newly hired executives spend roughly 70% of their budget in their first 100 days. Outreach that catches that window converts at 14%, against 1.2% for standard cold outreach.",
+          },
+          {
+            type: "p",
+            text: "Bad GTM teams blast every signal. Good GTM teams suppress, merge, prioritize, and route signals before action. The question becomes: should this account be contacted now? Which signal matters most? Which channel should fire? Should sales handle it, or should marketing nurture? Should this be suppressed because another motion is already active? That decision layer is what we covered in [how signal arbitration breaks most AI outbound stacks](/blogs/signal-arbitration-b2b-outbound/). It is the difference between detection and action.",
+          },
+          {
+            type: "p",
+            text: "This is also where GTM becomes infrastructure, not just messaging. Apollo's 2026 framework defines signal based selling around three layers: first party (website behavior, product usage, CRM engagement), second party (G2 reviews, vendor comparisons, partner ecosystem signals), and third party (Bombora, ZoomInfo Intent, TechTarget). No single signal is reliable enough to justify a sales touch. Layered composite scores across three or more signals are.",
+          },
+        ],
+      },
+      {
+        id: "trust",
+        heading: "Social, community, and creator trust become core GTM",
+        tocLabel: "Social, community, and creator trust",
+        blocks: [
+          {
+            type: "p",
+            text: "Social media is no longer a brand channel. It is where buyers actually research.",
+          },
+          {
+            type: "p",
+            text: "LinkedIn is the B2B trust layer. Founders, operators, employees, and customers shape perception there before sales ever enters the conversation. Reddit is the honesty layer. Buyers go there when they want unfiltered opinions, and Reddit threads now rank inside Google AI Overviews and LLM responses, which means Answer Engine Optimization (the new SEO of 2026) treats Reddit as core surface. YouTube is the education layer. Complex products need explanation, proof, and depth. X is still useful for fast moving founder, investor, and operator conversations. WhatsApp and messaging channels are becoming conversion and retention layers in markets where buyers prefer direct conversation.",
+          },
+          {
+            type: "p",
+            text: "The future GTM system does not treat these as separate channels. It treats them as connected surfaces in the same buyer journey.",
+          },
+          {
+            type: "p",
+            text: "Community used to be treated as soft marketing. That is changing. IDC projects 60% of global revenue will come from partner driven models by 2026. Build Club went from 0 to 50,000 plus AI community members in 60 plus cities globally in one year. Crossbeam's Bob Moore coined Ecosystem Led Growth to describe leveraging partner data and relationships to attract, convert, and grow customers. PartnerStack data shows customers acquired through partner channels see 72% lower CAC and stickier retention.",
+          },
+          {
+            type: "p",
+            text: "But community led GTM cannot be faked. You cannot enter a community only to extract leads. People notice. The companies that win participate before they promote. They answer real questions, share useful breakdowns, show proof, and build trust over time. Community is not a shortcut. It is a long term trust asset.",
+          },
+          {
+            type: "p",
+            text: "The same logic applies to creator led and founder led GTM. In a market saturated with AI, people trust people more than brands. The company page matters less than the people behind the company. A strong founder POV can build demand before paid ads ever start. A credible operator can explain the problem better than a polished campaign. A niche creator can influence a specific buyer segment better than a broad media buy. The future of GTM is expert led trust at scale, not faceless brand content.",
+          },
+        ],
+      },
+      {
+        id: "measurement",
+        heading: "Measurement has to evolve",
+        tocLabel: "How measurement evolves",
+        blocks: [
+          {
+            type: "p",
+            text: "The old attribution model is breaking.",
+          },
+          {
+            type: "p",
+            text: "Last click attribution does not explain how someone discovered you through a LinkedIn post, validated you on Reddit, watched your YouTube video, asked ChatGPT about alternatives, and then converted through a direct visit. That journey will not show up cleanly in a dashboard. So GTM measurement has to shift from simple attribution to blended measurement.",
+          },
+          {
+            type: "p",
+            text: "Teams need to track pipeline quality over lead volume, influenced revenue over direct conversions, community sourced demand, creator influenced pipeline, brand search lift, activation and retention, CAC payback, net revenue retention, and incrementality. ICONIQ's 2025 data shows the Rule of 40 has overtaken raw growth and NRR as the most reliable predictor of public market multiples for software companies. Growth still wins at the top, but capital efficiency wins everywhere else.",
+          },
+          {
+            type: "p",
+            text: "The future GTM team will not ask which channel gets credit. It will ask which system creates revenue we would not have won otherwise.",
+          },
+        ],
+      },
+      {
+        id: "breaking",
+        heading: "What is actually breaking right now",
+        tocLabel: "What is actually breaking",
+        blocks: [
+          {
+            type: "p",
+            text: "The story of 2025 and 2026 is not all AI native companies reaching $100M ARR in eight months. Underneath the headlines, a slower set of failures is playing out, and they shape what survives the transition.",
+          },
+          {
+            type: "p",
+            text: "The most visible one is the AI SDR cancellation wave. TechCrunch's March 2025 investigation into 11x.ai (Benchmark and a16z backed at a $350M valuation, around $25M reported ARR) found that 11x had been listing ZoomInfo and Airtable as customers without permission. ZoomInfo's response: \"11x's product performed significantly worse than our SDR employees, and we did not move forward.\" Airtable also denied being a customer. UserGems publicly reports AI SDR tool churn at 50 to 70% annually, roughly double the rate of human SDR turnover. Operator post mortems put the rate at which fully replaced human SDR with AI deployments stick in production at around 2%. Gartner forecasts that over 40% of agentic AI projects will be cancelled by the end of 2027. S&P Global's 2025 survey found 42% of companies had abandoned most of their AI initiatives, up from 17% a year earlier.",
+          },
+          {
+            type: "p",
+            text: "Deliverability is the second collapse. Google and Yahoo's February 2024 bulk sender rules, tightened through 2025, effectively capped volume per warmed domain. Microsoft began enforcement in May 2025. By November 2025, Google moved from soft enforcement to outright SMTP level rejection of senders who breach the published 0.10% spam complaint threshold. At 0.30% domain reputation degrades. At 0.50% recovery takes weeks to months. A weak sequence in 2026 is no longer just a messaging problem. It is a cumulative liability that burns the domains, the brand, and the future pipeline of the company that bought it. A cohort study of fourteen B2B SaaS sales orgs through Q2 2026 found reply rates on AI SDR campaigns specifically decay by more than 60% within eighteen months as recipients pattern match the prose voice and cadence.",
+          },
+          {
+            type: "p",
+            text: "Governance is the third. On May 1, 2026, CISA, NSA, ASD's ACSC, the Canadian Centre for Cyber Security, NCSC NZ, and NCSC UK jointly published Careful Adoption of Agentic Artificial Intelligence Services. The headline directive: until evaluation methods mature, organizations should \"assume that agentic AI systems may behave unexpectedly and plan deployments accordingly, prioritizing resilience, reversibility and risk containment over efficiency gains.\" The IBM State of Salesforce 2025 to 26 report shows only 21% of organizations feel they have the right governance for agentic systems. The other 79% are running agents in production without the trust framework they would demand from any human employee. That gap is where the embarrassing public incidents come from.",
+          },
+          {
+            type: "p",
+            text: "Regulatory exposure is the fourth. The EU AI Act's high risk system requirements take effect August 2, 2026, with penalties up to €35M or 7% of global revenue. Colorado's AI Act took effect in February 2026, with Virginia close behind. State AGs are actively litigating; Pennsylvania settled an AI housing case in 2025. Forrester predicts B2B companies will lose more than $10 billion in enterprise value in 2026 because of ungoverned generative AI use. Gartner expects 2,000 plus \"death by AI\" legal claims by year end. The teams that wired governance in from day one will not feel any of this. The teams that bolted AI on top of broken processes will feel it twice.",
+          },
+          {
+            type: "p",
+            text: "Then there is what Cassie Young called the Gross Retention Apocalypse, a phrase Hayes Davis at Gradient Works has been the loudest voice on. One or more of the AI native companies that hit $100M ARR in months will see their growth suddenly hit an asymptote in 2026 or 2027 as their first cohort of customers reaches renewal. The buying frenzy of 2024 oversold many products. The first churn wall is coming, and the math is hard to argue with. Early sales followed by fire sales is how this kind of crisis kills slowly. The market is going to learn that growth at machine speed does not automatically mean retention at machine speed.",
+          },
+          {
+            type: "p",
+            text: "And then there is the sameness problem. AI makes it easy to produce more. More posts. More emails. More ads. More landing pages. More sequences. When every company uses the same tools, the same prompts, and the same templates, everything starts to sound the same. The viral 11x \"Alice\" agent screenshot, where the agent congratulated a CTO on a fundraising round that never happened, ended in two active customers cancelling within 48 hours of the screenshot hitting LinkedIn. Gartner's 2025 finding that 73% of B2B buyers actively avoid suppliers who send irrelevant outreach is the cleanest single indictment of the sameness trap.",
+          },
+          {
+            type: "p",
+            text: "The brands that win in this environment have sharper opinions, clearer positioning, better proof, and stronger human voice. AI can help distribute the message. It cannot create a point of view for a company that does not have one.",
+          },
+        ],
+      },
+      {
+        heading: "What Rev Orchestra sees",
+        blocks: [
+          {
+            type: "p",
+            text: "The future of GTM is not one trend. It is the convergence of several. AI assisted execution. Signal based outbound. Founder led trust. Community led validation. Creator led distribution. Search everywhere discovery. Privacy safe measurement. Unified RevOps. Smaller, more technical GTM teams.",
+          },
+          {
+            type: "p",
+            text: "Together those create a new GTM architecture. Not a funnel. A system. A modern GTM system listens for signals, interprets buyer intent, chooses the right motion, routes the right action, creates useful content, activates trusted people, measures business impact, and improves continuously.",
+          },
+          {
+            type: "p",
+            text: "That is the runtime Rev Orchestra builds. Inside your existing stack (HubSpot or Salesforce, Slack, Clay, Apollo, n8n, Notion, Claude via MCP) wired into one orchestration runtime. After 90 days you own the runtime, the rules, the agents, and the data. We covered the agents that live inside it in [how AI agents actually work in B2B GTM](/blogs/ai-agents-gtm-stack-2026/). Four founders per quarter, maximum.",
+          },
+        ],
+      },
+      {
+        id: "final",
+        heading: "Final thought",
+        tocLabel: "Final thought",
+        blocks: [
+          {
+            type: "p",
+            text: "The future of GTM will not belong to the teams that automate the most. It will belong to the teams that understand what should be automated, what should stay human, and how every signal connects to revenue.",
+          },
+          {
+            type: "p",
+            text: "The playbooks are broken. The fundamentals are not. Clear ICP still matters. Sharp positioning still matters. Trust still matters. Timing still matters. Customer understanding still matters. The difference is speed.",
+          },
+          {
+            type: "p",
+            text: "In the AI era, weak GTM breaks faster. Strong GTM scales faster. The winners will not just run campaigns. They will build GTM systems.",
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "Why is the old SaaS GTM playbook breaking?",
+        answer:
+          "Three things converged. AI made content, research, and outbound effectively free, which destroyed the volume advantage that the SDR pod model relied on. Around 81% of B2B buyers now complete their vendor selection before ever talking to a sales rep (McKinsey, 2025), which moved most of the decision into channels you do not own. And capital markets stopped paying for growth at all costs, which made bloated GTM headcount a liability rather than an asset. The motion that worked from 2015 to 2022 (hire SDRs, buy data, run sequences, push demos) is not just less effective in 2026. It is structurally mismatched to how buyers actually buy.",
+      },
+      {
+        question: "Will AI replace SDRs and salespeople?",
+        answer:
+          "The cadence based, email blasting SDR role is contracting. Jason Lemkin of SaaStr now runs the same revenue with 1.2 humans and 20 AI agents instead of eight to nine human SDRs. But the role is not disappearing. It is shifting. The best SDRs in 2026 manage AI assisted workflows, inspect outputs, follow up with judgment, and focus on the moments where human trust matters. Gartner predicts that by 2030, 75% of B2B buyers will prefer sales experiences that prioritize human interaction over AI for high stakes commitments. The volume work is being absorbed by agents. The judgment work is becoming more valuable, not less.",
+      },
+      {
+        question: "What is signal based selling and how does it differ from cold outbound?",
+        answer:
+          "Cold outbound contacts accounts that fit the firmographic profile. Signal based selling contacts accounts that just did something specific that suggests buying intent. A funding round, a new sales hire, a pricing page visit, a competitor mention, a job change, a tech stack change. McKinsey's 2025 study found prospects contacted within 48 hours of a buying signal are 4.2x more likely to engage than prospects contacted cold. The shift is from \"who fits our ICP\" to \"who fits our ICP and just did something we should act on within 48 hours.\" The decision layer that arbitrates which signal wins, which channel fires, and which gets suppressed is the load bearing piece. That is the orchestration layer most stacks are missing.",
+      },
+      {
+        question: "How does measurement need to change for the new GTM era?",
+        answer:
+          "Last click attribution is increasingly fiction. A buyer might discover you on LinkedIn, validate you on Reddit, watch your YouTube breakdown, ask ChatGPT for alternatives, and then convert through a direct visit. Last click attribution will credit the direct visit and miss the entire trust building journey. Modern GTM measurement shifts to blended measurement: pipeline quality over lead volume, influenced revenue over direct conversions, community sourced demand, creator influenced pipeline, brand search lift, NRR, and incrementality. ICONIQ's 2025 data shows the Rule of 40 has overtaken raw growth and NRR as the most reliable predictor of public software multiples. The question is no longer which channel gets credit. It is which system creates revenue you would not have won otherwise.",
+      },
+      {
+        question: "What roles will dominate the future GTM team?",
+        answer:
+          "GTM Engineers (connect tools, signals, data, and workflows). Forward Deployed Engineers (embed inside customer environments to build production code on site, originally a Palantir model now central to Anthropic and OpenAI's enterprise GTM). AI Operators (manage agents, prompts, and quality assurance). RevOps leaders who function more like system architects than dashboard owners. AEs and CSMs who are more consultative and technical than commercial. The roles disappearing are the low skill volume roles: cadence based SDRs, manual list building, copy paste outreach. The roles growing are the ones that turn judgment into systems.",
+      },
+      {
+        question: "Where are AI GTM projects actually failing in 2026?",
+        answer:
+          "Several places at once. UserGems puts AI SDR tool churn at 50 to 70% annually. Gartner forecasts that over 40% of agentic AI projects will be cancelled by the end of 2027. S&P Global's 2025 survey found 42% of companies abandoned most of their AI initiatives, up from 17% the year before. Cold email reply rates have collapsed from 6.8% in 2023 to 3.43% in 2026 as Google, Yahoo, and Microsoft tightened bulk sender rules. Only 21% of organizations feel they have the right governance for agentic systems (IBM State of Salesforce 2025 to 26). Forrester predicts B2B companies will lose more than $10 billion in enterprise value in 2026 because of ungoverned generative AI. Cassie Young coined Gross Retention Apocalypse for the first wave of AI native $100M ARR companies that will hit a churn wall in 2026 or 2027 as their earliest customers reach renewal. The category is not broken. The teams using AI without the system underneath are.",
+      },
+      {
+        question: "How long does Rev Orchestra take to build the GTM runtime?",
+        answer:
+          "90 days from kickoff to handover. The build covers signal ingestion, identity resolution, signal arbitration, AI agent execution through Claude via MCP, CRM hygiene rules, attribution wiring, and governance (scoped permissions, audit logs, kill switches). After day 90 you own the runtime, the agents, the rules, and the data. We work with four founders per quarter, maximum.",
+      },
+    ],
+    resources: [
+      {
+        label: "ICONIQ Capital: State of Software 2025",
+        url: "https://www.iconiqcapital.com/growth/insights/state-of-software-2025",
+        note: "Benchmarks for AI native companies, burn multiples, FCF margins, and the Rule of 40.",
+      },
+      {
+        label: "Salesforce: 2026 State of Sales",
+        url: "https://www.salesforce.com/resources/research-reports/state-of-sales/",
+        note: "AI agent adoption, prospecting gains, and tech silo blockers across 4,050 sellers.",
+      },
+      {
+        label: "Lenny's Newsletter: Jason Lemkin on replacing SaaStr's GTM team with AI",
+        url: "https://www.lennysnewsletter.com/p/jason-lemkin-saastr",
+        note: "The 1.2 humans plus 20 AI agents experiment and the death of cadence based SDRs.",
+      },
+      {
+        label: "Gartner: 2026 strategic predictions for GTM",
+        url: "https://www.gartner.com/en/newsroom/press-releases",
+        note: "$15T B2B agent intermediated buying by 2028, 10x agent to seller ratio, 75% human preference by 2030.",
+      },
+      {
+        label: "How AI agents actually work in B2B GTM",
+        url: "/blogs/ai-agents-gtm-stack-2026/",
+        note: "What lives inside the GTM runtime: model, toolset, memory, governance.",
+      },
+      {
+        label: "How signal arbitration breaks most AI outbound stacks",
+        url: "/blogs/signal-arbitration-b2b-outbound/",
+        note: "The decision layer that turns detection into action.",
+      },
+      {
+        label: "Why outbound stopped working in 2026",
+        url: "/blogs/outbound-2026-gtm-systems-problem/",
+        note: "Outbound as a systems problem, where the new motion lives operationally.",
+      },
+    ],
+  },
+  {
+    slug: "ai-agents-gtm-stack-2026",
+    badge: "Agent Architecture",
+    category: "AGENTIC GTM",
+    title: "How AI agents actually work in B2B GTM",
+    metaDescription:
+      "Salesforce says 92% of sellers with AI agents see prospecting gains. McKinsey says fewer than 10% have scaled them. Gartner says only ~130 of the thousands of agentic vendors are real. All three are true at once. Here is what an AI agent in B2B GTM actually is, how it works under the hood, why most autonomous SDR projects still fail, and the stack pattern that is winning in 2026.",
+    date: "MAY 08, 2026",
+    isoDate: "2026-05-08",
+    readTime: "9 min read",
+    author: {
+      name: "Danny",
+      initial: "D",
+      bio: "Founder of Rev Orchestra. Builds AI orchestrated GTM systems for B2B founders. 12 builds shipped, 4 founders per quarter.",
+      url: "https://www.linkedin.com/in/dannydulina",
+    },
+    audio: {
+      title: "How AI agents actually work in B2B GTM",
+      durationLabel: "9:00",
+    },
+    cta: {
+      tag: "Agent Architecture",
+      title: "Want the AI agent runtime",
+      titleAccent: "Built Inside Your Existing Stack in 90 Days?",
+      body: "Rev Orchestra wires the model, toolset, memory, and governance into one runtime that sits inside your CRM and channels. You own it permanently after handover. Four founders per quarter.",
+    },
+    sections: [
+      {
+        id: "state",
+        tocLabel: "Where the category stands today",
+        blocks: [
+          {
+            type: "p",
+            text: "The current state of AI agents in B2B GTM is contradictory if you read it straight off vendor decks.",
+          },
+          {
+            type: "p",
+            text: "Salesforce's 2026 State of Sales report says 87% of sales organizations now use AI in some form, and 92% of sellers running AI agents say they benefit prospecting. McKinsey's State of AI in 2025 says fewer than 10% of organizations have actually scaled AI agents to deliver measurable value in any function. Gartner, in a June 2025 statement, estimated that of the thousands of vendors marketing themselves as agentic AI, roughly 130 are real. The rest are practicing what Gartner now calls agent washing. They rebadge chatbots, RPA scripts, and AI assistants under the agentic label because the category sells. The same forecast predicts that over 40% of agentic AI projects will be cancelled by the end of 2027.",
+          },
+          {
+            type: "p",
+            text: "All three are true at once. Adoption is mainstream. Scaled production is rare. The gap between buying an agent and shipping one in production is much larger than the marketing suggests.",
+          },
+          {
+            type: "p",
+            text: "This piece is about what separates the two.",
+          },
+        ],
+      },
+      {
+        id: "what-it-is",
+        heading: "What an AI agent in GTM actually is",
+        tocLabel: "What an agent actually is",
+        blocks: [
+          {
+            type: "p",
+            text: "The phrase AI agent gets used loosely. Most B2B founders use it interchangeably with AI SDR, chatbot, or automation. It is none of those exactly.",
+          },
+          {
+            type: "p",
+            text: "A working definition: a piece of software that reads context about an account, reasons about what to do next, uses tools to act on that decision, and writes the result back into a system the next agent or human can pick up.",
+          },
+          {
+            type: "p",
+            text: "Three things separate an agent from a workflow. An agent reasons about what to do, instead of executing a fixed sequence. It uses tools (CRM API, search, calendar, channel) the way a person would. And it adapts to context. What the prospect did yesterday, what a different rep already touched, what the orchestrator says is in scope right now.",
+          },
+          {
+            type: "p",
+            text: "Adam Alfano, EVP of Sales at Salesforce, said it cleanly in the 2026 State of Sales: \"Standalone agents without comprehensive customer context tend to fail. To get accurate results, agents need the full picture. Otherwise, you get garbage outputs.\" The model is rarely where the failure starts. Context and governance usually are.",
+          },
+        ],
+      },
+      {
+        id: "anatomy",
+        heading: "The four parts every agent has",
+        tocLabel: "The four parts of an agent",
+        blocks: [
+          {
+            type: "p",
+            text: "Strip the marketing and every working AI agent in GTM is built from four parts. If any one of them is missing, the system is a demo, not a production agent.",
+          },
+          {
+            type: "p",
+            text: "A model. The reasoning engine. Claude, GPT, Gemini. This is what reads the prompt, looks at the context, and decides what to do next. The model picks the moves. It does not choose what data to look at or what tools it has access to.",
+          },
+          {
+            type: "p",
+            text: "A toolset. The things the agent is allowed to do in the world. Read a CRM record. Draft an email. Post to Slack. Update a field. Each tool is a defined function the agent is allowed to call, with a defined input and output. The toolset is also where governance lives. An agent can only do what its tools let it do.",
+          },
+          {
+            type: "p",
+            text: "Memory. What the agent knows about this account, this conversation, this prospect. Short term memory is what fits in the current context window: the prompt, the brief, prior tool results. Long term memory lives in the CRM, the conversation log, the prior agent outputs. The orchestrator decides what to load.",
+          },
+          {
+            type: "p",
+            text: "Governance. What the agent is allowed to do, what requires human approval, when to stop. Most teams skip this part on day one and pay for it on day thirty.",
+          },
+        ],
+      },
+      {
+        id: "context",
+        heading: "What an agent reads before it acts",
+        tocLabel: "What it reads",
+        blocks: [
+          {
+            type: "p",
+            text: "The output is only as good as the context. Most agent failures in GTM start here, not in the model.",
+          },
+          {
+            type: "p",
+            text: "On a typical account run, an agent reads CRM state (last touch, owner, deal stage, prior reasons closed lost), conversation history (emails, call summaries, Slack threads tagged to the account), buying signals (pricing visits, hiring patterns, technographic changes, executive moves), and public sources (LinkedIn activity, recent news, public filings). That is roughly the same context a thoughtful human would gather, just faster.",
+          },
+          {
+            type: "p",
+            text: "Connecting an agent to all those sources used to be the hard part. Model Context Protocol (MCP), released by Anthropic in November 2024, gives agents a standard way to plug into external systems without bespoke integration work. By December 2025 it had been donated to the Linux Foundation's Agentic AI Foundation and adopted across OpenAI and Google's stacks. The N times M integration problem (every model needing custom plumbing to every tool) is now closer to N plus M.",
+          },
+          {
+            type: "p",
+            text: "What MCP does not solve is the data underneath. Salesforce's 2026 numbers tell that part: 51% of sales leaders say tech silos delay or limit AI initiatives, 19% of company data is inaccessible to leadership, and 70% of data and analytics leaders say the most valuable insights are trapped in unstructured data. The agent only knows what its tools can reach.",
+          },
+        ],
+      },
+      {
+        id: "decisions",
+        heading: "How an agent decides what to do next",
+        tocLabel: "How it decides",
+        blocks: [
+          {
+            type: "p",
+            text: "An agent does not run a fixed script. It runs a reasoning loop.",
+          },
+          {
+            type: "p",
+            text: "Read the prompt and the context the orchestrator loaded. Decide which tools to use, in which order. Call a tool, get a result. Reason about the result. Was it what was expected? Is more context needed? Then either call another tool, return a finished output, or escalate to a human.",
+          },
+          {
+            type: "p",
+            text: "That loop is simple in concept and hard in practice. The hardest part is which agent runs on which account. That is not the agent's decision. That is the orchestrator's. Agents reason inside a scope. Orchestrators decide the scope. We covered that side of the system in [how signal arbitration breaks most AI outbound stacks](/blogs/signal-arbitration-b2b-outbound/).",
+          },
+          {
+            type: "p",
+            text: "The other hard part is knowing when to stop. An agent that cannot tell when it has enough information will keep calling tools, burning tokens, and eventually return something it made up. Lower input tokens per task is one of the cleanest indicators of a well scoped agent. Gartner introduced this in January 2026 as Context Memory Optimization Score. Reasoning debt is real, and you pay for it on the bill.",
+          },
+        ],
+      },
+      {
+        id: "failures",
+        heading: "Why most autonomous AI SDR projects still fail",
+        tocLabel: "Why most still fail",
+        blocks: [
+          {
+            type: "p",
+            text: "The most cautionary tale in the category is also the most public one.",
+          },
+          {
+            type: "p",
+            text: "In March 2025, TechCrunch reported that 11x.ai, the most funded AI SDR startup on the planet at $74M raised across Benchmark and a16z, had been listing ZoomInfo as a customer for months. ZoomInfo had run the product for one month, called it \"significantly worse than our SDR employees,\" and refused to renew. Airtable also denied being a customer. By the time the three month break clauses cleared, internal sources estimated only about $3M of a reported $14M ARR survived.",
+          },
+          {
+            type: "p",
+            text: "The viral moment was 11x's \"Alice\" agent, which emailed a CTO at a mid market SaaS company opening with a fabricated compliment about a fundraising round that never happened. The screenshot hit LinkedIn. Four thousand reactions, six hundred comments, two of them from active 11x customers. One canceled within 48 hours.",
+          },
+          {
+            type: "p",
+            text: "That story is not really about 11x. It is about what happens when you take a broken GTM motion, wrap it in autonomous AI, and turn the volume up by fifty.",
+          },
+          {
+            type: "p",
+            text: "The structural numbers underneath confirm the pattern. UserGems reports AI SDR tool churn at 50 to 70% annually. Operator post mortems put the rate at which fully replaced human SDR with AI deployments stick in production at around 2%. Gartner's 2025 finding that 73% of B2B buyers actively avoid suppliers who send irrelevant outreach is the cleanest single indictment of the volume thesis ever published. The model is rarely the problem. The system around it usually is.",
+          },
+        ],
+      },
+      {
+        id: "whats-working",
+        heading: "What's actually working in 2026",
+        tocLabel: "What's actually working",
+        blocks: [
+          {
+            type: "p",
+            text: "If autonomous AI SDR projects are failing at scale, what is succeeding?",
+          },
+          {
+            type: "p",
+            text: "The clearest enterprise example is Snowflake's internal GTM AI Assistant. Started late February 2025 with a narrow RAG goal, rolled out by mid-2025 to over 6,000 sales and marketing users. By year-end the assistant had answered more than 330,000 questions, with internal NPS over 90% and roughly 90% adoption across primary personas. Snowflake's own framing of why it worked: they treated quality as P(-1). Curated trusted content rather than crawling everything. The first impression was reliable, so trust compounded.",
+          },
+          {
+            type: "p",
+            text: "Salesforce ran a similar playbook against dormant CRM data. Its internal SDR agent contacted 130,000 untouched leads and surfaced 3,200 opportunities in four months. Adam Alfano described those leads as falling to the floor like sawdust before the agent started sweeping them up and sifting for gold. That works because Salesforce already had the context the agent needed. The agent caught what was already on the floor.",
+          },
+          {
+            type: "p",
+            text: "The pattern across operators is consistent. Michael Saruggia, who has trained over 900 GTM engineers, describes the configuration that wins as one operator running the intelligence layer (research, enrichment, targeting, messaging) while a smaller SDR team executes outreach with much richer context per account. Teams running this typically book 2x to 3x more meetings per SDR while reducing headcount cost. Reply rates back this up: signal personalized outreach against a sharply defined ICP runs 15% to 25% (Instantly, Belkins, 2026), against a 1.7% baseline on cold email (Salesloft, 2025).",
+          },
+          {
+            type: "p",
+            text: "The lift is not in the model or the prose. It is in the targeting, the context, and the discipline of who runs what when.",
+          },
+        ],
+      },
+      {
+        id: "stack",
+        heading: "The agent stack pattern that wins",
+        tocLabel: "The stack that wins",
+        blocks: [
+          {
+            type: "p",
+            text: "A working AI agent setup in B2B GTM is not one big autonomous agent. It is three to five narrow specialists, each doing one job, coordinated by an orchestrator that decides which one runs and when.",
+          },
+          {
+            type: "p",
+            text: "Across the last twelve Rev Orchestra builds, the same four roles keep showing up. A research agent that synthesizes account context across CRM, intent feeds, and public sources. A drafting agent that turns context into first pass outreach drafts (email, LinkedIn, rep tasks) and never sends autonomously. A reply triage agent that classifies inbound responses into intent buckets and routes them. A CRM hygiene agent that keeps the system of record clean enough for the other three to trust.",
+          },
+          {
+            type: "p",
+            text: "This pattern outperforms autonomous AI SDRs because the failure surface is smaller per agent, the governance is per agent, and the kill switches are per agent. When something goes wrong at scale (and it will), you turn off one agent and the rest keeps working.",
+          },
+          {
+            type: "p",
+            text: "The orchestrator that sits above the agents is the part most teams skip. It decides which agent runs on which account, with which context loaded, with which human approval gate. Without it, more agents just produce more conflict.",
+          },
+        ],
+      },
+      {
+        id: "humans",
+        heading: "Where humans stay in the loop",
+        tocLabel: "Where humans stay",
+        blocks: [
+          {
+            type: "p",
+            text: "The rule of thumb for human in the loop checkpoints: anything that cannot be cheaply undone needs a human gate.",
+          },
+          {
+            type: "p",
+            text: "Sending a first touch outbound email to an enterprise CFO needs human approval. Merging two CRM records needs human approval. Replying autonomously to a positive intent reply needs human approval, or a separate scheduling agent that only books meetings and never freelances. Re enriching an account from public data is reversible and low cost, so the agent runs on autopilot.",
+          },
+          {
+            type: "p",
+            text: "That principle has a public source now. On May 1, 2026, CISA, NSA, ASD's ACSC, the Canadian Centre for Cyber Security, NCSC-NZ, and NCSC-UK jointly published Careful Adoption of Agentic Artificial Intelligence Services. The headline directive: until evaluation methods mature, organizations should \"assume that agentic AI systems may behave unexpectedly and plan deployments accordingly, prioritizing resilience, reversibility and risk containment over efficiency gains.\" Reversibility is the operative word.",
+          },
+          {
+            type: "p",
+            text: "The IBM State of Salesforce 2025 to 26 report makes the gap visible: only 21% of organizations feel they have the right governance for agentic systems. The other 79% are running agents in production without the trust framework they would demand from any human employee.",
+          },
+        ],
+      },
+      {
+        heading: "What Rev Orchestra sees",
+        blocks: [
+          {
+            type: "p",
+            text: "Most founders we meet have already bought a model, a couple of tools, and a CRM. What they lack is the runtime that wires those pieces together. Which agent runs. On which account. With which context loaded. With which human approval gate.",
+          },
+          {
+            type: "p",
+            text: "That is what Rev Orchestra builds. Inside your existing stack (HubSpot or Salesforce, Slack, Clay, Apollo, n8n, Notion, Claude via MCP) wired into one runtime that decides what runs, when, and with which guardrails.",
+          },
+          {
+            type: "p",
+            text: "After 90 days the runtime, the agents, the rules, and the data are yours. Four founders per quarter, maximum.",
+          },
+        ],
+      },
+      {
+        id: "final-thoughts",
+        heading: "Final thoughts",
+        tocLabel: "Final thoughts",
+        blocks: [
+          {
+            type: "p",
+            text: "AI agents in B2B GTM are real. They work. They are not the autonomous SDRs vendors are selling, and they are not chatbots either. They are narrow specialists that read context, reason inside a scope, use tools to act, and write structured outputs into a system humans can audit.",
+          },
+          {
+            type: "p",
+            text: "The teams getting durable value from them in 2026 are the ones that scoped them tightly, gave each one a small toolset, treated context as a first class system, and wired them into a runtime that decides when each one runs. Everyone else is buying tools and calling them agents.",
+          },
+          {
+            type: "p",
+            text: "That is the gap.",
+          },
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "What is an AI agent in B2B GTM?",
+        answer:
+          "An AI agent in B2B GTM is a piece of software that reads context about an account, reasons about what to do next, uses tools (like reading a CRM record, drafting a message, posting to Slack) to act on that decision, and writes the result back so the next agent or human can pick up. It is not a chatbot. It is not an autonomous AI SDR. It is a narrow specialist with a defined toolset, defined memory, and defined governance.",
+      },
+      {
+        question: "Why do Salesforce and McKinsey report such different numbers on AI agent adoption?",
+        answer:
+          "Salesforce's 2026 State of Sales says 92% of sellers running AI agents see prospecting gains. McKinsey's State of AI in 2025 says fewer than 10% of organizations have scaled AI agents in any function. Both are honest. Salesforce is asking deployed users (where the gains are real). McKinsey is asking organizations at the entity level (where scaling is rare). Adoption is mainstream. Production grade scaling is the part most teams have not solved.",
+      },
+      {
+        question: "What are the four parts every AI agent has?",
+        answer:
+          "A model (the reasoning engine, like Claude or GPT). A toolset (the things the agent is allowed to do in the world). Memory (what the agent knows about this account, conversation, and prior touches). Governance (what the agent is allowed to do autonomously and what requires human approval). If any of those four are missing, the system is a demo, not a production agent.",
+      },
+      {
+        question: "Why do most autonomous AI SDR projects fail?",
+        answer:
+          "Three reasons. Hallucination at scale (the 11x Alice agent emailing a CTO with a fabricated fundraising compliment is the canonical 2025 example). Trust decay (Gartner reports 73% of B2B buyers actively avoid suppliers who send irrelevant outreach, and the volume thesis directly violates that constraint). Tool churn (UserGems puts AI SDR tool churn at 50 to 70% annually, and operator post mortems put the rate at which fully replaced human SDR with AI deployments stick in production at around 2%). The model is rarely the problem. The system around it usually is.",
+      },
+      {
+        question: "What does a working AI agent stack in B2B GTM look like?",
+        answer:
+          "Three to five narrow specialists, not one big autonomous agent. Typically: a research agent that produces account briefs, a drafting agent that turns briefs into draft messages, a reply triage agent that classifies and routes inbound, and a CRM hygiene agent that keeps the system of record clean. Each one has a tight scope, a defined toolset, and a kill switch. An orchestrator decides which one runs and when.",
+      },
+      {
+        question: "Where should humans stay in the loop with AI agents?",
+        answer:
+          "Anywhere the action is hard to reverse. First touch outbound to an enterprise contact, merging or deleting CRM records, autonomous replies to positive intent, anything sent under your brand to a high value account. The CISA and Five Eyes joint guidance from May 1, 2026 phrased this as prioritizing resilience, reversibility, and risk containment over efficiency gains. Reversibility is the operative word, and it is the right framework.",
+      },
+      {
+        question: "How long does Rev Orchestra take to build the agent runtime?",
+        answer:
+          "90 days from kickoff to handover. The build covers the model layer (Claude via MCP), the toolset (CRM, Slack, channels, signal sources), memory (CRM and conversation history), and governance (scoped permissions, audit logs, kill switches). After day 90 you own the runtime, the agents, the rules, and the data. We work with four founders per quarter, maximum.",
+      },
+    ],
+    resources: [
+      {
+        label: "Anthropic: Model Context Protocol (MCP)",
+        url: "https://www.anthropic.com/news/model-context-protocol",
+        note: "The open protocol that lets agents access CRM, tools, and data sources without bespoke integrations.",
+      },
+      {
+        label: "Gartner: Over 40% of agentic AI projects will be canceled by 2027",
+        url: "https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027",
+        note: "Gartner's June 2025 statement on agent washing and the cancellation forecast.",
+      },
+      {
+        label: "Salesforce: 2026 State of Sales",
+        url: "https://www.salesforce.com/resources/research-reports/state-of-sales/",
+        note: "AI agent adoption, prospecting gains, tech silo blockers, and the Adam Alfano quotes referenced above.",
+      },
+      {
+        label: "McKinsey: The State of AI in 2025",
+        url: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai",
+        note: "Adoption vs scaling data and the EBIT impact reality check.",
+      },
+      {
+        label: "CISA: Careful Adoption of Agentic AI Services (May 2026)",
+        url: "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-121a",
+        note: "Five Eyes joint guidance on agentic AI security, reversibility, and human in the loop principles.",
+      },
+      {
+        label: "TechCrunch: 11x.ai customer claims investigation (March 2025)",
+        url: "https://techcrunch.com/2025/03/24/11x-ai-customer-claims/",
+        note: "The reporting on inflated customer lists, retention, and break clauses behind the cautionary tale.",
+      },
+      {
+        label: "How signal arbitration breaks most AI outbound stacks",
+        url: "/blogs/signal-arbitration-b2b-outbound/",
+        note: "The orchestrator side of the agent runtime.",
+      },
+    ],
+  },
+  {
     slug: "outbound-2026-gtm-systems-problem",
     badge: "GTM Strategy",
     category: "DEMAND GENERATION",
@@ -852,7 +1544,7 @@ export default async function BlogDetailPage({
   const { article: articleLd, faqLd } = buildJsonLd(post);
 
   return (
-    <main className="w-full bg-black">
+    <main className="w-full bg-white text-[rgb(14,15,17)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
@@ -869,10 +1561,10 @@ export default async function BlogDetailPage({
       <section className="relative w-full pt-[140px] pb-20 overflow-hidden">
         {/* Grid background */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-70"
+          className="absolute inset-0 pointer-events-none opacity-100"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
+              "linear-gradient(rgba(0,0,0,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.045) 1px, transparent 1px)",
             backgroundSize: "80px 80px",
           }}
         />
@@ -920,7 +1612,7 @@ export default async function BlogDetailPage({
               {post.date}
             </p>
             <h1
-              className="font-semibold text-white leading-[110%] tracking-[-0.02em] mx-auto"
+              className="font-semibold text-[rgb(14,15,17)] leading-[110%] tracking-[-0.02em] mx-auto"
               style={{ fontSize: "clamp(32px, 5.2vw, 60px)", maxWidth: 900 }}
             >
               {post.title}
@@ -941,22 +1633,22 @@ export default async function BlogDetailPage({
                     href={post.author.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-[rgba(255,255,255,0.85)] font-medium hover:text-white"
+                    className="text-sm text-[rgba(14,15,17,0.85)] font-medium hover:text-black"
                   >
                     {post.author.name}
                   </a>
                 ) : (
-                  <p className="text-sm text-[rgba(255,255,255,0.85)] font-medium">
+                  <p className="text-sm text-[rgba(14,15,17,0.85)] font-medium">
                     {post.author.name}
                   </p>
                 )}
                 {post.author.bio && (
-                  <p className="text-xs text-[rgba(255,255,255,0.5)] mt-0.5 max-w-[420px]">
+                  <p className="text-xs text-[rgba(14,15,17,0.55)] mt-0.5 max-w-[420px]">
                     {post.author.bio}
                   </p>
                 )}
               </div>
-              <span className="text-xs text-[rgba(255,255,255,0.4)] ml-2">
+              <span className="text-xs text-[rgba(14,15,17,0.45)] ml-2">
                 · <time dateTime={post.isoDate}>{post.date}</time> · {post.readTime}
               </span>
             </div>
@@ -986,8 +1678,8 @@ export default async function BlogDetailPage({
                 />
               )}
 
-              <article className="prose prose-invert max-w-none mt-2">
-                <div className="flex flex-col gap-8 text-[15px] text-[rgba(255,255,255,0.72)] leading-[185%]">
+              <article className="prose max-w-none mt-2">
+                <div className="flex flex-col gap-8 text-[15px] text-[rgba(14,15,17,0.78)] leading-[185%]">
                   {post.sections.map((section, i) => (
                     <div
                       key={i}
@@ -996,7 +1688,7 @@ export default async function BlogDetailPage({
                     >
                       {section.heading && (
                         <h2
-                          className="text-white font-semibold mt-4"
+                          className="text-[rgb(14,15,17)] font-semibold mt-4"
                           style={{
                             fontSize: "clamp(22px, 2.4vw, 30px)",
                             lineHeight: "125%",
@@ -1027,10 +1719,10 @@ export default async function BlogDetailPage({
                         return (
                           <div
                             key={j}
-                            className="my-2 rounded-xl border border-[rgba(255,255,255,0.08)] overflow-hidden"
+                            className="my-2 rounded-xl border border-[rgba(0,0,0,0.1)] overflow-hidden"
                           >
                             {block.caption && (
-                              <div className="px-5 py-3 bg-[rgba(232,86,0,0.06)] border-b border-[rgba(255,255,255,0.08)]">
+                              <div className="px-5 py-3 bg-[rgba(232,86,0,0.06)] border-b border-[rgba(0,0,0,0.08)]">
                                 <p className="text-xs uppercase tracking-[0.12em] text-accent-orange font-semibold">
                                   {block.caption}
                                 </p>
@@ -1043,7 +1735,7 @@ export default async function BlogDetailPage({
                                     {block.table.headers.map((h, k) => (
                                       <th
                                         key={k}
-                                        className="text-left text-white font-semibold px-5 py-3 bg-[rgb(12,12,15)] border-b border-[rgba(255,255,255,0.08)]"
+                                        className="text-left text-[rgb(14,15,17)] font-semibold px-5 py-3 bg-[rgb(245,245,247)] border-b border-[rgba(0,0,0,0.08)]"
                                       >
                                         {h}
                                       </th>
@@ -1056,7 +1748,7 @@ export default async function BlogDetailPage({
                                       {row.map((cell, c) => (
                                         <td
                                           key={c}
-                                          className="px-5 py-3 align-top border-b border-[rgba(255,255,255,0.05)] text-[rgba(255,255,255,0.78)]"
+                                          className="px-5 py-3 align-top border-b border-[rgba(0,0,0,0.06)] text-[rgba(14,15,17,0.78)]"
                                         >
                                           {cell}
                                         </td>
@@ -1077,10 +1769,10 @@ export default async function BlogDetailPage({
               {post.faq && post.faq.length > 0 && (
                 <section
                   id="faq"
-                  className="mt-16 scroll-mt-24 rounded-2xl border border-[rgba(255,255,255,0.12)] bg-black p-8"
+                  className="mt-16 scroll-mt-24 rounded-2xl border border-[rgba(0,0,0,0.1)] bg-[rgb(248,248,250)] p-8"
                 >
                   <h2
-                    className="text-white font-semibold mb-6"
+                    className="text-[rgb(14,15,17)] font-semibold mb-6"
                     style={{
                       fontSize: "clamp(22px, 2.4vw, 30px)",
                       lineHeight: "125%",
@@ -1093,12 +1785,12 @@ export default async function BlogDetailPage({
                     {post.faq.map((item, i) => (
                       <div
                         key={i}
-                        className="flex flex-col gap-2 pb-6 border-b border-[rgba(255,255,255,0.06)] last:border-b-0 last:pb-0"
+                        className="flex flex-col gap-2 pb-6 border-b border-[rgba(0,0,0,0.08)] last:border-b-0 last:pb-0"
                       >
-                        <h3 className="text-white text-base font-semibold">
+                        <h3 className="text-[rgb(14,15,17)] text-base font-semibold">
                           {item.question}
                         </h3>
-                        <p className="text-sm text-[rgba(255,255,255,0.7)] leading-[180%]">
+                        <p className="text-sm text-[rgba(14,15,17,0.72)] leading-[180%]">
                           {item.answer}
                         </p>
                       </div>
@@ -1108,8 +1800,8 @@ export default async function BlogDetailPage({
               )}
 
               {post.resources && post.resources.length > 0 && (
-                <div className="mt-16 rounded-2xl border border-[rgba(255,255,255,0.12)] bg-black p-8">
-                  <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
+                <div className="mt-16 rounded-2xl border border-[rgba(0,0,0,0.1)] bg-[rgb(248,248,250)] p-8">
+                  <h3 className="text-xl font-semibold text-[rgb(14,15,17)] mb-6 flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-orange" />
                     Resources & Further Reading
                   </h3>
@@ -1125,7 +1817,7 @@ export default async function BlogDetailPage({
                           {r.label}
                         </a>
                         {r.note && (
-                          <span className="text-xs text-[rgba(255,255,255,0.45)] leading-[160%]">
+                          <span className="text-xs text-[rgba(14,15,17,0.55)] leading-[160%]">
                             {r.note}
                           </span>
                         )}
@@ -1143,16 +1835,16 @@ export default async function BlogDetailPage({
             <div className="hidden lg:block">
               <div className="sticky top-[120px] flex flex-col gap-8">
                 <ShareArticle title={post.title} />
-                <div className="h-px bg-[rgba(255,255,255,0.08)]" />
+                <div className="h-px bg-[rgba(0,0,0,0.08)]" />
                 <BlogSubscribe />
               </div>
             </div>
 
             {/* Mobile: share + subscribe stacked below article */}
             <div className="lg:hidden flex flex-col gap-8 mt-4">
-              <div className="h-px bg-[rgba(255,255,255,0.08)]" />
+              <div className="h-px bg-[rgba(0,0,0,0.08)]" />
               <ShareArticle title={post.title} />
-              <div className="h-px bg-[rgba(255,255,255,0.08)]" />
+              <div className="h-px bg-[rgba(0,0,0,0.08)]" />
               <BlogSubscribe />
             </div>
           </div>

@@ -51,7 +51,7 @@ const trustItems = [
 
 export default function Compliance() {
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[rgb(8,8,15)]">
+    <section className="relative w-full py-24 md:py-32 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1200px] mx-auto px-5">
         <Reveal variants={flipUp}>
           <div className="text-center mb-6" style={{ perspective: "1000px" }}>
@@ -87,7 +87,7 @@ export default function Compliance() {
           {trustItems.map((item, i) => (
             <StaggerItem key={i} variants={zoomRotate}>
               <motion.div
-                className="rounded-[20px] bg-[rgb(14,15,17)] border border-[rgba(255,255,255,0.06)] p-5 md:p-6 h-full"
+                className="rounded-[20px] bg-[rgb(0, 0, 0)] border border-[rgba(255,255,255,0.06)] p-5 md:p-6 h-full"
                 whileHover={{ borderColor: "rgba(232,86,0,0.15)", y: -3 }}
                 transition={{ duration: 0.3 }}
               >

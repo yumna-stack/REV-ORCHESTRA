@@ -43,7 +43,7 @@ export function Badge({ text }: { text: string }) {
 
 export function PageHero({ badge, title, subtitle }: { badge: string; title: string; subtitle: string }) {
   return (
-    <section className="relative w-full pt-[140px] pb-20 bg-[rgb(14,15,17)] overflow-hidden">
+    <section className="relative w-full pt-[140px] pb-20 bg-[rgb(0, 0, 0)] overflow-hidden">
       {/* Grid background */}
       <div className="absolute inset-0 pointer-events-none" style={{
         backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",

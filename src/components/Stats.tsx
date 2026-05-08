@@ -14,7 +14,7 @@ const CAL_URL = "https://cal.com/danny-revorchestra/discovery";
 
 /* ── Exact Cryps color tokens from Framer MCP ── */
 const COLORS = {
-  lightBlack: "rgb(14, 15, 17)",
+  lightBlack: "rgb(0, 0, 0)",
   preHeader: "rgb(8, 8, 10)",
   lightOutline: "rgba(255, 255, 255, 0.03)",
   outline: "rgb(41, 42, 43)",
@@ -232,7 +232,7 @@ export default function Stats() {
   const leftOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.4, 1, 1, 0.6]);
 
   return (
-    <section ref={sectionRef} id="stats" className="relative w-full py-28 bg-[rgb(14,15,17)]">
+    <section ref={sectionRef} id="stats" className="relative w-full py-28 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-14 items-start">
           {/* LEFT — scroll-linked opacity */}
@@ -312,14 +312,6 @@ An AI powered operations system we customize around your workflow and deploy ins
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </motion.a>
-                <div className="flex items-center">
-                  <div className="flex -space-x-2">
-                    {avatarColors.map((color, i) => (
-                      <div key={i} className="w-8 h-8 rounded-full border-2 border-[rgb(14,15,17)]" style={{ background: color }} />
-                    ))}
-                  </div>
-                  <span className="ml-3 text-sm text-[rgba(255,255,255,0.5)] font-medium">8M</span>
-                </div>
               </div>
             </Reveal>
           </motion.div>

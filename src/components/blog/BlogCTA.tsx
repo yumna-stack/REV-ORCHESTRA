@@ -143,8 +143,9 @@ export default function BlogCTA({
         transition={{ type: "spring", stiffness: 280, damping: 24 }}
         className="relative w-full overflow-hidden rounded-2xl border"
         style={{
-          backgroundColor: "rgb(0, 0, 0)",
-          borderColor: "rgba(232, 86, 0, 0.25)",
+          backgroundColor: "rgb(14, 15, 17)",
+          borderColor: "rgba(232, 86, 0, 0.35)",
+          boxShadow: "0 30px 60px -30px rgba(232, 86, 0, 0.35)",
         }}
       >
         {/* Right-side orbit + orbiting tech logos + orbiting glow ball */}

@@ -42,10 +42,10 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
 
   return (
     <aside aria-label="On this page">
-      <p className="text-[11px] font-semibold tracking-[0.16em] text-[rgba(255,255,255,0.45)] uppercase mb-4 pl-4">
+      <p className="text-[11px] font-semibold tracking-[0.16em] text-[rgba(14,15,17,0.5)] uppercase mb-4 pl-4">
         On this page
       </p>
-      <nav className="border-l border-[rgba(255,255,255,0.08)]">
+      <nav className="border-l border-[rgba(0,0,0,0.1)]">
         <ul className="flex flex-col">
           {items.map((item) => {
             const isActive = active === item.id;
@@ -57,8 +57,8 @@ export default function TableOfContents({ items }: { items: TocItem[] }) {
                   onClick={(e) => handleClick(e, item.id)}
                   className={`relative block py-2 pr-3 ${baseIndent} text-sm leading-[150%] transition-colors duration-200 ${
                     isActive
-                      ? "text-white font-medium"
-                      : "text-[rgba(255,255,255,0.45)] hover:text-white"
+                      ? "text-[rgb(14,15,17)] font-medium"
+                      : "text-[rgba(14,15,17,0.5)] hover:text-[rgb(14,15,17)]"
                   }`}
                 >
                   <span

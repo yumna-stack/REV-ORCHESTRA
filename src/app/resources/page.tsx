@@ -51,7 +51,7 @@ const resources = [
 
 export default function ResourcesPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       <PageHero
@@ -60,7 +60,7 @@ export default function ResourcesPage() {
         subtitle="Download it. Read it. Build it. No gating, no email walls, just useful stuff."
       />
 
-      <section className="w-full py-16 bg-[rgb(14,15,17)]">
+      <section className="w-full py-16 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[1000px] mx-auto px-5">
           <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {resources.map((r, i) => (

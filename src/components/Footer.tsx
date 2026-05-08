@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -76,17 +77,57 @@ const itemVariants = {
   },
 };
 
-const linkHover = {
-  x: 4,
-  color: "rgba(255,255,255,1)",
-  transition: { duration: 0.2 },
-};
-
 export default function Footer() {
+  const pathname = usePathname();
+  const isLight = /^\/blogs\/[^/]+/.test(pathname ?? "");
+
+  /* Theme tokens — flip on blog detail pages to match the white reading view */
+  const t = isLight
+    ? {
+        bg: "bg-white",
+        topBorder: "bg-[rgb(225,226,228)]",
+        wordmark: "text-[rgb(14,15,17)]",
+        body: "text-[rgba(14,15,17,0.55)]",
+        socialBg: "bg-[rgba(0,0,0,0.04)]",
+        socialBorder: "border-[rgba(0,0,0,0.08)]",
+        socialIcon: "text-[rgba(14,15,17,0.5)]",
+        emailLink: "text-[rgba(14,15,17,0.45)]",
+        heading: "text-[rgb(14,15,17)]",
+        link: "text-[rgba(14,15,17,0.55)]",
+        linkHover: "rgba(14,15,17,1)",
+        bottomBorder: "border-[rgb(225,226,228)]",
+        copy: "text-[rgba(14,15,17,0.45)]",
+        builtBorder: "border-[rgba(0,0,0,0.06)]",
+        built: "text-[rgba(14,15,17,0.4)]",
+      }
+    : {
+        bg: "bg-[rgb(0,0,0)]",
+        topBorder: "bg-[rgb(41,42,43)]",
+        wordmark: "text-white",
+        body: "text-[rgba(255,255,255,0.45)]",
+        socialBg: "bg-[rgba(255,255,255,0.04)]",
+        socialBorder: "border-[rgba(255,255,255,0.06)]",
+        socialIcon: "text-[rgba(255,255,255,0.4)]",
+        emailLink: "text-[rgba(255,255,255,0.3)]",
+        heading: "text-white",
+        link: "text-[rgba(255,255,255,0.45)]",
+        linkHover: "rgba(255,255,255,1)",
+        bottomBorder: "border-[rgb(41,42,43)]",
+        copy: "text-[rgba(255,255,255,0.35)]",
+        builtBorder: "border-[rgba(255,255,255,0.04)]",
+        built: "text-[rgba(255,255,255,0.2)]",
+      };
+
+  const linkHover = {
+    x: 4,
+    color: t.linkHover,
+    transition: { duration: 0.2 },
+  };
+
   return (
-    <footer className="relative w-full pt-[100px] pb-0 bg-[rgb(14,15,17)] overflow-hidden">
+    <footer className={`relative w-full pt-[100px] pb-0 ${t.bg} overflow-hidden`}>
       {/* Top border — Framer Cryps style */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-[rgb(41,42,43)]" />
+      <div className={`absolute top-0 left-0 right-0 h-px ${t.topBorder}`} />
 
       <div className="max-w-[1200px] mx-auto px-5">
         <motion.div
@@ -98,24 +139,17 @@ export default function Footer() {
         >
           {/* ── LEFT COLUMN — Brand + description + social icons ── */}
           <motion.div variants={itemVariants} className="flex flex-col gap-10">
-            {/* Logo */}
+            {/* Wordmark */}
             <motion.div
-              className="flex items-center gap-3"
+              className="flex items-center"
               whileHover={{ x: 3 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="w-10 h-10 rounded-xl bg-accent-orange flex items-center justify-center">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M9 18V5l12-2v13" />
-                  <circle cx="6" cy="18" r="3" />
-                  <circle cx="18" cy="16" r="3" />
-                </svg>
-              </div>
-              <span className="text-white font-semibold text-lg tracking-tight">Rev Orchestra</span>
+              <span className={`${t.wordmark} font-semibold text-lg tracking-tight`}>Rev Orchestra</span>
             </motion.div>
 
             {/* Description — Framer 18px content style */}
-            <p className="text-[16px] text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[420px]">
+            <p className={`text-[16px] ${t.body} leading-[160%] max-w-[420px]`}>
               AI powered GTM orchestration for B2B founders. Autonomous agents, one system, connected to your stack. Customized and deployed in 90 days. Yours permanently.
             </p>
 
@@ -127,7 +161,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.06)] flex items-center justify-center text-[rgba(255,255,255,0.4)] hover:text-white hover:bg-[rgba(232,86,0,0.1)] hover:border-[rgba(232,86,0,0.3)] transition-colors"
+                  className={`w-10 h-10 rounded-xl ${t.socialBg} border ${t.socialBorder} flex items-center justify-center ${t.socialIcon} hover:text-accent-orange hover:bg-[rgba(232,86,0,0.1)] hover:border-[rgba(232,86,0,0.3)] transition-colors`}
                   initial={{ opacity: 0, scale: 0, rotate: -20 }}
                   whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                   viewport={{ once: false, amount: 0.5 }}
@@ -149,7 +183,7 @@ export default function Footer() {
             {/* Email */}
             <motion.a
               href="mailto:hello@revorchestra.com"
-              className="text-sm text-[rgba(255,255,255,0.3)] hover:text-accent-orange transition-colors w-fit"
+              className={`text-sm ${t.emailLink} hover:text-accent-orange transition-colors w-fit`}
               whileHover={{ x: 3 }}
             >
               hello@revorchestra.com
@@ -159,12 +193,12 @@ export default function Footer() {
           {/* ── RIGHT COLUMN — Link groups (Framer: 2 groups horizontal, gap 40px) ── */}
           <motion.div
             variants={itemVariants}
-            className="grid grid-cols-3 gap-10"
+            className="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-10"
           >
             {/* Company links */}
-            <div className="min-w-[140px]">
+            <div className="min-w-0">
               <motion.h4
-                className="text-[16px] text-white font-medium mb-5"
+                className={`text-[16px] ${t.heading} font-medium mb-5`}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false }}
@@ -191,7 +225,7 @@ export default function Footer() {
                             document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
                           }
                         }}
-                        className="text-[16px] text-[rgba(255,255,255,0.45)] hover:text-white transition-colors inline-block"
+                        className={`text-[16px] ${t.link} transition-colors inline-block`}
                       >
                         {link.label}
                       </a>
@@ -202,9 +236,9 @@ export default function Footer() {
             </div>
 
             {/* Resources links */}
-            <div className="min-w-[140px]">
+            <div className="min-w-0">
               <motion.h4
-                className="text-[16px] text-white font-medium mb-5"
+                className={`text-[16px] ${t.heading} font-medium mb-5`}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false }}
@@ -224,7 +258,7 @@ export default function Footer() {
                     <motion.div whileHover={linkHover}>
                       <Link
                         href={link.href}
-                        className="text-[16px] text-[rgba(255,255,255,0.45)] hover:text-white transition-colors inline-block"
+                        className={`text-[16px] ${t.link} transition-colors inline-block`}
                       >
                         {link.label}
                       </Link>
@@ -235,9 +269,9 @@ export default function Footer() {
             </div>
 
             {/* Legal links */}
-            <div className="min-w-[140px]">
+            <div className="min-w-0">
               <motion.h4
-                className="text-[16px] text-white font-medium mb-5"
+                className={`text-[16px] ${t.heading} font-medium mb-5`}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false }}
@@ -257,7 +291,7 @@ export default function Footer() {
                     <motion.div whileHover={linkHover}>
                       <Link
                         href={link.href}
-                        className="text-[16px] text-[rgba(255,255,255,0.45)] hover:text-white transition-colors inline-block"
+                        className={`text-[16px] ${t.link} transition-colors inline-block`}
                       >
                         {link.label}
                       </Link>
@@ -271,14 +305,14 @@ export default function Footer() {
 
         {/* ── Bottom bar — Framer: top border, space-between, 60px padding ── */}
         <motion.div
-          className="border-t border-[rgb(41,42,43)] py-[60px] flex flex-col md:flex-row items-center justify-between gap-5"
+          className={`border-t ${t.bottomBorder} py-[60px] flex flex-col md:flex-row items-center justify-between gap-5`}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6, ease }}
         >
           <motion.p
-            className="text-[16px] text-[rgba(255,255,255,0.35)]"
+            className={`text-[16px] ${t.copy}`}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: false }}
@@ -288,17 +322,17 @@ export default function Footer() {
           </motion.p>
 
           <motion.div
-            className="flex items-center gap-5 text-[16px] text-[rgba(255,255,255,0.35)]"
+            className={`flex items-center gap-5 text-[16px] ${t.copy}`}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: false }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <Link href="/legal/terms-conditions" className="hover:text-white transition-colors">
+            <Link href="/legal/terms-conditions" className="transition-colors">
               Terms &amp; Conditions
             </Link>
-            <span className="text-[rgba(255,255,255,0.15)]">|</span>
-            <Link href="/legal/privacy-policy" className="hover:text-white transition-colors">
+            <span className={isLight ? "text-[rgba(14,15,17,0.18)]" : "text-[rgba(255,255,255,0.15)]"}>|</span>
+            <Link href="/legal/privacy-policy" className="transition-colors">
               Privacy Policy
             </Link>
           </motion.div>
@@ -306,13 +340,13 @@ export default function Footer() {
 
         {/* Built with strip */}
         <motion.div
-          className="border-t border-[rgba(255,255,255,0.04)] py-5 text-center"
+          className={`border-t ${t.builtBorder} py-5 text-center`}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <p className="text-xs text-[rgba(255,255,255,0.2)]">
+          <p className={`text-xs ${t.built}`}>
             Built with {tools.join(" \u00B7 ")}, US LLC via Stripe Atlas, Team in Sri Lanka &amp; Singapore
           </p>
         </motion.div>

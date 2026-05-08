@@ -211,8 +211,10 @@ function OrbitVisual({ activeIndex }: { activeIndex: number }) {
           animate={{ scale: [1, 1.03, 1] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E85600" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="3" fill="#E85600" />
+            <circle cx="12" cy="12" r="6" stroke="rgba(232,86,0,0.45)" strokeWidth="1" />
+            <circle cx="12" cy="12" r="9" stroke="rgba(232,86,0,0.2)" strokeWidth="1" />
           </svg>
         </motion.div>
         <span
@@ -352,7 +354,7 @@ export default function SixAgents() {
   }, [advance]);
 
   return (
-    <section id="agents" className="relative w-full bg-[rgb(14,15,17)] overflow-hidden" style={{ paddingTop: 80, paddingBottom: 100 }}>
+    <section id="agents" className="relative w-full bg-[rgb(0, 0, 0)] overflow-hidden" style={{ paddingTop: 80, paddingBottom: 100 }}>
       <div className="max-w-[1120px] mx-auto px-6">
 
         {/* ── Top: 2-column layout ── */}

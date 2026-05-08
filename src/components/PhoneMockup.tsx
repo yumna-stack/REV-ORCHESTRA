@@ -74,7 +74,7 @@ export default function PhoneMockup() {
   const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.1, 0.9]);
 
   return (
-    <section ref={sectionRef} className="relative w-full py-24 bg-[rgb(14,15,17)] overflow-hidden">
+    <section ref={sectionRef} className="relative w-full py-24 bg-[rgb(0, 0, 0)] overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
         <Reveal variants={fadeUp} className="text-center mb-6">
@@ -189,7 +189,7 @@ export default function PhoneMockup() {
                   <div
                     className="rounded-2xl p-5 backdrop-blur-xl"
                     style={{
-                      background: "rgb(14,15,17)",
+                      background: "rgb(0, 0, 0)",
                       border: "1px solid rgba(255,255,255,0.08)",
                       boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
                     }}
@@ -243,7 +243,7 @@ export default function PhoneMockup() {
                   <div
                     className="rounded-xl p-3 backdrop-blur-xl"
                     style={{
-                      background: "rgb(14,15,17)",
+                      background: "rgb(0, 0, 0)",
                       border: "1px solid rgba(255,255,255,0.06)",
                     }}
                   >

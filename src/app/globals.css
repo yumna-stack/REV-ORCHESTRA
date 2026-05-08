@@ -1,7 +1,19 @@
 @import "tailwindcss";
 
+/* Browser-native cross-fade between routes (Chrome/Edge 126+).
+ * Listing → article and back gets a smooth 400ms crossfade.
+ * Firefox/Safari fall back to instant nav. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @theme {
-  --color-black-light: rgb(14, 15, 17);
+  --color-black-light: rgb(0, 0, 0);
   --color-black-dark: rgb(0, 0, 0);
   --color-black-03: rgb(30, 30, 30);
   --color-black-outline: rgb(41, 42, 43);
@@ -13,98 +25,103 @@
   --color-accent-purple: rgb(152, 151, 255);
   --color-accent-green: rgb(183, 233, 50);
   --color-accent-red: rgb(233, 50, 50);
-  --font-family-inter: "Inter", system-ui, -apple-system, sans-serif;
-  --font-family-heading: var(--font-heading), "Instrument Serif", serif;
+  --font-family-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-heading: var(--font-family-sans);
 }
 
 /* ===== Theme tokens (dark only) ===== */
 :root {
-  /* Inverted hierarchy: page bg is LIGHTER, cards/surfaces are near-BLACK,
-     so cards pop as darker wells against the lighter page. */
-  --bg: rgb(22, 24, 28);
-  --bg-elev: rgb(26, 28, 32);
-  --surface: rgb(10, 10, 12);
-  --surface-2: rgb(10, 10, 12);
-  --card-bg: rgb(8, 8, 10);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.15);
+  --bg: rgb(0, 0, 0);
+  --bg-elev: rgb(5, 5, 5);
+  --surface: rgb(0, 0, 0);
+  --surface-2: rgb(0, 0, 0);
+  --card-bg: rgb(0, 0, 0);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.2);
   --text: rgb(255, 255, 255);
-  --text-muted: rgba(255, 255, 255, 0.7);
-  --text-dim: rgba(255, 255, 255, 0.45);
-  --grid-line: rgba(255, 255, 255, 0.04);
+  --text-muted: rgba(255, 255, 255, 0.8);
+  --text-dim: rgba(255, 255, 255, 0.5);
+  --grid-line: rgba(255, 255, 255, 0.03);
 
-  /* ===== Radii (Geist Materials) ===== */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  /* ===== Radii ===== */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
   --radius-pill: 999px;
 
   /* ===== Strokes ===== */
-  --stroke-subtle: 1px solid rgba(255, 255, 255, 0.06);
-  --stroke-regular: 1px solid rgba(255, 255, 255, 0.08);
-  --stroke-strong: 1px solid rgba(255, 255, 255, 0.15);
+  --stroke-subtle: 1px solid rgba(255, 255, 255, 0.12);
+  --stroke-regular: 1px solid rgba(255, 255, 255, 0.15);
+  --stroke-strong: 1px solid rgba(255, 255, 255, 0.25);
 
-  /* ===== Shadows (dark-theme tuned) ===== */
+  /* ===== Shadows ===== */
   --shadow-none: none;
-  --shadow-tooltip: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-menu: 0 6px 18px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.35);
-  --shadow-modal: 0 18px 40px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
-  --shadow-fullscreen: 0 30px 80px rgba(0, 0, 0, 0.7), 0 4px 10px rgba(0, 0, 0, 0.45);
+  --shadow-tooltip: 0 2px 8px rgba(0, 0, 0, 0.8);
+  --shadow-menu: 0 6px 18px rgba(0, 0, 0, 0.9);
+  --shadow-modal: 0 18px 40px rgba(0, 0, 0, 0.95);
+  --shadow-fullscreen: 0 30px 80px rgba(0, 0, 0, 1);
+}
+
+body {
+  background-color: rgb(0, 0, 0);
+  color: var(--text);
+  font-family: var(--font-family-sans);
+  overflow-x: hidden;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px;
 }
 
 /* ═══════════════════════════════════════════════════════════════
  * MATERIALS — preset surfaces (Geist-style)
- * Each class bundles radius + fill + stroke + shadow. Pick the tier
- * that matches the elevation: surface stays on-page; floating lifts.
  * ═══════════════════════════════════════════════════════════════ */
 
 .material-base {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgb(0, 0, 0);
   border: var(--stroke-subtle);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-none);
 }
 .material-small {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgb(0, 0, 0);
   border: var(--stroke-regular);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-none);
 }
 .material-medium {
-  background: rgba(20, 21, 24, 0.5);
+  background: rgb(0, 0, 0);
   border: var(--stroke-regular);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-none);
-  backdrop-filter: blur(6px);
 }
 .material-large {
-  background: rgba(20, 21, 24, 0.7);
+  background: rgb(0, 0, 0);
   border: var(--stroke-strong);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-none);
-  backdrop-filter: blur(10px);
 }
 
 .material-tooltip {
-  background: rgb(25, 27, 31);
+  background: rgb(0, 0, 0);
   border: var(--stroke-regular);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-tooltip);
 }
 .material-menu {
-  background: rgb(20, 21, 24);
+  background: rgb(0, 0, 0);
   border: var(--stroke-regular);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-menu);
 }
 .material-modal {
-  background: rgb(20, 21, 24);
+  background: rgb(0, 0, 0);
   border: var(--stroke-strong);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-modal);
 }
 .material-fullscreen {
-  background: rgb(14, 15, 17);
+  background: rgb(0, 0, 0);
   border: var(--stroke-strong);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-fullscreen);
@@ -120,12 +137,11 @@ body {
   overflow-x: hidden;
   transition: color 0.3s ease;
 
-  /* Page-level background gradient — LIGHTER than cards.
-     Cards are near-black and pop as darker wells against this. */
+  /* Pitch black page with subtle accent glows at top/bottom. */
   background:
     radial-gradient(ellipse 80% 40% at 50% 0%, rgba(232, 86, 0, 0.05) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 50% 100%, rgba(152, 151, 255, 0.035) 0%, transparent 70%),
-    linear-gradient(180deg, rgb(22, 24, 28) 0%, rgb(30, 32, 36) 50%, rgb(24, 26, 30) 100%);
+    rgb(0, 0, 0);
   background-attachment: fixed;
 }
 
@@ -303,6 +319,36 @@ body {
   }
 }
 
+/* Remove any remaining translucency from standard components */
+button:not(.btn-primary), a:not(.btn-primary) {
+  backdrop-filter: none !important;
+}
+
+.btn-primary {
+  background-color: #EF5A00;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+/* Force pitch black autofill to prevent ugly browser defaults */
+.premium-input:-webkit-autofill,
+.premium-input:-webkit-autofill:hover, 
+.premium-input:-webkit-autofill:focus, 
+.premium-input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px rgb(0,0,0) inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 /* Slide in from left (text content) */
 @keyframes slideInFromLeft {
   0% {
@@ -405,4 +451,31 @@ body {
 .reveal-scale-up.is-visible {
   animation-name: scaleUpReveal;
   animation-duration: 0.75s;
+}
+
+/* Marquee — tools-ticker continuous scroll (horizontal) */
+@keyframes marquee-scroll {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track {
+  animation: marquee-scroll 30s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Vertical marquee — testimonial columns, up & down */
+@keyframes marquee-up {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(0, -50%, 0); }
+}
+@keyframes marquee-down {
+  0%   { transform: translate3d(0, -50%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
 }

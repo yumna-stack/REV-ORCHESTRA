@@ -1,9 +1,6 @@
-"use client";
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Section, Badge } from "@/components/PageWrapper";
-import { usePathname } from "next/navigation";
 
 const content: Record<string, { title: string; updated: string; sections: { heading: string; body: string }[] }> = {
   "terms-conditions": {
@@ -41,13 +38,16 @@ const content: Record<string, { title: string; updated: string; sections: { head
   },
 };
 
-export default function LegalPage() {
-  const pathname = usePathname();
-  const slug = pathname.split("/").pop() || "terms-conditions";
+export function generateStaticParams() {
+  return Object.keys(content).map((slug) => ({ slug }));
+}
+
+export default async function LegalPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const page = content[slug] || content["terms-conditions"];
 
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
       <section className="relative w-full pt-[140px] pb-20">
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "80px 80px", mask: "linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 60%)", WebkitMask: "linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 60%)" }} />

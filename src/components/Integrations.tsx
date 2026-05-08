@@ -31,8 +31,8 @@ function CoinRow({ logos, direction = "left", speed = 30 }: { logos: typeof tool
   return (
     <div className="relative w-full overflow-hidden py-4">
       {/* Edge fades */}
-      <div className="absolute left-0 top-0 bottom-0 w-[25%] z-10 bg-gradient-to-r from-[rgb(14,15,17)] via-[rgba(14,15,17,0.8)] to-transparent pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-[25%] z-10 bg-gradient-to-l from-[rgb(14,15,17)] via-[rgba(14,15,17,0.8)] to-transparent pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-[25%] z-10 bg-gradient-to-r from-[rgb(0, 0, 0)] via-[rgba(14,15,17,0.8)] to-transparent pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-[25%] z-10 bg-gradient-to-l from-[rgb(0, 0, 0)] via-[rgba(14,15,17,0.8)] to-transparent pointer-events-none" />
 
       {/* Center warm glow spotlight */}
       <div

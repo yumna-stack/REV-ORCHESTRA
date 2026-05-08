@@ -147,7 +147,7 @@ function GlassCard({ children, index, glowColor = "#9897FF" }: { children: React
       transition={{ duration: 0.6, ease, delay: index * 0.1 }}
       whileHover={{ scale: 1.015, y: -3 }}
     >
-      <div className="relative rounded-2xl bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden">
+      <div className="relative rounded-2xl bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden">
         <div className="absolute bottom-0 left-0 right-0 h-[50%] pointer-events-none z-0" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 100%, ${glowColor}15 0%, transparent 65%)` }} />
         <motion.div className="absolute bottom-0 left-[15%] right-[15%] h-[2px] rounded-full z-10" style={{ background: `linear-gradient(90deg, transparent, ${glowColor}, transparent)` }} animate={{ opacity: [0.2, 0.6, 0.2] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }} />
         <div className="relative z-[1] p-5 md:p-6">{children}</div>
@@ -173,7 +173,7 @@ export default function SocialProof() {
   };
 
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
+    <section className="relative w-full py-24 md:py-32 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Heading */}
         <Reveal variants={fadeRight}>
@@ -219,7 +219,7 @@ export default function SocialProof() {
                   exit={{ opacity: 0, x: 40, filter: "blur(8px)" }}
                   transition={{ duration: 0.5, ease }}
                 >
-                  <div className="relative rounded-2xl bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden">
+                  <div className="relative rounded-2xl bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden">
                     <div className="absolute bottom-0 left-0 right-0 h-[50%] pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(232,86,0,0.08) 0%, transparent 65%)" }} />
                     <motion.div className="absolute bottom-0 left-[15%] right-[15%] h-[2px] rounded-full" style={{ background: "linear-gradient(90deg, transparent, #E85600, transparent)" }} animate={{ opacity: [0.3, 0.7, 0.3] }} transition={{ duration: 2.5, repeat: Infinity }} />
                     <div className="relative z-[1] p-5 md:p-6">

@@ -21,7 +21,7 @@ export default function LiveSystem() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[rgb(14,15,17)] overflow-hidden"
+      className="relative w-full bg-[rgb(0, 0, 0)] overflow-hidden"
       style={{ paddingTop: 80, paddingBottom: 100 }}
     >
       <div className="max-w-[1120px] mx-auto px-6">
@@ -43,9 +43,10 @@ export default function LiveSystem() {
                 style={{
                   fontFamily: "var(--font-family-body)",
                   fontSize: 11,
-                  color: "rgba(255,255,255,0.5)",
-                  letterSpacing: "0.06em",
+                  color: "rgba(255,255,255,0.85)",
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
+                  fontWeight: 600,
                 }}
               >
                 Security &amp; Compliance
@@ -75,10 +76,10 @@ export default function LiveSystem() {
             <p
               style={{
                 fontFamily: "var(--font-family-body)",
-                fontSize: 15,
+                fontSize: 16,
                 lineHeight: "170%",
-                color: "rgba(255,255,255,0.4)",
-                maxWidth: 520,
+                color: "rgba(255,255,255,0.75)",
+                maxWidth: 560,
                 margin: "16px auto 0",
               }}
             >
@@ -164,10 +165,10 @@ export default function LiveSystem() {
               <p
                 style={{
                   fontFamily: "var(--font-family-body)",
-                  fontSize: 15,
+                  fontSize: 16,
                   lineHeight: "165%",
-                  color: "rgba(255,255,255,0.72)",
-                  marginBottom: 20,
+                  color: "rgba(255,255,255,0.9)",
+                  marginBottom: 22,
                 }}
               >
                 {card.body}
@@ -316,8 +317,9 @@ export default function LiveSystem() {
                         <span style={{ fontSize: 11, fontWeight: 500, color: "rgba(255,255,255,0.4)", fontVariantNumeric: "tabular-nums" }}>00:04</span>
                         <span className="w-1.5 h-1.5 rounded-full bg-[#4ADE80] animate-pulse" />
                       </div>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="3" fill="#E85600" />
+                        <circle cx="12" cy="12" r="7" stroke="rgba(232,86,0,0.4)" strokeWidth="1" />
                       </svg>
                     </motion.div>
 

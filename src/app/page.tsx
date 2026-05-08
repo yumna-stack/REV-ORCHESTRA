@@ -6,8 +6,9 @@ import AnimatedText from "@/components/AnimatedText";
 import ServiceFlow from "@/components/ServiceFlow";
 import Stats from "@/components/Stats";
 import SixAgents from "@/components/SixAgents";
-import DashboardPreview from "@/components/DashboardPreview";
 import LiveSystem from "@/components/LiveSystem";
+import DashboardPreview from "@/components/DashboardPreview";
+import Testimonials from "@/components/Testimonials";
 import ProcessVisual from "@/components/ProcessVisual";
 import HowItWorks from "@/components/HowItWorks";
 import FAQ from "@/components/FAQ";
@@ -15,7 +16,7 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
 /* Gradient divider — blends sections with different bg colors seamlessly */
-function SectionBlend({ from = "rgb(14,15,17)", to = "rgb(8,8,15)" }: { from?: string; to?: string }) {
+function SectionBlend({ from = "rgb(0, 0, 0)", to = "rgb(0, 0, 0)" }: { from?: string; to?: string }) {
   return (
     <div
       className="relative w-full h-24 pointer-events-none -mt-12 -mb-12 z-[1]"
@@ -30,19 +31,21 @@ export default function Home() {
       <Navigation />
 
       <Hero />
+      <ProcessVisual />
+      <DashboardPreview />
       <AnimatedText />
+      <SectionBlend from="rgb(0, 0, 0)" to="rgb(0, 0, 0)" />
       <StackLogos />
       <ServiceFlow />
+      <Testimonials />
       <Stats />
       <SixAgents />
-      <DashboardPreview />
       <LiveSystem />
-      <ProcessVisual />
       <HowItWorks />
       <FAQ />
-      <SectionBlend from="rgb(14,15,17)" to="rgb(8,8,15)" />
+      <SectionBlend from="rgb(0, 0, 0)" to="rgb(0, 0, 0)" />
       <CTA />
-      <SectionBlend from="rgb(14,15,17)" to="rgb(14,15,17)" />
+      <SectionBlend from="rgb(0, 0, 0)" to="rgb(0, 0, 0)" />
       <Footer />
     </main>
   );

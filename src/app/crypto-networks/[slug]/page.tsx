@@ -1,12 +1,21 @@
-"use client";
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Section, Badge, CTAButton } from "@/components/PageWrapper";
 
+export function generateStaticParams() {
+  return [
+    { slug: "ethereum" },
+    { slug: "bitcoin" },
+    { slug: "polygon" },
+    { slug: "solana" },
+    { slug: "avalanche" },
+    { slug: "arbitrum" },
+  ];
+}
+
 export default function NetworkDetailPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
       <section className="relative w-full pt-[140px] pb-20">
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "80px 80px" }} />

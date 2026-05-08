@@ -41,9 +41,9 @@ const steps = [
       "We deploy autonomous agents into your stack and connect the handoffs between signals, research, copy, outreach, CRM, and monitoring.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-        <path d="M2 17l10 5 10-5" />
-        <path d="M2 12l10 5 10-5" />
+        <circle cx="12" cy="12" r="3" />
+        <circle cx="12" cy="12" r="7" opacity="0.5" />
+        <circle cx="12" cy="12" r="11" opacity="0.25" />
       </svg>
     ),
   },
@@ -167,7 +167,7 @@ function MiniVisual({ step }: { step: number }) {
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative w-full py-28 md:py-36 bg-[rgb(14,15,17)]">
+    <section id="how-it-works" className="relative w-full py-28 md:py-36 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1200px] mx-auto px-6">
         {/* ── Centered header ── */}
         <Reveal variants={fadeUp} className="text-center mb-16 md:mb-20">

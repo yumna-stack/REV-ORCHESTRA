@@ -73,7 +73,7 @@ export default function HowWeHandle() {
   const tab = tabs[active];
 
   return (
-    <section id="what-we-do" className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
+    <section id="what-we-do" className="relative w-full py-24 md:py-32 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Section heading */}
         <Reveal variants={fadeUp}>
@@ -150,7 +150,7 @@ export default function HowWeHandle() {
                     fontWeight: 500,
                     color: active === i ? "white" : "rgba(255,255,255,0.4)",
                     backgroundColor: active === i ? "white" : "transparent",
-                    ...(active === i ? { color: "rgb(14,15,17)" } : {}),
+                    ...(active === i ? { color: "rgb(0, 0, 0)" } : {}),
                   }}
                 >
                   {t.badge}

@@ -155,6 +155,60 @@ const DOMAIN: Record<string, string> = {
   sendspark: "sendspark.com",
   vidyard: "vidyard.com",
   typeform: "typeform.com",
+  /* Prospect */
+  zoominfo: "zoominfo.com",
+  cognism: "cognism.com",
+  rocketreach: "rocketreach.co",
+  ocean: "ocean.io",
+  brightdata: "brightdata.com",
+  phantombuster: "phantombuster.com",
+  builtwith: "builtwith.com",
+  wappalyzer: "wappalyzer.com",
+  fullenrich: "fullenrich.com",
+  prospeo: "prospeo.io",
+  wiza: "wiza.co",
+  leadmagic: "leadmagic.io",
+  hunter: "hunter.io",
+  dropcontact: "dropcontact.com",
+  rb2b: "rb2b.com",
+  commonroom: "commonroom.io",
+  bombora: "bombora.com",
+  g2: "g2.com",
+  usergems: "usergems.com",
+  champify: "champify.io",
+  /* Engage */
+  expandi: "expandi.io",
+  orum: "orum.com",
+  nooks: "nooks.ai",
+  loom: "loom.com",
+  calendly: "calendly.com",
+  chilipiper: "chilipiper.com",
+  intercom: "intercom.com",
+  drift: "drift.com",
+  customerio: "customer.io",
+  marketo: "marketo.com",
+  beehiiv: "beehiiv.com",
+  elevenx: "11x.ai",
+  artisan: "artisan.co",
+  lavender: "lavender.ai",
+  twain: "twain.ai",
+  /* Orchestrate */
+  n8n: "n8n.io",
+  zapier: "zapier.com",
+  airtable: "airtable.com",
+  supabase: "supabase.com",
+  notion: "notion.so",
+  openrouter: "openrouter.ai",
+  hubspot: "hubspot.com",
+  clari: "clari.com",
+  fireflies: "fireflies.ai",
+  usermaven: "usermaven.com",
+  hockeystack: "hockeystack.com",
+  qwilr: "qwilr.com",
+  pandadoc: "pandadoc.com",
+  vercel: "vercel.com",
+  hotjar: "hotjar.com",
+  posthog: "posthog.com",
 };
 
 /* Human-readable display names. Extend as needed. Falls back to `name`
@@ -232,11 +286,14 @@ export function BrandMark({
       />
     );
   } else {
-    /* 1. simple-icons brand? Render inline SVG. */
+    /* 1. simple-icons brand? Render inline SVG.
+     * Apply the same greyscale+brightness pipeline used on favicon logos so
+     * SI brands (HubSpot, n8n, Claude) match the visual color of favicon
+     * brands (Apollo, Slack, …) when shown together. */
     const siKey = SI_KEY[key];
     const def = siKey ? fromSI(siKey) : null;
     if (def) {
-      const fill = colored ? def.hex : "#d4d4d4";
+      const fill = colored ? def.hex : def.hex;
       inner = (
         <svg
           width={size}
@@ -244,7 +301,7 @@ export function BrandMark({
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
           className={className}
-          style={{ ...style, filter: style?.filter }}
+          style={{ ...style, filter: mergedFilter }}
           aria-label={name}
         >
           <path d={def.path} fill={fill} />

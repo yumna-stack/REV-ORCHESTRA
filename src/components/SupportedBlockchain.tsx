@@ -22,18 +22,18 @@ export default function SupportedBlockchain() {
         {/* Heading */}
         <Reveal variants={fadeUp}>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[rgb(8,8,10)] border border-[rgba(255,255,255,0.08)] mb-6">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black border border-[rgba(255,255,255,0.15)] mb-6">
               <span className="w-2 h-2 rounded-full bg-accent-orange" />
-              <span className="text-xs text-[rgba(255,255,255,0.6)] tracking-wider uppercase">Supported Blockchain</span>
+              <span className="text-xs text-[rgba(255,255,255,0.8)] tracking-wider uppercase">Supported Blockchain</span>
             </div>
             <h2
               className="mb-4"
               style={{
                 fontFamily: "var(--font-family-heading)",
                 fontSize: "clamp(28px, 3.5vw, 42px)",
-                fontWeight: 500,
+                fontWeight: 600,
                 lineHeight: "120%",
-                letterSpacing: "-1.2px",
+                letterSpacing: "-0.02em",
                 color: "white",
                 maxWidth: 560,
                 margin: "0 auto",
@@ -41,7 +41,7 @@ export default function SupportedBlockchain() {
             >
               Hear the Pulse of Every Crypto Chain
             </h2>
-            <p className="text-base text-[rgba(255,255,255,0.45)] leading-[160%] max-w-[600px] mx-auto">
+            <p className="text-base text-[rgba(255,255,255,0.6)] leading-[160%] max-w-[600px] mx-auto">
               Multi chain support across all major blockchain networks with real time data indexing and analysis.
             </p>
           </div>
@@ -53,12 +53,12 @@ export default function SupportedBlockchain() {
             <GridItem key={i}>
               <motion.div
                 whileHover={{ y: -4 }}
-                className="flex flex-col items-center gap-4 p-6 rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] hover:border-[rgba(232,86,0,0.2)] hover:bg-[rgb(34,25,22)] transition-all duration-500 group"
+                className="flex flex-col items-center gap-4 p-6 rounded-2xl border border-[rgba(255,255,255,0.12)] bg-black hover:border-[rgba(255,255,255,0.25)] transition-all duration-500 group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[rgb(14,14,16)] border border-[rgba(255,255,255,0.08)] flex items-center justify-center group-hover:bg-accent-orange/10 group-hover:border-accent-orange/20 transition-colors duration-300">
-                  <img src={chain.icon} alt={chain.name} className="w-8 h-8 object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="w-14 h-14 rounded-2xl bg-black border border-[rgba(255,255,255,0.15)] flex items-center justify-center group-hover:bg-black group-hover:border-[rgba(255,255,255,0.3)] transition-colors duration-300">
+                  <img src={chain.icon} alt={chain.name} className="w-8 h-8 object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <span className="text-sm font-medium text-[rgba(255,255,255,0.6)] group-hover:text-white transition-colors duration-300">
+                <span className="text-[13px] font-medium text-[rgba(255,255,255,0.8)] tracking-wide group-hover:text-white transition-colors duration-300">
                   {chain.name}
                 </span>
               </motion.div>

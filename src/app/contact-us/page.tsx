@@ -25,7 +25,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       <PageHero
@@ -44,7 +44,7 @@ export default function ContactPage() {
             >
               <div
                 className="relative rounded-[36px] overflow-hidden"
-                style={{ border: "1px solid rgba(255,255,255,0.06)", background: "rgb(14,15,17)" }}
+                style={{ border: "1px solid rgba(255,255,255,0.06)", background: "rgb(0, 0, 0)" }}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* LEFT: Contact Info */}
@@ -150,11 +150,11 @@ export default function ContactPage() {
                           <div className="flex flex-col gap-2">
                             <label className="text-xs text-[rgba(255,255,255,0.4)] uppercase tracking-wider">Current ARR</label>
                             <select className="px-5 py-3.5 text-sm text-white bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] rounded-xl outline-none focus:border-[#E85600]/50 transition-colors" onChange={(e) => setFormData({ ...formData, arr: e.target.value })}>
-                              <option value="" className="bg-[rgb(14,15,17)]">Select range</option>
-                              <option value="pre-revenue" className="bg-[rgb(14,15,17)]">Pre revenue</option>
-                              <option value="under-500k" className="bg-[rgb(14,15,17)]">&lt;$500K</option>
-                              <option value="500k-2m" className="bg-[rgb(14,15,17)]">$500K to $2M</option>
-                              <option value="2m-plus" className="bg-[rgb(14,15,17)]">$2M+</option>
+                              <option value="" className="bg-[rgb(0, 0, 0)]">Select range</option>
+                              <option value="pre-revenue" className="bg-[rgb(0, 0, 0)]">Pre revenue</option>
+                              <option value="under-500k" className="bg-[rgb(0, 0, 0)]">&lt;$500K</option>
+                              <option value="500k-2m" className="bg-[rgb(0, 0, 0)]">$500K to $2M</option>
+                              <option value="2m-plus" className="bg-[rgb(0, 0, 0)]">$2M+</option>
                             </select>
                           </div>
                         </StaggerItem>

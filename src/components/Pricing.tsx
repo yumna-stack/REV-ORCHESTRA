@@ -119,7 +119,7 @@ function PricingCard({ plan, index }: { plan: (typeof plans)[number]; index: num
         className="relative h-full flex flex-col overflow-hidden"
         style={{
           borderRadius: 18,
-          backgroundColor: "rgb(14,15,17)",
+          backgroundColor: "rgb(0, 0, 0)",
           border: `1px solid ${plan.highlighted ? "rgba(232,86,0,0.25)" : "rgb(14,14,16)"}`,
         }}
       >
@@ -263,7 +263,7 @@ function PricingCard({ plan, index }: { plan: (typeof plans)[number]; index: num
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
+    <section id="pricing" className="relative w-full py-24 md:py-32 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Heading */}
         <Reveal variants={fadeUp}>

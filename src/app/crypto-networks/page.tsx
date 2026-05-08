@@ -22,7 +22,7 @@ const tickerIcons = [
 
 export default function CryptoNetworksPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       {/* Hero */}

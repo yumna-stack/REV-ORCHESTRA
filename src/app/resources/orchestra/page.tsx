@@ -26,7 +26,7 @@ const recentIssues = [
 
 export default function OrchestraPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       <PageHero
@@ -36,7 +36,7 @@ export default function OrchestraPage() {
       />
 
       {/* Subscribe form placeholder */}
-      <section className="w-full py-16 bg-[rgb(14,15,17)]">
+      <section className="w-full py-16 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[500px] mx-auto px-5">
           <Reveal variants={fadeUp}>
             <div className="rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-8 text-center">
@@ -66,7 +66,7 @@ export default function OrchestraPage() {
       </section>
 
       {/* Recent issues */}
-      <section className="w-full py-16 bg-[rgb(14,15,17)]">
+      <section className="w-full py-16 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[700px] mx-auto px-5">
           <Reveal variants={fadeUp} className="mb-10">
             <h2

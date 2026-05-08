@@ -108,13 +108,13 @@ const flowPath = "M40,30 L40,90 Q40,130 70,130 L180,130 Q210,130 210,160 L210,22
 
 export default function ProductsPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       {/* ═══════════════════════════════════════════
           HERO SECTION (unique to Products page)
       ═══════════════════════════════════════════ */}
-      <section className="relative w-full flex flex-col items-center bg-[rgb(14,15,17)] overflow-hidden">
+      <section className="relative w-full flex flex-col items-center bg-[rgb(0, 0, 0)] overflow-hidden">
         {/* Grid pattern background */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -221,7 +221,7 @@ export default function ProductsPage() {
             }}
           >
             {/* Inner container: rounded-[36px] */}
-            <div className="rounded-[36px] bg-[rgb(14,15,17)] border border-[rgba(41,42,43,1)] overflow-hidden">
+            <div className="rounded-[36px] bg-[rgb(0, 0, 0)] border border-[rgba(41,42,43,1)] overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-x divide-[rgba(41,42,43,0.6)]">
                 {/* ─── Left Panel: BTC/USDT Chart ─── */}
                 <div className="p-6 flex flex-col">
@@ -326,7 +326,7 @@ export default function ProductsPage() {
 
                   {/* Swap arrow */}
                   <div className="flex justify-center -my-1 relative z-10">
-                    <div className="w-8 h-8 rounded-full bg-[rgb(14,15,17)] border border-[rgba(41,42,43,0.8)] flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-[rgb(0, 0, 0)] border border-[rgba(41,42,43,0.8)] flex items-center justify-center">
                       <svg
                         width="14"
                         height="14"

@@ -34,7 +34,7 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       <PageHero
@@ -44,7 +44,7 @@ export default function AboutPage() {
       />
 
       {/* Story */}
-      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+      <section className="w-full py-20 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[750px] mx-auto px-5">
           <Reveal variants={slideRight}>
             <div className="space-y-6 text-base text-[rgba(255,255,255,0.5)] leading-[180%]">
@@ -66,7 +66,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+      <section className="w-full py-20 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[1000px] mx-auto px-5">
           <Reveal variants={flipUp} className="text-center mb-14">
             <Badge text="Our Values" />
@@ -96,7 +96,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Inner card */}
-                  <div className="relative rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden p-8 h-full">
+                  <div className="relative rounded-[24px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden p-8 h-full">
                     <h3 className="text-accent-orange font-semibold text-lg mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>
                       {v.title}
                     </h3>
@@ -117,7 +117,7 @@ export default function AboutPage() {
       </section>
 
       {/* Founder */}
-      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+      <section className="w-full py-20 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[600px] mx-auto px-5 text-center">
           <Reveal variants={fadeUp}>
             {/* Glassmorphic card wrapper with orange glow */}
@@ -126,7 +126,7 @@ export default function AboutPage() {
               <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-b from-accent-orange/[0.06] via-transparent to-accent-orange/[0.04] blur-xl pointer-events-none" />
 
               {/* Inner card */}
-              <div className="relative rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden p-10">
+              <div className="relative rounded-[24px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden p-10">
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-orange/20 to-accent-orange/5 border border-accent-orange/20 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl font-bold text-accent-orange">DB</span>
                 </div>

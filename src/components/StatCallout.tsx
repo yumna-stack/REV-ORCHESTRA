@@ -6,7 +6,7 @@ import CountUp from "@/components/CountUp";
 
 export default function StatCallout() {
   return (
-    <section className="relative w-full py-16 bg-[rgb(14,15,17)] overflow-hidden">
+    <section className="relative w-full py-16 bg-[rgb(0, 0, 0)] overflow-hidden">
       <div className="max-w-[900px] mx-auto px-5">
         <Reveal variants={fadeUp}>
           <div className="relative rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-10 overflow-hidden">

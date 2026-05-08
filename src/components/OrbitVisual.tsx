@@ -87,7 +87,7 @@ export default function OrbitVisual() {
   const ring2Nodes = orbitNodes.filter((n) => n.ring === 2);
 
   return (
-    <section className="relative w-full py-24 bg-[rgb(14,15,17)] overflow-hidden">
+    <section className="relative w-full py-24 bg-[rgb(0, 0, 0)] overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Section heading */}
         <Reveal variants={fadeUp} className="text-center mb-16">

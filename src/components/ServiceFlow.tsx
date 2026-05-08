@@ -92,7 +92,7 @@ const stages = [
 
 export default function ServiceFlow() {
   return (
-    <section className="relative w-full py-24 md:py-32 overflow-hidden" style={{ background: "rgb(14,15,17)" }}>
+    <section className="relative w-full py-24 md:py-32 overflow-hidden" style={{ background: "rgb(0, 0, 0)" }}>
       {/* Ambient orange glow top */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[500px] pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,101,10,0.08) 0%, transparent 70%)" }} />
 

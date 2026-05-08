@@ -49,50 +49,92 @@ function Card1() {
           Funding, hiring, intent data, LinkedIn activity, detected the moment it happens
         </p>
       </div>
-      {/* Avatar circles + dashed connector + orb — like Cryps profile pics */}
-      <div className="flex items-center mt-6">
-        {[
-          { letter: "D", bg: "rgba(232,86,0,0.3)", border: "rgba(232,86,0,0.4)", color: "#E85600" },
-          { letter: "R", bg: "rgba(255,255,255,0.08)", border: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)" },
-        ].map((a, i) => (
-          <motion.div
+      {/* Scanning spreadsheet — rows scroll, magnifier pulses over them */}
+      <SignalSheet />
+    </div>
+  );
+}
+
+/* ── Mini scrolling spreadsheet + magnifier — represents signal detection ── */
+function SignalSheet() {
+  const signalRows = [
+    { co: "Loomly",   signal: "Series B · $18M",     hot: true  },
+    { co: "Plotr",    signal: "Hired 4 SDRs",        hot: false },
+    { co: "Northstar", signal: "Visited pricing x3", hot: true  },
+    { co: "Heliox",   signal: "CTO changed",          hot: false },
+    { co: "ScaleOps", signal: "Posted ICP job",       hot: true  },
+    { co: "OutboundLab", signal: "Added Apollo",      hot: false },
+    { co: "Taxxa",    signal: "RFP downloaded",       hot: true  },
+    { co: "Cryps",    signal: "Earnings beat",        hot: false },
+  ];
+  const doubled = [...signalRows, ...signalRows];
+
+  return (
+    <div
+      className="relative mt-6 overflow-hidden rounded-md"
+      style={{
+        height: 96,
+        background: "linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0.01))",
+        border: "1px solid rgba(255,255,255,0.06)",
+      }}
+    >
+      {/* Top fade */}
+      <div className="absolute top-0 left-0 right-0 h-4 z-10 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgb(8,8,10), transparent)" }} />
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-4 z-10 pointer-events-none" style={{ background: "linear-gradient(to top, rgb(8,8,10), transparent)" }} />
+
+      {/* Scrolling rows */}
+      <motion.div
+        className="flex flex-col"
+        animate={{ y: ["0%", "-50%"] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+      >
+        {doubled.map((row, i) => (
+          <div
             key={i}
-            className="w-11 h-11 rounded-full flex items-center justify-center text-[12px] font-bold"
+            className="flex items-center justify-between px-3 text-[10px]"
             style={{
-              backgroundColor: a.bg,
-              border: `2px solid ${a.border}`,
-              color: a.color,
-              marginLeft: i > 0 ? -10 : 0,
-              zIndex: 2 - i,
+              height: 20,
+              borderBottom: "1px solid rgba(255,255,255,0.04)",
+              color: row.hot ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.4)",
+              fontVariantNumeric: "tabular-nums",
             }}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
-            transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 300, damping: 20 }}
           >
-            {a.letter}
-          </motion.div>
+            <span className="truncate max-w-[70px]" style={{ fontWeight: row.hot ? 600 : 400 }}>{row.co}</span>
+            <span className="truncate" style={{ fontSize: 9 }}>{row.signal}</span>
+            <span
+              className="w-1.5 h-1.5 rounded-full shrink-0"
+              style={{ background: row.hot ? "#E85600" : "rgba(255,255,255,0.15)", boxShadow: row.hot ? "0 0 6px rgba(232,86,0,0.7)" : undefined }}
+            />
+          </div>
         ))}
-        {/* Dashed line */}
+      </motion.div>
+
+      {/* Magnifier — gently oscillates over the rows, with a soft orange glow */}
+      <motion.div
+        className="absolute z-20 pointer-events-none"
+        style={{ top: 32, left: 110 }}
+        animate={{ y: [-6, 6, -6], x: [-4, 4, -4] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
         <div
-          className="mx-3"
-          style={{ width: 40, height: 0, borderTop: "1.5px dashed rgba(255,255,255,0.2)" }}
-        />
-        {/* Rev Orchestra orb */}
-        <motion.div
-          className="w-11 h-11 rounded-full flex items-center justify-center"
+          className="relative"
           style={{
-            background: "radial-gradient(circle at 35% 35%, #F09030, #C44800)",
-            boxShadow: "0 4px 16px rgba(232,86,0,0.35)",
+            filter: "drop-shadow(0 0 8px rgba(232,86,0,0.45))",
           }}
-          animate={{ scale: [1, 1.06, 1] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            {/* Glass ring */}
+            <circle cx="10" cy="10" r="6" stroke="#E85600" strokeWidth="1.6" />
+            {/* Glass tint */}
+            <circle cx="10" cy="10" r="5.4" fill="rgba(232,86,0,0.12)" />
+            {/* Handle */}
+            <path d="M14.5 14.5 L19 19" stroke="#E85600" strokeWidth="1.8" strokeLinecap="round" />
+            {/* Specular highlight */}
+            <path d="M7 7.5 A 4 4 0 0 1 9 6" stroke="rgba(255,255,255,0.6)" strokeWidth="1" strokeLinecap="round" fill="none" />
           </svg>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
@@ -114,16 +156,8 @@ function Card2() {
   return (
     <div className="flex flex-col h-full">
       <StepBadge n="02" label="GTM Running" />
-      {/* Header — Rev Orchestra mark + running metric */}
-      <div className="flex items-center gap-2 mb-2">
-        <div
-          className="w-7 h-7 rounded-full flex items-center justify-center"
-          style={{ background: "radial-gradient(circle at 35% 35%, #F09030, #C44800)" }}
-        >
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-          </svg>
-        </div>
+      {/* Header — running metric */}
+      <div className="flex items-center mb-2">
         <div>
           <span className="text-[12px] font-semibold text-white leading-none block">Rev Orchestra</span>
           <span className="text-[10px] text-[rgba(255,255,255,0.3)]">47 meetings/mo</span>
@@ -224,11 +258,11 @@ function Card3() {
 /* ── Card 4: PIPELINE — the final stage, closed deals ── */
 function Card4() {
   const rows = [
-    { initials: "JW", amount: "$3,200", name: "James Wilson · CloudBase", stage: "Qualified",  stageColor: "#4ade80" },
-    { initials: "LP", amount: "$7,775", name: "Lisa Park · DataSync",     stage: "Meeting",    stageColor: "#4ade80" },
-    { initials: "SC", amount: "$4,120", name: "Sarah Chen · Acme Corp",   stage: "Discovery",  stageColor: "#4ade80" },
-    { initials: "AN", amount: "$890",   name: "Amy Nguyen · ScaleAI",     stage: "Outreach",   stageColor: "#60a5fa" },
-    { initials: "DK", amount: "$2,100", name: "David Kim · GrowthOS",     stage: "Responded",  stageColor: "#4ade80" },
+    { avatar: "https://i.pravatar.cc/80?img=12",  name: "James Wilson", company: "CloudBase", stage: "Qualified",  stageColor: "#4ade80" },
+    { avatar: "https://i.pravatar.cc/80?img=45",  name: "Lisa Park",    company: "DataSync",  stage: "Meeting",    stageColor: "#4ade80" },
+    { avatar: "https://i.pravatar.cc/80?img=47",  name: "Sarah Chen",   company: "Acme Corp", stage: "Discovery",  stageColor: "#4ade80" },
+    { avatar: "https://i.pravatar.cc/80?img=44",  name: "Amy Nguyen",   company: "ScaleAI",   stage: "Outreach",   stageColor: "#60a5fa" },
+    { avatar: "https://i.pravatar.cc/80?img=33",  name: "David Kim",    company: "GrowthOS",  stage: "Responded",  stageColor: "#4ade80" },
   ];
 
   return (
@@ -254,19 +288,26 @@ function Card4() {
         >
         {[...rows, ...rows].map((row, i) => (
           <div
-            key={`${row.initials}-${i}`}
+            key={`${row.name}-${i}`}
             className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg"
             style={{
               backgroundColor: "rgb(18,18,20)",
               border: "0.5px solid rgba(255,255,255,0.05)",
             }}
           >
-            <div className="w-6 h-6 rounded-full bg-[rgb(18,18,20)] flex items-center justify-center text-[8px] font-bold text-[rgba(255,255,255,0.55)] shrink-0">
-              {row.initials}
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={row.avatar}
+              alt={row.name}
+              width={26}
+              height={26}
+              className="w-[26px] h-[26px] rounded-full object-cover shrink-0"
+              style={{ border: "1px solid rgba(255,255,255,0.08)" }}
+              loading="lazy"
+            />
             <div className="flex-1 min-w-0">
-              <span className="text-[11px] font-semibold text-white block leading-tight">{row.amount}</span>
-              <span className="text-[9px] text-[rgba(255,255,255,0.3)] truncate block">{row.name}</span>
+              <span className="text-[11px] font-semibold text-white block leading-tight truncate">{row.name}</span>
+              <span className="text-[9px] text-[rgba(255,255,255,0.3)] truncate block">{row.company}</span>
             </div>
             <span
               className="text-[9px] font-medium px-2 py-0.5 rounded-full shrink-0"
@@ -332,7 +373,7 @@ function DashedConnector() {
 
 export default function ProcessVisual() {
   return (
-    <section id="how-it-works" className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
+    <section id="how-it-works" className="relative w-full py-24 md:py-32 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1100px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-start">
           {/* LEFT — sticky text */}
@@ -399,14 +440,14 @@ export default function ProcessVisual() {
             </Reveal>
           </div>
 
-          {/* RIGHT — 2×2 card grid */}
-          <div className="grid gap-5" style={{ gridTemplateRows: "320px 320px" }}>
+          {/* RIGHT — card grid: stacks vertically on mobile, 2×2 on lg+ */}
+          <div className="grid gap-5 lg:[grid-template-rows:320px_320px]">
             {/* ── Top row ── */}
-            <div className="flex items-stretch gap-0">
+            <div className="flex flex-col lg:flex-row items-stretch gap-4 lg:gap-0">
               {/* Card 1 */}
               <motion.div
+                className="w-full lg:[flex:0_0_56%] lg:min-h-0 min-h-[320px]"
                 style={{
-                  flex: "0 0 56%",
                   backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",
                   borderRadius: 18,
@@ -420,12 +461,12 @@ export default function ProcessVisual() {
                 <Card1 />
               </motion.div>
 
-              {/* Dashed connector */}
+              {/* Dashed connector — desktop only */}
               <DashedConnector />
 
               {/* Card 2 */}
               <motion.div
-                className="flex-1"
+                className="w-full lg:flex-1 lg:min-h-0 min-h-[320px]"
                 style={{
                   backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",
@@ -442,11 +483,11 @@ export default function ProcessVisual() {
             </div>
 
             {/* ── Bottom row ── */}
-            <div className="flex items-stretch gap-0">
+            <div className="flex flex-col lg:flex-row items-stretch gap-4 lg:gap-0">
               {/* Card 3 */}
               <motion.div
+                className="w-full lg:[flex:0_0_56%] lg:min-h-0 min-h-[320px]"
                 style={{
-                  flex: "0 0 56%",
                   backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",
                   borderRadius: 18,
@@ -460,12 +501,12 @@ export default function ProcessVisual() {
                 <Card3 />
               </motion.div>
 
-              {/* Dashed connector linking Agents → Pipeline */}
+              {/* Dashed connector — desktop only */}
               <DashedConnector />
 
               {/* Card 4 */}
               <motion.div
-                className="relative flex-1 overflow-hidden"
+                className="relative w-full lg:flex-1 overflow-hidden lg:min-h-0 min-h-[320px]"
                 style={{
                   backgroundColor: "rgb(8,8,10)",
                   border: "1px solid rgba(255,255,255,0.1)",

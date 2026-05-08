@@ -38,7 +38,7 @@ const problems = [
 
 export default function ProblemSection() {
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[rgb(8,8,15)]">
+    <section className="relative w-full py-24 md:py-32 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Header */}
         <div className="mb-16 max-w-[800px]">
@@ -103,7 +103,7 @@ export default function ProblemSection() {
         >
           {problems.map((problem, i) => (
             <StaggerItem key={i} variants={popIn}>
-              <div className="rounded-[20px] bg-[rgb(14,15,17)] border border-[rgba(255,255,255,0.06)] p-5 h-full">
+              <div className="rounded-[20px] bg-[rgb(0, 0, 0)] border border-[rgba(255,255,255,0.06)] p-5 h-full">
                 <span
                   className="text-accent-orange text-sm font-semibold tracking-wider mb-3 block"
                   style={{ fontFamily: "var(--font-family-heading)" }}

@@ -4,3 +4,12 @@ node_modules/
 *.tsbuildinfo
 next-env.d.ts
 node_modules
+.vercel
+out/
+.open-next/
+.wrangler/
+
+# Environment files (keep secrets and project keys out of git)
+.env
+.env.local
+.env.*.local

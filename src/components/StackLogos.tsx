@@ -24,28 +24,31 @@ const row1 = [
 const capabilities = [
   {
     title: "Prospect",
+    subtitle: "Find data",
     items: [
-      { label: "Buying Signal Detection", tools: ["hubspot", "linkedin", "apollo"] },
-      { label: "Deep Account Research", tools: ["clay", "apollo", "claude"] },
-      { label: "ICP Matched Targeting", tools: ["salesforce", "hubspot", "clay"] },
-      { label: "Auto Contact Enrichment", tools: ["clay", "apollo", "linkedin"] },
+      { label: "Buying Signal Detection", tools: ["commonroom", "bombora", "g2"] },
+      { label: "Deep Account Research", tools: ["apollo", "zoominfo", "cognism"] },
+      { label: "ICP Matched Targeting", tools: ["apollo", "lusha", "rb2b"] },
+      { label: "Auto Contact Enrichment", tools: ["hunter", "dropcontact", "fullenrich"] },
     ],
   },
   {
     title: "Engage",
+    subtitle: "Contact leads",
     items: [
-      { label: "AI Written Email Sequences", tools: ["instantly", "claude", "hubspot"] },
-      { label: "LinkedIn Touch Sequences", tools: ["linkedin", "clay", "n8n"] },
-      { label: "Multi Channel Orchestration", tools: ["slack", "instantly", "hubspot"] },
-      { label: "Smart Follow up Triggers", tools: ["n8n", "instantly", "claude"] },
+      { label: "AI Written Email Sequences", tools: ["instantly", "smartlead", "lemlist"] },
+      { label: "LinkedIn Touch Sequences", tools: ["heyreach", "expandi", "linkedin"] },
+      { label: "Multi Channel Orchestration", tools: ["outreach", "salesloft", "reply"] },
+      { label: "Smart Follow up Triggers", tools: ["customerio", "intercom", "drift"] },
     ],
   },
   {
     title: "Orchestrate",
+    subtitle: "Run the machine",
     items: [
-      { label: "CRM Auto Updates", tools: ["hubspot", "salesforce", "n8n"] },
-      { label: "Live Pipeline Monitoring", tools: ["hubspot", "slack", "n8n"] },
-      { label: "Agent to Agent Handoffs", tools: ["n8n", "claude", "slack"] },
+      { label: "CRM Auto Updates", tools: ["hubspot", "attio", "salesforce"] },
+      { label: "Live Pipeline Monitoring", tools: ["clari", "gong", "hockeystack"] },
+      { label: "Agent to Agent Handoffs", tools: ["n8n", "zapier", "make"] },
       { label: "Real Time Slack Alerts", tools: ["slack", "zapier", "n8n"] },
     ],
   },
@@ -139,7 +142,7 @@ const capItem: Variants = {
 
 export default function StackLogos() {
   return (
-    <section className="relative w-full py-20 bg-[rgb(14,15,17)] overflow-hidden">
+    <section className="relative w-full py-20 bg-[rgb(0, 0, 0)] overflow-hidden">
       {/* Subtle golden ambient glow behind icons */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none"
@@ -185,9 +188,14 @@ export default function StackLogos() {
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
             >
-              <h3 className="text-white font-semibold text-lg mb-4">
-                {col.title}
-              </h3>
+              <div className="mb-4">
+                <h3 className="text-white font-semibold text-lg leading-tight">
+                  {col.title}
+                </h3>
+                <p className="text-[11px] text-[rgba(255,255,255,0.4)] uppercase tracking-[0.14em] mt-1">
+                  {col.subtitle}
+                </p>
+              </div>
               <div className="flex flex-col gap-3">
                 {col.items.map((item, j) => (
                   <motion.div
@@ -210,23 +218,15 @@ export default function StackLogos() {
           ))}
         </div>
 
-        {/* Legacy comparison */}
-        <Reveal variants={fadeUp} className="max-w-[600px] mx-auto">
+        {/* Legacy cost contrast — legacy price only, no mention of ours */}
+        <Reveal variants={fadeUp} className="max-w-[600px] mx-auto mt-10">
           <div className="relative rounded-lg border border-[rgba(255,255,255,0.06)] bg-[rgb(8,8,10)] p-4">
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-[rgba(255,255,255,0.06)]">
+            <div className="flex items-center justify-between">
               <span className="text-sm text-[rgba(255,255,255,0.4)]">
                 Legacy stack
               </span>
-              <span className="text-sm text-[rgba(255,255,255,0.3)] line-through">
+              <span className="text-sm text-[rgba(255,255,255,0.35)] line-through">
                 $3,500/month
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-white font-medium">
-                With Rev Orchestra
-              </span>
-              <span className="text-sm text-accent-orange font-bold">
-                $18,000 once, yours forever
               </span>
             </div>
           </div>

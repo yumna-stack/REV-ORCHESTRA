@@ -106,7 +106,7 @@ export default function AIIntegration() {
                       animation: `float${(n % 3) + 1} ${5 + n}s ease-in-out infinite`,
                     }}
                   >
-                    <div className="w-10 h-16 rounded-[20px] bg-[rgb(14,15,17)] border border-[rgba(232,86,0,0.2)]" />
+                    <div className="w-10 h-16 rounded-[20px] bg-[rgb(0, 0, 0)] border border-[rgba(232,86,0,0.2)]" />
                   </div>
                 ))}
               </div>

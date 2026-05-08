@@ -44,7 +44,7 @@ const cardVariants = [fadeUp, fadeLeft, popIn, fadeUp];
 
 export default function HowItWorksPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       <PageHero
@@ -54,7 +54,7 @@ export default function HowItWorksPage() {
       />
 
       {/* Timeline */}
-      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+      <section className="w-full py-20 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[900px] mx-auto px-5">
           {steps.map((step, i) => (
             <Reveal key={i} variants={cardVariants[i]} delay={i * 0.1} once={false}>
@@ -73,7 +73,7 @@ export default function HowItWorksPage() {
 
                 {/* Step circle */}
                 <motion.div
-                  className="absolute left-0 top-0 w-9 h-9 rounded-full border-2 border-accent-orange bg-[rgb(14,15,17)] flex items-center justify-center"
+                  className="absolute left-0 top-0 w-9 h-9 rounded-full border-2 border-accent-orange bg-[rgb(0, 0, 0)] flex items-center justify-center"
                   whileInView={{ scale: [0.8, 1.1, 1] }}
                   viewport={{ once: false }}
                   transition={{ duration: 0.5, delay: 0.2 }}
@@ -88,7 +88,7 @@ export default function HowItWorksPage() {
                   transition={{ duration: 0.3 }}
                 >
                   {/* Inner card */}
-                  <div className="relative rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden">
+                  <div className="relative rounded-[24px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden">
                     {/* Orange glow at bottom */}
                     <div
                       className="pointer-events-none absolute inset-x-0 bottom-0 h-[140px]"
@@ -148,7 +148,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA */}
-      <section className="w-full py-20 bg-[rgb(14,15,17)]">
+      <section className="w-full py-20 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[600px] mx-auto px-5 text-center">
           <Reveal variants={fadeUp} once={false}>
             <h2

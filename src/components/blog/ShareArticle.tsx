@@ -54,7 +54,7 @@ export default function ShareArticle({ title }: { title: string }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <h4 className="text-sm font-semibold text-white tracking-wide">
+      <h4 className="text-sm font-semibold text-[rgb(14,15,17)] tracking-wide">
         Share this article
       </h4>
       <div className="flex items-center gap-2">
@@ -67,10 +67,10 @@ export default function ShareArticle({ title }: { title: string }) {
             whileHover={{ scale: 1.08, y: -2 }}
             whileTap={{ scale: 0.95 }}
             aria-label={`Share on ${l.name}`}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
+            className="w-9 h-9 rounded-full flex items-center justify-center text-[rgb(14,15,17)] transition-colors"
             style={{
-              backgroundColor: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor: "rgba(0,0,0,0.04)",
+              border: "1px solid rgba(0,0,0,0.1)",
             }}
           >
             {l.svg}
@@ -83,10 +83,10 @@ export default function ShareArticle({ title }: { title: string }) {
           whileHover={{ scale: 1.08, y: -2 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Copy link"
-          className="w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
+          className="w-9 h-9 rounded-full flex items-center justify-center text-[#E85600] transition-colors"
           style={{
             backgroundColor: "rgba(232,86,0,0.12)",
-            border: "1px solid rgba(232,86,0,0.25)",
+            border: "1px solid rgba(232,86,0,0.35)",
           }}
         >
           {copied ? (

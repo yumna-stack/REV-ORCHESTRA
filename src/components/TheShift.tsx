@@ -89,7 +89,7 @@ function StatCard({
   const count = useCountUp(rawNumber, 1.8, inView);
 
   return (
-    <div className="rounded-[20px] bg-[rgb(14,15,17)] border border-[rgba(255,255,255,0.06)] p-5 flex flex-col h-full">
+    <div className="rounded-[20px] bg-[rgb(0, 0, 0)] border border-[rgba(255,255,255,0.06)] p-5 flex flex-col h-full">
       <span
         className="text-accent-orange text-[clamp(32px,4vw,48px)] font-bold leading-[110%] mb-3"
         style={{ fontFamily: "var(--font-family-heading)" }}
@@ -138,7 +138,7 @@ export default function TheShift() {
   const inView = useInView(statsRef, { once: false, amount: 0.3 });
 
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[rgb(14,15,17)]">
+    <section className="relative w-full py-24 md:py-32 bg-[rgb(0, 0, 0)]">
       <div className="max-w-[1200px] mx-auto px-5">
         {/* Header */}
         <div className="mb-16 max-w-[800px]">

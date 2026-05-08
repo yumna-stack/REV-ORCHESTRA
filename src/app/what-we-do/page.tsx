@@ -73,7 +73,7 @@ const problems = [
 
 export default function WhatWeDoPage() {
   return (
-    <main className="w-full bg-[rgb(14,15,17)]">
+    <main className="w-full bg-[rgb(0, 0, 0)]">
       <Navigation />
 
       <PageHero
@@ -83,7 +83,7 @@ export default function WhatWeDoPage() {
       />
 
       {/* Problem Section */}
-      <section className="w-full py-24 bg-[rgb(14,15,17)]">
+      <section className="w-full py-24 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[1100px] mx-auto px-5">
           <Reveal variants={fadeLeft} className="mb-14">
             <h2
@@ -110,7 +110,7 @@ export default function WhatWeDoPage() {
                   whileHover={{ scale: 1.015, y: -4 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="relative rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden p-7 h-full">
+                  <div className="relative rounded-[24px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden p-7 h-full">
                     <div className="absolute bottom-0 left-0 right-0 h-[40%] pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(232,86,0,0.06) 0%, transparent 65%)" }} />
                     <div className="relative z-[1]">
                       <div className="w-11 h-11 rounded-xl bg-accent-orange/10 border border-accent-orange/20 flex items-center justify-center mb-5">
@@ -128,7 +128,7 @@ export default function WhatWeDoPage() {
       </section>
 
       {/* The Agents */}
-      <section className="w-full py-24 bg-[rgb(14,15,17)]">
+      <section className="w-full py-24 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[1100px] mx-auto px-5">
           <Reveal variants={flipUp} className="text-center mb-14" >
             <Badge text="The System" />
@@ -157,7 +157,7 @@ export default function WhatWeDoPage() {
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="relative rounded-[24px] bg-[rgb(14,15,17)] border border-[rgb(41,42,43)] overflow-hidden p-7 h-full">
+                  <div className="relative rounded-[24px] bg-[rgb(0, 0, 0)] border border-[rgb(41,42,43)] overflow-hidden p-7 h-full">
                     <div className="absolute bottom-0 left-0 right-0 h-[50%] pointer-events-none" style={{ background: `radial-gradient(ellipse 80% 50% at 50% 100%, ${agent.color}12 0%, transparent 65%)` }} />
                     <motion.div className="absolute bottom-0 left-[15%] right-[15%] h-[2px] rounded-full" style={{ background: `linear-gradient(90deg, transparent, ${agent.color}, transparent)` }} animate={{ opacity: [0.15, 0.4, 0.15] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }} />
                     <div className="relative z-[1]">
@@ -179,7 +179,7 @@ export default function WhatWeDoPage() {
       </section>
 
       {/* CTA */}
-      <section className="w-full py-24 bg-[rgb(14,15,17)]">
+      <section className="w-full py-24 bg-[rgb(0, 0, 0)]">
         <div className="max-w-[600px] mx-auto px-5 text-center">
           <Reveal variants={fadeUp}>
             <h2
